@@ -1,0 +1,38 @@
+/**
+ * Archivo: src/estilos/tema.css
+ * Responsabilidad: Variables de tema (oscuro/claro) y paleta principal.
+ * Motivo: Centralizar colores/efectos para no repetirlos en cada componente.
+ */
+
+:root {
+  /* Tema oscuro (default) */
+  --fondo: #070711;
+  --texto: rgba(255, 255, 255, 0.92);
+  --textoSuave: rgba(255, 255, 255, 0.70);
+
+  --panel: rgba(255, 255, 255, 0.04);
+  --borde: rgba(255, 255, 255, 0.10);
+
+  /* Acentos (cyberpunk limpio) */
+  --morado: #7c3aed;
+  --azul: #2563eb;
+  --cian: #22d3ee;
+
+  --glow: 0 0 24px rgba(124, 58, 237, 0.25), 0 0 42px rgba(37, 99, 235, 0.18);
+}
+
+:root[data-tema="claro"] {
+  /* Tema claro (mantiene morado/azul sin perder identidad) */
+  --fondo: #f7f8ff;
+  --texto: rgba(0, 0, 0, 0.88);
+  --textoSuave: rgba(0, 0, 0, 0.62);
+
+  --panel: rgba(0, 0, 0, 0.04);
+  --borde: rgba(0, 0, 0, 0.10);
+
+  --morado: #6d28d9;
+  --azul: #1d4ed8;
+  --cian: #0891b2;
+
+  --glow: 0 0 22px rgba(109, 40, 217, 0.18), 0 0 36px rgba(29, 78, 216, 0.12);
+}

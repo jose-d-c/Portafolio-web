@@ -1,0 +1,40 @@
+---
+/**
+ * Archivo: src/pages/index.astro
+ * Responsabilidad: Pagina principal (home).
+ * Motivo: Unir layout + componentes principales sin duplicar estructura.
+ */
+
+import DisenoBase from "../layouts/DisenoBase.astro";
+import Portada from "../componentes/portada/Portada.astro";
+import BarraFlotante from "../componentes/navegacion/BarraFlotante.astro";
+---
+
+<DisenoBase titulo="Portafolio | Jose David Consuegra Medina">
+  <main class="contenedor">
+    <Portada />
+
+    <section id="sobre-mi" class="panel" style="padding:16px; margin-top:14px;">
+      <h2 class="tituloSeccion">Sobre mi</h2>
+      <p class="textoSuave" style="margin:0;">
+        (Aqui va tu descripcion corta. Por ahora lo dejamos como placeholder.)
+      </p>
+    </section>
+
+    <section id="proyectos" class="panel" style="padding:16px; margin-top:14px;">
+      <h2 class="tituloSeccion">Proyectos</h2>
+      <p class="textoSuave" style="margin:0;">
+        (Aqui va la grilla de proyectos. Luego lo conectamos con src/datos/proyectos.ts)
+      </p>
+    </section>
+
+    <section id="habilidades" class="panel" style="padding:16px; margin-top:14px;">
+      <h2 class="tituloSeccion">Habilidades</h2>
+      <p class="textoSuave" style="margin:0;">
+        (Aqui van tus skills. Luego lo conectamos con src/datos/habilidades.ts)
+      </p>
+    </section>
+  </main>
+
+  <BarraFlotante />
+</DisenoBase>

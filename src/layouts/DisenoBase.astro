@@ -1,0 +1,33 @@
+---
+/**
+ * Archivo: src/layouts/DisenoBase.astro
+ * Responsabilidad: Layout base del sitio (head + estilos globales + scripts).
+ * Motivo: Evitar duplicar estructura HTML en cada pagina.
+ */
+
+import "../estilos/tema.css";
+import "../estilos/globales.css";
+
+const { titulo = "Portafolio | Jose David Consuegra" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{titulo}</title>
+    <meta
+      name="description"
+      content="Portafolio de Jose David Consuegra Medina: proyectos, habilidades y enfoque en ciberseguridad, redes y servidores."
+    />
+  </head>
+
+  <body>
+    <slot />
+
+    <!-- Scripts separados para mantener el layout limpio -->
+    <script type="module" src="/src/scripts/tema.ts"></script>
+  </body>
+</html>

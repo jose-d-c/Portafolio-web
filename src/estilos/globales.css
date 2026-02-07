@@ -1,0 +1,59 @@
+/**
+ * Archivo: src/estilos/globales.css
+ * Responsabilidad: Estilos base del sitio (tipografia, fondo, layout, utilidades).
+ * Motivo: Definir una base consistente para todos los componentes.
+ */
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+html {
+  scroll-behavior: smooth; /* Para que el dock navegue suave */
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--texto);
+  background:
+    radial-gradient(1000px 600px at 20% 10%, rgba(124,58,237,0.18), transparent 60%),
+    radial-gradient(900px 520px at 80% 15%, rgba(37,99,235,0.16), transparent 55%),
+    var(--fondo);
+  line-height: 1.5;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.contenedor {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 24px 18px 110px; /* espacio para la barra flotante */
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+}
+
+.tituloSeccion {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.textoSuave { color: var(--textoSuave); }
+
+.boton {
+  border: 1px solid var(--borde);
+  background: rgba(255,255,255,0.04);
+  color: var(--texto);
+  padding: 10px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+}
+.boton:hover { background: rgba(255,255,255,0.08); }
+
+.botonPrimario {
+  border-color: rgba(124,58,237,0.55);
+  background: rgba(124,58,237,0.14);
+}

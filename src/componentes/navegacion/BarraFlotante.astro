@@ -1,0 +1,70 @@
+---
+/**
+ * Componente: BarraFlotante
+ * Responsabilidad: Navegación por secciones + acceso al tema.
+ * Nota: Usamos SVG inline para no depender de librerías aún.
+ */
+---
+
+<nav class="dock" aria-label="Navegacion">
+  <a class="item" href="#sobre-mi" title="Sobre mi" aria-label="Sobre mi">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 21a8 8 0 1 0-16 0"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+  </a>
+
+  <a class="item" href="#proyectos" title="Proyectos" aria-label="Proyectos">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+    </svg>
+  </a>
+
+  <a class="item" href="#habilidades" title="Habilidades" aria-label="Habilidades">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+    </svg>
+  </a>
+
+  <button class="item" type="button" onclick="window.alternarTema()" title="Cambiar tema" aria-label="Cambiar tema">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+    </svg>
+  </button>
+</nav>
+
+<style>
+.dock{
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display:flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 18px;
+  border: 1px solid var(--borde);
+  background: rgba(10,10,18,0.55);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--glow);
+  z-index: 50;
+}
+
+.item{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  display:grid;
+  place-items:center;
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.item:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.08);
+  transition: 160ms;
+}
+</style>
