@@ -5,8 +5,11 @@
  * Motivo: Evitar duplicar estructura HTML en cada pagina.
  */
 
-import "../estilos/tema.css";
 import "../estilos/globales.css";
+import "../estilos/tema.css";
+
+import urlDesplazamiento from "../scripts/desplazamiento.ts?url";
+import urlTema from "../scripts/tema.ts?url";
 
 const { titulo = "Portafolio | Jose David Consuegra" } = Astro.props;
 ---
@@ -28,6 +31,7 @@ const { titulo = "Portafolio | Jose David Consuegra" } = Astro.props;
     <slot />
 
     <!-- Scripts separados para mantener el layout limpio -->
-    <script type="module" src="/src/scripts/tema.ts"></script>
+    <script type="module" src={urlTema}></script>
+    <script type="module" src={urlDesplazamiento}></script>
   </body>
 </html>

@@ -1,0 +1,21 @@
+---
+/**
+ * Componente: PastillaHabilidad
+ * Responsabilidad: Renderizar una habilidad tipo "pill".
+ */
+
+import type { Habilidad } from "../../datos/habilidades";
+const { habilidad } : { habilidad: Habilidad } = Astro.props;
+---
+
+<span class="pill">{habilidad.nombre}</span>
+
+<style>
+.pill{
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--borde);
+  background: rgba(255,255,255,0.04);
+  font-size: 13px;
+}
+</style>

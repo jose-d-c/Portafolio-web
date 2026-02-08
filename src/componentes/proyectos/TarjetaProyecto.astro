@@ -1,0 +1,55 @@
+---
+/**
+ * Componente: TarjetaProyecto
+ * Responsabilidad: Renderizar un proyecto (titulo, descripcion, links, etiquetas).
+ */
+
+import type { Proyecto } from "../../datos/proyectos";
+import Tarjeta from "../ui/Tarjeta.astro";
+
+const { proyecto } : { proyecto: Proyecto } = Astro.props;
+---
+
+<Tarjeta>
+  <h3 class="titulo">{proyecto.titulo}</h3>
+  <p class="textoSuave descripcion">{proyecto.descripcion}</p>
+
+  {proyecto.etiquetas?.length ? (
+    <div class="etiquetas">
+      {proyecto.etiquetas.map((t) => <span class="etiqueta">{t}</span>)}
+    </div>
+  ) : null}
+
+  <div class="links">
+    {proyecto.demo ? <a href={proyecto.demo} target="_blank" rel="noreferrer">Demo</a> : null}
+    {proyecto.codigo ? <a href={proyecto.codigo} target="_blank" rel="noreferrer">Codigo</a> : null}
+  </div>
+</Tarjeta>
+
+<style>
+.titulo{ margin: 0 0 6px; font-size: 16px; }
+.descripcion{ margin: 0; }
+
+.etiquetas{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.etiqueta{
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--borde);
+  background: rgba(255,255,255,0.04);
+  font-size: 12px;
+}
+
+.links{
+  display:flex;
+  gap: 12px;
+  margin-top: 12px;
+  opacity: .92;
+}
+.links a:hover{ text-decoration: underline; }
+</style>

@@ -1,0 +1,22 @@
+---
+/**
+ * Componente: Tarjeta
+ * Responsabilidad: Contenedor tipo card reutilizable.
+ * Motivo: Mantener consistencia visual entre items (proyectos, etc.).
+ */
+
+const { class: claseExtra = "" } = Astro.props;
+---
+
+<article class={"tarjeta " + claseExtra}>
+  <slot />
+</article>
+
+<style>
+.tarjeta{
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--borde);
+  background: rgba(0,0,0,0.18);
+}
+</style>

@@ -1,0 +1,21 @@
+---
+/**
+ * Componente: GrillaHabilidades
+ * Responsabilidad: Mostrar habilidades desde src/datos/habilidades.ts
+ */
+
+import { habilidades } from "../../datos/habilidades";
+import PastillaHabilidad from "./PastillaHabilidad.astro";
+---
+
+<div class="pills">
+  {habilidades.map((h) => <PastillaHabilidad habilidad={h} />)}
+</div>
+
+<style>
+.pills{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+</style>

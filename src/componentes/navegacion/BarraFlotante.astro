@@ -1,8 +1,8 @@
 ---
 /**
  * Componente: BarraFlotante
- * Responsabilidad: Navegación por secciones + acceso al tema.
- * Nota: Usamos SVG inline para no depender de librerías aún.
+ * Responsabilidad: Navegacion por secciones + acceso al tema.
+ * Nota: Usamos SVG inline para no depender de librerias aun.
  */
 ---
 
@@ -66,5 +66,12 @@
   transform: translateY(-2px);
   background: rgba(255,255,255,0.08);
   transition: 160ms;
+}
+
+/* Seccion activa (la marca el script desplazamiento.ts) */
+.item.activa{
+  border-color: rgba(124,58,237,0.55);
+  background: rgba(124,58,237,0.14);
+  box-shadow: var(--glow);
 }
 </style>
