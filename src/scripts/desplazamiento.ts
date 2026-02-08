@@ -1,57 +1,105 @@
 /**
  * Archivo: src/scripts/desplazamiento.ts
- * Responsabilidad: Mostrar solo una vista a la vez desde el dock lateral,
- * con animacion fluida y SIN solape (sale -> entra).
+ * Responsabilidad:
+ * - Mostrar SOLO una vista a la vez (Sobre mi / Proyectos / Habilidades)
+ * - Navegacion por hash (#sobre-mi, #proyectos, #habilidades) para que Back/Forward funcione
+ * - Animacion fluida SIN solape (sale -> entra)
+ * - Accesibilidad: vistas inactivas con hidden/aria-hidden y nav activa con aria-current
  */
 
 type IdVista = "sobre-mi" | "proyectos" | "habilidades";
 const ID_POR_DEFECTO: IdVista = "sobre-mi";
 
+const EASE = "cubic-bezier(0.2, 0.9, 0.2, 1)";
 const DUR_SALIDA = 220;
 const DUR_ENTRADA = 260;
-const EASE = "cubic-bezier(0.2, 0.9, 0.2, 1)";
+
+function prefiereReducirAnimacion(): boolean {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
 
 function obtenerIdDesdeHash(): string | null {
   const raw = window.location.hash?.replace("#", "").trim();
   return raw ? raw : null;
 }
 
+function todasLasVistas(): HTMLElement[] {
+  return Array.from(document.querySelectorAll<HTMLElement>(".vista"));
+}
+
 function getVista(id: string) {
   return document.getElementById(id) as HTMLElement | null;
 }
 
-function marcarDock(idFinal: string) {
+function navItems(): HTMLElement[] {
   const nav = document.querySelector('nav[aria-label="Navegacion"]');
-  const items = Array.from(nav?.querySelectorAll<HTMLElement>(".item[data-vista]") ?? []);
-  for (const it of items) {
-    it.classList.toggle("activa", it.getAttribute("data-vista") === idFinal);
+  return Array.from(nav?.querySelectorAll<HTMLElement>(".item[data-vista]") ?? []);
+}
+
+function marcarNav(idFinal: string) {
+  for (const it of navItems()) {
+    const esActiva = it.getAttribute("data-vista") === idFinal;
+    it.classList.toggle("activa", esActiva);
+
+    // Accesibilidad
+    if (esActiva) it.setAttribute("aria-current", "page");
+    else it.removeAttribute("aria-current");
   }
 }
 
-function scrollAContenedor() {
-  const cont = document.getElementById("contenedor-vistas");
-  if (cont) cont.scrollIntoView({ behavior: "smooth", block: "start" });
+function actualizarA11yVistas(idActiva: string) {
+  for (const v of todasLasVistas()) {
+    const activa = v.id === idActiva;
+    v.toggleAttribute("hidden", !activa);
+    v.setAttribute("aria-hidden", activa ? "false" : "true");
+  }
 }
 
-function bindDock() {
-  const nav = document.querySelector('nav[aria-label="Navegacion"]');
-  const items = Array.from(nav?.querySelectorAll<HTMLAnchorElement>('.item[data-vista]') ?? []);
+/**
+ * Scroll inteligente:
+ * - Evita mover la pagina si ya estas cerca del contenedor.
+ */
+function scrollAContenedorSiHaceFalta() {
+  const cont = document.getElementById("contenedor-vistas");
+  if (!cont) return;
 
-  for (const a of items) {
+  const r = cont.getBoundingClientRect();
+  if (r.top >= -40 && r.top <= 160) return;
+
+  cont.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function bindNav() {
+  // Usamos href="#id" pero controlamos el cambio para evitar scroll a elementos ocultos.
+  for (const a of navItems()) {
     a.addEventListener("click", (e) => {
       e.preventDefault();
       const id = a.getAttribute("data-vista");
       if (!id) return;
-      history.replaceState(null, "", `#${id}`);
-      mostrarVista(id);
+
+      // Esto SI crea historial (Back/Forward).
+      if (window.location.hash !== `#${id}`) window.location.hash = id;
+      else void mostrarVista(id, { origen: "click" }); // si ya estabas ahi, igual fuerza render
     });
   }
 }
 
 let actual: string | null = null;
 let bloqueado = false;
+let pendiente: string | null = null;
+
+function cancelarAnimaciones(el: HTMLElement) {
+  try {
+    for (const a of el.getAnimations()) a.cancel();
+  } catch {
+    // ok
+  }
+}
 
 async function animarSalida(el: HTMLElement) {
+  if (prefiereReducirAnimacion()) return;
+
+  cancelarAnimaciones(el);
   await el.animate(
     [
       { opacity: 1, transform: "translateY(0px)" },
@@ -62,11 +110,13 @@ async function animarSalida(el: HTMLElement) {
 }
 
 async function animarEntrada(el: HTMLElement) {
+  if (prefiereReducirAnimacion()) return;
+
+  cancelarAnimaciones(el);
+
   el.style.opacity = "0";
   el.style.transform = "translateY(10px)";
-
-  // forzar reflow para que la animacion arranque bien
-  void el.offsetHeight;
+  void el.offsetHeight; // reflow
 
   await el.animate(
     [
@@ -76,20 +126,23 @@ async function animarEntrada(el: HTMLElement) {
     { duration: DUR_ENTRADA, easing: EASE, fill: "forwards" }
   ).finished;
 
-  // limpiar estilos inline
   el.style.opacity = "";
   el.style.transform = "";
 }
 
-async function mostrarVista(id: string) {
-  if (bloqueado) return;
+async function mostrarVista(idSolicitada: string, opts: { origen?: "hash" | "click" | "init" } = {}) {
+  if (bloqueado) {
+    pendiente = idSolicitada; // cola simple: nos quedamos con la ultima
+    return;
+  }
 
-  const vistas = Array.from(document.querySelectorAll<HTMLElement>(".vista"));
-  const existe = vistas.some((v) => v.id === id);
-  const idFinal = existe ? id : ID_POR_DEFECTO;
+  const vistas = todasLasVistas();
+  const existe = vistas.some((v) => v.id === idSolicitada);
+  const idFinal = (existe ? idSolicitada : ID_POR_DEFECTO) as IdVista;
 
   if (actual === idFinal) {
-    marcarDock(idFinal);
+    marcarNav(idFinal);
+    actualizarA11yVistas(idFinal);
     return;
   }
 
@@ -100,30 +153,56 @@ async function mostrarVista(id: string) {
 
   const vistaActual = actual ? getVista(actual) : null;
 
-  // Salida de la actual (si existe)
+  // Asegurar que la nueva no este hidden (aunque aun no tenga .activa)
+  vistaNueva.removeAttribute("hidden");
+  vistaNueva.setAttribute("aria-hidden", "false");
+
+  // Salida de la actual
   if (vistaActual) {
     await animarSalida(vistaActual);
-    vistaActual.classList.remove("activa");
   }
 
-  // Ocultar todas y mostrar la nueva
+  // Activar nueva y ocultar las demas
   for (const v of vistas) v.classList.remove("activa");
   vistaNueva.classList.add("activa");
 
-  // Entrada de la nueva
+  actualizarA11yVistas(idFinal);
+
+  // Entrada
   await animarEntrada(vistaNueva);
 
   actual = idFinal;
-  marcarDock(idFinal);
-  scrollAContenedor();
+  marcarNav(idFinal);
+
+  if (opts.origen) scrollAContenedorSiHaceFalta();
 
   bloqueado = false;
+
+  // Ejecutar lo ultimo que pidieron si hubo spam de clicks
+  if (pendiente && pendiente !== actual) {
+    const next = pendiente;
+    pendiente = null;
+    await mostrarVista(next, { origen: opts.origen ?? "hash" });
+  } else {
+    pendiente = null;
+  }
 }
 
-// Init
-bindDock();
-mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO);
+function init() {
+  bindNav();
 
-window.addEventListener("hashchange", () => {
-  mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO);
-});
+  // Ocultar todo para evitar flash
+  for (const v of todasLasVistas()) {
+    v.setAttribute("aria-hidden", "true");
+    v.setAttribute("hidden", "");
+  }
+
+  void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, { origen: "init" });
+
+  // Back/Forward
+  window.addEventListener("hashchange", () => {
+    void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, { origen: "hash" });
+  });
+}
+
+init();

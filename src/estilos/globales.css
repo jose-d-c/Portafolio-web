@@ -20,7 +20,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Fondo fijo (base) */
+/* Fondo fijo */
 body::before{
   content:"";
   position: fixed;
@@ -28,19 +28,19 @@ body::before{
   z-index: -2;
   pointer-events: none;
   background:
-    radial-gradient(1000px 600px at 20% 10%, rgba(124,58,237,0.18), transparent 60%),
-    radial-gradient(900px 520px at 80% 15%, rgba(37,99,235,0.16), transparent 55%),
+    radial-gradient(1000px 600px at 20% 10%, color-mix(in srgb, var(--morado) 22%, transparent), transparent 60%),
+    radial-gradient(900px 520px at 80% 15%, color-mix(in srgb, var(--azul) 18%, transparent), transparent 55%),
     var(--fondo);
 }
 
-/* Micro-textura (scanlines + grid MUY sutil) */
+/* Micro-textura (scanlines + grid sutil) */
 body::after{
   content:"";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.10; /* sutil */
+  opacity: 0.10;
   background:
     repeating-linear-gradient(
       0deg,
@@ -64,17 +64,17 @@ a { color: inherit; text-decoration: none; }
 .contenedor {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 28px 18px 80px 18px;
+  padding: 28px 18px 80px 18px; /* ya no hay barra lateral */
 }
 
 .panel {
   border: 1px solid var(--borde);
   border-radius: 18px;
 
-  /* panel con brillo y “capa” superior leve */
+  /* panel con brillo y capa superior leve */
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.16)),
-    radial-gradient(650px 220px at 20% 0%, rgba(124,58,237,0.10), transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.10)),
+    radial-gradient(650px 220px at 20% 0%, color-mix(in srgb, var(--morado) 16%, transparent), transparent 70%),
     var(--panel);
 }
 
@@ -82,28 +82,27 @@ a { color: inherit; text-decoration: none; }
 
 .boton {
   border: 1px solid var(--borde);
-  background: rgba(255,255,255,0.04);
+  background: var(--bg-btn);
   color: var(--texto);
   padding: 14px 20px;
   border-radius: 16px;
   cursor: pointer;
   font-size: 20px;
+  font-family: var(--fuente-base);
 }
-.boton:hover { background: rgba(255,255,255,0.08); }
+.boton:hover { background: var(--bg-btn-hover); }
 
 .botonPrimario {
-  border-color: rgba(124,58,237,0.55);
-  background: rgba(124,58,237,0.14);
+  border-color: color-mix(in srgb, var(--morado) 55%, transparent);
+  background: color-mix(in srgb, var(--morado) 14%, transparent);
 }
 
-/* Vistas */
 .vista{ display: none; }
 .vista.activa{ display: block; }
 
-/* Glow sutil para titulos de seccion (siempre) */
+/* Glow sutil para titulos de seccion */
 .tituloSeccionGlow{
   text-shadow:
-    0 0 14px rgba(124,58,237,0.22),
-    0 0 22px rgba(37,99,235,0.16);
+    0 0 14px color-mix(in srgb, var(--morado) 22%, transparent),
+    0 0 22px color-mix(in srgb, var(--azul) 16%, transparent);
 }
-
