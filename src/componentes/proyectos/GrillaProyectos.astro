@@ -1,22 +1,61 @@
 ---
 /**
  * Componente: GrillaProyectos
- * Responsabilidad: Mostrar lista de proyectos desde src/datos/proyectos.ts
+ * Responsabilidad: Mostrar proyectos desde src/datos/proyectos.ts
+ *
+ * NOTA (v1):
+ * - Si el arreglo viene vacio, NO mostramos cards.
+ * - Mostramos un placeholder intencional ("Proximamente") para que la seccion
+ *   no parezca rota y para recordar que falta poblarla con proyectos reales.
  */
 
 import { proyectos } from "../../datos/proyectos";
 import TarjetaProyecto from "./TarjetaProyecto.astro";
 ---
 
-<div class="grilla">
-  {proyectos.map((p) => <TarjetaProyecto proyecto={p} />)}
-</div>
+{proyectos.length === 0 ? (
+  <div class="placeholder">
+    <div class="titulo">Proximamente</div>
+    <p class="textoSuave desc">
+      Esta seccion esta vacia a proposito. Cuando tenga proyectos reales, se cargan desde
+      <code>src/datos/proyectos.ts</code>.
+    </p>
+  </div>
+) : (
+  <div class="grilla">
+    {proyectos.map((p) => <TarjetaProyecto proyecto={p} />)}
+  </div>
+)}
 
 <style>
 .grilla{
   display:grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+.placeholder{
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px dashed var(--borde);
+  background: var(--bg-item);
+}
+
+.titulo{
+  font-family: var(--fuente-titulos);
+  font-size: 26px;
+  letter-spacing: 0.4px;
+}
+
+.desc{
+  margin: 10px 0 0;
+  font-size: 18px;
+}
+
+code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95em;
+  opacity: 0.92;
 }
 
 @media (max-width: 760px){

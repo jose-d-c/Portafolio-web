@@ -4,6 +4,7 @@ import Portada from "../componentes/portada/Portada.astro";
 import DisenoBase from "../layouts/DisenoBase.astro";
 
 import GrillaHabilidades from "../componentes/habilidades/GrillaHabilidades.astro";
+import GrillaProyectos from "../componentes/proyectos/GrillaProyectos.astro";
 import ColumnasSobreMi from "../componentes/sobre_mi/ColumnasSobreMi.astro";
 import Seccion from "../componentes/ui/Seccion.astro";
 ---
@@ -12,7 +13,7 @@ import Seccion from "../componentes/ui/Seccion.astro";
   <main class="contenedor">
     <Portada />
 
-    <!-- Barra de navegacion: debajo de la portada y encima de la vista -->
+    <!-- Navegacion superior (cambia vistas) -->
     <BarraFlotante />
 
     <div id="contenedor-vistas">
@@ -21,9 +22,8 @@ import Seccion from "../componentes/ui/Seccion.astro";
       </Seccion>
 
       <Seccion id="proyectos" titulo="Proyectos" clase="vista">
-        <p class="textoSuave" style="margin:0;">
-          (Aun no hay proyectos publicados.)
-        </p>
+        <!-- v1: intencionalmente vacio (se llena desde src/datos/proyectos.ts) -->
+        <GrillaProyectos />
       </Seccion>
 
       <Seccion id="habilidades" titulo="Habilidades" clase="vista">
