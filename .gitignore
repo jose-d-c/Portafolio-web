@@ -1,2 +1,11 @@
 **/EJEMPLO/
 
+
+# Dependencias y caches
+node_modules/
+.astro/
+dist/
+
+# Logs / sistema
+npm-debug.log*
+.DS_Store
