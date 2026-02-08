@@ -1,0 +1,108 @@
+---
+import { sobreMi } from "../../datos/sobreMi";
+
+const columnas = [
+  { id: "estudios", titulo: "Estudios", color: "var(--cian)" },
+  { id: "experiencia", titulo: "Experiencia laboral", color: "var(--azul)" },
+  { id: "certificaciones", titulo: "Certificaciones y cursos", color: "var(--morado)" },
+] as const;
+
+function listaPorId(id: string) {
+  if (id === "estudios") return sobreMi.estudios;
+  if (id === "experiencia") return sobreMi.experiencia;
+  return sobreMi.certificaciones;
+}
+---
+
+<div class="grid">
+  {columnas.map((col) => {
+    const lista = listaPorId(col.id);
+
+    return (
+      <section class="columna panel">
+        <header class="cabecera">
+          <span class="badge" style={`color:${col.color}`}></span>
+          <h3 class="titulo">{col.titulo}</h3>
+        </header>
+
+        <div class="lista">
+          {lista.map((it) => (
+            <article class="item">
+              <div class="itemTitulo">{it.titulo}</div>
+              <div class="textoSuave itemDetalle">{it.detalle}</div>
+            </article>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</div>
+
+<style>
+.grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.columna{
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: var(--glow);
+}
+
+.cabecera{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.badge{
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 18px color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.titulo{
+  margin: 0;
+  font-family: var(--fuente-titulos);
+  font-size: 26px;
+  letter-spacing: 0.4px;
+}
+
+.lista{
+  display:flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.item{
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--borde);
+  background: rgba(0,0,0,0.18);
+}
+
+.itemTitulo{
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.itemDetalle{
+  margin-top: 8px;
+  font-size: 18px;
+}
+
+/* 2 columnas */
+@media (max-width: 1050px){
+  .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* 1 columna */
+@media (max-width: 760px){
+  .grid{ grid-template-columns: 1fr; }
+}
+</style>

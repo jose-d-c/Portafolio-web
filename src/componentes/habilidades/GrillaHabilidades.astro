@@ -1,21 +1,151 @@
 ---
 /**
- * Componente: GrillaHabilidades
- * Responsabilidad: Mostrar habilidades desde src/datos/habilidades.ts
+ * Habilidades en columnas (Dominado | En proceso | Por aprender)
+ * - 3 columnas en escritorio
+ * - 2 columnas en pantallas medianas
+ * - 1 columna en mobile
+ * - Sin recortes raros de texto (min-width:0 + wrap)
  */
 
 import { habilidades } from "../../datos/habilidades";
-import PastillaHabilidad from "./PastillaHabilidad.astro";
+import IconoHabilidad from "./IconoHabilidad.astro";
+
+const columnas = [
+  { id: "dominado", titulo: "Dominado" },
+  { id: "en_proceso", titulo: "En proceso" },
+  { id: "por_aprender", titulo: "Por aprender" },
+] as const;
+
+const colorPorId: Record<string, string> = {
+  linux: "var(--cian)",
+  redes: "var(--azul)",
+  servidores: "var(--morado)",
+  ciberseguridad: "rgba(255, 77, 137, 0.95)",
+};
 ---
 
-<div class="pills">
-  {habilidades.map((h) => <PastillaHabilidad habilidad={h} />)}
+<div class="gridColumnas" aria-label="Columnas de habilidades">
+  {columnas.map((col) => {
+    const lista = habilidades.filter((h) => h.estado === col.id);
+
+    return (
+      <section class="columna panel">
+        <header class="cabecera">
+          <h3 class="titulo">{col.titulo}</h3>
+        </header>
+
+        <div class="lista">
+          {lista.length ? (
+            lista.map((h) => (
+              <article class="item">
+                <div class="icono" style={`color:${colorPorId[h.id] ?? "var(--texto)"}`}>
+                  <IconoHabilidad id={h.id} tam={34} />
+                </div>
+
+                <div class="info">
+                  <div class="nombre">{h.nombre}</div>
+                  <div class="textoSuave desc">{h.descripcion}</div>
+                </div>
+              </article>
+            ))
+          ) : (
+            <div class="vacio textoSuave">Aun no hay habilidades aqui.</div>
+          )}
+        </div>
+      </section>
+    );
+  })}
 </div>
 
 <style>
-.pills{
+.gridColumnas{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.columna{
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: var(--glow);
+  min-height: 360px;
+}
+
+.cabecera{
   display:flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items:center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.titulo{
+  margin: 0;
+  font-family: var(--fuente-titulos);
+  font-size: 26px;
+  letter-spacing: 0.4px;
+}
+
+.lista{
+  display:flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.item{
+  display:flex;
+  gap: 14px;
+  align-items:flex-start;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--borde);
+  background: rgba(0,0,0,0.18);
+}
+
+.icono{
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  display:grid;
+  place-items:center;
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  background: color-mix(in srgb, currentColor 10%, rgba(255,255,255,0.03));
+  box-shadow: 0 0 18px color-mix(in srgb, currentColor 25%, transparent);
+  flex: 0 0 auto;
+}
+
+/* CLAVE: evita que el texto se “corte” en flex */
+.info{
+  min-width: 0;
+  flex: 1;
+}
+
+.nombre{
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.desc{
+  margin-top: 8px;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.vacio{
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px dashed var(--borde);
+  background: rgba(255,255,255,0.03);
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 1100px){
+  .gridColumnas{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px){
+  .gridColumnas{ grid-template-columns: 1fr; }
 }
 </style>

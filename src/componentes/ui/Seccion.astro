@@ -1,16 +1,10 @@
 ---
-/**
- * Componente: Seccion
- * Responsabilidad: Bloque reutilizable con titulo + contenedor visual consistente.
- * Motivo: Evitar duplicar padding/margenes/bordes en cada seccion.
- */
-
 const { id, titulo, clase = "" } = Astro.props;
 ---
 
 <section id={id} class={"seccion panel " + clase}>
   <header class="encabezado">
-    <h2 class="tituloSeccion">{titulo}</h2>
+    <h2 class="tituloSeccion tituloSeccionGlow">{titulo}</h2>
   </header>
 
   <div class="contenido">
@@ -20,8 +14,8 @@ const { id, titulo, clase = "" } = Astro.props;
 
 <style>
 .seccion{
-  padding: 16px;
-  margin-top: 14px;
+  padding: 18px;
+  margin-top: 16px;
   position: relative;
   box-shadow: var(--glow);
 }
@@ -31,13 +25,14 @@ const { id, titulo, clase = "" } = Astro.props;
   align-items:center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .tituloSeccion{
   margin: 0;
-  font-size: 18px;
-  letter-spacing: 0.2px;
+  font-family: var(--fuente-titulos);
+  font-size: 34px;         /* <-- MAS GRANDE */
+  letter-spacing: 0.6px;
 }
 
 .contenido{

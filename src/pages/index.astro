@@ -1,15 +1,10 @@
 ---
-/**
- * Archivo: src/pages/index.astro
- * Responsabilidad: Pagina principal (home).
- */
-
 import BarraFlotante from "../componentes/navegacion/BarraFlotante.astro";
 import Portada from "../componentes/portada/Portada.astro";
 import DisenoBase from "../layouts/DisenoBase.astro";
 
 import GrillaHabilidades from "../componentes/habilidades/GrillaHabilidades.astro";
-import GrillaProyectos from "../componentes/proyectos/GrillaProyectos.astro";
+import ColumnasSobreMi from "../componentes/sobre_mi/ColumnasSobreMi.astro";
 import Seccion from "../componentes/ui/Seccion.astro";
 ---
 
@@ -17,15 +12,18 @@ import Seccion from "../componentes/ui/Seccion.astro";
   <main class="contenedor">
     <Portada />
 
+    <!-- Barra de navegacion: debajo de la portada y encima de la vista -->
+    <BarraFlotante />
+
     <div id="contenedor-vistas">
       <Seccion id="sobre-mi" titulo="Sobre mi" clase="vista">
-        <p class="textoSuave" style="margin:0;">
-          (Aqui va tu descripcion corta. Luego la afinamos y la hacemos mas pro.)
-        </p>
+        <ColumnasSobreMi />
       </Seccion>
 
       <Seccion id="proyectos" titulo="Proyectos" clase="vista">
-        <GrillaProyectos />
+        <p class="textoSuave" style="margin:0;">
+          (Aun no hay proyectos publicados.)
+        </p>
       </Seccion>
 
       <Seccion id="habilidades" titulo="Habilidades" clase="vista">
@@ -33,6 +31,4 @@ import Seccion from "../componentes/ui/Seccion.astro";
       </Seccion>
     </div>
   </main>
-
-  <BarraFlotante />
 </DisenoBase>
