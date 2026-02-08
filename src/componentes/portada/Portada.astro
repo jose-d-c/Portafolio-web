@@ -15,15 +15,13 @@ import { perfil } from "../../datos/perfil";
   </div>
 
   <div>
-    <p class="etiqueta">Cyberpunk • Futurista • Limpio</p>
     <h1 class="nombre">{perfil.nombreCompleto}</h1>
     <p class="rol">{perfil.titulo}</p>
     <p class="textoSuave">{perfil.enfoque}</p>
 
     <div class="acciones">
-      <a class="boton botonPrimario" href="#proyectos">Ver proyectos</a>
-      <a class="boton" href="#habilidades">Skills</a>
-      <button class="boton" type="button" onclick="window.alternarTema()">Modo claro/oscuro</button>
+      <!-- Coloca tu PDF en: public/cv.pdf -->
+      <a class="boton botonPrimario" href="/cv.pdf" download>Descargar CV</a>
     </div>
   </div>
 </header>
@@ -31,60 +29,61 @@ import { perfil } from "../../datos/perfil";
 <style>
 .portada{
   display:grid;
-  grid-template-columns: 160px 1fr;
-  gap: 16px;
+  grid-template-columns: 200px 1fr;
+  gap: 18px;
   align-items:center;
   padding: 18px;
   border-radius: 22px;
   box-shadow: var(--glow);
 }
 
-.etiqueta{
-  display:inline-block;
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--borde);
-  background: rgba(0,0,0,0.10);
-  margin: 0 0 8px;
-}
-
-.nombre{ margin: 0; font-size: 26px; line-height: 1.1; }
-.rol{ margin: 6px 0 6px; opacity: .9; }
-
-.acciones{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 12px; }
-
+/* Foto ~33% mas grande (140 -> 186 aprox) */
 .fotoWrap{
   position: relative;
-  width: 140px;
-  height: 140px;
-  border-radius: 22px;
+  width: 186px;
+  height: 186px;
+  border-radius: 26px;
   overflow: hidden;
 }
+
 .foto{
   width:100%;
   height:100%;
   object-fit: cover;
   transform: scale(1.02);
 }
+
 .marco{
   position:absolute;
   inset: 0;
-  border-radius: 22px;
+  border-radius: 26px;
   border: 1px solid rgba(255,255,255,0.16);
   box-shadow: var(--glow);
 }
+
 .marco::before{
   content:"";
   position:absolute;
-  inset: -22px;
-  background: conic-gradient(from 180deg, rgba(124,58,237,0.8), rgba(37,99,235,0.8), rgba(34,211,238,0.6), rgba(124,58,237,0.8));
+  inset: -24px;
+  background: conic-gradient(
+    from 180deg,
+    rgba(124,58,237,0.8),
+    rgba(37,99,235,0.8),
+    rgba(34,211,238,0.6),
+    rgba(124,58,237,0.8)
+  );
   opacity: .16;
   filter: blur(12px);
 }
+
+.nombre{ margin: 0; font-size: 28px; line-height: 1.1; }
+.rol{ margin: 8px 0 8px; opacity: .9; }
+
+.acciones{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 12px; }
 
 @media (max-width: 760px){
   .portada{ grid-template-columns: 1fr; }
   .fotoWrap{ margin: 0 auto; }
 }
 </style>
+

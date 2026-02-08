@@ -1,34 +1,63 @@
 /**
  * Archivo: src/scripts/desplazamiento.ts
- * Responsabilidad: marcar item activo del dock segun la seccion visible.
+ * Responsabilidad: mostrar solo una seccion a la vez segun la barra flotante.
+ * Motivo: experiencia mas intuitiva (tipo "tabs") sin scroll por secciones.
  */
 
-const nav = document.querySelector('nav[aria-label="Navegacion"]');
-const links = Array.from(nav?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]') ?? []);
+type IdVista = "sobre-mi" | "proyectos" | "habilidades";
 
-const porId = new Map<string, HTMLAnchorElement>();
-for (const a of links) {
-  const id = a.getAttribute("href")?.slice(1);
-  if (id) porId.set(id, a);
+const ID_POR_DEFECTO: IdVista = "sobre-mi";
+
+function obtenerIdDesdeHash(): string | null {
+  const raw = window.location.hash?.replace("#", "").trim();
+  return raw ? raw : null;
 }
 
-function activar(id: string) {
-  for (const [, a] of porId) a.classList.remove("activa");
-  const actual = porId.get(id);
-  if (actual) actual.classList.add("activa");
+function mostrarVista(id: string) {
+  const vistas = Array.from(document.querySelectorAll<HTMLElement>(".vista"));
+  const existe = vistas.some((v) => v.id === id);
+  const idFinal = existe ? id : ID_POR_DEFECTO;
+
+  // Mostrar solo una
+  for (const v of vistas) {
+    v.classList.toggle("activa", v.id === idFinal);
+  }
+
+  // Marcar activo en la barra flotante
+  const nav = document.querySelector('nav[aria-label="Navegacion"]');
+  const items = Array.from(nav?.querySelectorAll<HTMLElement>(".item[data-vista]") ?? []);
+  for (const it of items) {
+    it.classList.toggle("activa", it.getAttribute("data-vista") === idFinal);
+  }
+
+  // Mantener la vista estable (sin saltos raros)
+  const contenedor = document.getElementById("contenedor-vistas");
+  if (contenedor) {
+    contenedor.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
-const secciones = Array.from(document.querySelectorAll<HTMLElement>("section[id]"));
+// Clicks del dock (sin scroll, solo cambia vista)
+function bindDock() {
+  const nav = document.querySelector('nav[aria-label="Navegacion"]');
+  const items = Array.from(nav?.querySelectorAll<HTMLAnchorElement>('.item[data-vista]') ?? []);
 
-const obs = new IntersectionObserver(
-  (entradas) => {
-    const visible = entradas
-      .filter((e) => e.isIntersecting)
-      .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+  for (const a of items) {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      const id = a.getAttribute("data-vista");
+      if (!id) return;
+      history.replaceState(null, "", `#${id}`);
+      mostrarVista(id);
+    });
+  }
+}
 
-    if (visible?.target?.id) activar(visible.target.id);
-  },
-  { rootMargin: "-45% 0px -45% 0px", threshold: [0.1, 0.2, 0.3] }
-);
+// Inicial
+bindDock();
+mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO);
 
-secciones.forEach((s) => obs.observe(s));
+// Back/forward del navegador
+window.addEventListener("hashchange", () => {
+  mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO);
+});

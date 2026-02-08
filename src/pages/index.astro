@@ -17,19 +17,21 @@ import Seccion from "../componentes/ui/Seccion.astro";
   <main class="contenedor">
     <Portada />
 
-    <Seccion id="sobre-mi" titulo="Sobre mi">
-      <p class="textoSuave" style="margin:0;">
-        (Aqui va tu descripcion corta. Luego la afinamos y la hacemos mas pro.)
-      </p>
-    </Seccion>
+    <div id="contenedor-vistas">
+      <Seccion id="sobre-mi" titulo="Sobre mi" clase="vista">
+        <p class="textoSuave" style="margin:0;">
+          (Aqui va tu descripcion corta. Luego la afinamos y la hacemos mas pro.)
+        </p>
+      </Seccion>
 
-    <Seccion id="proyectos" titulo="Proyectos">
-      <GrillaProyectos />
-    </Seccion>
+      <Seccion id="proyectos" titulo="Proyectos" clase="vista">
+        <GrillaProyectos />
+      </Seccion>
 
-    <Seccion id="habilidades" titulo="Habilidades">
-      <GrillaHabilidades />
-    </Seccion>
+      <Seccion id="habilidades" titulo="Habilidades" clase="vista">
+        <GrillaHabilidades />
+      </Seccion>
+    </div>
   </main>
 
   <BarraFlotante />

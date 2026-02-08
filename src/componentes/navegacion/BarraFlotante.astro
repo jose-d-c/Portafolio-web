@@ -1,26 +1,25 @@
 ---
 /**
  * Componente: BarraFlotante
- * Responsabilidad: Navegacion por secciones + acceso al tema.
- * Nota: Usamos SVG inline para no depender de librerias aun.
+ * Responsabilidad: Navegacion por vistas (solo una seccion visible) + acceso al tema.
  */
 ---
 
 <nav class="dock" aria-label="Navegacion">
-  <a class="item" href="#sobre-mi" title="Sobre mi" aria-label="Sobre mi">
+  <a class="item" data-vista="sobre-mi" href="#sobre-mi" title="Sobre mi" aria-label="Sobre mi">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M20 21a8 8 0 1 0-16 0"/>
       <circle cx="12" cy="7" r="4"/>
     </svg>
   </a>
 
-  <a class="item" href="#proyectos" title="Proyectos" aria-label="Proyectos">
+  <a class="item" data-vista="proyectos" href="#proyectos" title="Proyectos" aria-label="Proyectos">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M3 7h6l2 2h10v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
     </svg>
   </a>
 
-  <a class="item" href="#habilidades" title="Habilidades" aria-label="Habilidades">
+  <a class="item" data-vista="habilidades" href="#habilidades" title="Habilidades" aria-label="Habilidades">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
     </svg>
@@ -68,7 +67,7 @@
   transition: 160ms;
 }
 
-/* Seccion activa (la marca el script desplazamiento.ts) */
+/* Vista activa (la marca el script) */
 .item.activa{
   border-color: rgba(124,58,237,0.55);
   background: rgba(124,58,237,0.14);

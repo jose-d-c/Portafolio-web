@@ -5,10 +5,10 @@
  * Motivo: Evitar duplicar padding/margenes/bordes en cada seccion.
  */
 
-const { id, titulo } = Astro.props;
+const { id, titulo, clase = "" } = Astro.props;
 ---
 
-<section id={id} class="seccion panel">
+<section id={id} class={"seccion panel " + clase}>
   <header class="encabezado">
     <h2 class="tituloSeccion">{titulo}</h2>
   </header>
