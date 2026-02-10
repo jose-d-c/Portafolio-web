@@ -1,18 +1,19 @@
 /**
  * Archivo: src/scripts/desplazamiento.ts
  * Responsabilidad:
- * - Mostrar SOLO una vista a la vez (Sobre mi / Proyectos / Habilidades)
- * - Navegacion por hash (#sobre-mi, #proyectos, #habilidades) para que Back/Forward funcione
+ * - Mostrar solo una vista a la vez (Sobre mi / Proyectos / Habilidades)
  * - Animacion fluida SIN solape (sale -> entra)
- * - Accesibilidad: vistas inactivas con hidden/aria-hidden y nav activa con aria-current
+ * - SIN SCROLL AUTOMATICO (el usuario baja/sube manual)
+ * - URL con hash (#sobre-mi, #proyectos, #habilidades) sin salto por click
+ * - Back/Forward funcional (popstate)
  */
 
 type IdVista = "sobre-mi" | "proyectos" | "habilidades";
 const ID_POR_DEFECTO: IdVista = "sobre-mi";
 
-const EASE = "cubic-bezier(0.2, 0.9, 0.2, 1)";
 const DUR_SALIDA = 220;
 const DUR_ENTRADA = 260;
+const EASE = "cubic-bezier(0.2, 0.9, 0.2, 1)";
 
 function prefiereReducirAnimacion(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
@@ -23,26 +24,21 @@ function obtenerIdDesdeHash(): string | null {
   return raw ? raw : null;
 }
 
-function todasLasVistas(): HTMLElement[] {
-  return Array.from(document.querySelectorAll<HTMLElement>(".vista"));
-}
-
 function getVista(id: string) {
   return document.getElementById(id) as HTMLElement | null;
 }
 
-function navItems(): HTMLElement[] {
-  const nav = document.querySelector('nav[aria-label="Navegacion"]');
-  return Array.from(nav?.querySelectorAll<HTMLElement>(".item[data-vista]") ?? []);
+function todasLasVistas(): HTMLElement[] {
+  return Array.from(document.querySelectorAll<HTMLElement>(".vista"));
 }
 
 function marcarNav(idFinal: string) {
-  for (const it of navItems()) {
-    const esActiva = it.getAttribute("data-vista") === idFinal;
-    it.classList.toggle("activa", esActiva);
-
-    // Accesibilidad
-    if (esActiva) it.setAttribute("aria-current", "page");
+  const nav = document.querySelector('nav[aria-label="Navegacion"]');
+  const items = Array.from(nav?.querySelectorAll<HTMLElement>(".item[data-vista]") ?? []);
+  for (const it of items) {
+    const activa = it.getAttribute("data-vista") === idFinal;
+    it.classList.toggle("activa", activa);
+    if (activa) it.setAttribute("aria-current", "page");
     else it.removeAttribute("aria-current");
   }
 }
@@ -55,38 +51,33 @@ function actualizarA11yVistas(idActiva: string) {
   }
 }
 
-/**
- * Scroll inteligente:
- * - Evita mover la pagina si ya estas cerca del contenedor.
- */
-function scrollAContenedorSiHaceFalta() {
-  const cont = document.getElementById("contenedor-vistas");
-  if (!cont) return;
-
-  const r = cont.getBoundingClientRect();
-  if (r.top >= -40 && r.top <= 160) return;
-
-  cont.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
 function bindNav() {
-  // Usamos href="#id" pero controlamos el cambio para evitar scroll a elementos ocultos.
-  for (const a of navItems()) {
+  const nav = document.querySelector('nav[aria-label="Navegacion"]');
+  const items = Array.from(nav?.querySelectorAll<HTMLAnchorElement>(".item[data-vista]") ?? []);
+
+  for (const a of items) {
     a.addEventListener("click", (e) => {
       e.preventDefault();
       const id = a.getAttribute("data-vista");
       if (!id) return;
 
-      // Esto SI crea historial (Back/Forward).
-      if (window.location.hash !== `#${id}`) window.location.hash = id;
-      else void mostrarVista(id, { origen: "click" }); // si ya estabas ahi, igual fuerza render
+      // Guardar scroll actual y RESTAURARLO luego (por seguridad)
+      const scrollY = window.scrollY;
+
+      // Actualizar URL + historial SIN dejar que el navegador haga scroll por hash:
+      // pushState NO genera el salto de ancla que haria location.hash
+      if (window.location.hash !== `#${id}`) {
+        history.pushState(null, "", `#${id}`);
+      }
+
+      void mostrarVista(id, scrollY);
     });
   }
 }
 
 let actual: string | null = null;
 let bloqueado = false;
-let pendiente: string | null = null;
+let pendiente: { id: string; scrollY: number } | null = null;
 
 function cancelarAnimaciones(el: HTMLElement) {
   try {
@@ -116,7 +107,7 @@ async function animarEntrada(el: HTMLElement) {
 
   el.style.opacity = "0";
   el.style.transform = "translateY(10px)";
-  void el.offsetHeight; // reflow
+  void el.offsetHeight;
 
   await el.animate(
     [
@@ -130,19 +121,29 @@ async function animarEntrada(el: HTMLElement) {
   el.style.transform = "";
 }
 
-async function mostrarVista(idSolicitada: string, opts: { origen?: "hash" | "click" | "init" } = {}) {
+function restaurarScroll(scrollY: number) {
+  // Restaura luego del cambio de layout para evitar cualquier salto involuntario
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollY, behavior: "auto" });
+    });
+  });
+}
+
+async function mostrarVista(id: string, scrollY: number) {
   if (bloqueado) {
-    pendiente = idSolicitada; // cola simple: nos quedamos con la ultima
+    pendiente = { id, scrollY }; // cola simple: se queda con la ultima
     return;
   }
 
   const vistas = todasLasVistas();
-  const existe = vistas.some((v) => v.id === idSolicitada);
-  const idFinal = (existe ? idSolicitada : ID_POR_DEFECTO) as IdVista;
+  const existe = vistas.some((v) => v.id === id);
+  const idFinal = (existe ? id : ID_POR_DEFECTO) as IdVista;
 
   if (actual === idFinal) {
     marcarNav(idFinal);
     actualizarA11yVistas(idFinal);
+    restaurarScroll(scrollY);
     return;
   }
 
@@ -153,7 +154,7 @@ async function mostrarVista(idSolicitada: string, opts: { origen?: "hash" | "cli
 
   const vistaActual = actual ? getVista(actual) : null;
 
-  // Asegurar que la nueva no este hidden (aunque aun no tenga .activa)
+  // Preparar nueva para animar
   vistaNueva.removeAttribute("hidden");
   vistaNueva.setAttribute("aria-hidden", "false");
 
@@ -162,7 +163,7 @@ async function mostrarVista(idSolicitada: string, opts: { origen?: "hash" | "cli
     await animarSalida(vistaActual);
   }
 
-  // Activar nueva y ocultar las demas
+  // Activar nueva y ocultar el resto
   for (const v of vistas) v.classList.remove("activa");
   vistaNueva.classList.add("activa");
 
@@ -174,20 +175,22 @@ async function mostrarVista(idSolicitada: string, opts: { origen?: "hash" | "cli
   actual = idFinal;
   marcarNav(idFinal);
 
-  if (opts.origen) scrollAContenedorSiHaceFalta();
+  // IMPORTANTISIMO: NO hay scroll automatico
+  restaurarScroll(scrollY);
 
   bloqueado = false;
 
-  // Ejecutar lo ultimo que pidieron si hubo spam de clicks
-  if (pendiente && pendiente !== actual) {
+  // Si spamearon clicks, ejecuta la ultima
+  if (pendiente && pendiente.id !== actual) {
     const next = pendiente;
     pendiente = null;
-    await mostrarVista(next, { origen: opts.origen ?? "hash" });
+    await mostrarVista(next.id, next.scrollY);
   } else {
     pendiente = null;
   }
 }
 
+// Init
 function init() {
   bindNav();
 
@@ -197,11 +200,17 @@ function init() {
     v.setAttribute("hidden", "");
   }
 
-  void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, { origen: "init" });
+  // Vista inicial sin mover scroll
+  void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
 
-  // Back/Forward
+  // Back/Forward (popstate se dispara con pushState)
+  window.addEventListener("popstate", () => {
+    void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
+  });
+
+  // Si el usuario escribe/pega un hash manualmente:
   window.addEventListener("hashchange", () => {
-    void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, { origen: "hash" });
+    void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
   });
 }
 
