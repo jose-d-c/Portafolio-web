@@ -16,7 +16,7 @@ function aplicarTema(tema: Tema) {
   document.documentElement.setAttribute("data-tema", tema);
 
   // Ayuda a inputs/scrollbar del navegador
-  (document.documentElement.style as any).colorScheme = tema === "claro" ? "light" : "dark";
+  document.documentElement.style.colorScheme = tema === "claro" ? "light" : "dark";
 }
 
 function leerTemaGuardado(): Tema {

@@ -110,8 +110,11 @@ html[data-tema="claro"] .panel{
   background: color-mix(in srgb, var(--morado) 16%, transparent);
 }
 
-.vista{ display: none; }
-.vista.activa{ display: block; }
+/* Sin JavaScript: todas las secciones quedan visibles (fallback accesible).
+   Con JavaScript: se activa modo vistas y se muestra solo la actual. */
+.vista{ display: block; }
+html.js .vista{ display: none; }
+html.js .vista.activa{ display: block; }
 
 .tituloSeccionGlow{
   text-shadow:
