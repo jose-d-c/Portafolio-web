@@ -1,9 +1,12 @@
 /**
  * Archivo: src/estilos/tema.css
- * Variables del tema. El script pone data-tema="oscuro" o "claro" en <html>.
+ * Objetivo:
+ * - Oscuro (default): cyberpunk profundo
+ * - Claro: cyberpunk BLANCO (base blanca + neones vivos), no gris
  */
 
-:root[data-tema="oscuro"] {
+/* DEFAULT = OSCURO */
+:root {
   --fondo: #070711;
   --texto: rgba(255, 255, 255, 0.92);
   --textoSuave: rgba(255, 255, 255, 0.70);
@@ -22,52 +25,52 @@
 
   --glow: 0 0 24px rgba(124, 58, 237, 0.25), 0 0 42px rgba(37, 99, 235, 0.18);
 
-  /* Fondo (halos) */
-  --halo-1: color-mix(in srgb, var(--morado) 26%, transparent);
-  --halo-2: color-mix(in srgb, var(--azul) 20%, transparent);
+  --halo-1: rgba(124, 58, 237, 0.22);
+  --halo-2: rgba(37, 99, 235, 0.18);
+  --halo-3: rgba(34, 211, 238, 0.10);
 
-  /* Textura (scanlines + grid) */
   --textura-opacidad: 0.10;
   --scanline: rgba(255, 255, 255, 0.06);
   --gridline: rgba(255, 255, 255, 0.03);
 
-  /* Panel (para no “ensuciar” el claro) */
   --panel-grad-top: rgba(255, 255, 255, 0.05);
-  --panel-grad-bottom: rgba(0, 0, 0, 0.12);
-  --panel-halo: color-mix(in srgb, var(--morado) 16%, transparent);
+  --panel-grad-bottom: rgba(0, 0, 0, 0.14);
+  --panel-halo: rgba(124, 58, 237, 0.16);
+
+  /* borde neon (solo se usa en claro via globales.css) */
+  --borde-neon: rgba(255, 255, 255, 0.10);
 }
 
-:root[data-tema="claro"] {
-  /* Fondo claro con halos pastel (NO gris) */
-  --fondo: #f7f8ff;
-  --texto: rgba(0, 0, 0, 0.88);
-  --textoSuave: rgba(0, 0, 0, 0.62);
+/* MODO CLARO */
+html[data-tema="claro"] {
+  --fondo: #ffffff;
+  --texto: rgba(10, 10, 16, 0.92);
+  --textoSuave: rgba(10, 10, 16, 0.62);
 
-  --panel: rgba(255, 255, 255, 0.72);
-  --borde: rgba(0, 0, 0, 0.10);
+  --panel: rgba(255, 255, 255, 0.94);
+  --bg-item: rgba(255, 255, 255, 0.98);
+  --bg-chip: rgba(10, 10, 16, 0.04);
+  --bg-btn: rgba(255, 255, 255, 0.92);
+  --bg-btn-hover: rgba(255, 255, 255, 1);
 
-  --bg-item: rgba(255, 255, 255, 0.86);
-  --bg-chip: rgba(0, 0, 0, 0.04);
-  --bg-btn: rgba(255, 255, 255, 0.70);
-  --bg-btn-hover: rgba(255, 255, 255, 0.92);
+  --morado: #7c3aed;
+  --azul: #2563eb;
+  --cian: #06b6d4;
 
-  --morado: #6d28d9;
-  --azul: #1d4ed8;
-  --cian: #0891b2;
+  --halo-1: rgba(124, 58, 237, 0.34);
+  --halo-2: rgba(37, 99, 235, 0.28);
+  --halo-3: rgba(6, 182, 212, 0.16);
 
-  --glow: 0 0 22px rgba(109, 40, 217, 0.18), 0 0 36px rgba(29, 78, 216, 0.12);
+  --textura-opacidad: 0.05;
+  --scanline: rgba(10, 10, 16, 0.04);
+  --gridline: rgba(10, 10, 16, 0.02);
 
-  /* Halos mas visibles en claro (pastel) */
-  --halo-1: color-mix(in srgb, var(--morado) 22%, white);
-  --halo-2: color-mix(in srgb, var(--azul) 18%, white);
+  --panel-grad-top: rgba(255, 255, 255, 1);
+  --panel-grad-bottom: rgba(255, 255, 255, 0.92);
+  --panel-halo: rgba(124, 58, 237, 0.12);
 
-  /* Textura en claro debe ser OSCURA y mas sutil */
-  --textura-opacidad: 0.08;
-  --scanline: rgba(0, 0, 0, 0.05);
-  --gridline: rgba(0, 0, 0, 0.03);
+  --borde: rgba(10, 10, 16, 0.10);
+  --borde-neon: rgba(124, 58, 237, 0.22);
 
-  /* Panel claro: degradado casi blanco (sin negro) */
-  --panel-grad-top: rgba(255, 255, 255, 0.85);
-  --panel-grad-bottom: rgba(0, 0, 0, 0.03);
-  --panel-halo: color-mix(in srgb, var(--morado) 10%, transparent);
+  --glow: 0 0 28px rgba(124, 58, 237, 0.30), 0 0 44px rgba(37, 99, 235, 0.22);
 }
