@@ -22,10 +22,17 @@ import Seccion from "../componentes/ui/Seccion.astro";
         <ColumnasSobreMi />
       </Seccion>
 
-      <Seccion id="proyectos" titulo="Proyectos" clase="vista">
-        <!-- v1: intencionalmente vacio (se llena desde src/datos/proyectos.ts) -->
-        <GrillaProyectos />
-        <ApartadoProgramasTemporales />
+      <Seccion id="proyectos" titulo="Proyectos" clase="vista vista-proyectos">
+        <div class="bloques-proyectos">
+          <section class="panel bloque-proyecto">
+            <h3>Proyectos propios</h3>
+            <GrillaProyectos />
+          </section>
+
+          <section class="panel bloque-proyecto">
+            <ApartadoProgramasTemporales />
+          </section>
+        </div>
       </Seccion>
 
       <Seccion id="habilidades" titulo="Habilidades" clase="vista">
@@ -34,3 +41,34 @@ import Seccion from "../componentes/ui/Seccion.astro";
     </div>
   </main>
 </DisenoBase>
+
+<style>
+.vista-proyectos{
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 18px 0 0;
+}
+
+.vista-proyectos .encabezado{
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+.bloques-proyectos{
+  display: grid;
+  gap: 16px;
+}
+
+.bloque-proyecto{
+  padding: 16px;
+  border-radius: 20px;
+}
+
+.bloque-proyecto h3{
+  margin: 0 0 12px;
+  font-family: var(--fuente-titulos);
+  font-size: 26px;
+}
+</style>
