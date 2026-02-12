@@ -47,11 +47,11 @@ html[data-tema="claro"] {
   --texto: rgba(10, 10, 16, 0.92);
   --textoSuave: rgba(10, 10, 16, 0.62);
 
-  --panel: rgba(255, 255, 255, 0.94);
+  --panel: rgba(255, 255, 255, 0.98);
   --bg-item: rgba(255, 255, 255, 0.98);
-  --bg-chip: rgba(10, 10, 16, 0.04);
-  --bg-btn: rgba(255, 255, 255, 0.92);
-  --bg-btn-hover: rgba(255, 255, 255, 1);
+  --bg-chip: rgba(255, 255, 255, 0.96);
+  --bg-btn: #ffffff;
+  --bg-btn-hover: #f8faff;
 
   --morado: #7c3aed;
   --azul: #2563eb;
@@ -66,10 +66,10 @@ html[data-tema="claro"] {
   --gridline: rgba(10, 10, 16, 0.02);
 
   --panel-grad-top: rgba(255, 255, 255, 1);
-  --panel-grad-bottom: rgba(255, 255, 255, 0.92);
+  --panel-grad-bottom: rgba(255, 255, 255, 0.98);
   --panel-halo: rgba(124, 58, 237, 0.12);
 
-  --borde: rgba(10, 10, 16, 0.10);
+  --borde: rgba(37, 99, 235, 0.24);
   --borde-neon: rgba(124, 58, 237, 0.22);
 
   --glow: 0 0 28px rgba(124, 58, 237, 0.30), 0 0 44px rgba(37, 99, 235, 0.22);

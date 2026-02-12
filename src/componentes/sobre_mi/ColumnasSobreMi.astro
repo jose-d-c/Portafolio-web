@@ -14,8 +14,8 @@ function listaPorId(id: string) {
 }
 ---
 
-<div class="grid">
-  <details class="descripcion panel">
+<section class="perfilProfesional panel">
+  <details class="descripcion">
     <summary>Perfil profesional</summary>
     <p>
       Soy una persona disciplinada, curiosa y orientada al aprendizaje continuo. Entre mis fortalezas
@@ -33,7 +33,9 @@ function listaPorId(id: string) {
       proyectos donde la seguridad, la estabilidad y la mejora continua sean prioridad.
     </p>
   </details>
+</section>
 
+<div class="grid">
   {columnas.map((col) => {
     const lista = listaPorId(col.id);
 
@@ -58,15 +60,9 @@ function listaPorId(id: string) {
 </div>
 
 <style>
-.grid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.descripcion{
-  grid-column: 1 / -1;
-  padding: 16px;
+.perfilProfesional{
+  margin-bottom: 16px;
+  padding: 8px 16px;
   border-radius: 20px;
 }
 
@@ -82,6 +78,12 @@ function listaPorId(id: string) {
   font-size: 19px;
   line-height: 1.6;
   color: var(--textoSuave);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .columna{
@@ -122,7 +124,7 @@ function listaPorId(id: string) {
   padding: 14px;
   border-radius: 18px;
   border: 1px solid var(--borde);
-  background: rgba(0,0,0,0.18);
+  background: var(--bg-item);
 }
 
 .itemTitulo{
