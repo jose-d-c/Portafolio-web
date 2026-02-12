@@ -5,6 +5,7 @@ import DisenoBase from "../layouts/DisenoBase.astro";
 
 import GrillaHabilidades from "../componentes/habilidades/GrillaHabilidades.astro";
 import GrillaProyectos from "../componentes/proyectos/GrillaProyectos.astro";
+import ApartadoProgramasTemporales from "../programas-temporales/ApartadoProgramasTemporales.astro";
 import ColumnasSobreMi from "../componentes/sobre_mi/ColumnasSobreMi.astro";
 import Seccion from "../componentes/ui/Seccion.astro";
 ---
@@ -24,6 +25,7 @@ import Seccion from "../componentes/ui/Seccion.astro";
       <Seccion id="proyectos" titulo="Proyectos" clase="vista">
         <!-- v1: intencionalmente vacio (se llena desde src/datos/proyectos.ts) -->
         <GrillaProyectos />
+        <ApartadoProgramasTemporales />
       </Seccion>
 
       <Seccion id="habilidades" titulo="Habilidades" clase="vista">
