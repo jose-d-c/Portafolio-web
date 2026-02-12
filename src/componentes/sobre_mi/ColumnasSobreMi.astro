@@ -15,6 +15,25 @@ function listaPorId(id: string) {
 ---
 
 <div class="grid">
+  <details class="descripcion panel">
+    <summary>Perfil profesional</summary>
+    <p>
+      Soy una persona disciplinada, curiosa y orientada al aprendizaje continuo. Entre mis fortalezas
+      destaco la capacidad de resolver problemas con enfoque analítico, la facilidad para trabajar en
+      equipo y la constancia para completar objetivos técnicos con calidad.
+    </p>
+    <p>
+      Como áreas de mejora, reconozco que aún estoy construyendo mayor experiencia práctica en
+      entornos laborales reales y fortaleciendo mis habilidades de comunicación en presentaciones
+      técnicas frente a audiencias grandes.
+    </p>
+    <p>
+      Mi desarrollo laboral esperado está enfocado en crecer como profesional de tecnología en
+      ciberseguridad e infraestructura, asumir progresivamente más responsabilidades y aportar valor en
+      proyectos donde la seguridad, la estabilidad y la mejora continua sean prioridad.
+    </p>
+  </details>
+
   {columnas.map((col) => {
     const lista = listaPorId(col.id);
 
@@ -43,6 +62,26 @@ function listaPorId(id: string) {
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+}
+
+.descripcion{
+  grid-column: 1 / -1;
+  padding: 16px;
+  border-radius: 20px;
+}
+
+.descripcion summary{
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--texto);
+}
+
+.descripcion p{
+  margin: 12px 0 0;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--textoSuave);
 }
 
 .columna{
