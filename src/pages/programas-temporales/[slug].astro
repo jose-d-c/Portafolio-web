@@ -15,7 +15,7 @@ const { programa } = Astro.props;
 <DisenoBase titulo={`${programa.titulo} | Programas temporales`}>
   <main class="contenedor pagina-programa">
     <section class="panel bloque encabezado-programa">
-      <img src="/programas-temporales/uis-logo.svg" alt="Logotipo de la Universidad Industrial de Santander" />
+      <img src="/programas-temporales/uis-logo.svg" alt="Logotipo de la Universidad Industrial de Santander" loading="eager" decoding="async" />
       <div>
         <p>Estructura de Datos y Analisis Algoritmicos</p>
         <p>Jose David Consuegra Medina</p>
@@ -103,6 +103,9 @@ const { programa } = Astro.props;
 .encabezado-programa img{
   width: 100%;
   max-width: 110px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px;
 }
 
 .encabezado-programa p{

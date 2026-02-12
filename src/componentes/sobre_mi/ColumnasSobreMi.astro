@@ -61,16 +61,25 @@ function listaPorId(id: string) {
 
 <style>
 .perfilProfesional{
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   padding: 8px 16px;
   border-radius: 20px;
 }
 
 .descripcion summary{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
   cursor: pointer;
   font-size: 22px;
   font-weight: 700;
+  line-height: 1.25;
   color: var(--texto);
+}
+
+.descripcion summary::-webkit-details-marker{
+  margin-right: 4px;
 }
 
 .descripcion p{
@@ -81,6 +90,7 @@ function listaPorId(id: string) {
 }
 
 .grid{
+  margin-top: 4px;
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
