@@ -1,11 +1,65 @@
-// Plantilla de codigo para Programa 01
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-01.svg
+// Programa 01: Ordenamiento Burbuja simple en C++ (String)
+// Descripcion:
+// Este programa ordena alfabeticamente 10 palabras usando el algoritmo burbuja.
+// La explicacion esta comentada linea por linea para facilitar su exposicion.
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    // PASO 1: Declarar e inicializar los 10 datos de tipo string.
+    // Estos son los valores de entrada que vamos a ordenar.
+    string palabras[10] = {
+        "zorro", "manzana", "luna", "barco", "nube",
+        "guitarra", "isla", "avion", "perro", "casa"
+    };
+
+    // PASO 2: Mostrar el arreglo original para comparar antes/despues.
+    cout << "Arreglo original:\n";
+    for (int i = 0; i < 10; i++) {
+        cout << palabras[i] << (i < 9 ? ", " : "\n\n");
+    }
+
+    // PASO 3: Aplicar el algoritmo burbuja.
+    // Recorremos varias pasadas. En cada pasada, la palabra "mayor"
+    // (lexicograficamente) va quedando al final.
+    for (int pasada = 0; pasada < 9; pasada++) {
+        // Bandera para detectar si ya esta ordenado y salir antes.
+        bool huboIntercambio = false;
+
+        // Comparamos pares consecutivos: [j] y [j+1].
+        // El limite disminuye porque al final de cada pasada
+        // ya queda un elemento en su posicion definitiva.
+        for (int j = 0; j < 9 - pasada; j++) {
+            // Si la palabra actual es "mayor" que la siguiente,
+            // las intercambiamos para avanzar hacia orden ascendente.
+            if (palabras[j] > palabras[j + 1]) {
+                string temporal = palabras[j];
+                palabras[j] = palabras[j + 1];
+                palabras[j + 1] = temporal;
+                huboIntercambio = true;
+            }
+        }
+
+        // PASO 4: Mostrar estado del arreglo en cada pasada.
+        cout << "Pasada " << (pasada + 1) << ": ";
+        for (int k = 0; k < 10; k++) {
+            cout << palabras[k] << (k < 9 ? ", " : "\n");
+        }
+
+        // Si no hubo intercambio, significa que ya estaba ordenado.
+        if (!huboIntercambio) {
+            cout << "\nNo hubo intercambios; el arreglo ya esta ordenado.\n";
+            break;
+        }
+    }
+
+    // PASO 5: Mostrar el resultado final ordenado.
+    cout << "\nArreglo ordenado alfabeticamente:\n";
+    for (int i = 0; i < 10; i++) {
+        cout << palabras[i] << (i < 9 ? ", " : "\n");
+    }
+
+    return 0;
 }
-
-main();

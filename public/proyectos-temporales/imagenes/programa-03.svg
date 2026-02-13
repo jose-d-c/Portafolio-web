@@ -1,8 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Plantilla de imagen Programa 03</title>
-  <desc id="desc">Imagen temporal para Programa 03. Reemplazar con captura del programa final.</desc>
-  <rect width="1200" height="700" fill="#0f172a"/>
-  <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
-  <text x="600" y="315" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="56">Programa 03</text>
-  <text x="600" y="390" text-anchor="middle" fill="#94a3b8" font-family="Arial, sans-serif" font-size="30">Reemplaza esta imagen por la evidencia final</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Salida Programa 03 (Java int)</title>
+  <desc id="desc">Captura de consola con la salida del programa 03.</desc>
+  <rect width="1400" height="760" fill="#020617"/>
+  <rect x="30" y="30" width="1340" height="700" rx="18" fill="#111827" stroke="#374151" stroke-width="3"/>
+  <text x="60" y="72" fill="#22c55e" font-family="Arial, sans-serif" font-size="30">$ Salida Programa 03 (Java int)</text>
+  <text x="60" y="110" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Arreglo original:</text>
+  <text x="60" y="152" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">[91, 14, 37, 5, 62, 48, 73, 26, 10, 55]</text>
+  <text x="60" y="194" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24"></text>
+  <text x="60" y="236" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 1: [14, 37, 5, 62, 48, 73, 26, 10, 55, 91]</text>
+  <text x="60" y="278" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 2: [14, 5, 37, 48, 62, 26, 10, 55, 73, 91]</text>
+  <text x="60" y="320" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 3: [5, 14, 37, 48, 26, 10, 55, 62, 73, 91]</text>
+  <text x="60" y="362" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 4: [5, 14, 37, 26, 10, 48, 55, 62, 73, 91]</text>
+  <text x="60" y="404" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 5: [5, 14, 26, 10, 37, 48, 55, 62, 73, 91]</text>
+  <text x="60" y="446" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 6: [5, 14, 10, 26, 37, 48, 55, 62, 73, 91]</text>
+  <text x="60" y="488" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 7: [5, 10, 14, 26, 37, 48, 55, 62, 73, 91]</text>
+  <text x="60" y="530" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 8: [5, 10, 14, 26, 37, 48, 55, 62, 73, 91]</text>
+  <text x="60" y="572" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24"></text>
 </svg>

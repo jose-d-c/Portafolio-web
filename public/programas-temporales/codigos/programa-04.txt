@@ -1,11 +1,50 @@
-// Plantilla de codigo para Programa 04
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-04.svg
+// Programa 04: Actividad - Ordenamiento Burbuja Simple en Java (String)
+// Descripcion:
+// Ordena alfabeticamente 10 cadenas con burbuja usando compareTo.
+// Todos los pasos estan comentados para explicar la logica del algoritmo.
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+import java.util.Arrays;
+
+public class BurbujaJavaStrings {
+    public static void main(String[] args) {
+        // PASO 1: Definir 10 cadenas de entrada.
+        String[] palabras = {
+            "tigre", "avena", "montana", "dado", "kiwi",
+            "balon", "queso", "rio", "sol", "naranja"
+        };
+
+        // PASO 2: Imprimir estado original.
+        System.out.println("Arreglo original:");
+        System.out.println(Arrays.toString(palabras));
+        System.out.println();
+
+        // PASO 3: Ejecutar pasadas del algoritmo burbuja.
+        for (int pasada = 0; pasada < palabras.length - 1; pasada++) {
+            boolean huboIntercambio = false;
+
+            // PASO 4: Comparar pares consecutivos de Strings.
+            // compareTo > 0 significa que palabras[j] va despues alfabeticamente.
+            for (int j = 0; j < palabras.length - 1 - pasada; j++) {
+                if (palabras[j].compareTo(palabras[j + 1]) > 0) {
+                    String temporal = palabras[j];
+                    palabras[j] = palabras[j + 1];
+                    palabras[j + 1] = temporal;
+                    huboIntercambio = true;
+                }
+            }
+
+            // Mostrar avance de cada pasada.
+            System.out.println("Pasada " + (pasada + 1) + ": " + Arrays.toString(palabras));
+
+            // Si no hubo cambios, el arreglo ya esta ordenado.
+            if (!huboIntercambio) {
+                System.out.println("\nNo hubo intercambios; el arreglo ya estaba ordenado.");
+                break;
+            }
+        }
+
+        // PASO 5: Mostrar resultado final ordenado.
+        System.out.println("\nArreglo ordenado alfabeticamente:");
+        System.out.println(Arrays.toString(palabras));
+    }
 }
-
-main();
