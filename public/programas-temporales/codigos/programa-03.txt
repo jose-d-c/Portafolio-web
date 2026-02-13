@@ -1,11 +1,48 @@
-// Plantilla de codigo para Programa 03
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-03.svg
+// Programa 03: Actividad - Ordenamiento Burbuja Simple en Java (int)
+// Descripcion:
+// Ordena 10 numeros enteros con burbuja, explicando cada paso con comentarios.
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+import java.util.Arrays;
+
+public class BurbujaJavaEnteros {
+    public static void main(String[] args) {
+        // PASO 1: Definir los 10 datos de entrada.
+        int[] numeros = {91, 14, 37, 5, 62, 48, 73, 26, 10, 55};
+
+        // PASO 2: Imprimir arreglo original.
+        System.out.println("Arreglo original:");
+        System.out.println(Arrays.toString(numeros));
+        System.out.println();
+
+        // PASO 3: Recorrer pasadas del algoritmo burbuja.
+        for (int pasada = 0; pasada < numeros.length - 1; pasada++) {
+            // Bandera de control para terminar antes si ya esta ordenado.
+            boolean huboIntercambio = false;
+
+            // PASO 4: Comparar elementos consecutivos en la parte no ordenada.
+            for (int j = 0; j < numeros.length - 1 - pasada; j++) {
+                // Si el numero actual es mayor que el siguiente,
+                // intercambiamos posiciones.
+                if (numeros[j] > numeros[j + 1]) {
+                    int temporal = numeros[j];
+                    numeros[j] = numeros[j + 1];
+                    numeros[j + 1] = temporal;
+                    huboIntercambio = true;
+                }
+            }
+
+            // Mostrar avance tras cada pasada.
+            System.out.println("Pasada " + (pasada + 1) + ": " + Arrays.toString(numeros));
+
+            // Si no hubo intercambio, ya no hace falta seguir iterando.
+            if (!huboIntercambio) {
+                System.out.println("\nNo hubo intercambios; el arreglo ya estaba ordenado.");
+                break;
+            }
+        }
+
+        // PASO 5: Resultado final.
+        System.out.println("\nArreglo ordenado de menor a mayor:");
+        System.out.println(Arrays.toString(numeros));
+    }
 }
-
-main();

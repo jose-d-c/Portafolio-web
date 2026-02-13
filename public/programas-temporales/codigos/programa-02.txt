@@ -1,11 +1,44 @@
-// Plantilla de codigo para Programa 02
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-02.svg
+# Programa 02: Ordenamiento Burbuja simple en Python (int)
+# Descripcion:
+# Este programa ordena 10 numeros enteros de menor a mayor con burbuja.
+# Incluye comentarios detallados para explicar el funcionamiento paso a paso.
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
-}
+def main():
+    # PASO 1: Crear la lista con 10 datos enteros (entrada).
+    numeros = [45, 12, 89, 3, 77, 21, 56, 8, 34, 60]
 
-main();
+    # PASO 2: Mostrar el estado inicial para evidencia.
+    print("Arreglo original:")
+    print(numeros)
+    print()
+
+    # PASO 3: Ciclo externo -> controla cuantas pasadas se hacen.
+    # Para 10 elementos, como maximo se requieren 9 pasadas.
+    for pasada in range(len(numeros) - 1):
+        # Esta bandera permite optimizar: si no hay cambios, terminamos antes.
+        hubo_intercambio = False
+
+        # PASO 4: Ciclo interno -> compara elementos vecinos.
+        # En cada pasada, el mayor "sube" al final de la zona no ordenada.
+        for j in range(len(numeros) - 1 - pasada):
+            # Si el actual es mayor que el siguiente, se intercambian.
+            if numeros[j] > numeros[j + 1]:
+                numeros[j], numeros[j + 1] = numeros[j + 1], numeros[j]
+                hubo_intercambio = True
+
+        # Mostrar la lista despues de cada pasada.
+        print(f"Pasada {pasada + 1}: {numeros}")
+
+        # Si no hubo ningun intercambio, la lista ya esta ordenada.
+        if not hubo_intercambio:
+            print("\nNo hubo intercambios; la lista ya estaba ordenada.")
+            break
+
+    # PASO 5: Mostrar salida final ordenada.
+    print("\nArreglo ordenado de menor a mayor:")
+    print(numeros)
+
+
+# Punto de entrada del programa.
+if __name__ == "__main__":
+    main()
