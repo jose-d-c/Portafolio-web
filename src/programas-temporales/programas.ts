@@ -3,8 +3,9 @@ export type ProgramaTemporal = {
   slug: string;
   titulo: string;
   descripcion: string;
-  codigoPlantilla: string;
   enlaceExterno: string;
+  rutaCodigoPlantilla: string;
+  rutaImagenPlantilla: string;
 };
 
 export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 20 }, (_, index) => {
@@ -17,16 +18,8 @@ export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 20 }
     titulo: `Programa ${id}`,
     descripcion:
       "Plantilla temporal para agregar analisis, pseudocodigo, pruebas y evidencia visual del programa.",
-    enlaceExterno: `https://example.com/programas/programa-${id}`,
-    codigoPlantilla: [
-      `// ${`Programa ${id}`}`,
-      "// Agrega aqui el codigo final cuando este disponible.",
-      "",
-      "function main() {",
-      "  console.log('Espacio temporal de codigo');",
-      "}",
-      "",
-      "main();",
-    ].join("\n"),
+    enlaceExterno: `/programas-temporales/programa-${id}`,
+    rutaCodigoPlantilla: `/programas-temporales/codigos/programa-${id}.txt`,
+    rutaImagenPlantilla: `/proyectos-temporales/imagenes/programa-${id}.svg`,
   };
 });

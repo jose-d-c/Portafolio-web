@@ -1,5 +1,7 @@
 ---
 import DisenoBase from "../../layouts/DisenoBase.astro";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { programasTemporales } from "../../programas-temporales/programas";
 
 export function getStaticPaths() {
@@ -10,6 +12,10 @@ export function getStaticPaths() {
 }
 
 const { programa } = Astro.props;
+const codigoPlantilla = await readFile(
+  join(process.cwd(), "public", programa.rutaCodigoPlantilla.replace(/^\//, "")),
+  "utf-8"
+);
 ---
 
 <DisenoBase titulo={`${programa.titulo} | Programas temporales`}>
@@ -44,13 +50,18 @@ const { programa } = Astro.props;
         </button>
       </div>
 
-      <pre class="cuadro-codigo"><code>{programa.codigoPlantilla}</code></pre>
+      <pre class="cuadro-codigo"><code>{codigoPlantilla}</code></pre>
     </section>
 
     <section class="panel bloque zona-imagen">
       <h2>Imagen de presentacion</h2>
-      <div class="marco-imagen" role="img" aria-label="Imagen de presentacion pendiente">
-        Imagen pendiente por asignar
+      <div class="marco-imagen">
+        <img
+          src={programa.rutaImagenPlantilla}
+          alt={`Imagen temporal de ${programa.titulo}`}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </section>
   </main>
@@ -166,10 +177,16 @@ h2{
   border: 1px dashed var(--borde);
   display: grid;
   place-items: center;
-  text-align: center;
-  padding: 14px;
+  overflow: hidden;
+  padding: 10px;
   background: var(--bg-item);
-  font-size: 20px;
+}
+
+.marco-imagen img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 @media (max-width: 760px){
