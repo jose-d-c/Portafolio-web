@@ -110,11 +110,10 @@ html[data-tema="claro"] .panel{
   background: color-mix(in srgb, var(--morado) 16%, transparent);
 }
 
-/* Sin JavaScript: todas las secciones quedan visibles (fallback accesible).
-   Con JavaScript: se activa modo vistas y se muestra solo la actual. */
+/* Fallback accesible:
+   - Si falla el JavaScript, todas las vistas permanecen visibles.
+   - Si carga el JavaScript, el propio script controla [hidden] y .activa. */
 .vista{ display: block; }
-html.js .vista{ display: none; }
-html.js .vista.activa{ display: block; }
 
 .tituloSeccionGlow{
   text-shadow:
