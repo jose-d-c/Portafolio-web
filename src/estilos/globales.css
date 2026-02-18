@@ -110,10 +110,26 @@ html[data-tema="claro"] .panel{
   background: color-mix(in srgb, var(--morado) 16%, transparent);
 }
 
-/* Fallback accesible:
-   - Si falla el JavaScript, todas las vistas permanecen visibles.
-   - Si carga el JavaScript, el propio script controla [hidden] y .activa. */
-.vista{ display: block; }
+/* Vistas por secciones:
+   - Sin JS: todas se ven una debajo de la otra.
+   - Con JS: la barra flotante cambia la vista activa y oculta el resto. */
+.vista{
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html.js .contenedor-vistas{
+  min-height: 280px;
+}
+
+html.js .vista[hidden]{
+  display: none;
+}
+
+html.js .vista.activa{
+  display: block;
+}
 
 .tituloSeccionGlow{
   text-shadow:

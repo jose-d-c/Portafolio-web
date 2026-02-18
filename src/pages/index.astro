@@ -17,19 +17,20 @@ import Seccion from "../componentes/ui/Seccion.astro";
     <!-- Navegacion superior (cambia vistas) -->
     <BarraFlotante />
 
-    <div id="contenedor-vistas">
+    <div id="contenedor-vistas" class="contenedor-vistas" aria-live="polite">
       <Seccion id="sobre-mi" titulo="Sobre mi" clase="vista">
         <ColumnasSobreMi />
       </Seccion>
 
       <Seccion id="proyectos" titulo="Proyectos" clase="vista vista-proyectos">
         <div class="bloques-proyectos">
-          <section class="panel bloque-proyecto">
+          <section class="panel bloque-proyecto" aria-label="Proyectos propios">
             <h3>Proyectos propios</h3>
             <GrillaProyectos />
           </section>
 
-          <section class="panel bloque-proyecto">
+          <section class="panel bloque-proyecto" aria-label="Programas temporales">
+            <h3>Programas temporales</h3>
             <ApartadoProgramasTemporales />
           </section>
         </div>
@@ -43,6 +44,10 @@ import Seccion from "../componentes/ui/Seccion.astro";
 </DisenoBase>
 
 <style>
+.contenedor-vistas{
+  position: relative;
+}
+
 .vista-proyectos{
   background: transparent;
   border: none;
