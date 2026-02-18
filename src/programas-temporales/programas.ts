@@ -29,9 +29,14 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Programa en Java con 10 cadenas para reforzar comparacion lexicografica en burbuja, incluyendo explicacion comentada y evidencia de salida.",
   },
+  21: {
+    titulo: "Actividad: Quicksort en Java (7 enteros)",
+    descripcion:
+      "Implementacion de Quicksort en Java con un vector de 7 enteros, explicada y comentada paso a paso para entender pivote, particion y recursion.",
+  },
 };
 
-export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 20 }, (_, index) => {
+export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 21 }, (_, index) => {
   const numero = index + 1;
   const id = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];

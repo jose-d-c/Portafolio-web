@@ -2,7 +2,7 @@
  * Archivo: src/scripts/desplazamiento.ts
  * Responsabilidad:
  * - Mostrar solo una vista a la vez (Sobre mi / Proyectos / Habilidades)
- * - Animacion fluida SIN solape (sale -> entra)
+ * - Animacion tipo slide SIN solape (sale -> entra)
  * - SIN SCROLL AUTOMATICO (el usuario baja/sube manual)
  * - URL con hash (#sobre-mi, #proyectos, #habilidades) sin salto por click
  * - Back/Forward funcional (popstate)
@@ -11,8 +11,9 @@
 type IdVista = "sobre-mi" | "proyectos" | "habilidades";
 const ID_POR_DEFECTO: IdVista = "sobre-mi";
 
-const DUR_SALIDA = 220;
-const DUR_ENTRADA = 260;
+const DUR_SALIDA = 180;
+const DUR_ENTRADA = 240;
+const DISTANCIA_SLIDE = 34;
 const EASE = "cubic-bezier(0.2, 0.9, 0.2, 1)";
 
 function prefiereReducirAnimacion(): boolean {
@@ -87,32 +88,41 @@ function cancelarAnimaciones(el: HTMLElement) {
   }
 }
 
-async function animarSalida(el: HTMLElement) {
+function direccionCambio(idDestino: IdVista, idOrigen: IdVista | null): 1 | -1 {
+  if (!idOrigen) return 1;
+
+  const orden: IdVista[] = ["sobre-mi", "proyectos", "habilidades"];
+  const idxDestino = orden.indexOf(idDestino);
+  const idxOrigen = orden.indexOf(idOrigen);
+  return idxDestino >= idxOrigen ? 1 : -1;
+}
+
+async function animarSalida(el: HTMLElement, direccion: 1 | -1) {
   if (prefiereReducirAnimacion()) return;
 
   cancelarAnimaciones(el);
   await el.animate(
     [
-      { opacity: 1, transform: "translateY(0px)" },
-      { opacity: 0, transform: "translateY(10px)" },
+      { opacity: 1, transform: "translateX(0px)" },
+      { opacity: 0, transform: `translateX(${-DISTANCIA_SLIDE * direccion}px)` },
     ],
     { duration: DUR_SALIDA, easing: EASE, fill: "forwards" }
   ).finished;
 }
 
-async function animarEntrada(el: HTMLElement) {
+async function animarEntrada(el: HTMLElement, direccion: 1 | -1) {
   if (prefiereReducirAnimacion()) return;
 
   cancelarAnimaciones(el);
 
   el.style.opacity = "0";
-  el.style.transform = "translateY(10px)";
+  el.style.transform = `translateX(${DISTANCIA_SLIDE * direccion}px)`;
   void el.offsetHeight;
 
   await el.animate(
     [
-      { opacity: 0, transform: "translateY(10px)" },
-      { opacity: 1, transform: "translateY(0px)" },
+      { opacity: 0, transform: `translateX(${DISTANCIA_SLIDE * direccion}px)` },
+      { opacity: 1, transform: "translateX(0px)" },
     ],
     { duration: DUR_ENTRADA, easing: EASE, fill: "forwards" }
   ).finished;
@@ -149,6 +159,7 @@ async function mostrarVista(id: string, scrollY: number) {
 
   const vistaNueva = getVista(idFinal);
   if (!vistaNueva) return;
+  const direccion = direccionCambio(idFinal, actual as IdVista | null);
 
   bloqueado = true;
 
@@ -160,7 +171,7 @@ async function mostrarVista(id: string, scrollY: number) {
 
   // Salida de la actual
   if (vistaActual) {
-    await animarSalida(vistaActual);
+    await animarSalida(vistaActual, direccion);
   }
 
   // Activar nueva y ocultar el resto
@@ -170,7 +181,7 @@ async function mostrarVista(id: string, scrollY: number) {
   actualizarA11yVistas(idFinal);
 
   // Entrada
-  await animarEntrada(vistaNueva);
+  await animarEntrada(vistaNueva, direccion);
 
   actual = idFinal;
   marcarNav(idFinal);
