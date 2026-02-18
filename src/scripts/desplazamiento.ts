@@ -70,7 +70,7 @@ function bindNav() {
         history.pushState(null, "", `#${id}`);
       }
 
-      void mostrarVista(id, scrollY);
+      ejecutarCambioVista(id, scrollY);
     });
   }
 }
@@ -190,6 +190,23 @@ async function mostrarVista(id: string, scrollY: number) {
   }
 }
 
+function restaurarFallbackSiFalla() {
+  for (const v of todasLasVistas()) {
+    v.removeAttribute("hidden");
+    v.removeAttribute("aria-hidden");
+    v.classList.remove("activa");
+  }
+}
+
+function manejarErrorNavegacion(error: unknown) {
+  console.error("No se pudo inicializar/actualizar la navegacion de vistas:", error);
+  restaurarFallbackSiFalla();
+}
+
+function ejecutarCambioVista(id: string, scrollY: number) {
+  void mostrarVista(id, scrollY).catch(manejarErrorNavegacion);
+}
+
 // Init
 function init() {
   bindNav();
@@ -201,17 +218,21 @@ function init() {
   }
 
   // Vista inicial sin mover scroll
-  void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
+  ejecutarCambioVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
 
   // Back/Forward (popstate se dispara con pushState)
   window.addEventListener("popstate", () => {
-    void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
+    ejecutarCambioVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
   });
 
   // Si el usuario escribe/pega un hash manualmente:
   window.addEventListener("hashchange", () => {
-    void mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
+    ejecutarCambioVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
   });
 }
 
-init();
+try {
+  init();
+} catch (error) {
+  manejarErrorNavegacion(error);
+}

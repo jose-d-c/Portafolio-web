@@ -28,5 +28,8 @@
   "dependencies": {
     "astro": "^5.17.1"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }
