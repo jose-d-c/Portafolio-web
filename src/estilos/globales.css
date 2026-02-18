@@ -123,6 +123,14 @@ html.js .contenedor-vistas{
   min-height: 280px;
 }
 
+html.js .contenedor-vistas > .vista{
+  display: none;
+}
+
+html.js .contenedor-vistas > .vista:first-child{
+  display: block;
+}
+
 html.js .vista[hidden]{
   display: none;
 }
