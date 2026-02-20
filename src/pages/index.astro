@@ -36,6 +36,14 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
       <section class="views" aria-live="polite">
         <article class="view active section-about" id="sobre-mi">
           <h2><img src="/icons/user.svg" alt="" class="ui-icon" aria-hidden="true" />Sobre mí</h2>
+
+          <details class="panel subpanel profile-dropdown">
+            <summary><img src="/icons/briefcase.svg" alt="" class="ui-icon" aria-hidden="true" />Perfil laboral</summary>
+            {sobreMi.perfilLaboral.map((item) => (
+              <p>{item}</p>
+            ))}
+          </details>
+
           <div class="grid-3">
             <div class="panel subpanel info-card card-studies">
               <h3><img src="/icons/study.svg" alt="" class="ui-icon" aria-hidden="true" />Estudios</h3>
@@ -44,8 +52,8 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
               ))}
             </div>
             <div class="panel subpanel info-card card-experience">
-              <h3><img src="/icons/briefcase.svg" alt="" class="ui-icon" aria-hidden="true" />Perfil laboral</h3>
-              {sobreMi.experiencia.map((item) => (
+              <h3><img src="/icons/briefcase.svg" alt="" class="ui-icon" aria-hidden="true" />Experiencia laboral</h3>
+              {sobreMi.experienciaLaboral.map((item) => (
                 <p><strong>{item.titulo}:</strong> {item.detalle}</p>
               ))}
             </div>
@@ -75,7 +83,7 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
 
           <details class="panel subpanel temporary">
             <summary>
-              <h3><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos temporales</h3>
+              <h3><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Programas temporales</h3>
               <span>Desplegar</span>
             </summary>
             <div class="cards">

@@ -19,7 +19,13 @@ export const sobreMi = {
   experiencia: [
     {
       titulo: "Sin experiencia laboral formal aun",
-      detalle: "Este apartado se completara cuando tenga mi primera experiencia.",
+      detalle:
+        "Perfil laboral orientado a soporte tecnico, redes y ciberseguridad con experiencia en proyectos academicos y personales.",
+    },
+    {
+      titulo: "Experiencia laboral en formacion",
+      detalle:
+        "Participacion en practicas y entregas de Estructura de Datos, documentando analisis, pseudocodigo y resultados de ejecucion.",
     },
   ],
 
