@@ -1,7 +1,6 @@
 ---
 import "../styles/theme.css";
 import "../styles/app.css";
-import mainScript from "../scripts/main.ts?url";
 
 const { title = "Portafolio | Jose David Consuegra Medina" } = Astro.props;
 ---
@@ -33,6 +32,8 @@ const { title = "Portafolio | Jose David Consuegra Medina" } = Astro.props;
   </head>
   <body>
     <slot />
-    <script type="module" src={mainScript}></script>
+    <script>
+      import "../scripts/main.ts";
+    </script>
   </body>
 </html>
