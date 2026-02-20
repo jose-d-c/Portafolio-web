@@ -29,14 +29,29 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Programa en Java con 10 cadenas para reforzar comparacion lexicografica en burbuja, incluyendo explicacion comentada y evidencia de salida.",
   },
-  21: {
-    titulo: "Actividad: Quicksort en Java (7 enteros)",
+  5: {
+    titulo: "Actividad: Burbuja mejorado en Java (arreglo de enteros)",
     descripcion:
-      "Implementacion de Quicksort en Java con un vector de 7 enteros, explicada y comentada paso a paso para entender pivote, particion y recursion.",
+      "Ordenamiento burbuja mejorado en Java usando arrays de enteros, con bandera de corte temprano y comentarios detallados para cada bloque.",
+  },
+  6: {
+    titulo: "Actividad: Burbuja mejorado en Java (String)",
+    descripcion:
+      "Version de burbuja mejorado para cadenas en Java, explicando compareTo, intercambio y optimizacion cuando no hay cambios en una pasada.",
+  },
+  7: {
+    titulo: "Actividad: Quicksort en Java (enteros)",
+    descripcion:
+      "Implementacion de Quicksort con enteros en Java, incluyendo comentarios explicativos sobre particionado, pivote e invocaciones recursivas.",
+  },
+  8: {
+    titulo: "Actividad: Quicksort en Java (String)",
+    descripcion:
+      "Implementacion de Quicksort para arreglos de String en Java, con comparacion lexicografica y comentarios detallados paso a paso.",
   },
 };
 
-export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 21 }, (_, index) => {
+export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 20 }, (_, index) => {
   const numero = index + 1;
   const id = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
