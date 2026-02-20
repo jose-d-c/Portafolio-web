@@ -1,11 +1,81 @@
-// Plantilla de codigo para Programa 07
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-07.svg
+// Programa 07: Quicksort en Java con enteros
+// Objetivo:
+// Ordenar un arreglo de numeros enteros con el algoritmo Quicksort.
+//
+// Resumen de Quicksort:
+// 1) Elegir pivote (en este caso, el ultimo elemento del tramo).
+// 2) Particionar: dejar menores/iguales a la izquierda y mayores a la derecha.
+// 3) Aplicar recursivamente el mismo proceso a ambos lados.
+//
+// Caracteristicas:
+// - Muy eficiente en la practica.
+// - Complejidad promedio: O(n log n).
+// - Peor caso: O(n^2) si el pivote divide muy mal en cada paso.
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+public class Programa07QuickSortEnteros {
+
+    public static void main(String[] args) {
+        int[] datos = {29, 10, 14, 37, 13, 5, 42, 1, 18};
+
+        System.out.print("Arreglo original: ");
+        imprimir(datos);
+
+        quickSort(datos, 0, datos.length - 1);
+
+        System.out.print("Arreglo ordenado: ");
+        imprimir(datos);
+    }
+
+    // Metodo recursivo que ordena el tramo [izquierda, derecha].
+    public static void quickSort(int[] arreglo, int izquierda, int derecha) {
+        // Caso base: con 0 o 1 elemento no hay nada que ordenar.
+        if (izquierda >= derecha) {
+            return;
+        }
+
+        // Particionamos y obtenemos la posicion final del pivote.
+        int indicePivote = particionar(arreglo, izquierda, derecha);
+
+        // Ordenamos recursivamente la parte izquierda del pivote.
+        quickSort(arreglo, izquierda, indicePivote - 1);
+
+        // Ordenamos recursivamente la parte derecha del pivote.
+        quickSort(arreglo, indicePivote + 1, derecha);
+    }
+
+    // Reorganiza el tramo y deja el pivote en su lugar definitivo.
+    public static int particionar(int[] arreglo, int izquierda, int derecha) {
+        int pivote = arreglo[derecha];
+        int i = izquierda - 1;
+
+        for (int j = izquierda; j < derecha; j++) {
+            if (arreglo[j] <= pivote) {
+                i++;
+                intercambiar(arreglo, i, j);
+            }
+        }
+
+        // Insertamos el pivote entre menores/iguales y mayores.
+        intercambiar(arreglo, i + 1, derecha);
+        return i + 1;
+    }
+
+    // Intercambia dos posiciones del arreglo.
+    public static void intercambiar(int[] arreglo, int a, int b) {
+        int temporal = arreglo[a];
+        arreglo[a] = arreglo[b];
+        arreglo[b] = temporal;
+    }
+
+    // Imprime el arreglo con formato amigable.
+    public static void imprimir(int[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
 }
-
-main();
