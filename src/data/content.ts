@@ -1,3 +1,5 @@
+import { programasTemporales } from "../programas-temporales/programas";
+
 export const perfil = {
   nombre: "Jose David Consuegra Medina",
   rol: "Ingeniero de sistemas",
@@ -9,16 +11,21 @@ export const perfil = {
 };
 
 export const sobreMi = {
+  perfilLaboral: [
+    "Soy una persona disciplinada, curiosa y orientada al aprendizaje continuo. Destaco por resolver problemas con enfoque analítico, trabajar en equipo y mantener constancia en objetivos técnicos.",
+    "Mi ruta de crecimiento profesional está enfocada en ciberseguridad e infraestructura, asumiendo progresivamente más responsabilidades y aportando en proyectos de seguridad y estabilidad tecnológica.",
+  ],
   estudios: [
     {
       titulo: "Ingeniería de Sistemas (en curso)",
       detalle: "Universidad Industrial de Santander (UIS).",
     },
   ],
-  experiencia: [
+  experienciaLaboral: [
     {
       titulo: "Sin experiencia laboral formal aún",
-      detalle: "Perfil laboral orientado a soporte técnico, redes y ciberseguridad con experiencia en proyectos académicos y personales.",
+      detalle:
+        "Perfil laboral orientado a soporte técnico, redes y ciberseguridad con experiencia en proyectos académicos y personales.",
     },
   ],
   certificaciones: [
@@ -44,12 +51,11 @@ export const proyectos = [
   },
 ];
 
-export const proyectosTemporales = Array.from({ length: 8 }, (_, i) => ({
-  id: i + 1,
-  titulo: `Programa temporal ${String(i + 1).padStart(2, "0")}`,
-  descripcion:
-    "Bloque temporal para ejercicios de algoritmos, evidencias y entregas académicas de corta duración.",
-  enlace: `/programas-temporales/programa-${String(i + 1).padStart(2, "0")}`,
+export const proyectosTemporales = programasTemporales.map((programa) => ({
+  id: programa.id,
+  titulo: programa.titulo,
+  descripcion: programa.descripcion,
+  enlace: programa.enlaceExterno,
 }));
 
 export const habilidades = [
