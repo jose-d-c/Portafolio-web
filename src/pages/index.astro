@@ -1,105 +1,100 @@
 ---
-import BarraFlotante from "../componentes/navegacion/BarraFlotante.astro";
-import Portada from "../componentes/portada/Portada.astro";
-import DisenoBase from "../layouts/DisenoBase.astro";
-
-import GrillaHabilidades from "../componentes/habilidades/GrillaHabilidades.astro";
-import GrillaProyectos from "../componentes/proyectos/GrillaProyectos.astro";
-import ApartadoProgramasTemporales from "../programas-temporales/ApartadoProgramasTemporales.astro";
-import ColumnasSobreMi from "../componentes/sobre_mi/ColumnasSobreMi.astro";
-import Seccion from "../componentes/ui/Seccion.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "../data/content";
 ---
 
-<DisenoBase titulo="Portafolio | Jose David Consuegra Medina">
-  <main class="contenedor">
-    <Portada />
-
-    <!-- Navegacion superior (cambia vistas) -->
-    <BarraFlotante />
-
-    <div class="viewport-vistas" aria-live="polite">
-      <div id="contenedor-vistas" class="contenedor-vistas">
-        <Seccion id="sobre-mi" titulo="Sobre mi" clase="vista activa">
-          <ColumnasSobreMi />
-        </Seccion>
-
-        <Seccion id="proyectos" titulo="Proyectos" clase="vista vista-proyectos">
-          <div class="bloques-proyectos">
-            <section class="panel bloque-proyecto" aria-label="Proyectos propios">
-              <h3>Proyectos propios</h3>
-              <GrillaProyectos />
-            </section>
-
-            <section class="panel bloque-proyecto" aria-label="Programas temporales">
-              <h3>Programas temporales</h3>
-              <ApartadoProgramasTemporales />
-            </section>
-          </div>
-        </Seccion>
-
-        <Seccion id="habilidades" titulo="Habilidades" clase="vista">
-          <GrillaHabilidades />
-        </Seccion>
+<BaseLayout>
+  <main class="app-shell">
+    <header class="cover panel" id="portada">
+      <img src={perfil.foto} alt={`Foto de ${perfil.nombre}`} class="avatar" />
+      <div>
+        <p class="eyebrow">Portafolio profesional</p>
+        <h1>{perfil.nombre}</h1>
+        <p class="role">{perfil.rol}</p>
+        <p>{perfil.enfoque}</p>
+        <div class="actions">
+          <a href={perfil.correo}>✉️ Correo</a>
+          <a href={perfil.whatsapp} target="_blank" rel="noreferrer">💬 WhatsApp</a>
+        </div>
       </div>
+    </header>
+
+    <div class="content-shell">
+      <nav class="sidebar panel" aria-label="Navegación lateral">
+        <button class="nav-btn active nav-about" data-target="sobre-mi" aria-current="page">👤 Sobre mí</button>
+        <button class="nav-btn nav-projects" data-target="proyectos">📁 Proyectos</button>
+        <button class="nav-btn nav-skills" data-target="habilidades">⚡ Habilidades</button>
+        <button class="nav-btn nav-theme" data-theme-toggle>🌓 Tema</button>
+      </nav>
+
+      <section class="views" aria-live="polite">
+        <article class="view active section-about" id="sobre-mi">
+          <h2>👤 Sobre mí</h2>
+          <div class="grid-3">
+            <div class="panel subpanel info-card card-studies">
+              <h3>🎓 Estudios</h3>
+              {sobreMi.estudios.map((item) => (
+                <p><strong>{item.titulo}:</strong> {item.detalle}</p>
+              ))}
+            </div>
+            <div class="panel subpanel info-card card-experience">
+              <h3>💼 Experiencia</h3>
+              {sobreMi.experiencia.map((item) => (
+                <p><strong>{item.titulo}:</strong> {item.detalle}</p>
+              ))}
+            </div>
+            <div class="panel subpanel info-card card-certs">
+              <h3>🏅 Certificaciones</h3>
+              {sobreMi.certificaciones.map((item) => (
+                <p><strong>{item.titulo}:</strong> {item.detalle}</p>
+              ))}
+            </div>
+          </div>
+        </article>
+
+        <article class="view section-projects" id="proyectos" aria-hidden="true">
+          <h2>📁 Proyectos</h2>
+          <div class="panel subpanel">
+            <h3>🚀 Proyectos normales</h3>
+            <div class="cards">
+              {proyectos.map((proyecto) => (
+                <div class="card project-card">
+                  <h4>{proyecto.titulo}</h4>
+                  <p>{proyecto.descripcion}</p>
+                  <small>{proyecto.etiquetas.join(" • ")}</small>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <details class="panel subpanel temporary">
+            <summary>
+              <h3>🧪 Proyectos temporales</h3>
+              <span>Desplegar</span>
+            </summary>
+            <div class="cards">
+              {proyectosTemporales.map((item) => (
+                <a class="card temporary-card" href={item.enlace}>
+                  <h4>{item.titulo}</h4>
+                  <p>{item.descripcion}</p>
+                </a>
+              ))}
+            </div>
+          </details>
+        </article>
+
+        <article class="view section-skills" id="habilidades" aria-hidden="true">
+          <h2>⚡ Habilidades</h2>
+          <div class="cards skills">
+            {habilidades.map((skill) => (
+              <div class={`card skill-card ${skill.tono}`}>
+                <h3>{skill.icono} {skill.nombre}</h3>
+                <p>{skill.estado}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+      </section>
     </div>
   </main>
-</DisenoBase>
-
-<style>
-.viewport-vistas{
-  position: relative;
-  overflow: hidden;
-}
-
-.contenedor-vistas{
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-  transition: transform 320ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  will-change: transform;
-}
-
-.vista{
-  flex: 0 0 100%;
-  width: 100%;
-  min-width: 100%;
-  margin-top: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 100%));
-  align-items: start;
-  transition: transform 320ms cubic-bezier(0.2, 0.9, 0.2, 1);
-}
-
-.vista{
-  min-width: 0;
-}
-
-.vista-proyectos{
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  padding: 18px 0 0;
-}
-
-.vista-proyectos .encabezado{
-  margin-bottom: 12px;
-  padding: 0 2px;
-}
-
-.bloques-proyectos{
-  display: grid;
-  gap: 16px;
-}
-
-.bloque-proyecto{
-  padding: 16px;
-  border-radius: 20px;
-}
-
-.bloque-proyecto h3{
-  margin: 0 0 12px;
-  font-family: var(--fuente-titulos);
-  font-size: 26px;
-}
-</style>
+</BaseLayout>
