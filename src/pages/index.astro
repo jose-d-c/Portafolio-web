@@ -13,38 +13,44 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
         <p class="role">{perfil.rol}</p>
         <p>{perfil.enfoque}</p>
         <div class="actions">
-          <a href={perfil.correo}>✉️ Correo</a>
-          <a href={perfil.whatsapp} target="_blank" rel="noreferrer">💬 WhatsApp</a>
+          <a class="contact-btn contact-mail" href={perfil.correo}>
+            <img src="/icons/mail.svg" alt="" class="ui-icon" aria-hidden="true" />
+            Correo
+          </a>
+          <a class="contact-btn contact-whatsapp" href={perfil.whatsapp} target="_blank" rel="noreferrer">
+            <img src="/icons/whatsapp.svg" alt="" class="ui-icon" aria-hidden="true" />
+            WhatsApp
+          </a>
         </div>
       </div>
     </header>
 
     <div class="content-shell">
       <nav class="sidebar panel" aria-label="Navegación lateral">
-        <button class="nav-btn active nav-about" data-target="sobre-mi" aria-current="page">👤 Sobre mí</button>
-        <button class="nav-btn nav-projects" data-target="proyectos">📁 Proyectos</button>
-        <button class="nav-btn nav-skills" data-target="habilidades">⚡ Habilidades</button>
-        <button class="nav-btn nav-theme" data-theme-toggle>🌓 Tema</button>
+        <button class="nav-btn active nav-about" data-target="sobre-mi" aria-current="page"><img src="/icons/user.svg" alt="" class="ui-icon" aria-hidden="true" />Sobre mí</button>
+        <button class="nav-btn nav-projects" data-target="proyectos"><img src="/icons/folder.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos</button>
+        <button class="nav-btn nav-skills" data-target="habilidades"><img src="/icons/bolt.svg" alt="" class="ui-icon" aria-hidden="true" />Habilidades</button>
+        <button class="nav-btn nav-theme" data-theme-toggle><img src="/icons/theme.svg" alt="" class="ui-icon" aria-hidden="true" />Tema</button>
       </nav>
 
       <section class="views" aria-live="polite">
         <article class="view active section-about" id="sobre-mi">
-          <h2>👤 Sobre mí</h2>
+          <h2><img src="/icons/user.svg" alt="" class="ui-icon" aria-hidden="true" />Sobre mí</h2>
           <div class="grid-3">
             <div class="panel subpanel info-card card-studies">
-              <h3>🎓 Estudios</h3>
+              <h3><img src="/icons/study.svg" alt="" class="ui-icon" aria-hidden="true" />Estudios</h3>
               {sobreMi.estudios.map((item) => (
                 <p><strong>{item.titulo}:</strong> {item.detalle}</p>
               ))}
             </div>
             <div class="panel subpanel info-card card-experience">
-              <h3>💼 Experiencia</h3>
+              <h3><img src="/icons/briefcase.svg" alt="" class="ui-icon" aria-hidden="true" />Perfil laboral</h3>
               {sobreMi.experiencia.map((item) => (
                 <p><strong>{item.titulo}:</strong> {item.detalle}</p>
               ))}
             </div>
             <div class="panel subpanel info-card card-certs">
-              <h3>🏅 Certificaciones</h3>
+              <h3><img src="/icons/certificate.svg" alt="" class="ui-icon" aria-hidden="true" />Certificaciones</h3>
               {sobreMi.certificaciones.map((item) => (
                 <p><strong>{item.titulo}:</strong> {item.detalle}</p>
               ))}
@@ -53,9 +59,9 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
         </article>
 
         <article class="view section-projects" id="proyectos" aria-hidden="true">
-          <h2>📁 Proyectos</h2>
+          <h2><img src="/icons/folder.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos</h2>
           <div class="panel subpanel">
-            <h3>🚀 Proyectos normales</h3>
+            <h3><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos normales</h3>
             <div class="cards">
               {proyectos.map((proyecto) => (
                 <div class="card project-card">
@@ -69,7 +75,7 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
 
           <details class="panel subpanel temporary">
             <summary>
-              <h3>🧪 Proyectos temporales</h3>
+              <h3><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos temporales</h3>
               <span>Desplegar</span>
             </summary>
             <div class="cards">
@@ -84,13 +90,28 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
         </article>
 
         <article class="view section-skills" id="habilidades" aria-hidden="true">
-          <h2>⚡ Habilidades</h2>
-          <div class="cards skills">
-            {habilidades.map((skill) => (
-              <div class={`card skill-card ${skill.tono}`}>
-                <h3>{skill.icono} {skill.nombre}</h3>
-                <p>{skill.estado}</p>
-              </div>
+          <h2><img src="/icons/bolt.svg" alt="" class="ui-icon" aria-hidden="true" />Habilidades</h2>
+          <div class="skills-columns">
+            {[
+              { titulo: "Dominadas", estado: "Dominado", clase: "skills-dominadas" },
+              { titulo: "En proceso", estado: "En proceso", clase: "skills-proceso" },
+              { titulo: "Por aprender", estado: "Por aprender", clase: "skills-aprender" },
+            ].map((columna) => (
+              <section class={`panel subpanel skill-column ${columna.clase}`}>
+                <h3>{columna.titulo}</h3>
+                <div class="cards skill-list">
+                  {habilidades
+                    .filter((skill) => skill.estado === columna.estado)
+                    .map((skill) => (
+                      <div class={`card skill-card ${skill.tono}`}>
+                        <h4><img src={skill.icono} alt="" class="ui-icon skill-icon" aria-hidden="true" />{skill.nombre}</h4>
+                      </div>
+                    ))}
+                  {habilidades.filter((skill) => skill.estado === columna.estado).length === 0 && (
+                    <p class="empty-state">Aún sin habilidades registradas.</p>
+                  )}
+                </div>
+              </section>
             ))}
           </div>
         </article>
