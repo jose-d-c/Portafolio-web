@@ -2,7 +2,7 @@
  * Archivo: src/scripts/desplazamiento.ts
  * Responsabilidad:
  * - Mostrar solo una vista a la vez (Sobre mi / Proyectos / Habilidades)
- * - Animacion tipo slide SIN solape (sale -> entra)
+ * - Animacion tipo slide (si el navegador la soporta)
  * - SIN SCROLL AUTOMATICO (el usuario baja/sube manual)
  * - URL con hash (#sobre-mi, #proyectos, #habilidades) sin salto por click
  * - Back/Forward funcional (popstate)
@@ -10,11 +10,14 @@
 
 type IdVista = "sobre-mi" | "proyectos" | "habilidades";
 const ID_POR_DEFECTO: IdVista = "sobre-mi";
+const ORDEN_VISTAS: IdVista[] = ["sobre-mi", "proyectos", "habilidades"];
 
-const DUR_SALIDA = 180;
 const DUR_ENTRADA = 240;
 const DISTANCIA_SLIDE = 34;
 const EASE = "cubic-bezier(0.2, 0.9, 0.2, 1)";
+
+let actual: IdVista | null = null;
+let cambioSerial = 0;
 
 function prefiereReducirAnimacion(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
@@ -22,20 +25,33 @@ function prefiereReducirAnimacion(): boolean {
 
 function obtenerIdDesdeHash(): string | null {
   const raw = window.location.hash?.replace("#", "").trim();
-  return raw ? raw : null;
+  return raw || null;
 }
 
-function getVista(id: string) {
-  return document.getElementById(id) as HTMLElement | null;
+function esIdVista(id: string | null): id is IdVista {
+  return id !== null && ORDEN_VISTAS.includes(id as IdVista);
 }
 
 function todasLasVistas(): HTMLElement[] {
   return Array.from(document.querySelectorAll<HTMLElement>(".vista"));
 }
 
-function marcarNav(idFinal: string) {
+function getVista(id: IdVista): HTMLElement | null {
+  return document.getElementById(id) as HTMLElement | null;
+}
+
+function restaurarScroll(scrollY: number) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: scrollY, behavior: "auto" });
+    });
+  });
+}
+
+function marcarNav(idFinal: IdVista) {
   const nav = document.querySelector('nav[aria-label="Navegacion"]');
   const items = Array.from(nav?.querySelectorAll<HTMLElement>(".item[data-vista]") ?? []);
+
   for (const it of items) {
     const activa = it.getAttribute("data-vista") === idFinal;
     it.classList.toggle("activa", activa);
@@ -44,12 +60,66 @@ function marcarNav(idFinal: string) {
   }
 }
 
-function actualizarA11yVistas(idActiva: string) {
+function aplicarEstadoVista(idActiva: IdVista) {
   for (const v of todasLasVistas()) {
     const activa = v.id === idActiva;
+    v.classList.toggle("activa", activa);
     v.toggleAttribute("hidden", !activa);
     v.setAttribute("aria-hidden", activa ? "false" : "true");
   }
+}
+
+function animarEntradaSiAplica(el: HTMLElement, direccion: 1 | -1, serial: number) {
+  if (prefiereReducirAnimacion() || typeof el.animate !== "function") return;
+
+  try {
+    for (const a of el.getAnimations()) a.cancel();
+
+    el.style.opacity = "0";
+    el.style.transform = `translateX(${DISTANCIA_SLIDE * direccion}px)`;
+    void el.offsetHeight;
+
+    const animacion = el.animate(
+      [
+        { opacity: 0, transform: `translateX(${DISTANCIA_SLIDE * direccion}px)` },
+        { opacity: 1, transform: "translateX(0px)" },
+      ],
+      { duration: DUR_ENTRADA, easing: EASE, fill: "forwards" }
+    );
+
+    void animacion.finished.finally(() => {
+      if (serial !== cambioSerial) return;
+      el.style.opacity = "";
+      el.style.transform = "";
+    });
+  } catch {
+    el.style.opacity = "";
+    el.style.transform = "";
+  }
+}
+
+function direccionCambio(idDestino: IdVista, idOrigen: IdVista | null): 1 | -1 {
+  if (!idOrigen) return 1;
+  return ORDEN_VISTAS.indexOf(idDestino) >= ORDEN_VISTAS.indexOf(idOrigen) ? 1 : -1;
+}
+
+function mostrarVista(idSolicitada: string, scrollY: number) {
+  const idFinal: IdVista = esIdVista(idSolicitada) ? idSolicitada : ID_POR_DEFECTO;
+  const vistaNueva = getVista(idFinal);
+  if (!vistaNueva) return;
+
+  const idAnterior = actual;
+  const direccion = direccionCambio(idFinal, idAnterior);
+
+  cambioSerial += 1;
+  const serialLocal = cambioSerial;
+
+  aplicarEstadoVista(idFinal);
+  animarEntradaSiAplica(vistaNueva, direccion, serialLocal);
+
+  actual = idFinal;
+  marcarNav(idFinal);
+  restaurarScroll(scrollY);
 }
 
 function bindNav() {
@@ -62,188 +132,41 @@ function bindNav() {
       const id = a.getAttribute("data-vista");
       if (!id) return;
 
-      // Guardar scroll actual y RESTAURARLO luego (por seguridad)
       const scrollY = window.scrollY;
-
-      // Actualizar URL + historial SIN dejar que el navegador haga scroll por hash:
-      // pushState NO genera el salto de ancla que haria location.hash
       if (window.location.hash !== `#${id}`) {
         history.pushState(null, "", `#${id}`);
       }
 
-      ejecutarCambioVista(id, scrollY);
+      mostrarVista(id, scrollY);
     });
   }
 }
 
-let actual: string | null = null;
-let bloqueado = false;
-let pendiente: { id: string; scrollY: number } | null = null;
-
-function cancelarAnimaciones(el: HTMLElement) {
-  try {
-    for (const a of el.getAnimations()) a.cancel();
-  } catch {
-    // ok
-  }
-}
-
-function direccionCambio(idDestino: IdVista, idOrigen: IdVista | null): 1 | -1 {
-  if (!idOrigen) return 1;
-
-  const orden: IdVista[] = ["sobre-mi", "proyectos", "habilidades"];
-  const idxDestino = orden.indexOf(idDestino);
-  const idxOrigen = orden.indexOf(idOrigen);
-  return idxDestino >= idxOrigen ? 1 : -1;
-}
-
-async function animarSalida(el: HTMLElement, direccion: 1 | -1) {
-  if (prefiereReducirAnimacion()) return;
-
-  cancelarAnimaciones(el);
-  await el.animate(
-    [
-      { opacity: 1, transform: "translateX(0px)" },
-      { opacity: 0, transform: `translateX(${-DISTANCIA_SLIDE * direccion}px)` },
-    ],
-    { duration: DUR_SALIDA, easing: EASE, fill: "forwards" }
-  ).finished;
-}
-
-async function animarEntrada(el: HTMLElement, direccion: 1 | -1) {
-  if (prefiereReducirAnimacion()) return;
-
-  cancelarAnimaciones(el);
-
-  el.style.opacity = "0";
-  el.style.transform = `translateX(${DISTANCIA_SLIDE * direccion}px)`;
-  void el.offsetHeight;
-
-  await el.animate(
-    [
-      { opacity: 0, transform: `translateX(${DISTANCIA_SLIDE * direccion}px)` },
-      { opacity: 1, transform: "translateX(0px)" },
-    ],
-    { duration: DUR_ENTRADA, easing: EASE, fill: "forwards" }
-  ).finished;
-
-  el.style.opacity = "";
-  el.style.transform = "";
-}
-
-function restaurarScroll(scrollY: number) {
-  // Restaura luego del cambio de layout para evitar cualquier salto involuntario
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: scrollY, behavior: "auto" });
-    });
-  });
-}
-
-async function mostrarVista(id: string, scrollY: number) {
-  if (bloqueado) {
-    pendiente = { id, scrollY }; // cola simple: se queda con la ultima
-    return;
-  }
-
-  const vistas = todasLasVistas();
-  const existe = vistas.some((v) => v.id === id);
-  const idFinal = (existe ? id : ID_POR_DEFECTO) as IdVista;
-
-  if (actual === idFinal) {
-    marcarNav(idFinal);
-    actualizarA11yVistas(idFinal);
-    restaurarScroll(scrollY);
-    return;
-  }
-
-  const vistaNueva = getVista(idFinal);
-  if (!vistaNueva) return;
-  const direccion = direccionCambio(idFinal, actual as IdVista | null);
-
-  bloqueado = true;
-
-  const vistaActual = actual ? getVista(actual) : null;
-
-  // Preparar nueva para animar
-  vistaNueva.removeAttribute("hidden");
-  vistaNueva.setAttribute("aria-hidden", "false");
-
-  // Salida de la actual
-  if (vistaActual) {
-    await animarSalida(vistaActual, direccion);
-  }
-
-  // Activar nueva y ocultar el resto
-  for (const v of vistas) v.classList.remove("activa");
-  vistaNueva.classList.add("activa");
-
-  actualizarA11yVistas(idFinal);
-
-  // Entrada
-  await animarEntrada(vistaNueva, direccion);
-
-  actual = idFinal;
-  marcarNav(idFinal);
-
-  // IMPORTANTISIMO: NO hay scroll automatico
-  restaurarScroll(scrollY);
-
-  bloqueado = false;
-
-  // Si spamearon clicks, ejecuta la ultima
-  if (pendiente && pendiente.id !== actual) {
-    const next = pendiente;
-    pendiente = null;
-    await mostrarVista(next.id, next.scrollY);
-  } else {
-    pendiente = null;
-  }
-}
-
-function restaurarFallbackSiFalla() {
-  for (const v of todasLasVistas()) {
-    v.removeAttribute("hidden");
-    v.removeAttribute("aria-hidden");
-    v.classList.remove("activa");
-  }
-}
-
-function manejarErrorNavegacion(error: unknown) {
-  console.error("No se pudo inicializar/actualizar la navegacion de vistas:", error);
-  restaurarFallbackSiFalla();
-}
-
-function ejecutarCambioVista(id: string, scrollY: number) {
-  void mostrarVista(id, scrollY).catch(manejarErrorNavegacion);
-}
-
-// Init
 function init() {
   bindNav();
 
-  // Ocultar todo para evitar flash
   for (const v of todasLasVistas()) {
     v.setAttribute("aria-hidden", "true");
     v.setAttribute("hidden", "");
   }
 
-  // Vista inicial sin mover scroll
-  ejecutarCambioVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
+  mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
 
-  // Back/Forward (popstate se dispara con pushState)
   window.addEventListener("popstate", () => {
-    ejecutarCambioVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
+    mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
   });
 
-  // Si el usuario escribe/pega un hash manualmente:
   window.addEventListener("hashchange", () => {
-    ejecutarCambioVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
+    mostrarVista(obtenerIdDesdeHash() ?? ID_POR_DEFECTO, window.scrollY);
   });
 }
 
 try {
   init();
 } catch (error) {
-  manejarErrorNavegacion(error);
+  console.error("No se pudo inicializar navegacion de vistas:", error);
+  for (const v of todasLasVistas()) {
+    v.removeAttribute("hidden");
+    v.removeAttribute("aria-hidden");
+  }
 }

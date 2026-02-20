@@ -127,7 +127,7 @@ html.js .contenedor-vistas > .vista{
   display: none;
 }
 
-html.js .contenedor-vistas > .vista:first-child{
+html.js .contenedor-vistas > .vista:first-child:not([hidden]){
   display: block;
 }
 
