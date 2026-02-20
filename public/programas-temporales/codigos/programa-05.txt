@@ -1,11 +1,61 @@
-// Plantilla de codigo para Programa 05
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-05.svg
+// ================================================
+// PROGRAMA 05
+// Titulo: Ordenamiento Burbuja Mejorado en Java (Enteros)
+// Descripcion:
+//   Ordena un arreglo de enteros en forma ascendente con Burbuja Mejorado.
+//   Se usa una bandera para terminar temprano cuando el arreglo ya esta ordenado.
+// Entradas:
+//   int[] numeros = {42, 15, 8, 23, 4, 16, 9, 55, 1, 30}
+// Salidas esperadas:
+//   Arreglo original: [42, 15, 8, 23, 4, 16, 9, 55, 1, 30]
+//   Arreglo ordenado: [1, 4, 8, 9, 15, 16, 23, 30, 42, 55]
+// Complejidad:
+//   Mejor caso: O(n) | Promedio/Peor caso: O(n^2)
+// ================================================
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+public class Programa05BurbujaMejoradoEnteros {
+
+    public static void main(String[] args) {
+        int[] numeros = {42, 15, 8, 23, 4, 16, 9, 55, 1, 30};
+
+        System.out.print("Arreglo original: ");
+        imprimirArreglo(numeros);
+
+        burbujaMejorado(numeros);
+
+        System.out.print("Arreglo ordenado: ");
+        imprimirArreglo(numeros);
+    }
+
+    // Burbuja mejorado: finaliza si en una pasada no se realiza ningun intercambio.
+    public static void burbujaMejorado(int[] arreglo) {
+        int n = arreglo.length;
+
+        for (int pasada = 0; pasada < n - 1; pasada++) {
+            boolean huboIntercambio = false;
+
+            for (int j = 0; j < n - 1 - pasada; j++) {
+                if (arreglo[j] > arreglo[j + 1]) {
+                    int temporal = arreglo[j];
+                    arreglo[j] = arreglo[j + 1];
+                    arreglo[j + 1] = temporal;
+                    huboIntercambio = true;
+                }
+            }
+
+            if (!huboIntercambio) {
+                System.out.println("(Corte temprano) El arreglo ya estaba ordenado.");
+                break;
+            }
+        }
+    }
+
+    public static void imprimirArreglo(int[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) System.out.print(", ");
+        }
+        System.out.println("]");
+    }
 }
-
-main();

@@ -1,11 +1,67 @@
-// Plantilla de codigo para Programa 07
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-07.svg
+// ================================================
+// PROGRAMA 07
+// Titulo: Quicksort en Java (Enteros)
+// Descripcion:
+//   Ordena un arreglo de enteros con Quicksort usando pivote final.
+//   Se aplica particion y recursion sobre subarreglos izquierdo/derecho.
+// Entradas:
+//   int[] datos = {29, 10, 14, 37, 13, 5, 42, 1, 18}
+// Salidas esperadas:
+//   Arreglo original: [29, 10, 14, 37, 13, 5, 42, 1, 18]
+//   Arreglo ordenado: [1, 5, 10, 13, 14, 18, 29, 37, 42]
+// Complejidad:
+//   Promedio: O(n log n) | Peor caso: O(n^2)
+// ================================================
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+public class Programa07QuickSortEnteros {
+
+    public static void main(String[] args) {
+        int[] datos = {29, 10, 14, 37, 13, 5, 42, 1, 18};
+
+        System.out.print("Arreglo original: ");
+        imprimir(datos);
+
+        quickSort(datos, 0, datos.length - 1);
+
+        System.out.print("Arreglo ordenado: ");
+        imprimir(datos);
+    }
+
+    public static void quickSort(int[] arreglo, int izquierda, int derecha) {
+        if (izquierda >= derecha) return;
+
+        int indicePivote = particionar(arreglo, izquierda, derecha);
+        quickSort(arreglo, izquierda, indicePivote - 1);
+        quickSort(arreglo, indicePivote + 1, derecha);
+    }
+
+    public static int particionar(int[] arreglo, int izquierda, int derecha) {
+        int pivote = arreglo[derecha];
+        int i = izquierda - 1;
+
+        for (int j = izquierda; j < derecha; j++) {
+            if (arreglo[j] <= pivote) {
+                i++;
+                intercambiar(arreglo, i, j);
+            }
+        }
+
+        intercambiar(arreglo, i + 1, derecha);
+        return i + 1;
+    }
+
+    public static void intercambiar(int[] arreglo, int a, int b) {
+        int temporal = arreglo[a];
+        arreglo[a] = arreglo[b];
+        arreglo[b] = temporal;
+    }
+
+    public static void imprimir(int[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) System.out.print(", ");
+        }
+        System.out.println("]");
+    }
 }
-
-main();

@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Plantilla de imagen Programa 05</title>
-  <desc id="desc">Imagen temporal para Programa 05. Reemplazar con captura del programa final.</desc>
-  <rect width="1200" height="700" fill="#0f172a"/>
-  <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
-  <text x="600" y="315" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="56">Programa 05</text>
-  <text x="600" y="390" text-anchor="middle" fill="#94a3b8" font-family="Arial, sans-serif" font-size="30">Reemplaza esta imagen por la evidencia final</text>
+  <title id="title">Salida programa 05 - Burbuja mejorado enteros</title>
+  <desc id="desc">Evidencia de salida en consola del programa de burbuja mejorado con enteros.</desc>
+  <rect width="1200" height="700" fill="#0b1020"/>
+  <rect x="34" y="34" width="1132" height="632" rx="18" fill="#111827" stroke="#2dd4bf" stroke-width="3"/>
+  <text x="70" y="90" fill="#2dd4bf" font-family="Consolas, monospace" font-size="28">Programa 05 - Burbuja mejorado (int)</text>
+  <text x="70" y="150" fill="#e5e7eb" font-family="Consolas, monospace" font-size="30">Arreglo original: [42, 15, 8, 23, 4, 16, 9, 55, 1, 30]</text>
+  <text x="70" y="205" fill="#fbbf24" font-family="Consolas, monospace" font-size="30">(Corte temprano) El arreglo ya estaba ordenado.</text>
+  <text x="70" y="260" fill="#86efac" font-family="Consolas, monospace" font-size="30">Arreglo ordenado: [1, 4, 8, 9, 15, 16, 23, 30, 42, 55]</text>
 </svg>
