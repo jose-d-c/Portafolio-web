@@ -121,22 +121,7 @@ html[data-tema="claro"] .panel{
 
 html.js .contenedor-vistas{
   min-height: 280px;
-}
-
-html.js .contenedor-vistas > .vista{
-  display: none;
-}
-
-html.js .contenedor-vistas > .vista:first-child:not([hidden]){
-  display: block;
-}
-
-html.js .vista[hidden]{
-  display: none;
-}
-
-html.js .vista.activa{
-  display: block;
+  transform: translate3d(calc(var(--indice-vista, 0) * -100%), 0, 0);
 }
 
 .tituloSeccionGlow{
