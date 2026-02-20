@@ -17,35 +17,49 @@ import Seccion from "../componentes/ui/Seccion.astro";
     <!-- Navegacion superior (cambia vistas) -->
     <BarraFlotante />
 
-    <div id="contenedor-vistas" class="contenedor-vistas" aria-live="polite">
-      <Seccion id="sobre-mi" titulo="Sobre mi" clase="vista">
-        <ColumnasSobreMi />
-      </Seccion>
+    <div class="viewport-vistas" aria-live="polite">
+      <div id="contenedor-vistas" class="contenedor-vistas">
+        <Seccion id="sobre-mi" titulo="Sobre mi" clase="vista activa">
+          <ColumnasSobreMi />
+        </Seccion>
 
-      <Seccion id="proyectos" titulo="Proyectos" clase="vista vista-proyectos">
-        <div class="bloques-proyectos">
-          <section class="panel bloque-proyecto" aria-label="Proyectos propios">
-            <h3>Proyectos propios</h3>
-            <GrillaProyectos />
-          </section>
+        <Seccion id="proyectos" titulo="Proyectos" clase="vista vista-proyectos">
+          <div class="bloques-proyectos">
+            <section class="panel bloque-proyecto" aria-label="Proyectos propios">
+              <h3>Proyectos propios</h3>
+              <GrillaProyectos />
+            </section>
 
-          <section class="panel bloque-proyecto" aria-label="Programas temporales">
-            <h3>Programas temporales</h3>
-            <ApartadoProgramasTemporales />
-          </section>
-        </div>
-      </Seccion>
+            <section class="panel bloque-proyecto" aria-label="Programas temporales">
+              <h3>Programas temporales</h3>
+              <ApartadoProgramasTemporales />
+            </section>
+          </div>
+        </Seccion>
 
-      <Seccion id="habilidades" titulo="Habilidades" clase="vista">
-        <GrillaHabilidades />
-      </Seccion>
+        <Seccion id="habilidades" titulo="Habilidades" clase="vista">
+          <GrillaHabilidades />
+        </Seccion>
+      </div>
     </div>
   </main>
 </DisenoBase>
 
 <style>
-.contenedor-vistas{
+.viewport-vistas{
   position: relative;
+  overflow: hidden;
+}
+
+.contenedor-vistas{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 100%));
+  align-items: start;
+  transition: transform 320ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.vista{
+  min-width: 0;
 }
 
 .vista-proyectos{
