@@ -18,7 +18,7 @@ export const sobreMi = {
   experiencia: [
     {
       titulo: "Sin experiencia laboral formal aún",
-      detalle: "Construyendo base sólida con proyectos académicos y personales.",
+      detalle: "Perfil laboral orientado a soporte técnico, redes y ciberseguridad con experiencia en proyectos académicos y personales.",
     },
   ],
   certificaciones: [
@@ -53,8 +53,8 @@ export const proyectosTemporales = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const habilidades = [
-  { nombre: "Linux", estado: "En proceso", icono: "🐧", tono: "skill-linux" },
-  { nombre: "Redes", estado: "Por aprender", icono: "🌐", tono: "skill-redes" },
-  { nombre: "Servidores", estado: "Por aprender", icono: "🖥️", tono: "skill-servidores" },
-  { nombre: "Ciberseguridad", estado: "Por aprender", icono: "🛡️", tono: "skill-ciber" },
+  { nombre: "Linux", estado: "Dominado", icono: "/icons/linux.svg", tono: "skill-linux" },
+  { nombre: "Redes", estado: "Por aprender", icono: "/icons/network.svg", tono: "skill-redes" },
+  { nombre: "Servidores", estado: "Por aprender", icono: "/icons/server.svg", tono: "skill-servidores" },
+  { nombre: "Ciberseguridad", estado: "Por aprender", icono: "/icons/shield.svg", tono: "skill-ciber" },
 ];
