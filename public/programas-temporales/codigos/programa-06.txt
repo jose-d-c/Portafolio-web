@@ -1,20 +1,21 @@
-// Programa 06: Ordenamiento Burbuja Mejorado en Java (arreglo de String)
-// Objetivo:
-// Ordenar un arreglo de cadenas en orden alfabetico usando burbuja mejorado.
-//
-// Nota importante:
-// En Java se compara texto con compareTo:
-// - < 0  : la cadena actual va antes de la otra.
-// - = 0  : son iguales.
-// - > 0  : la cadena actual va despues de la otra.
-//
-// La mejora se basa en detener el algoritmo cuando una pasada completa no realiza
-// ningun intercambio, evitando trabajo innecesario.
+// ================================================
+// PROGRAMA 06
+// Titulo: Ordenamiento Burbuja Mejorado en Java (String)
+// Descripcion:
+//   Ordena un arreglo de cadenas alfabeticamente usando compareTo.
+//   Implementa corte temprano para optimizar cuando no hay intercambios.
+// Entradas:
+//   String[] palabras = {"zorro", "abeja", "limon", "casa", "nube", "gato", "arbol"}
+// Salidas esperadas:
+//   Arreglo original: [zorro, abeja, limon, casa, nube, gato, arbol]
+//   Arreglo ordenado: [abeja, arbol, casa, gato, limon, nube, zorro]
+// Complejidad:
+//   Mejor caso: O(n) | Promedio/Peor caso: O(n^2)
+// ================================================
 
 public class Programa06BurbujaMejoradoStrings {
 
     public static void main(String[] args) {
-        // Arreglo de palabras de ejemplo.
         String[] palabras = {"zorro", "abeja", "limon", "casa", "nube", "gato", "arbol"};
 
         System.out.print("Arreglo original: ");
@@ -26,7 +27,6 @@ public class Programa06BurbujaMejoradoStrings {
         imprimirArreglo(palabras);
     }
 
-    // Ordena el arreglo de cadenas de manera ascendente (A-Z).
     public static void burbujaMejoradoStrings(String[] arreglo) {
         int n = arreglo.length;
 
@@ -34,32 +34,26 @@ public class Programa06BurbujaMejoradoStrings {
             boolean huboIntercambio = false;
 
             for (int j = 0; j < n - 1 - pasada; j++) {
-                // Si arreglo[j] es "mayor" alfabeticamente que arreglo[j + 1], intercambiamos.
                 if (arreglo[j].compareTo(arreglo[j + 1]) > 0) {
                     String temporal = arreglo[j];
                     arreglo[j] = arreglo[j + 1];
                     arreglo[j + 1] = temporal;
-
                     huboIntercambio = true;
                 }
             }
 
-            // Corte temprano: el arreglo ya estaba ordenado.
             if (!huboIntercambio) {
-                System.out.println("No hubo intercambios en la pasada " + (pasada + 1) + ". Fin anticipado.");
+                System.out.println("(Corte temprano) No hubo intercambios en la pasada " + (pasada + 1));
                 break;
             }
         }
     }
 
-    // Imprime un arreglo de String con formato [a, b, c].
     public static void imprimirArreglo(String[] arreglo) {
         System.out.print("[");
         for (int i = 0; i < arreglo.length; i++) {
             System.out.print(arreglo[i]);
-            if (i < arreglo.length - 1) {
-                System.out.print(", ");
-            }
+            if (i < arreglo.length - 1) System.out.print(", ");
         }
         System.out.println("]");
     }

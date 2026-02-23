@@ -1,15 +1,17 @@
-// Programa 08: Quicksort en Java con String
-// Objetivo:
-// Ordenar cadenas alfabeticamente (A-Z) usando Quicksort.
-//
-// Consideraciones de comparacion:
-// - Se utiliza compareTo para comparar texto de forma lexicografica.
-// - Si palabraA.compareTo(palabraB) <= 0, palabraA va antes o igual que palabraB.
-//
-// Estrategia de particion usada:
-// - Tomamos como pivote el ultimo elemento del subarreglo.
-// - Movemos hacia la izquierda las cadenas que sean <= pivote.
-// - Colocamos el pivote en su posicion final y continuamos recursivamente.
+// ================================================
+// PROGRAMA 08
+// Titulo: Quicksort en Java (String)
+// Descripcion:
+//   Ordena un arreglo de cadenas alfabeticamente con Quicksort.
+//   Utiliza compareTo para la comparacion lexicografica y pivote final.
+// Entradas:
+//   String[] palabras = {"kiwi", "manzana", "pera", "uva", "banana", "cereza", "durazno"}
+// Salidas esperadas:
+//   Arreglo original: [kiwi, manzana, pera, uva, banana, cereza, durazno]
+//   Arreglo ordenado: [banana, cereza, durazno, kiwi, manzana, pera, uva]
+// Complejidad:
+//   Promedio: O(n log n) | Peor caso: O(n^2)
+// ================================================
 
 public class Programa08QuickSortStrings {
 
@@ -25,26 +27,19 @@ public class Programa08QuickSortStrings {
         imprimir(palabras);
     }
 
-    // Ordena recursivamente el subarreglo delimitado por izquierda y derecha.
     public static void quickSort(String[] arreglo, int izquierda, int derecha) {
-        if (izquierda >= derecha) {
-            return;
-        }
+        if (izquierda >= derecha) return;
 
         int indicePivote = particionar(arreglo, izquierda, derecha);
-
         quickSort(arreglo, izquierda, indicePivote - 1);
         quickSort(arreglo, indicePivote + 1, derecha);
     }
 
-    // Metodo de particion para cadenas.
     public static int particionar(String[] arreglo, int izquierda, int derecha) {
         String pivote = arreglo[derecha];
         int i = izquierda - 1;
 
         for (int j = izquierda; j < derecha; j++) {
-            // Si el valor actual va antes o igual al pivote alfabeticamente,
-            // lo movemos al bloque izquierdo.
             if (arreglo[j].compareTo(pivote) <= 0) {
                 i++;
                 intercambiar(arreglo, i, j);
@@ -55,21 +50,17 @@ public class Programa08QuickSortStrings {
         return i + 1;
     }
 
-    // Intercambio simple entre dos posiciones del arreglo.
     public static void intercambiar(String[] arreglo, int a, int b) {
         String temporal = arreglo[a];
         arreglo[a] = arreglo[b];
         arreglo[b] = temporal;
     }
 
-    // Funcion de apoyo para mostrar resultados.
     public static void imprimir(String[] arreglo) {
         System.out.print("[");
         for (int i = 0; i < arreglo.length; i++) {
             System.out.print(arreglo[i]);
-            if (i < arreglo.length - 1) {
-                System.out.print(", ");
-            }
+            if (i < arreglo.length - 1) System.out.print(", ");
         }
         System.out.println("]");
     }

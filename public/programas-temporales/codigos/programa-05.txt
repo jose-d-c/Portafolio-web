@@ -1,71 +1,60 @@
-// Programa 05: Ordenamiento Burbuja Mejorado en Java (arreglo de enteros)
-// Objetivo:
-// Ordenar un arreglo de numeros enteros de menor a mayor utilizando la variante
-// mejorada del algoritmo Burbuja.
-//
-// ¿Que mejora tiene esta version?
-// - En burbuja clasico se recorren todas las pasadas aunque el arreglo ya este ordenado.
-// - En burbuja mejorado usamos una bandera (huboIntercambio):
-//   si en una pasada no hay intercambios, el proceso termina anticipadamente.
-//
-// Ventaja:
-// - Mejor caso: O(n), cuando los datos ya estan ordenados.
-// - Caso promedio/peor: O(n^2).
+// ================================================
+// PROGRAMA 05
+// Titulo: Ordenamiento Burbuja Mejorado en Java (Enteros)
+// Descripcion:
+//   Ordena un arreglo de enteros en forma ascendente con Burbuja Mejorado.
+//   Se usa una bandera para terminar temprano cuando el arreglo ya esta ordenado.
+// Entradas:
+//   int[] numeros = {42, 15, 8, 23, 4, 16, 9, 55, 1, 30}
+// Salidas esperadas:
+//   Arreglo original: [42, 15, 8, 23, 4, 16, 9, 55, 1, 30]
+//   Arreglo ordenado: [1, 4, 8, 9, 15, 16, 23, 30, 42, 55]
+// Complejidad:
+//   Mejor caso: O(n) | Promedio/Peor caso: O(n^2)
+// ================================================
 
 public class Programa05BurbujaMejoradoEnteros {
 
     public static void main(String[] args) {
-        // Arreglo de ejemplo con valores desordenados.
         int[] numeros = {42, 15, 8, 23, 4, 16, 9, 55, 1, 30};
 
         System.out.print("Arreglo original: ");
         imprimirArreglo(numeros);
 
-        // Llamamos al metodo que aplica burbuja mejorado.
         burbujaMejorado(numeros);
 
         System.out.print("Arreglo ordenado: ");
         imprimirArreglo(numeros);
     }
 
-    // Metodo principal del ordenamiento burbuja mejorado.
+    // Burbuja mejorado: finaliza si en una pasada no se realiza ningun intercambio.
     public static void burbujaMejorado(int[] arreglo) {
         int n = arreglo.length;
 
-        // Recorremos por pasadas.
-        // En cada pasada, el elemento mas grande "sube" al final de la zona no ordenada.
         for (int pasada = 0; pasada < n - 1; pasada++) {
-            // Bandera para detectar si hubo al menos un intercambio.
             boolean huboIntercambio = false;
 
-            // El limite se reduce con cada pasada porque el final ya queda ordenado.
             for (int j = 0; j < n - 1 - pasada; j++) {
-                // Si el elemento actual es mayor que el siguiente, se intercambian.
                 if (arreglo[j] > arreglo[j + 1]) {
                     int temporal = arreglo[j];
                     arreglo[j] = arreglo[j + 1];
                     arreglo[j + 1] = temporal;
-
                     huboIntercambio = true;
                 }
             }
 
-            // Si no hubo intercambios, significa que ya esta totalmente ordenado.
             if (!huboIntercambio) {
-                System.out.println("Se detecto arreglo ordenado antes de completar todas las pasadas.");
+                System.out.println("(Corte temprano) El arreglo ya estaba ordenado.");
                 break;
             }
         }
     }
 
-    // Metodo auxiliar para imprimir el arreglo en formato legible.
     public static void imprimirArreglo(int[] arreglo) {
         System.out.print("[");
         for (int i = 0; i < arreglo.length; i++) {
             System.out.print(arreglo[i]);
-            if (i < arreglo.length - 1) {
-                System.out.print(", ");
-            }
+            if (i < arreglo.length - 1) System.out.print(", ");
         }
         System.out.println("]");
     }
