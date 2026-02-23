@@ -33,8 +33,7 @@ const codigoPlantilla = await readFile(
     <section class="panel bloque">
       <h1>{programa.titulo}</h1>
       <p class="textoSuave">
-        Espacio reservado para documentar el programa. Puedes actualizar esta pagina con el contenido final cuando
-        este disponible.
+        {programa.descripcion}
       </p>
     </section>
 
@@ -54,11 +53,11 @@ const codigoPlantilla = await readFile(
     </section>
 
     <section class="panel bloque zona-imagen">
-      <h2>Imagen de presentacion</h2>
+      <h2>Imagen de salida</h2>
       <div class="marco-imagen">
         <img
           src={programa.rutaImagenPlantilla}
-          alt={`Imagen temporal de ${programa.titulo}`}
+          alt={`Imagen de salida de ${programa.titulo}`}
           loading="lazy"
           decoding="async"
         />
