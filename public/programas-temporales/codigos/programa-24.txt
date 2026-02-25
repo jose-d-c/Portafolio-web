@@ -1,0 +1,67 @@
+// Programa 24: Ordenamiento por Seleccion en Java (arreglo de enteros)
+// ---------------------------------------------------------------------------------
+// ¿Que hace este programa?
+// 1) Recorre el arreglo por posiciones.
+// 2) En cada posicion i, busca el menor elemento del tramo no ordenado.
+// 3) Intercambia ese menor con la posicion i.
+//
+// Idea mental sencilla:
+// - "Voy llenando el arreglo de izquierda a derecha con el menor disponible".
+
+public class Programa24SeleccionEnteros {
+
+    public static void main(String[] args) {
+        int[] datos = {29, 10, 14, 37, 13, 4, 8, 21};
+
+        System.out.print("Arreglo original: ");
+        imprimirArreglo(datos);
+
+        seleccion(datos);
+
+        System.out.print("Arreglo ordenado: ");
+        imprimirArreglo(datos);
+    }
+
+    // Implementacion del metodo de Seleccion para enteros.
+    public static void seleccion(int[] arreglo) {
+        int n = arreglo.length;
+
+        // i representa el inicio de la zona no ordenada.
+        for (int i = 0; i < n - 1; i++) {
+            // Suponemos que el minimo esta en i.
+            int indiceMinimo = i;
+
+            // Buscamos el verdadero minimo desde i+1 hasta el final.
+            for (int j = i + 1; j < n; j++) {
+                if (arreglo[j] < arreglo[indiceMinimo]) {
+                    indiceMinimo = j;
+                }
+            }
+
+            // Si el minimo encontrado no es i, hacemos intercambio.
+            if (indiceMinimo != i) {
+                int temporal = arreglo[i];
+                arreglo[i] = arreglo[indiceMinimo];
+                arreglo[indiceMinimo] = temporal;
+            }
+        }
+    }
+
+    public static void imprimirArreglo(int[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+}
+
+// ------------------------------
+// EJEMPLO DE EJECUCION (OUTPUT)
+// ------------------------------
+// Arreglo original: [29, 10, 14, 37, 13, 4, 8, 21]
+// Arreglo ordenado: [4, 8, 10, 13, 14, 21, 29, 37]
+

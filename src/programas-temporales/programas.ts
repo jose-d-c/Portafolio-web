@@ -81,7 +81,7 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
   },
 };
 
-export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 20 }, (_, index) => {
+export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 27 }, (_, index) => {
   const numero = index + 1;
   const id = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
