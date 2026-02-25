@@ -79,9 +79,14 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Programa Java interactivo que estima memoria de Burbuja, Burbuja mejorado, Quicksort, Shell Sort y Seleccion en escenarios bajos, medios y altos, con trazas de consumo por pasos.",
   },
+  21: {
+    titulo: "Actividad: Quicksort en Java (vector de 7 enteros)",
+    descripcion:
+      "Implementacion de Quicksort con ejemplo guiado de particionado y salida final ordenada para reforzar recursion y pivote.",
+  },
 };
 
-export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 20 }, (_, index) => {
+export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 21 }, (_, index) => {
   const numero = index + 1;
   const id = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
