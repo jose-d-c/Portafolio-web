@@ -1,16 +1,26 @@
 // Programa 13: Medicion de TIEMPO en 3 escenarios (bajo, medio, muchos datos)
 // -----------------------------------------------------------------------------
-// Este programa ejecuta TODOS los algoritmos ya vistos:
-// Burbuja simple, Burbuja mejorado, Quicksort, Shell Sort y Seleccion.
+// EXPLICACION DIDACTICA (COMO FUNCIONA LA TOMA DE MEDIDAS)
+// 1) El usuario elige tipo de dato: Enteros o String.
+// 2) El usuario define 3 tamanos: bajo, medio y alto.
+// 3) Para cada escenario se construye UN ARREGLO BASE aleatorio.
+// 4) Cada algoritmo ordena una COPIA del arreglo base (misma entrada para todos).
+//    Esto evita sesgos y permite una comparacion justa.
+// 5) El tiempo se mide con System.nanoTime():
+//      inicio = System.nanoTime();
+//      ejecutar algoritmo
+//      fin = System.nanoTime();
+//      tiempo = fin - inicio
+//    El resultado se muestra en nanosegundos y milisegundos.
+// 6) Durante la ejecucion se imprime paso a paso:
+//    - En arreglos pequenos: casi todos los pasos.
+//    - En arreglos grandes: checkpoints periodicos para no saturar consola.
+// 7) Al final de cada algoritmo se imprime una linea RESUMEN con tiempo total,
+//    cantidad de pasos registrados y una vista corta del arreglo ordenado.
 //
-// Se prueban 3 tamanos para ver variacion de rendimiento:
-// 1) Datos bajos
-// 2) Datos medios
-// 3) Muchos datos
-//
-// Tambien muestra el paso a paso de cada algoritmo:
-// - En arreglos pequenos: traza detallada
-// - En arreglos medianos/grandes: checkpoints por intervalos
+// Nota pedagogica:
+// Si repites la ejecucion, los tiempos pueden variar por carga del sistema,
+// optimizaciones de JVM y otros procesos del computador. Es normal.
 
 import java.util.Arrays;
 import java.util.Random;

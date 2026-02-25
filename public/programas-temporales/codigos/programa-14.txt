@@ -1,16 +1,22 @@
 // Programa 14: Medicion de MEMORIA en 3 escenarios (bajo, medio, muchos datos)
 // ------------------------------------------------------------------------------
-// Este programa compara consumo de memoria de:
-// Burbuja simple, Burbuja mejorado, Quicksort, Shell Sort y Seleccion.
+// EXPLICACION DIDACTICA (COMO FUNCIONA LA TOMA DE MEDIDAS)
+// 1) El usuario elige tipo de dato: Enteros o String.
+// 2) El usuario define 3 tamanos: bajo, medio y alto.
+// 3) Para cada escenario se crea UN ARREGLO BASE y cada algoritmo trabaja
+//    sobre una COPIA, para comparar bajo la misma entrada.
+// 4) La medicion usa Runtime de Java:
+//      memoriaUsada = totalMemory() - freeMemory()
+//    Se toma memoria antes y despues del algoritmo para calcular delta.
+// 5) Se invoca System.gc() antes/despues para reducir ruido de medicion.
+// 6) El programa muestra trazas por paso con "deltaMem" (bytes) y estado
+//    parcial del arreglo, para ver como evoluciona el consumo durante el proceso.
+// 7) Al final de cada algoritmo se imprime una linea RESUMEN con:
+//    delta total en bytes, equivalente en KB, pasos y salida ordenada.
 //
-// Escenarios:
-// 1) Datos bajos
-// 2) Datos medios
-// 3) Muchos datos
-//
-// Se muestra paso a paso por algoritmo y, en cada paso mostrado,
-// se reporta delta de memoria respecto al inicio de ese algoritmo.
-// Nota: En Java la memoria es aproximada (GC), pero es util para comparar.
+// Nota pedagogica:
+// En Java la memoria no es exacta al byte en todo momento por el GC,
+// por eso esta medicion es una ESTIMACION COMPARATIVA, no una cifra absoluta.
 
 import java.util.Arrays;
 import java.util.Random;
