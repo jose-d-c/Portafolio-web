@@ -49,9 +49,39 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Implementacion de Quicksort para arreglos de String en Java, con comparacion lexicografica y comentarios detallados paso a paso.",
   },
+  22: {
+    titulo: "Actividad: Shell Sort en Java (int)",
+    descripcion:
+      "Programa en Java que ordena un arreglo de enteros con Shell Sort, mostrando el vector original, los gaps utilizados y el resultado final ascendente.",
+  },
+  23: {
+    titulo: "Actividad: Shell Sort en Java (String)",
+    descripcion:
+      "Implementacion de Shell Sort para cadenas en Java usando compareTo, con comentarios sobre el desplazamiento por gap y salida alfabetica.",
+  },
+  24: {
+    titulo: "Actividad: Seleccion en Java (int)",
+    descripcion:
+      "Ordenamiento por seleccion en Java para enteros, identificando el minimo por iteracion y realizando intercambios controlados hasta ordenar todo el arreglo.",
+  },
+  25: {
+    titulo: "Actividad: Seleccion en Java (String)",
+    descripcion:
+      "Version de seleccion para arreglos de String en Java, comparando lexicograficamente para elegir el menor elemento de cada pasada.",
+  },
+  26: {
+    titulo: "Actividad interactiva: Tiempo de ejecucion de todos los algoritmos",
+    descripcion:
+      "Programa Java interactivo que compara tiempos de Burbuja, Burbuja mejorado, Quicksort, Shell Sort y Seleccion en escenarios de datos bajos, medios y altos, mostrando trazas paso a paso.",
+  },
+  27: {
+    titulo: "Actividad interactiva: Uso de memoria de todos los algoritmos",
+    descripcion:
+      "Programa Java interactivo que estima memoria de Burbuja, Burbuja mejorado, Quicksort, Shell Sort y Seleccion en escenarios bajos, medios y altos, con trazas de consumo por pasos.",
+  },
 };
 
-export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 20 }, (_, index) => {
+export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 27 }, (_, index) => {
   const numero = index + 1;
   const id = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
