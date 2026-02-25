@@ -1,0 +1,67 @@
+// Programa 25: Ordenamiento por Seleccion en Java (arreglo de String)
+// ---------------------------------------------------------------------------------
+// ¿Que hace este programa?
+// 1) Toma un arreglo de palabras sin ordenar.
+// 2) Busca en cada pasada la palabra "menor" alfabeticamente.
+// 3) La coloca al inicio de la zona no ordenada.
+//
+// Para comparar cadenas usamos compareTo:
+// - < 0 : la palabra izquierda va antes alfabeticamente.
+// - = 0 : son iguales.
+// - > 0 : la palabra izquierda va despues alfabeticamente.
+
+public class Programa25SeleccionString {
+
+    public static void main(String[] args) {
+        String[] palabras = {"naranja", "uva", "manzana", "pera", "kiwi", "fresa", "banana"};
+
+        System.out.print("Arreglo original: ");
+        imprimirArreglo(palabras);
+
+        seleccion(palabras);
+
+        System.out.print("Arreglo ordenado: ");
+        imprimirArreglo(palabras);
+    }
+
+    // Seleccion adaptado a String.
+    public static void seleccion(String[] arreglo) {
+        int n = arreglo.length;
+
+        for (int i = 0; i < n - 1; i++) {
+            int indiceMinimo = i;
+
+            for (int j = i + 1; j < n; j++) {
+                // Si arreglo[j] va antes alfabeticamente que el minimo actual,
+                // actualizamos indiceMinimo.
+                if (arreglo[j].compareTo(arreglo[indiceMinimo]) < 0) {
+                    indiceMinimo = j;
+                }
+            }
+
+            if (indiceMinimo != i) {
+                String temporal = arreglo[i];
+                arreglo[i] = arreglo[indiceMinimo];
+                arreglo[indiceMinimo] = temporal;
+            }
+        }
+    }
+
+    public static void imprimirArreglo(String[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+}
+
+// ------------------------------
+// EJEMPLO DE EJECUCION (OUTPUT)
+// ------------------------------
+// Arreglo original: [naranja, uva, manzana, pera, kiwi, fresa, banana]
+// Arreglo ordenado: [banana, fresa, kiwi, manzana, naranja, pera, uva]
+
