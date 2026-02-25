@@ -1,11 +1,413 @@
-// Plantilla de codigo para Programa 13
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-13.svg
+// Programa 13: Medicion de TIEMPO en 3 escenarios (bajo, medio, muchos datos)
+// -----------------------------------------------------------------------------
+// EXPLICACION DIDACTICA (COMO FUNCIONA LA TOMA DE MEDIDAS)
+// 1) El usuario elige tipo de dato: Enteros o String.
+// 2) El usuario define 3 tamanos: bajo, medio y alto.
+// 3) Para cada escenario se construye UN ARREGLO BASE aleatorio.
+// 4) Cada algoritmo ordena una COPIA del arreglo base (misma entrada para todos).
+//    Esto evita sesgos y permite una comparacion justa.
+// 5) El tiempo se mide con System.nanoTime():
+//      inicio = System.nanoTime();
+//      ejecutar algoritmo
+//      fin = System.nanoTime();
+//      tiempo = fin - inicio
+//    El resultado se muestra en nanosegundos y milisegundos.
+// 6) Durante la ejecucion se imprime paso a paso:
+//    - En arreglos pequenos: casi todos los pasos.
+//    - En arreglos grandes: checkpoints periodicos para no saturar consola.
+// 7) Al final de cada algoritmo se imprime una linea RESUMEN con tiempo total,
+//    cantidad de pasos registrados y una vista corta del arreglo ordenado.
+//
+// Nota pedagogica:
+// Si repites la ejecucion, los tiempos pueden variar por carga del sistema,
+// optimizaciones de JVM y otros procesos del computador. Es normal.
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Programa13TiempoComparativo {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== MEDICION DE TIEMPO (3 ESCENARIOS) ===");
+        System.out.println("Tipo de dato: 1) Enteros  2) String");
+        System.out.print("Opcion: ");
+        int tipo = sc.nextInt();
+
+        System.out.print("Cantidad para datos bajos: ");
+        int nBajo = sc.nextInt();
+        System.out.print("Cantidad para datos medios: ");
+        int nMedio = sc.nextInt();
+        System.out.print("Cantidad para muchos datos: ");
+        int nAlto = sc.nextInt();
+
+        System.out.print("Semilla aleatoria: ");
+        long semilla = sc.nextLong();
+
+        if (tipo == 1) {
+            ejecutarEscenarioEnteros("BAJO", nBajo, semilla + 1);
+            ejecutarEscenarioEnteros("MEDIO", nMedio, semilla + 2);
+            ejecutarEscenarioEnteros("ALTO", nAlto, semilla + 3);
+        } else {
+            ejecutarEscenarioString("BAJO", nBajo, semilla + 1);
+            ejecutarEscenarioString("MEDIO", nMedio, semilla + 2);
+            ejecutarEscenarioString("ALTO", nAlto, semilla + 3);
+        }
+
+        sc.close();
+    }
+
+    private static void ejecutarEscenarioEnteros(String etiqueta, int n, long semilla) {
+        System.out.println("\n===== ESCENARIO " + etiqueta + " | n=" + n + " =====");
+        int[] base = generarEnteros(n, semilla);
+        System.out.println("Base: " + vistaCorta(base));
+        int frecuencia = frecuenciaTraza(n);
+
+        medirTiempoEnteros("Burbuja simple", base, frecuencia, Programa13TiempoComparativo::burbujaSimple);
+        medirTiempoEnteros("Burbuja mejorado", base, frecuencia, Programa13TiempoComparativo::burbujaMejorado);
+        medirTiempoEnteros("Quicksort", base, frecuencia, (arr, tr) -> quickSort(arr, 0, arr.length - 1, tr));
+        medirTiempoEnteros("Shell Sort", base, frecuencia, Programa13TiempoComparativo::shellSort);
+        medirTiempoEnteros("Seleccion", base, frecuencia, Programa13TiempoComparativo::seleccion);
+    }
+
+    private static void ejecutarEscenarioString(String etiqueta, int n, long semilla) {
+        System.out.println("\n===== ESCENARIO " + etiqueta + " | n=" + n + " =====");
+        String[] base = generarStrings(n, semilla);
+        System.out.println("Base: " + vistaCorta(base));
+        int frecuencia = frecuenciaTraza(n);
+
+        medirTiempoString("Burbuja simple", base, frecuencia, Programa13TiempoComparativo::burbujaSimple);
+        medirTiempoString("Burbuja mejorado", base, frecuencia, Programa13TiempoComparativo::burbujaMejorado);
+        medirTiempoString("Quicksort", base, frecuencia, (arr, tr) -> quickSort(arr, 0, arr.length - 1, tr));
+        medirTiempoString("Shell Sort", base, frecuencia, Programa13TiempoComparativo::shellSort);
+        medirTiempoString("Seleccion", base, frecuencia, Programa13TiempoComparativo::seleccion);
+    }
+
+    private static void medirTiempoEnteros(String nombre, int[] base, int frecuencia, OrdenadorEnteros algoritmo) {
+        int[] copia = Arrays.copyOf(base, base.length);
+        TrazaEnteros tr = new TrazaEnteros(nombre, frecuencia);
+
+        long inicio = System.nanoTime();
+        algoritmo.ordenar(copia, tr);
+        long fin = System.nanoTime();
+
+        long ns = fin - inicio;
+        System.out.printf("RESULTADO %-17s -> %12d ns | %9.4f ms | pasos=%d | %s%n",
+                nombre, ns, ns / 1_000_000.0, tr.pasos, vistaCorta(copia));
+    }
+
+    private static void medirTiempoString(String nombre, String[] base, int frecuencia, OrdenadorString algoritmo) {
+        String[] copia = Arrays.copyOf(base, base.length);
+        TrazaString tr = new TrazaString(nombre, frecuencia);
+
+        long inicio = System.nanoTime();
+        algoritmo.ordenar(copia, tr);
+        long fin = System.nanoTime();
+
+        long ns = fin - inicio;
+        System.out.printf("RESULTADO %-17s -> %12d ns | %9.4f ms | pasos=%d | %s%n",
+                nombre, ns, ns / 1_000_000.0, tr.pasos, vistaCorta(copia));
+    }
+
+    // ---------------- ENTEROS ----------------
+    private static void burbujaSimple(int[] a, TrazaEnteros t) {
+        for (int i = 0; i < a.length - 1; i++) {
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                t.log("comparar " + j + " y " + (j + 1), a);
+                if (a[j] > a[j + 1]) {
+                    int x = a[j]; a[j] = a[j + 1]; a[j + 1] = x;
+                    t.log("intercambio", a);
+                }
+            }
+        }
+    }
+
+    private static void burbujaMejorado(int[] a, TrazaEnteros t) {
+        for (int i = 0; i < a.length - 1; i++) {
+            boolean cambio = false;
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                t.log("comparar " + j + " y " + (j + 1), a);
+                if (a[j] > a[j + 1]) {
+                    int x = a[j]; a[j] = a[j + 1]; a[j + 1] = x;
+                    cambio = true;
+                    t.log("intercambio", a);
+                }
+            }
+            if (!cambio) {
+                t.log("corte temprano", a);
+                break;
+            }
+        }
+    }
+
+    private static void quickSort(int[] a, int l, int r, TrazaEnteros t) {
+        if (l >= r) return;
+        int p = particion(a, l, r, t);
+        t.log("pivote en " + p, a);
+        quickSort(a, l, p - 1, t);
+        quickSort(a, p + 1, r, t);
+    }
+
+    private static int particion(int[] a, int l, int r, TrazaEnteros t) {
+        int piv = a[r], i = l - 1;
+        t.log("particion pivote=" + piv, a);
+        for (int j = l; j < r; j++) {
+            t.log("comparar con pivote", a);
+            if (a[j] <= piv) {
+                i++;
+                int x = a[i]; a[i] = a[j]; a[j] = x;
+                t.log("mover <= pivote", a);
+            }
+        }
+        int x = a[i + 1]; a[i + 1] = a[r]; a[r] = x;
+        t.log("colocar pivote final", a);
+        return i + 1;
+    }
+
+    private static void shellSort(int[] a, TrazaEnteros t) {
+        for (int gap = a.length / 2; gap > 0; gap /= 2) {
+            t.log("gap=" + gap, a);
+            for (int i = gap; i < a.length; i++) {
+                int tmp = a[i], j = i;
+                while (j >= gap && a[j - gap] > tmp) {
+                    a[j] = a[j - gap];
+                    j -= gap;
+                    t.log("desplazar por gap", a);
+                }
+                a[j] = tmp;
+                t.log("insertar por gap", a);
+            }
+        }
+    }
+
+    private static void seleccion(int[] a, TrazaEnteros t) {
+        for (int i = 0; i < a.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < a.length; j++) {
+                t.log("buscar minimo", a);
+                if (a[j] < a[min]) {
+                    min = j;
+                    t.log("nuevo minimo=" + min, a);
+                }
+            }
+            if (min != i) {
+                int x = a[i]; a[i] = a[min]; a[min] = x;
+                t.log("intercambiar con i", a);
+            }
+        }
+    }
+
+    // ---------------- STRING ----------------
+    private static void burbujaSimple(String[] a, TrazaString t) {
+        for (int i = 0; i < a.length - 1; i++) {
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                t.log("comparar " + j + " y " + (j + 1), a);
+                if (a[j].compareTo(a[j + 1]) > 0) {
+                    String x = a[j]; a[j] = a[j + 1]; a[j + 1] = x;
+                    t.log("intercambio", a);
+                }
+            }
+        }
+    }
+
+    private static void burbujaMejorado(String[] a, TrazaString t) {
+        for (int i = 0; i < a.length - 1; i++) {
+            boolean cambio = false;
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                t.log("comparar " + j + " y " + (j + 1), a);
+                if (a[j].compareTo(a[j + 1]) > 0) {
+                    String x = a[j]; a[j] = a[j + 1]; a[j + 1] = x;
+                    cambio = true;
+                    t.log("intercambio", a);
+                }
+            }
+            if (!cambio) {
+                t.log("corte temprano", a);
+                break;
+            }
+        }
+    }
+
+    private static void quickSort(String[] a, int l, int r, TrazaString t) {
+        if (l >= r) return;
+        int p = particion(a, l, r, t);
+        t.log("pivote en " + p, a);
+        quickSort(a, l, p - 1, t);
+        quickSort(a, p + 1, r, t);
+    }
+
+    private static int particion(String[] a, int l, int r, TrazaString t) {
+        String piv = a[r];
+        int i = l - 1;
+        t.log("particion pivote=" + piv, a);
+        for (int j = l; j < r; j++) {
+            t.log("comparar con pivote", a);
+            if (a[j].compareTo(piv) <= 0) {
+                i++;
+                String x = a[i]; a[i] = a[j]; a[j] = x;
+                t.log("mover <= pivote", a);
+            }
+        }
+        String x = a[i + 1]; a[i + 1] = a[r]; a[r] = x;
+        t.log("colocar pivote final", a);
+        return i + 1;
+    }
+
+    private static void shellSort(String[] a, TrazaString t) {
+        for (int gap = a.length / 2; gap > 0; gap /= 2) {
+            t.log("gap=" + gap, a);
+            for (int i = gap; i < a.length; i++) {
+                String tmp = a[i];
+                int j = i;
+                while (j >= gap && a[j - gap].compareTo(tmp) > 0) {
+                    a[j] = a[j - gap];
+                    j -= gap;
+                    t.log("desplazar por gap", a);
+                }
+                a[j] = tmp;
+                t.log("insertar por gap", a);
+            }
+        }
+    }
+
+    private static void seleccion(String[] a, TrazaString t) {
+        for (int i = 0; i < a.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < a.length; j++) {
+                t.log("buscar minimo", a);
+                if (a[j].compareTo(a[min]) < 0) {
+                    min = j;
+                    t.log("nuevo minimo=" + min, a);
+                }
+            }
+            if (min != i) {
+                String x = a[i]; a[i] = a[min]; a[min] = x;
+                t.log("intercambiar con i", a);
+            }
+        }
+    }
+
+    // ---------------- UTILIDADES ----------------
+    private static int[] generarEnteros(int n, long semilla) {
+        Random r = new Random(semilla);
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) a[i] = r.nextInt(50_000);
+        return a;
+    }
+
+    private static String[] generarStrings(int n, long semilla) {
+        Random r = new Random(semilla);
+        String[] a = new String[n];
+        for (int i = 0; i < n; i++) a[i] = "pal" + r.nextInt(50_000);
+        return a;
+    }
+
+    private static int frecuenciaTraza(int n) {
+        if (n <= 20) return 1;
+        if (n <= 300) return 40;
+        return 1500;
+    }
+
+    private static String vistaCorta(int[] a) {
+        int lim = Math.min(a.length, 10);
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < lim; i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(a[i]);
+        }
+        if (a.length > lim) sb.append(", ...");
+        sb.append("]");
+        return sb.toString();
+    }
+
+    private static String vistaCorta(String[] a) {
+        int lim = Math.min(a.length, 10);
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < lim; i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(a[i]);
+        }
+        if (a.length > lim) sb.append(", ...");
+        sb.append("]");
+        return sb.toString();
+    }
+
+    static class TrazaEnteros {
+        String algoritmo;
+        int frecuencia;
+        long pasos = 0;
+
+        TrazaEnteros(String algoritmo, int frecuencia) {
+            this.algoritmo = algoritmo;
+            this.frecuencia = Math.max(1, frecuencia);
+        }
+
+        void log(String evento, int[] estado) {
+            pasos++;
+            if (pasos <= 12 || pasos % frecuencia == 0) {
+                System.out.println("[" + algoritmo + "] paso " + pasos + " -> " + evento + " | " + vistaCorta(estado));
+            }
+        }
+    }
+
+    static class TrazaString {
+        String algoritmo;
+        int frecuencia;
+        long pasos = 0;
+
+        TrazaString(String algoritmo, int frecuencia) {
+            this.algoritmo = algoritmo;
+            this.frecuencia = Math.max(1, frecuencia);
+        }
+
+        void log(String evento, String[] estado) {
+            pasos++;
+            if (pasos <= 12 || pasos % frecuencia == 0) {
+                System.out.println("[" + algoritmo + "] paso " + pasos + " -> " + evento + " | " + vistaCorta(estado));
+            }
+        }
+    }
+
+    @FunctionalInterface
+    interface OrdenadorEnteros { void ordenar(int[] arreglo, TrazaEnteros traza); }
+    @FunctionalInterface
+    interface OrdenadorString { void ordenar(String[] arreglo, TrazaString traza); }
 }
 
-main();
+// ------------------------------
+// EJEMPLOS DE EJECUCION (OUTPUT)
+// ------------------------------
+// Opcion 1 (Enteros):
+// Entrada:
+//   Opcion tipo = 1
+//   bajos=6, medios=20, altos=60, semilla=42
+// Salida esperada (resumen):
+//   ===== ESCENARIO BAJO | n=6 =====
+//   [Burbuja simple] paso 1 -> comparar 0 y 1 | [...]
+//   ...
+//   RESULTADO Burbuja simple    -> <ns> ns | <ms> ms | pasos=<n> | [..ordenado..]
+//   RESULTADO Burbuja mejorado  -> ...
+//   RESULTADO Quicksort         -> ...
+//   RESULTADO Shell Sort        -> ...
+//   RESULTADO Seleccion         -> ...
+//   ===== ESCENARIO MEDIO | n=20 =====
+//   ... resultados de los 5 algoritmos ...
+//   ===== ESCENARIO ALTO | n=60 =====
+//   ... resultados de los 5 algoritmos ...
+//
+// Opcion 2 (String):
+// Entrada:
+//   Opcion tipo = 2
+//   bajos=6, medios=20, altos=60, semilla=42
+// Salida esperada (resumen):
+//   ===== ESCENARIO BAJO | n=6 =====
+//   [Burbuja simple] paso 1 -> comparar 0 y 1 | [pal..., ...]
+//   ...
+//   RESULTADO Burbuja simple    -> <ns> ns | <ms> ms | pasos=<n> | [..ordenado..]
+//   RESULTADO Burbuja mejorado  -> ...
+//   RESULTADO Quicksort         -> ...
+//   RESULTADO Shell Sort        -> ...
+//   RESULTADO Seleccion         -> ...
+

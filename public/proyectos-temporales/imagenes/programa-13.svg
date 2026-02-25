@@ -1,8 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Plantilla de imagen Programa 13</title>
-  <desc id="desc">Imagen temporal para Programa 13. Reemplazar con captura del programa final.</desc>
+  <title id="title">Evidencia de salida Programa 13</title>
+  <desc id="desc">Plantilla de salida para medicion de tiempo por casos bajo, medio y alto en enteros y String.</desc>
   <rect width="1200" height="700" fill="#0f172a"/>
-  <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
-  <text x="600" y="315" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="56">Programa 13</text>
-  <text x="600" y="390" text-anchor="middle" fill="#94a3b8" font-family="Arial, sans-serif" font-size="30">Reemplaza esta imagen por la evidencia final</text>
+  <rect x="24" y="24" width="1152" height="652" rx="22" fill="#111827" stroke="#334155" stroke-width="4"/>
+
+  <text x="600" y="78" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="36">Programa 13 - Salida esperada (Tiempo)</text>
+  <text x="600" y="112" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="20">Casos: Bajo / Medio / Alto para Enteros y String</text>
+
+  <rect x="60" y="140" width="520" height="220" rx="14" fill="#0b1220" stroke="#1e293b"/>
+  <text x="80" y="176" fill="#cbd5e1" font-family="Courier New, monospace" font-size="22">ENTEROS</text>
+  <text x="80" y="212" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">BAJO  : RESULTADO Burbuja ... ns | ... ms</text>
+  <text x="80" y="242" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">MEDIO : RESULTADO Quicksort ... ns | ... ms</text>
+  <text x="80" y="272" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">ALTO  : RESULTADO Shell Sort ... ns | ... ms</text>
+  <text x="80" y="302" fill="#64748b" font-family="Courier New, monospace" font-size="16">(mostrar los 5 algoritmos por cada escenario)</text>
+
+  <rect x="620" y="140" width="520" height="220" rx="14" fill="#0b1220" stroke="#1e293b"/>
+  <text x="640" y="176" fill="#cbd5e1" font-family="Courier New, monospace" font-size="22">STRING</text>
+  <text x="640" y="212" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">BAJO  : RESULTADO Burbuja ... ns | ... ms</text>
+  <text x="640" y="242" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">MEDIO : RESULTADO Quicksort ... ns | ... ms</text>
+  <text x="640" y="272" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">ALTO  : RESULTADO Shell Sort ... ns | ... ms</text>
+  <text x="640" y="302" fill="#64748b" font-family="Courier New, monospace" font-size="16">(mostrar los 5 algoritmos por cada escenario)</text>
+
+  <rect x="60" y="390" width="1080" height="240" rx="14" fill="#0b1220" stroke="#1e293b"/>
+  <text x="80" y="426" fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">TRAZA (paso a paso):</text>
+  <text x="80" y="458" fill="#94a3b8" font-family="Courier New, monospace" font-size="17">[Burbuja simple] paso 1 -&gt; comparar 0 y 1 | [ ... ]</text>
+  <text x="80" y="486" fill="#94a3b8" font-family="Courier New, monospace" font-size="17">[Burbuja simple] paso 2 -&gt; intercambio | [ ... ]</text>
+  <text x="80" y="514" fill="#94a3b8" font-family="Courier New, monospace" font-size="17">[Quicksort] paso ... -&gt; pivote en ... | [ ... ]</text>
+  <text x="80" y="544" fill="#64748b" font-family="Courier New, monospace" font-size="16">Reemplazar con captura real donde se vean los 3 escenarios y ambos tipos de dato.</text>
 </svg>

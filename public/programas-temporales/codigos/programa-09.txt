@@ -1,11 +1,84 @@
-// Plantilla de codigo para Programa 09
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-09.svg
+// Programa 9: Shell Sort en Java (arreglo de enteros)
+// ---------------------------------------------------------------------------------
+// ¿Que hace este programa?
+// 1) Crea un arreglo de numeros enteros desordenados.
+// 2) Lo ordena de menor a mayor usando el algoritmo Shell Sort.
+// 3) Muestra el arreglo antes y despues del ordenamiento.
+//
+// ¿Por que Shell Sort?
+// - Es una mejora del algoritmo de insercion.
+// - En lugar de comparar solo vecinos inmediatos, primero compara elementos
+//   que estan "lejos" entre si (segun un salto llamado gap).
+// - Ese proceso deja el arreglo "casi ordenado" y luego termina con gap = 1,
+//   donde se comporta como insercion pero mucho mas rapido que empezar desde cero.
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+public class Programa9ShellSortEnteros {
+
+    public static void main(String[] args) {
+        // Arreglo de ejemplo que vamos a ordenar.
+        int[] datos = {45, 12, 89, 3, 27, 66, 18, 5, 90, 34};
+
+        // Imprimimos el estado inicial para comparar luego.
+        System.out.print("Arreglo original: ");
+        imprimirArreglo(datos);
+
+        // Llamamos al metodo que realiza Shell Sort.
+        shellSort(datos);
+
+        // Imprimimos el resultado final ya ordenado.
+        System.out.print("Arreglo ordenado: ");
+        imprimirArreglo(datos);
+    }
+
+    // Metodo principal del algoritmo Shell Sort.
+    public static void shellSort(int[] arreglo) {
+        int n = arreglo.length;
+
+        // El "gap" comienza en la mitad del tamano del arreglo.
+        // Ejemplo: si n = 10, gap inicia en 5.
+        // Luego lo reducimos a la mitad en cada vuelta: 5 -> 2 -> 1.
+        for (int gap = n / 2; gap > 0; gap /= 2) {
+
+            // Recorremos desde la posicion "gap" hasta el final,
+            // porque los indices anteriores no tienen elemento "a gap" atras.
+            for (int i = gap; i < n; i++) {
+                // Guardamos el valor actual para insertarlo en su posicion correcta.
+                int temporal = arreglo[i];
+
+                // j se movera hacia atras en saltos del tamano "gap".
+                int j = i;
+
+                // Mientras exista un elemento anterior (a distancia gap)
+                // y ese elemento sea mayor que "temporal", lo desplazamos.
+                // Esto deja un "hueco" donde luego insertaremos temporal.
+                while (j >= gap && arreglo[j - gap] > temporal) {
+                    arreglo[j] = arreglo[j - gap];
+                    j -= gap;
+                }
+
+                // Colocamos el valor temporal en su lugar correcto
+                // dentro del grupo definido por el gap actual.
+                arreglo[j] = temporal;
+            }
+        }
+    }
+
+    // Metodo auxiliar para mostrar el arreglo con formato [a, b, c].
+    public static void imprimirArreglo(int[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
 }
 
-main();
+// ------------------------------
+// EJEMPLO DE EJECUCION (OUTPUT)
+// ------------------------------
+// Arreglo original: [45, 12, 89, 3, 27, 66, 18, 5, 90, 34]
+// Arreglo ordenado: [3, 5, 12, 18, 27, 34, 45, 66, 89, 90]
+
