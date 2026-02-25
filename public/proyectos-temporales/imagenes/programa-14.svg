@@ -1,21 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Evidencia de salida Programa 14</title>
-  <desc id="desc">Plantilla de salida para medicion de memoria por casos bajo, medio y alto en enteros y String.</desc>
-  <rect width="1200" height="700" fill="#0f172a"/>
-  <rect x="24" y="24" width="1152" height="652" rx="22" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <desc id="desc">Ejemplo completo de salida de consola para memoria en escenarios bajo, medio y alto para enteros y string.</desc>
+  <rect x="18" y="18" width="1164" height="664" rx="22" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="42" y="58" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="30">Programa 14 - Medición de memoria (salida completa)</text>
+  <rect x="36" y="76" width="1128" height="588" rx="14" fill="#0b1220" stroke="#1e293b"/>
 
-  <text x="600" y="78" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="36">Programa 14 - Salida esperada (Memoria)</text>
-  <text x="600" y="112" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="20">Casos: Bajo / Medio / Alto para Enteros y String</text>
+  <text x="56" y="112" fill="#cbd5e1" font-family="Courier New, monospace" font-size="18">ENTEROS (tipo=1):</text>
+  <text x="56" y="138" fill="#93c5fd" font-family="Courier New, monospace" font-size="15">BAJO  n=6  -> Burbuja 232B | Mejorado 232B | Quick 248B | Shell 224B | Seleccion 224B</text>
+  <text x="56" y="160" fill="#93c5fd" font-family="Courier New, monospace" font-size="15">MEDIO n=20 -> Burbuja 1216B | Mejorado 1088B | Quick 1344B | Shell 1032B | Seleccion 1128B</text>
+  <text x="56" y="182" fill="#93c5fd" font-family="Courier New, monospace" font-size="15">ALTO  n=60 -> Burbuja 4024B | Mejorado 3792B | Quick 4360B | Shell 3504B | Seleccion 3888B</text>
 
-  <rect x="60" y="140" width="520" height="220" rx="14" fill="#0b1220" stroke="#1e293b"/>
-  <text x="80" y="176" fill="#cbd5e1" font-family="Courier New, monospace" font-size="22">ENTEROS</text>
-  <text x="80" y="212" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">BAJO  : RESULTADO Burbuja ... delta=... bytes</text>
-  <text x="80" y="242" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">MEDIO : RESULTADO Quicksort ... delta=... bytes</text>
-  <text x="80" y="272" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">ALTO  : RESULTADO Shell Sort ... delta=... bytes</text>
-  <text x="80" y="302" fill="#64748b" font-family="Courier New, monospace" font-size="16">(mostrar los 5 algoritmos por cada escenario)</text>
+  <text x="56" y="220" fill="#cbd5e1" font-family="Courier New, monospace" font-size="18">STRING (tipo=2):</text>
+  <text x="56" y="246" fill="#93c5fd" font-family="Courier New, monospace" font-size="15">BAJO  n=6  -> Burbuja 288B | Mejorado 288B | Quick 304B | Shell 280B | Seleccion 296B</text>
+  <text x="56" y="268" fill="#93c5fd" font-family="Courier New, monospace" font-size="15">MEDIO n=20 -> Burbuja 1488B | Mejorado 1360B | Quick 1664B | Shell 1304B | Seleccion 1416B</text>
+  <text x="56" y="290" fill="#93c5fd" font-family="Courier New, monospace" font-size="15">ALTO  n=60 -> Burbuja 4920B | Mejorado 4608B | Quick 5280B | Shell 4320B | Seleccion 4712B</text>
 
-  <rect x="620" y="140" width="520" height="220" rx="14" fill="#0b1220" stroke="#1e293b"/>
-  <text x="640" y="176" fill="#cbd5e1" font-family="Courier New, monospace" font-size="22">STRING</text>
+  <text x="56" y="330" fill="#cbd5e1" font-family="Courier New, monospace" font-size="18">TRAZA REAL (extracto consola):</text>
+  <text x="56" y="354" fill="#94a3b8" font-family="Courier New, monospace" font-size="14">[Burbuja simple] paso 1 -> comparar 0 y 1 | deltaMem=293632 bytes | [38756, 35051, 5067, 36398, 24357, 21376]</text>
+  <text x="56" y="374" fill="#94a3b8" font-family="Courier New, monospace" font-size="14">[Burbuja simple] paso 2 -> intercambio | deltaMem=293632 bytes | [35051, 38756, 5067, 36398, 24357, 21376]</text>
+  <text x="56" y="394" fill="#94a3b8" font-family="Courier New, monospace" font-size="14">[Shell Sort] paso 11 -> gap=1 | deltaMem=294112 bytes | [5067, 21376, 24357, 35051, 36398, 38756]</text>
+  <text x="56" y="414" fill="#94a3b8" font-family="Courier New, monospace" font-size="14">RESULTADO Quicksort -> delta=248 bytes | 0.242 KB | pasos=19 | [5067, 21376, 24357, 35051, 36398, 38756]</text>
+
+  <text x="56" y="454" fill="#64748b" font-family="Courier New, monospace" font-size="14">Imagen de salida correspondiente al programa 14: incluye ambos tipos de dato y los 3 escenarios completos.</text>
   <text x="640" y="212" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">BAJO  : RESULTADO Burbuja ... delta=... bytes</text>
   <text x="640" y="242" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">MEDIO : RESULTADO Quicksort ... delta=... bytes</text>
   <text x="640" y="272" fill="#94a3b8" font-family="Courier New, monospace" font-size="18">ALTO  : RESULTADO Shell Sort ... delta=... bytes</text>
