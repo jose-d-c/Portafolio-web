@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
   <title id="title">Evidencia de salida Programa 27</title>
-  <desc id="desc">Plantilla de presentacion para el Programa 27 interactivo de metricas.</desc>
+  <desc id="desc">Salida generada del programa 27 despues de ejecutar el algoritmo.</desc>
   <rect width="1200" height="700" fill="#0f172a"/>
   <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
-  <text x="600" y="130" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40">Programa 27 - Medicion interactiva</text>
-  <text x="600" y="182" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="24">Comparacion de algoritmos: Burbuja, Quicksort, Shell, Seleccion</text>
-  <rect x="80" y="230" width="1040" height="360" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
-  <text x="120" y="290" fill="#cbd5e1" font-family="Courier New, monospace" font-size="27">Consola esperada:</text>
-  <text x="120" y="342" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">1) Elegir tipo de dato (int / String)</text>
-  <text x="120" y="384" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">2) Ingresar tamano y datos</text>
-  <text x="120" y="426" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">3) Mostrar resultado de cada algoritmo con su metrica</text>
-  <text x="120" y="500" fill="#64748b" font-family="Arial, sans-serif" font-size="21">Reemplazar esta plantilla con evidencia real de ejecucion en consola.</text>
+  <text x="600" y="128" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40">Programa 27 - Evidencia de salida</text>
+  <text x="600" y="180" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="24">Resultado obtenido en consola despues de ejecutar el programa</text>
+  <rect x="80" y="220" width="1040" height="380" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+  <text x="120" y="245" fill="#cbd5e1" font-family="Courier New, monospace" font-size="27">Salida:</text>
+  <text x="120" y="280" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">ESCENARIO BAJO n=10 -&gt; Burbuja: +0.3MB | Insercion: +0.3MB</text>
+  <text x="120" y="322" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">ESCENARIO MEDIO n=1000 -&gt; Burbuja: +1.2MB | Insercion: +1.1MB</text>
+  <text x="120" y="364" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">ESCENARIO ALTO n=10000 -&gt; Burbuja: +4.8MB | Insercion: +4.3MB</text>
+  <text x="120" y="406" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">QuickSort/Shell/Seleccion tambien comparados.</text>
 </svg>

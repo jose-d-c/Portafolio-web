@@ -1,0 +1,61 @@
+// Programa 28: Ordenamiento por Insercion en Java (arreglo de enteros)
+// ---------------------------------------------------------------------
+// ¿Que hace este programa?
+// 1) Recorre el arreglo desde la segunda posicion.
+// 2) Toma el elemento actual como "clave".
+// 3) Desplaza hacia la derecha los elementos mayores.
+// 4) Inserta la clave en su posicion correcta.
+//
+// Idea:
+// - La parte izquierda siempre queda ordenada.
+// - En cada paso insertamos 1 elemento mas en esa zona ordenada.
+
+public class Programa28InsercionEnteros {
+
+    public static void main(String[] args) {
+        int[] datos = {34, 8, 64, 51, 32, 21, 13, 5};
+
+        System.out.print("Arreglo original: ");
+        imprimirArreglo(datos);
+
+        insercion(datos);
+
+        System.out.print("Arreglo ordenado: ");
+        imprimirArreglo(datos);
+    }
+
+    // Implementacion de insercion para enteros.
+    public static void insercion(int[] arreglo) {
+        for (int i = 1; i < arreglo.length; i++) {
+            int clave = arreglo[i];
+            int j = i - 1;
+
+            // Mientras haya elementos mayores que la clave,
+            // se desplazan una posicion a la derecha.
+            while (j >= 0 && arreglo[j] > clave) {
+                arreglo[j + 1] = arreglo[j];
+                j--;
+            }
+
+            // Insertamos la clave donde corresponde.
+            arreglo[j + 1] = clave;
+        }
+    }
+
+    public static void imprimirArreglo(int[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+}
+
+// ------------------------------
+// EJEMPLO DE EJECUCION (OUTPUT)
+// ------------------------------
+// Arreglo original: [34, 8, 64, 51, 32, 21, 13, 5]
+// Arreglo ordenado: [5, 8, 13, 21, 32, 34, 51, 64]

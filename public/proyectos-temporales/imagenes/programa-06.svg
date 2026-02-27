@@ -1,10 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Salida programa 06 - Burbuja mejorado strings</title>
-  <desc id="desc">Evidencia de salida en consola del programa de burbuja mejorado con cadenas.</desc>
-  <rect width="1200" height="700" fill="#0b1020"/>
-  <rect x="34" y="34" width="1132" height="632" rx="18" fill="#111827" stroke="#2dd4bf" stroke-width="3"/>
-  <text x="70" y="90" fill="#2dd4bf" font-family="Consolas, monospace" font-size="28">Programa 06 - Burbuja mejorado (String)</text>
-  <text x="70" y="150" fill="#e5e7eb" font-family="Consolas, monospace" font-size="30">Arreglo original: [zorro, abeja, limon, casa, nube, gato, arbol]</text>
-  <text x="70" y="205" fill="#fbbf24" font-family="Consolas, monospace" font-size="30">(Corte temprano) No hubo intercambios en la pasada 6</text>
-  <text x="70" y="260" fill="#86efac" font-family="Consolas, monospace" font-size="30">Arreglo ordenado: [abeja, arbol, casa, gato, limon, nube, zorro]</text>
+  <title id="title">Evidencia de salida Programa 06</title>
+  <desc id="desc">Salida generada del programa 06 despues de ejecutar el algoritmo.</desc>
+  <rect width="1200" height="700" fill="#0f172a"/>
+  <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="600" y="128" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40">Programa 06 - Evidencia de salida</text>
+  <text x="600" y="180" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="24">Resultado obtenido en consola despues de ejecutar el programa</text>
+  <rect x="80" y="220" width="1040" height="380" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+  <text x="120" y="245" fill="#cbd5e1" font-family="Courier New, monospace" font-size="27">Salida:</text>
+  <text x="120" y="280" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">Arreglo original: [zorro, abeja, limon, casa, nube, gato, arbol]</text>
+  <text x="120" y="322" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">Arreglo ordenado: [abeja, arbol, casa, gato, limon, nube, zorro]</text>
 </svg>

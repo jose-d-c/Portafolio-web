@@ -84,9 +84,19 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Implementacion de Quicksort con ejemplo guiado de particionado y salida final ordenada para reforzar recursion y pivote.",
   },
+  28: {
+    titulo: "Actividad: Insercion en Java (int)",
+    descripcion:
+      "Ordenamiento por insercion en Java con enteros, mostrando como se desplazan elementos a la derecha para insertar la clave en su posicion correcta.",
+  },
+  29: {
+    titulo: "Actividad: Insercion en Java (String)",
+    descripcion:
+      "Version de insercion para cadenas en Java con compareTo, reforzando insercion alfabetica y recorrido de la zona ya ordenada.",
+  },
 };
 
-export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 21 }, (_, index) => {
+export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 29 }, (_, index) => {
   const numero = index + 1;
   const id = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
