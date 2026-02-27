@@ -1,19 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
-  <title id="title">Salida Programa 02 (Python int)</title>
-  <desc id="desc">Captura de consola con la salida del programa 02.</desc>
-  <rect width="1400" height="760" fill="#020617"/>
-  <rect x="30" y="30" width="1340" height="700" rx="18" fill="#111827" stroke="#374151" stroke-width="3"/>
-  <text x="60" y="72" fill="#22c55e" font-family="Arial, sans-serif" font-size="30">$ Salida Programa 02 (Python int)</text>
-  <text x="60" y="110" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Arreglo original:</text>
-  <text x="60" y="152" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">[45, 12, 89, 3, 77, 21, 56, 8, 34, 60]</text>
-  <text x="60" y="194" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24"></text>
-  <text x="60" y="236" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 1: [12, 45, 3, 77, 21, 56, 8, 34, 60, 89]</text>
-  <text x="60" y="278" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 2: [12, 3, 45, 21, 56, 8, 34, 60, 77, 89]</text>
-  <text x="60" y="320" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 3: [3, 12, 21, 45, 8, 34, 56, 60, 77, 89]</text>
-  <text x="60" y="362" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 4: [3, 12, 21, 8, 34, 45, 56, 60, 77, 89]</text>
-  <text x="60" y="404" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 5: [3, 12, 8, 21, 34, 45, 56, 60, 77, 89]</text>
-  <text x="60" y="446" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 6: [3, 8, 12, 21, 34, 45, 56, 60, 77, 89]</text>
-  <text x="60" y="488" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">Pasada 7: [3, 8, 12, 21, 34, 45, 56, 60, 77, 89]</text>
-  <text x="60" y="530" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24"></text>
-  <text x="60" y="572" fill="#e5e7eb" font-family="'Courier New', monospace" font-size="24">No hubo intercambios; la lista ya estaba ordenada.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 02</title>
+  <desc id="desc">Salida generada del programa 02 despues de ejecutar el algoritmo.</desc>
+  <rect width="1200" height="700" fill="#0f172a"/>
+  <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="600" y="128" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40">Programa 02 - Evidencia de salida</text>
+  <text x="600" y="180" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="24">Resultado obtenido en consola despues de ejecutar el programa</text>
+  <rect x="80" y="220" width="1040" height="380" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+  <text x="120" y="245" fill="#cbd5e1" font-family="Courier New, monospace" font-size="27">Salida:</text>
+  <text x="120" y="280" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">Arreglo original:</text>
+  <text x="120" y="322" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">[34, 8, 64, 51, 32, 21, 13, 5, 89, 2]</text>
+  <text x="120" y="364" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">Arreglo ordenado de menor a mayor:</text>
+  <text x="120" y="406" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">[2, 5, 8, 13, 21, 32, 34, 51, 64, 89]</text>
 </svg>

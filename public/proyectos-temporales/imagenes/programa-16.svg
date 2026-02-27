@@ -1,8 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Plantilla de imagen Programa 16</title>
-  <desc id="desc">Imagen temporal para Programa 16. Reemplazar con captura del programa final.</desc>
+  <title id="title">Evidencia de salida Programa 16</title>
+  <desc id="desc">Salida generada del programa 16 despues de ejecutar el algoritmo.</desc>
   <rect width="1200" height="700" fill="#0f172a"/>
   <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
-  <text x="600" y="315" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="56">Programa 16</text>
-  <text x="600" y="390" text-anchor="middle" fill="#94a3b8" font-family="Arial, sans-serif" font-size="30">Reemplaza esta imagen por la evidencia final</text>
+  <text x="600" y="128" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40">Programa 16 - Evidencia de salida</text>
+  <text x="600" y="180" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="24">Resultado obtenido en consola despues de ejecutar el programa</text>
+  <rect x="80" y="220" width="1040" height="380" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+  <text x="120" y="245" fill="#cbd5e1" font-family="Courier New, monospace" font-size="27">Salida:</text>
+  <text x="120" y="280" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">Salida de ejecucion:</text>
+  <text x="120" y="322" fill="#94a3b8" font-family="Courier New, monospace" font-size="22">Pendiente de implementacion</text>
 </svg>

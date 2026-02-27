@@ -1,0 +1,56 @@
+// Programa 29: Ordenamiento por Insercion en Java (arreglo de String)
+// --------------------------------------------------------------------
+// ¿Que hace este programa?
+// 1) Usa insercion para ordenar palabras alfabeticamente.
+// 2) Toma una palabra clave y desplaza las que van despues de ella.
+// 3) Inserta la clave en su posicion final dentro del segmento ordenado.
+//
+// Para comparar cadenas se usa compareTo:
+// - > 0 indica que la palabra izquierda va despues alfabeticamente.
+
+public class Programa29InsercionString {
+
+    public static void main(String[] args) {
+        String[] palabras = {"zorro", "abeja", "limon", "uva", "cereza", "banana", "kiwi"};
+
+        System.out.print("Arreglo original: ");
+        imprimirArreglo(palabras);
+
+        insercion(palabras);
+
+        System.out.print("Arreglo ordenado: ");
+        imprimirArreglo(palabras);
+    }
+
+    // Insercion adaptada para String.
+    public static void insercion(String[] arreglo) {
+        for (int i = 1; i < arreglo.length; i++) {
+            String clave = arreglo[i];
+            int j = i - 1;
+
+            while (j >= 0 && arreglo[j].compareTo(clave) > 0) {
+                arreglo[j + 1] = arreglo[j];
+                j--;
+            }
+
+            arreglo[j + 1] = clave;
+        }
+    }
+
+    public static void imprimirArreglo(String[] arreglo) {
+        System.out.print("[");
+        for (int i = 0; i < arreglo.length; i++) {
+            System.out.print(arreglo[i]);
+            if (i < arreglo.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+}
+
+// ------------------------------
+// EJEMPLO DE EJECUCION (OUTPUT)
+// ------------------------------
+// Arreglo original: [zorro, abeja, limon, uva, cereza, banana, kiwi]
+// Arreglo ordenado: [abeja, banana, cereza, kiwi, limon, uva, zorro]
