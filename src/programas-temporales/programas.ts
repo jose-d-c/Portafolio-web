@@ -96,8 +96,14 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
   },
 };
 
-export const programasTemporales: ProgramaTemporal[] = Array.from({ length: 29 }, (_, index) => {
-  const numero = index + 1;
+const ordenProgramasTemporales = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+  13, 14,
+  28, 29,
+  15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+];
+
+export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero) => {
   const id = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
 
