@@ -1,11 +1,48 @@
-// Plantilla de codigo para Programa 16
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-16.svg
+// Programa 16: Ordenamiento por insercion en Java (String)
+//
+// Objetivo didactico:
+// - Aplicar insercion simple sobre cadenas usando compareTo.
+// - Reforzar la comparacion alfabetica en Java.
+//
+// Entrada del ejemplo:
+// [lima, bogota, medellin, cali, armenia]
+//
+// Salida esperada:
+// [armenia, bogota, cali, lima, medellin]
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+import java.util.Arrays;
+
+public class Programa16InsercionCadenas {
+
+    public static void main(String[] args) {
+        // Arreglo de prueba para ordenar alfabeticamente.
+        String[] ciudades = {"lima", "bogota", "medellin", "cali", "armenia"};
+
+        System.out.println("Programa 16 - Insercion (String)");
+        System.out.println("Arreglo original: " + Arrays.toString(ciudades));
+
+        insercion(ciudades);
+
+        System.out.println("Arreglo ordenado: " + Arrays.toString(ciudades));
+    }
+
+    // Algoritmo de insercion para cadenas.
+    public static void insercion(String[] arreglo) {
+        // Recorremos desde el segundo elemento; el primero se asume ordenado.
+        for (int i = 1; i < arreglo.length; i++) {
+            // "clave" es la cadena actual por insertar.
+            String clave = arreglo[i];
+            int j = i - 1;
+
+            // compareTo > 0 significa que arreglo[j] va despues alfabeticamente,
+            // por eso se desplaza a la derecha.
+            while (j >= 0 && arreglo[j].compareTo(clave) > 0) {
+                arreglo[j + 1] = arreglo[j];
+                j--;
+            }
+
+            // Se coloca la clave en la posicion correcta.
+            arreglo[j + 1] = clave;
+        }
+    }
 }
-
-main();
