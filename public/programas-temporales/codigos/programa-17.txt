@@ -1,0 +1,278 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa no busca tiempo ni memoria; mide trabajo interno del algoritmo.
+// 2) En cada metodo se cuentan iteraciones, comparaciones e intercambios/desplazamientos.
+// 3) Se usan tres arreglos fijos (pequeno, moderado y grande).
+// 4) Cada algoritmo recibe una copia del mismo arreglo del escenario.
+// 5) Eso permite comparar resultados de forma justa y reproducible.
+// 6) Los comentarios internos explican la logica para personas sin experiencia previa.
+
+// Programa temporal 17 (version corregida)
+// -----------------------------------------------------------------------------
+// OBJETIVO
+// Medir, para cada algoritmo de ordenamiento visto anteriormente, tres metricas:
+// 1) Iteraciones (pasadas)
+// 2) Comparaciones
+// 3) Intercambios o desplazamientos
+//
+// IMPORTANTE (ajuste solicitado):
+// - NO se generan arreglos aleatorios.
+// - Se usan arreglos ESPECIFICOS (fijos) para cada escenario.
+// - Cada algoritmo recibe una COPIA (clon) del mismo arreglo del escenario,
+//   para garantizar una comparacion justa.
+//
+// ESCENARIOS
+// - Pequena cantidad de datos
+// - Moderada cantidad de datos
+// - Gran cantidad de datos
+//
+// SALIDA REQUERIDA
+// System.out.println("Iteraciones (pasadas): " + iteraciones);
+// System.out.println("Comparaciones: " + comparaciones);
+// System.out.println("Intercambios: " + intercambios);
+//
+// DEFINICION DE METRICAS (segun tabla)
+// - Burbuja Simple: pasadas del ciclo externo, comparaciones por pares, swaps.
+// - Burbuja Mejorado: pasadas efectivas (solo con swap), comparaciones por pares, swaps.
+// - QuickSort: llamadas recursivas, comparaciones al particionar, swaps al particionar.
+// - ShellSort: iteraciones por gap, comparaciones por gap, desplazamientos por gap.
+// - Seleccion Directa: pasadas del externo, comparaciones para minimo, swaps finales.
+// - Insercion Simple: pasadas del externo, comparaciones para ubicar clave, desplazamientos.
+
+import java.util.Arrays;
+
+public class Programa17MetricasOrdenamientos {
+
+    // Estructura para centralizar el conteo de metricas.
+    static class Metricas {
+        long iteraciones;
+        long comparaciones;
+        long intercambios; // Para Shell/Insercion tambien representa desplazamientos.
+    }
+
+    public static void main(String[] args) {
+        // ---------------------------------------------------------------------
+        // ARREGLOS FIJOS (NO ALEATORIOS)
+        // Cada escenario tiene su propio arreglo base definido manualmente.
+        // Estos datos se mantienen constantes entre ejecuciones para que los
+        // resultados siempre sean reproducibles.
+
+        int[] basePequena = {
+                38, 12, 57, 9, 41, 23, 6, 71, 30, 18
+        };
+
+        int[] baseModerada = {
+                84, 15, 63, 29, 47, 91, 52, 6, 73, 34,
+                11, 58, 26, 99, 40, 2, 68, 77, 19, 55
+        };
+
+        int[] baseGrande = {
+                120, 35, 89, 14, 73, 61, 92, 8, 47, 56,
+                101, 23, 67, 39, 85, 5, 96, 42, 74, 18,
+                109, 31, 64, 12, 88, 53, 79, 3, 97, 45,
+                70, 21, 83, 16, 94, 58, 76, 9, 102, 37
+        };
+
+        ejecutarEscenario("PEQUENA CANTIDAD DE DATOS", basePequena);
+        ejecutarEscenario("MODERADA CANTIDAD DE DATOS", baseModerada);
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS", baseGrande);
+    }
+
+    // Ejecuta todos los algoritmos sobre CLONES del mismo arreglo base.
+    // Esto evita sesgo: ningun algoritmo recibe datos "ya ordenados" por otro.
+    private static void ejecutarEscenario(String nombreEscenario, int[] base) {
+        System.out.println("\n====================================================");
+        System.out.println("ESCENARIO: " + nombreEscenario + " (n = " + base.length + ")");
+        System.out.println("Arreglo base fijo: " + Arrays.toString(base));
+        System.out.println("====================================================");
+
+        imprimirResultado("Burbuja Simple", burbujaSimple(Arrays.copyOf(base, base.length)));
+        imprimirResultado("Burbuja Mejorado", burbujaMejorado(Arrays.copyOf(base, base.length)));
+        imprimirResultado("QuickSort", quickSortConMetricas(Arrays.copyOf(base, base.length)));
+        imprimirResultado("ShellSort", shellSort(Arrays.copyOf(base, base.length)));
+        imprimirResultado("Seleccion Directa", seleccionDirecta(Arrays.copyOf(base, base.length)));
+        imprimirResultado("Insercion Simple", insercionSimple(Arrays.copyOf(base, base.length)));
+    }
+
+    // Impresion exacta del bloque solicitado.
+    private static void imprimirResultado(String nombreAlgoritmo, Metricas m) {
+        System.out.println("\n--- " + nombreAlgoritmo + " ---");
+        System.out.println("Iteraciones (pasadas): " + m.iteraciones);
+        System.out.println("Comparaciones: " + m.comparaciones);
+        System.out.println("Intercambios: " + m.intercambios);
+    }
+
+    // -------------------------------------------------------------------------
+    // 1) BURBUJA SIMPLE
+    private static Metricas burbujaSimple(int[] a) {
+        Metricas m = new Metricas();
+
+        for (int i = 0; i < a.length - 1; i++) {
+            m.iteraciones++; // Una pasada del ciclo externo.
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                m.comparaciones++; // Comparacion entre pares adyacentes.
+                if (a[j] > a[j + 1]) {
+                    intercambiar(a, j, j + 1);
+                    m.intercambios++; // Swap real.
+                }
+            }
+        }
+
+        return m;
+    }
+
+    // -------------------------------------------------------------------------
+    // 2) BURBUJA MEJORADO
+    private static Metricas burbujaMejorado(int[] a) {
+        Metricas m = new Metricas();
+
+        for (int i = 0; i < a.length - 1; i++) {
+            boolean huboSwap = false;
+
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                m.comparaciones++;
+                if (a[j] > a[j + 1]) {
+                    intercambiar(a, j, j + 1);
+                    m.intercambios++;
+                    huboSwap = true;
+                }
+            }
+
+            // Solo cuenta como iteracion efectiva si hubo intercambio.
+            if (huboSwap) {
+                m.iteraciones++;
+            } else {
+                // Si no hubo swap, ya esta ordenado: corte temprano.
+                break;
+            }
+        }
+
+        return m;
+    }
+
+    // -------------------------------------------------------------------------
+    // 3) QUICKSORT
+    private static Metricas quickSortConMetricas(int[] a) {
+        Metricas m = new Metricas();
+        quickSort(a, 0, a.length - 1, m);
+        return m;
+    }
+
+    private static void quickSort(int[] a, int izq, int der, Metricas m) {
+        m.iteraciones++; // Cada llamada recursiva.
+
+        if (izq >= der) {
+            return;
+        }
+
+        int pivote = a[der];
+        int i = izq - 1;
+
+        for (int j = izq; j < der; j++) {
+            m.comparaciones++; // Comparacion contra pivote.
+            if (a[j] <= pivote) {
+                i++;
+                intercambiar(a, i, j);
+                m.intercambios++;
+            }
+        }
+
+        intercambiar(a, i + 1, der);
+        m.intercambios++; // Colocacion final del pivote.
+        int posPivote = i + 1;
+
+        quickSort(a, izq, posPivote - 1, m);
+        quickSort(a, posPivote + 1, der, m);
+    }
+
+    // -------------------------------------------------------------------------
+    // 4) SHELL SORT
+    private static Metricas shellSort(int[] a) {
+        Metricas m = new Metricas();
+
+        for (int gap = a.length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < a.length; i++) {
+                m.iteraciones++; // Iteraciones por gap (for interno).
+
+                int temp = a[i];
+                int j = i;
+
+                while (j >= gap) {
+                    m.comparaciones++;
+                    if (a[j - gap] > temp) {
+                        a[j] = a[j - gap];
+                        m.intercambios++; // Desplazamiento por gap.
+                        j -= gap;
+                    } else {
+                        break;
+                    }
+                }
+
+                a[j] = temp;
+                m.intercambios++; // Insercion final dentro del subarreglo por gap.
+            }
+        }
+
+        return m;
+    }
+
+    // -------------------------------------------------------------------------
+    // 5) SELECCION DIRECTA
+    private static Metricas seleccionDirecta(int[] a) {
+        Metricas m = new Metricas();
+
+        for (int i = 0; i < a.length - 1; i++) {
+            m.iteraciones++; // Pasada del ciclo externo.
+            int indiceMin = i;
+
+            for (int j = i + 1; j < a.length; j++) {
+                m.comparaciones++; // Buscar menor en la zona no ordenada.
+                if (a[j] < a[indiceMin]) {
+                    indiceMin = j;
+                }
+            }
+
+            if (indiceMin != i) {
+                intercambiar(a, i, indiceMin);
+                m.intercambios++; // Intercambio de la pasada.
+            }
+        }
+
+        return m;
+    }
+
+    // -------------------------------------------------------------------------
+    // 6) INSERCION SIMPLE
+    private static Metricas insercionSimple(int[] a) {
+        Metricas m = new Metricas();
+
+        for (int i = 1; i < a.length; i++) {
+            m.iteraciones++; // Pasada del ciclo externo.
+
+            int clave = a[i];
+            int j = i - 1;
+
+            while (j >= 0) {
+                m.comparaciones++; // Comparar para hallar la posicion de insercion.
+                if (a[j] > clave) {
+                    a[j + 1] = a[j];
+                    m.intercambios++; // Desplazamiento hacia la derecha.
+                    j--;
+                } else {
+                    break;
+                }
+            }
+
+            a[j + 1] = clave;
+            m.intercambios++; // Insercion final de la clave.
+        }
+
+        return m;
+    }
+
+    // Utilidad para intercambio tradicional.
+    private static void intercambiar(int[] a, int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}

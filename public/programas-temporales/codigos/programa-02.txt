@@ -1,3 +1,11 @@
+# GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+# 1) Primero se define una lista de numeros en desorden.
+# 2) Burbuja compara parejas vecinas: izquierda vs derecha.
+# 3) Si el numero de la izquierda es mayor, se cambian de posicion.
+# 4) En cada pasada, el numero mas grande de la zona no ordenada se mueve al final.
+# 5) El proceso se repite hasta que todos queden de menor a mayor.
+# 6) Los comentarios internos describen cada linea con lenguaje para principiantes.
+
 # Programa 02: Ordenamiento Burbuja simple en Python (int)
 # Descripcion:
 # Este programa ordena 10 numeros enteros de menor a mayor con burbuja.

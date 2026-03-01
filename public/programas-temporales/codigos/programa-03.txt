@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Se crea un arreglo de enteros sin ordenar.
+// 2) Burbuja hace varias pasadas y compara elementos consecutivos.
+// 3) Si un elemento es mayor que el siguiente, se intercambian.
+// 4) Cada pasada coloca un valor grande en su posicion final.
+// 5) Se usa una bandera para detectar si ya no hubo cambios y terminar antes.
+// 6) Los comentarios del programa explican la logica paso a paso.
+
 // Programa 03: Actividad - Ordenamiento Burbuja Simple en Java (int)
 // Descripcion:
 // Ordena 10 numeros enteros con burbuja, explicando cada paso con comentarios.

@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) ShellSort ordena comparando elementos separados por una distancia llamada gap.
+// 2) Inicia con gaps grandes y luego los reduce gradualmente.
+// 3) Cada gap hace una insercion parcial dentro de subgrupos.
+// 4) Al final, cuando gap vale 1, termina de afinar el orden.
+// 5) Esta estrategia acelera el proceso frente a insercion directa en muchos casos.
+// 6) Los comentarios internos explican cada fase de manera amigable.
+
 // Programa 9: Shell Sort en Java (arreglo de enteros)
 // ---------------------------------------------------------------------------------
 // ¿Que hace este programa?

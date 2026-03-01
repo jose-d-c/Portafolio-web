@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa usa Burbuja Mejorado para enteros.
+// 2) Funciona como Burbuja clasico, pero agrega una bandera de control.
+// 3) Si en una pasada no hay intercambios, significa que ya esta ordenado.
+// 4) Cuando eso ocurre, el algoritmo se detiene para ahorrar trabajo.
+// 5) Cada comentario interno explica por que se compara o intercambia.
+// 6) La meta es entender la logica, no solo memorizar instrucciones.
+
 // ================================================
 // PROGRAMA 05
 // Titulo: Ordenamiento Burbuja Mejorado en Java (Enteros)

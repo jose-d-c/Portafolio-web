@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa compara el TIEMPO de varios algoritmos de ordenamiento.
+// 2) Usa tres escenarios de tamano para observar cambios de rendimiento.
+// 3) Todos los algoritmos trabajan sobre copias de la misma entrada por escenario.
+// 4) Asi la comparacion es justa y no depende del orden previo dejado por otro.
+// 5) Se mide inicio y fin con nanoTime para calcular duracion.
+// 6) Los comentarios internos explican resultados y trazas con enfoque didactico.
+
 // Programa 13: Medicion de TIEMPO en 3 escenarios (bajo, medio, muchos datos)
 // -----------------------------------------------------------------------------
 // EXPLICACION DIDACTICA (COMO FUNCIONA LA TOMA DE MEDIDAS)

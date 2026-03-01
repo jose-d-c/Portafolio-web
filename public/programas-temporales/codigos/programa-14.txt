@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa estima memoria usada por cada algoritmo.
+// 2) Mide memoria antes y despues para obtener un delta aproximado.
+// 3) Evalua tres tamanos de entrada para comparar comportamientos.
+// 4) Cada algoritmo recibe una copia de la misma entrada por escenario.
+// 5) La medicion es comparativa, porque el recolector de basura puede variar cifras.
+// 6) Los comentarios internos explican cada calculo con lenguaje accesible.
+
 // Programa 14: Medicion de MEMORIA en 3 escenarios (bajo, medio, muchos datos)
 // ------------------------------------------------------------------------------
 // EXPLICACION DIDACTICA (COMO FUNCIONA LA TOMA DE MEDIDAS)

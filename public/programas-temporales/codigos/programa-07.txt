@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) QuickSort elige un pivote para dividir el problema.
+// 2) Recorre el arreglo y separa valores menores y mayores que el pivote.
+// 3) Coloca el pivote en su posicion final correcta.
+// 4) Luego repite el mismo proceso en la parte izquierda y derecha.
+// 5) Esta repeticion se llama recursion.
+// 6) Los comentarios internos explican cada movimiento de forma paso a paso.
+
 // ================================================
 // PROGRAMA 07
 // Titulo: Quicksort en Java (Enteros)

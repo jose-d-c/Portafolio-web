@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Se guardan palabras en un arreglo desordenado.
+// 2) Se comparan palabras vecinas con compareTo.
+// 3) Si la palabra izquierda debe ir despues alfabeticamente, se intercambian.
+// 4) Cada pasada acomoda una palabra en su posicion final.
+// 5) Se repite hasta que todas las palabras queden ordenadas.
+// 6) Los comentarios internos describen cada bloque de forma sencilla.
+
 // Programa 04: Actividad - Ordenamiento Burbuja Simple en Java (String)
 // Descripcion:
 // Ordena alfabeticamente 10 cadenas con burbuja usando compareTo.

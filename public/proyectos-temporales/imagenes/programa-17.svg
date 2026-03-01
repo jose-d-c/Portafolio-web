@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 17</title>
+  <desc id="desc">Salida esperada del programa que mide iteraciones, comparaciones e intercambios en varios algoritmos de ordenamiento.</desc>
+  <rect width="1200" height="700" fill="#0f172a"/>
+  <rect x="30" y="30" width="1140" height="640" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="600" y="110" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="34">Programa 17 - Metricas de ordenamiento</text>
+  <text x="600" y="150" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="22">Iteraciones, comparaciones e intercambios por algoritmo</text>
+  <rect x="80" y="190" width="1040" height="430" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <text x="120" y="240" fill="#22d3ee" font-family="Courier New, monospace" font-size="22">ESCENARIO: PEQUENA CANTIDAD DE DATOS (n = 10)</text>
+  <text x="120" y="285" fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">--- Burbuja Simple ---  Iteraciones: 9  Comparaciones: 45  Intercambios: 18</text>
+  <text x="120" y="325" fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">--- Burbuja Mejorado --- Iteraciones: 7  Comparaciones: 42  Intercambios: 18</text>
+  <text x="120" y="365" fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">--- QuickSort --- Iteraciones: 15  Comparaciones: 31  Intercambios: 24</text>
+  <text x="120" y="405" fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">--- ShellSort --- Iteraciones: 22  Comparaciones: 30  Intercambios: 34</text>
+  <text x="120" y="445" fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">--- Seleccion Directa --- Iteraciones: 9  Comparaciones: 45  Intercambios: 8</text>
+  <text x="120" y="485" fill="#86efac" font-family="Courier New, monospace" font-size="21">--- Insercion Simple --- Iteraciones: 9  Comparaciones: 25  Intercambios: 27</text>
+  <text x="120" y="545" fill="#94a3b8" font-family="Courier New, monospace" font-size="20">Tambien se ejecuta para cantidad MODERADA y GRANDE de datos.</text>
+</svg>

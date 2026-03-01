@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Se ordenan cadenas de texto con Burbuja Mejorado.
+// 2) compareTo decide el orden alfabetico entre dos palabras.
+// 3) Si el orden es incorrecto, se realiza el intercambio.
+// 4) Si una pasada completa no hace cambios, se corta temprano.
+// 5) Esto reduce tiempo cuando los datos ya estan casi ordenados.
+// 6) Los comentarios dentro del codigo detallan cada parte con claridad.
+
 // ================================================
 // PROGRAMA 06
 // Titulo: Ordenamiento Burbuja Mejorado en Java (String)

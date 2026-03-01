@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Seleccion Directa busca el valor minimo en la parte no ordenada.
+// 2) Cuando lo encuentra, lo coloca al inicio de esa zona.
+// 3) Asi, en cada pasada, crece la zona ordenada desde la izquierda.
+// 4) El algoritmo repite hasta recorrer casi todo el arreglo.
+// 5) Hace muchas comparaciones, pero pocos intercambios.
+// 6) Los comentarios del codigo explican cada paso de forma clara.
+
 // Programa 11: Ordenamiento por Seleccion en Java (arreglo de enteros)
 // ---------------------------------------------------------------------------------
 // ¿Que hace este programa?
