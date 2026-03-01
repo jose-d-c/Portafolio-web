@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Primero se guarda una lista de palabras en desorden.
+// 2) El algoritmo Burbuja compara dos palabras vecinas en cada paso.
+// 3) Si estan en orden incorrecto alfabetico, se intercambian de lugar.
+// 4) Al terminar una pasada completa, la palabra "mas grande" queda al final.
+// 5) Se repiten pasadas hasta dejar todo el arreglo ordenado.
+// 6) Los comentarios dentro del codigo explican cada instruccion en lenguaje simple.
+
 // Programa 01: Ordenamiento Burbuja simple en C++ (String)
 // Descripcion:
 // Este programa ordena alfabeticamente 10 palabras usando el algoritmo burbuja.

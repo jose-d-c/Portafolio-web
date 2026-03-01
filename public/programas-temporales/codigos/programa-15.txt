@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Insercion toma un elemento llamado clave en cada pasada.
+// 2) Compara la clave con los elementos de la izquierda (zona ordenada).
+// 3) Si es necesario, desplaza elementos a la derecha para abrir espacio.
+// 4) Inserta la clave en la posicion correcta.
+// 5) Repite hasta procesar todo el arreglo.
+// 6) Los comentarios del codigo explican cada decision paso a paso.
+
 // Programa 15: Ordenamiento por insercion en Java (int)
 //
 // Objetivo didactico:

@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa aplica Seleccion Directa sobre palabras.
+// 2) En cada pasada busca la palabra que va primero alfabeticamente.
+// 3) Luego la mueve al inicio de la zona no ordenada.
+// 4) La parte ordenada aumenta una posicion por pasada.
+// 5) compareTo permite decidir que palabra va antes o despues.
+// 6) Los comentarios internos traducen cada bloque a lenguaje sencillo.
+
 // Programa 12: Ordenamiento por Seleccion en Java (arreglo de String)
 // ---------------------------------------------------------------------------------
 // ¿Que hace este programa?

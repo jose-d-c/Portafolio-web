@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este QuickSort trabaja con cadenas.
+// 2) El pivote se compara con cada palabra usando compareTo.
+// 3) Las palabras que van antes se agrupan a la izquierda.
+// 4) Las que van despues quedan a la derecha.
+// 5) El algoritmo repite el proceso en subarreglos hasta ordenar todo.
+// 6) Cada comentario interno explica la logica en terminos simples.
+
 // ================================================
 // PROGRAMA 08
 // Titulo: Quicksort en Java (String)

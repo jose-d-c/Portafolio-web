@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) ShellSort para cadenas usa compareTo en lugar de comparacion numerica.
+// 2) Trabaja con varios gaps para mover palabras grandes distancias.
+// 3) Despues reduce el gap para mejorar el orden paso a paso.
+// 4) Finalmente, con gap 1, el arreglo queda alfabeticamente ordenado.
+// 5) Es una mejora sobre insercion simple cuando hay muchos elementos.
+// 6) Cada comentario interno describe la idea con lenguaje para principiantes.
+
 // Programa 10: Shell Sort en Java (arreglo de String)
 // ---------------------------------------------------------------------------------
 // ¿Que hace este programa?

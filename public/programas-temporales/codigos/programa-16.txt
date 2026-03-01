@@ -1,3 +1,11 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Insercion para cadenas ordena alfabeticamente con compareTo.
+// 2) En cada vuelta toma una palabra clave.
+// 3) Desplaza palabras mayores a la derecha para hacer espacio.
+// 4) Coloca la clave en la posicion alfabetica correcta.
+// 5) Repite hasta que todas las palabras queden ordenadas.
+// 6) Los comentarios internos estan escritos para personas que inician.
+
 // Programa 16: Ordenamiento por insercion en Java (String)
 //
 // Objetivo didactico:
