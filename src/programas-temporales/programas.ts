@@ -89,9 +89,14 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Version de insercion para cadenas en Java con compareTo, reforzando insercion alfabetica y recorrido de la zona ya ordenada.",
   },
+  17: {
+    titulo: "Programa temporal 17: Metricas de ordenamiento en 3 escenarios",
+    descripcion:
+      "Programa Java que mide iteraciones, comparaciones e intercambios/desplazamientos en Burbuja, Burbuja mejorado, QuickSort, ShellSort, Seleccion e Insercion para datos pequenos, moderados y grandes.",
+  },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 
 export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero, indice) => {
   const idFuente = numero.toString().padStart(2, "0");
