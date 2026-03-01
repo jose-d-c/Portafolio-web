@@ -79,16 +79,6 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Programa Java interactivo que estima memoria de Burbuja, Burbuja mejorado, Quicksort, Shell Sort y Seleccion en escenarios bajos, medios y altos, con trazas de consumo por pasos.",
   },
-  17: {
-    titulo: "Actividad integradora: metricas por algoritmo (iteraciones, comparaciones e intercambios/desplazamientos)",
-    descripcion:
-      "Programa en Java que, para pequena, moderada y gran cantidad de datos, imprime por cada algoritmo: Iteraciones (pasadas), Comparaciones e Intercambios/Desplazamientos, segun la tabla de Burbuja Simple, Burbuja Mejorado, QuickSort, ShellSort, Seleccion Directa e Insercion Simple.",
-  },
-  21: {
-    titulo: "Actividad: Quicksort en Java (vector de 7 enteros)",
-    descripcion:
-      "Implementacion de Quicksort con ejemplo guiado de particionado y salida final ordenada para reforzar recursion y pivote.",
-  },
   15: {
     titulo: "Actividad: Insercion en Java (int)",
     descripcion:
@@ -101,25 +91,20 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
   },
 };
 
-const ordenProgramasTemporales = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-  13, 14, 15, 16, 17,
-  18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero, indice) => {
-  const idOrden = (indice + 1).toString().padStart(2, "0");
   const idFuente = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
 
   return {
     id: indice + 1,
-    slug: `programa-${idOrden}`,
+    slug: `programa-${idFuente}`,
     titulo: configuracion?.titulo ?? `Programa ${idFuente}`,
     descripcion:
       configuracion?.descripcion ??
       "Plantilla temporal para agregar analisis, pseudocodigo, pruebas y evidencia visual del programa.",
-    enlaceExterno: `/programas-temporales/programa-${idOrden}`,
+    enlaceExterno: `/programas-temporales/programa-${idFuente}`,
     rutaCodigoPlantilla: `/programas-temporales/codigos/programa-${idFuente}.txt`,
     rutaImagenPlantilla: `/proyectos-temporales/imagenes/programa-${idFuente}.svg`,
   };

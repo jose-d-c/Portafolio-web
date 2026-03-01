@@ -1,11 +1,48 @@
-// Plantilla de codigo para Programa 15
-// 1) Reemplaza este bloque con el codigo final del programa.
-// 2) Conserva comentarios breves para documentar entradas, salidas y pruebas.
-// 3) Imagen asociada: /proyectos-temporales/imagenes/programa-15.svg
+// Programa 15: Ordenamiento por insercion en Java (int)
+//
+// Objetivo didactico:
+// - Mostrar como funciona insercion simple con un arreglo de enteros.
+// - En cada iteracion se toma una "clave" y se inserta en la parte ya ordenada.
+//
+// Entrada del ejemplo:
+// [34, 8, 64, 51, 32, 21]
+//
+// Salida esperada:
+// [8, 21, 32, 34, 51, 64]
 
-function main() {
-  // TODO: agregar logica del programa
-  console.log('Pendiente de implementacion');
+import java.util.Arrays;
+
+public class Programa15InsercionEnteros {
+
+    public static void main(String[] args) {
+        // Arreglo de prueba para evidenciar desplazamientos durante la insercion.
+        int[] datos = {34, 8, 64, 51, 32, 21};
+
+        System.out.println("Programa 15 - Insercion (int)");
+        System.out.println("Arreglo original: " + Arrays.toString(datos));
+
+        insercion(datos);
+
+        System.out.println("Arreglo ordenado: " + Arrays.toString(datos));
+    }
+
+    // Algoritmo de insercion para enteros.
+    public static void insercion(int[] arreglo) {
+        // Se inicia en 1 porque el primer elemento (indice 0) ya se considera ordenado.
+        for (int i = 1; i < arreglo.length; i++) {
+            // "clave" es el valor actual que vamos a ubicar en su posicion correcta.
+            int clave = arreglo[i];
+            int j = i - 1;
+
+            // Mientras haya elementos mayores que la clave en la zona izquierda,
+            // se desplazan una posicion hacia la derecha para abrir espacio.
+            while (j >= 0 && arreglo[j] > clave) {
+                arreglo[j + 1] = arreglo[j];
+                j--;
+            }
+
+            // Se inserta la clave en el hueco encontrado.
+            arreglo[j + 1] = clave;
+        }
+    }
 }
-
-main();
