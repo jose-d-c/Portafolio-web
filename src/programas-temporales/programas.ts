@@ -103,19 +103,20 @@ const ordenProgramasTemporales = [
   15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
 ];
 
-export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero) => {
-  const id = numero.toString().padStart(2, "0");
+export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero, indice) => {
+  const idOrden = (indice + 1).toString().padStart(2, "0");
+  const idFuente = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
 
   return {
-    id: numero,
-    slug: `programa-${id}`,
-    titulo: configuracion?.titulo ?? `Programa ${id}`,
+    id: indice + 1,
+    slug: `programa-${idOrden}`,
+    titulo: configuracion?.titulo ?? `Programa ${idFuente}`,
     descripcion:
       configuracion?.descripcion ??
       "Plantilla temporal para agregar analisis, pseudocodigo, pruebas y evidencia visual del programa.",
-    enlaceExterno: `/programas-temporales/programa-${id}`,
-    rutaCodigoPlantilla: `/programas-temporales/codigos/programa-${id}.txt`,
-    rutaImagenPlantilla: `/proyectos-temporales/imagenes/programa-${id}.svg`,
+    enlaceExterno: `/programas-temporales/programa-${idOrden}`,
+    rutaCodigoPlantilla: `/programas-temporales/codigos/programa-${idFuente}.txt`,
+    rutaImagenPlantilla: `/proyectos-temporales/imagenes/programa-${idFuente}.svg`,
   };
 });
