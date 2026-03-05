@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 18</title>
+  <desc id="desc">Solucion de la comparacion por parte para el programa temporal 18.</desc>
+  <rect width="1200" height="700" fill="#0f172a"/>
+  <rect x="24" y="24" width="1152" height="652" rx="20" fill="#111827" stroke="#334155" stroke-width="3"/>
+
+  <text x="600" y="68" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="29">Programa 18 - Solucion de la comparacion</text>
+  <text x="600" y="96" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="15">Mejor algoritmo por tiempo y por comparaciones en cada parte (segun ejecucion)</text>
+
+  <rect x="58" y="118" width="1084" height="522" rx="14" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <text x="80" y="160" fill="#22d3ee" font-family="Courier New, monospace" font-size="17">PARTE 1 (nombres base)</text>
+  <text x="410" y="160" fill="#86efac" font-family="Courier New, monospace" font-size="16">Tiempo: Quick/Shell | Comparaciones: Shell</text>
+
+  <text x="80" y="212" fill="#22d3ee" font-family="Courier New, monospace" font-size="17">PARTE 2 (casi ordenados)</text>
+  <text x="410" y="212" fill="#86efac" font-family="Courier New, monospace" font-size="16">Tiempo: Quick Sort | Comparaciones: Shell Sort</text>
+
+  <text x="80" y="264" fill="#22d3ee" font-family="Courier New, monospace" font-size="17">PARTE 3 (invertidos)</text>
+  <text x="410" y="264" fill="#86efac" font-family="Courier New, monospace" font-size="16">Tiempo: Quick Sort | Comparaciones: Shell Sort</text>
+
+  <text x="80" y="316" fill="#22d3ee" font-family="Courier New, monospace" font-size="17">PARTE 4 (repetidos)</text>
+  <text x="410" y="316" fill="#86efac" font-family="Courier New, monospace" font-size="16">Tiempo: Quick Sort | Comparaciones: Quick/Shell (segun conjunto)</text>
+
+  <text x="80" y="368" fill="#22d3ee" font-family="Courier New, monospace" font-size="17">PARTE 5 (parcialmente ordenados)</text>
+  <text x="410" y="368" fill="#86efac" font-family="Courier New, monospace" font-size="16">Tiempo: Insercion/Quick | Comparaciones: Insercion/Shell</text>
+
+  <text x="80" y="420" fill="#22d3ee" font-family="Courier New, monospace" font-size="17">PARTE 6 (dolar historico)</text>
+  <text x="410" y="420" fill="#86efac" font-family="Courier New, monospace" font-size="16">Tiempo: Shell Sort | Comparaciones: Shell Sort</text>
+  <text x="410" y="446" fill="#cbd5e1" font-family="Courier New, monospace" font-size="15">Max dolar: 2023-02 | Min dolar: 2022-03</text>
+
+  <text x="80" y="498" fill="#22d3ee" font-family="Courier New, monospace" font-size="17">PARTE 7 (conteo de nombres)</text>
+  <text x="410" y="498" fill="#86efac" font-family="Courier New, monospace" font-size="16">Orden por nombre y por repeticiones + comparativa de 6 algoritmos</text>
+
+  <text x="80" y="565" fill="#94a3b8" font-family="Courier New, monospace" font-size="16">Solucion: no hay algoritmo unico ganador; depende del tipo de entrada.</text>
+  <text x="80" y="590" fill="#94a3b8" font-family="Courier New, monospace" font-size="16">Para escenario general, Quick Sort y Shell Sort fueron los mas consistentes.</text>
+</svg>

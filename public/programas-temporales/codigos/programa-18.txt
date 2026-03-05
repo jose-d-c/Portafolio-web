@@ -1,0 +1,640 @@
+import java.util.*;
+
+public class ProgramaTemporal18 {
+
+    // Estructura para guardar las metricas de cada algoritmo.
+    // comparaciones: cuantas veces se comparan dos elementos.
+    // movimientos: asignaciones/intercambios/desplazamientos realizados.
+    // tiempoNs: tiempo total de ejecucion en nanosegundos.
+    static class Resultado {
+        String algoritmo;
+        long comparaciones;
+        long movimientos;
+        long tiempoNs;
+        long memoriaBytes;
+
+        Resultado(String algoritmo, long comparaciones, long movimientos, long tiempoNs, long memoriaBytes) {
+            this.algoritmo = algoritmo;
+            this.comparaciones = comparaciones;
+            this.movimientos = movimientos;
+            this.tiempoNs = tiempoNs;
+            this.memoriaBytes = memoriaBytes;
+        }
+    }
+
+    // Interfaz funcional para cualquier algoritmo de ordenamiento
+    // que retorne [comparaciones, movimientos].
+    interface Ordenador<T extends Comparable<T>> {
+        long[] ejecutar(T[] arr);
+    }
+
+
+
+    static class ConteoNombre implements Comparable<ConteoNombre> {
+        String nombre;
+        int repeticiones;
+        static boolean ordenarPorCantidad = false;
+
+        ConteoNombre(String nombre, int repeticiones) {
+            this.nombre = nombre;
+            this.repeticiones = repeticiones;
+        }
+
+        @Override
+        public int compareTo(ConteoNombre o) {
+            if (ordenarPorCantidad) {
+                int c = Integer.compare(o.repeticiones, this.repeticiones); // descendente
+                if (c != 0) return c;
+                return this.nombre.compareTo(o.nombre);
+            }
+            return this.nombre.compareTo(o.nombre);
+        }
+
+        @Override
+        public String toString() {
+            return nombre + " -> " + repeticiones;
+        }
+    }
+
+    static class RegistroDolar implements Comparable<RegistroDolar> {
+        String periodo;
+        double valor;
+
+        RegistroDolar(String periodo, double valor) {
+            this.periodo = periodo;
+            this.valor = valor;
+        }
+
+        @Override
+        public int compareTo(RegistroDolar o) {
+            return Double.compare(this.valor, o.valor);
+        }
+
+        @Override
+        public String toString() {
+            return periodo + "=" + valor;
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] nombres = {
+            "Juan", "Luciana", "Esteban", "Ximena", "Ricardo", "Micaela", "Felipe", "Barbara", "Santi", "Valeria",
+            "Hugo", "Florencia", "Marcos", "Agustina", "Damian", "Renata", "Joaquin", "Maite", "Bautista", "Irene",
+            "Rodrigo", "Antonella", "Samuel", "Jimena", "Emilio", "Julieta", "Tomas", "Amparo", "Benjamin", "Celia",
+            "Vicente", "Ainhoa", "Mateo", "Belen", "Nicolas", "Fatima", "Sebastian", "Gloria", "Leonardo", "Nuria",
+            "Matias", "Silvia", "Agustin", "Rocio", "Bruno", "Miriam", "Ignacio", "Leticia", "Simon", "Esther",
+            "Felix", "Raquel", "Manuel", "Salome", "Valentino", "Triana", "Thiago", "Naiara", "Ciro", "Guadalupe",
+            "Enzo", "Malena", "Gael", "Aitana", "Ian", "Manuela", "Liam", "Consuelo", "Noah", "Milagros",
+            "Dylan", "Paloma", "Axel", "Esperanza", "Luca", "Veronica", "Izan", "Angelica", "Leo", "Viviana",
+            "Joel", "Yolanda", "Elias", "Pilar", "Isaac", "Lidia", "Aaron", "Aurora", "Oliver", "Blanca",
+            "Erick", "Elsa", "Omar", "Adela", "Iker", "Felisa", "Saul", "Nerea", "Pau", "Lola",
+            "Eric", "Candela", "Iago", "Ines", "Unai", "Amelia", "Joan", "Ariadna", "Marc", "Carla",
+            "Pol", "Mireia", "Laia", "Oriol", "Berta", "Arnau", "Jana", "Nil", "Ona", "Biel",
+            "Arlet", "Marti", "Julia", "Jan", "Emma", "Aleix", "Abril", "Santiago", "Cayetana", "Mario",
+            "Virginia", "Gonzalo", "Miranda", "Alfonso", "Estefania", "Cristobal", "Montserrat", "Patricio", "Candida", "Gregorio",
+            "Genoveva", "Faustino", "Adelaide", "Marcelo", "Graciela", "Eugenio", "Rafaela", "Leandro", "Zaira", "Amadeo",
+            "Violeta", "Camilo", "Delfina", "Federico", "Jacinta", "Lorenzo", "Sabina", "Gaspar", "Ursula", "Baltasar",
+            "Teodora", "Melchor", "Ofelia", "Jonas", "Ramona", "Ezequiel", "Dorotea", "Abel", "Isidra", "Braulio",
+            "Eulalia", "Hipolito", "Justina", "Mariano", "Casandra", "Donato", "Remedios", "Agapito", "Priscila", "Fidencio",
+            "Amalia", "Eusebio", "Sonia", "Basilio", "Tatiana", "Cipriano", "Vanesa", "Dionisio", "Susana", "Eleuterio",
+            "Monica", "Feliciano", "Teresa", "Gumersindo", "Lourdes", "Heriberto", "Josefina", "Indalecio", "Magdalena", "Jeronimo",
+            "Rosario", "Ladislau", "Modesta", "Macario", "Purificacion", "Nicanor", "Angustias", "Olegario", "Asuncion", "Pancracio",
+            "Concepcion", "Quirino", "Inmaculada", "Ruperto", "Visitacion", "Servando", "Candelaria", "Torcuato", "Natividad", "Valeriano",
+            "Piedad", "Wenceslao", "Socorro", "Zenon", "Aurelia", "Aniceto", "Benigna", "Casimiro", "Dina", "Eutropio",
+            "Edelmira", "Florentino", "Eustaquia", "Gervasio", "Gisela", "Honorio", "Herminia", "Ildefonso", "Imelda", "Jenaro",
+            "Joaquina", "Leoncio", "Leocadia", "Mauricio", "Matilde", "Nemesio", "Noemi", "Onofre", "Olga", "Perfecto",
+            "Petrona", "Quiterio", "Quina", "Robustiano", "Rufina", "Saturio", "Segunda", "Telesforo", "Teofila", "Ulpiano",
+            "Urraca", "Venancio", "Veneranda", "Wilfredo", "Walda", "Xavier", "Xenia", "Yago", "Yara", "Zacarias",
+            "Zulma", "Adriano", "Aida", "Bernardo", "Bibiana", "Conrado", "Coral", "Desiderio", "Dora", "Edmundo",
+            "Edith", "Fabio", "Fabiana", "Gerardo", "Gema", "Hector", "Helena", "Ismael", "Iris", "Jacobo",
+            "Jade", "Kevin", "Keyla", "Lazaro", "Leila", "Maximo", "Maura", "Nestor", "Niza", "Orlando",
+            "Olivia", "Placido", "Perla", "Quintin", "Queila", "Ramiro", "Rebeca", "Silverio", "Selena", "Tadeo",
+            "Thais", "Ulises", "Uxia", "Valerio", "Vera", "Walter", "Wendy", "Xerach", "Xana", "Yusef",
+            "Yurena", "Zigor", "Zoe", "Donovan", "Emanuela", "Fiorella", "Gianluca", "Isabella", "Kilian", "Lucrecia",
+            "Morgana", "Nadir", "Ottilie", "Pavel", "Quinn", "Rocco", "Sasha", "Umi", "Valery", "Wyatt",
+            "Xavi", "Yael", "Zuri"
+        };
+
+        String[] nombresCasiOrdenados = {
+            "Zulma", "Yuvia", "Zuri", "Yosef", "Zosimo", "Ximena", "Zoren", "Xoan", "Yara", "Zenon", "Zoe",
+            "Yurena", "Zacarias", "Xerach", "Xenia", "Xavier", "Xavi", "Xandra", "Xana", "Wyatt", "Winona", "Wilson",
+            "Wilfredo", "Wifredo", "Wendy", "Wenceslao", "Walter", "Walda", "Viviana", "Visitacion", "Viriato", "Virginia",
+            "Violeta", "Vidal", "Victoria", "Victoriano", "Victor", "Vicente", "Veronica", "Vera", "Veneranda", "Venancio",
+            "Vania", "Vanesa", "Valery", "Valerio", "Valeriano", "Valeria", "Valentino", "Valentina", "Uxia", "Ursula",
+            "Urraca", "Urbano", "Unai", "Umi", "Uma", "Ulpiano", "Ulises", "Ubaldo", "Trinidad", "Triana", "Torcuato",
+            "Tomas", "Tobias", "Timoteo", "Tiburcio", "Thiago", "Thais", "Teresa", "Teonila", "Teofilo", "Teodora", "Teo",
+            "Telesforo", "Aaron", "Abel", "Abigail", "Abril", "Adan", "Adela", "Adolfo", "Adrian", "Adriana", "Agustin",
+            "Ainhoa", "Aitana", "Alan", "Alba", "Alberto", "Aldana", "Alejandro", "Alejo", "Alessandra", "Alex", "Alfonsina",
+            "Alfonso", "Alicia", "Alma", "Almudena", "Alonso", "Alvaro", "Amadeo", "Amalia", "Amanda", "Amparo", "Ana",
+            "Anabel", "Anahi", "Ander", "Andrea", "Andres", "Angel", "Angela", "Angelica", "Anibal", "Antia", "Anton",
+            "Antonia", "Antonio", "Ariadna", "Ariel", "Arlet", "Arnaldo", "Arnau", "Arturo", "Asier", "Asuncion", "Augusto",
+            "Aurea", "Aurora", "Axel", "Aylin", "Azahara", "Barbara", "Bartolome", "Basilio", "Bautista", "Beatriz", "Begona",
+            "Belen", "Beltran", "Benicio", "Benjamin", "Benito", "Berenice", "Bernardo", "Berta", "Bianca", "Biel", "Blanca",
+            "Blas", "Boris", "Braulio", "Breixo", "Brigida", "Bruna", "Bruno", "Bryan", "Cain", "Caleb", "Camilo", "Candela",
+            "Candelaria", "Carina", "Carla", "Carlos", "Carmelo", "Carmen", "Carolina", "Casandra", "Casimiro", "Catalina",
+            "Cayetana", "Cecilia", "Ceferino", "Celia", "Celina", "Cesar", "Chantal", "Charo", "Chema", "Christian", "Cintia",
+            "Cipriano", "Cira", "Ciro", "Clara", "Claudio", "Clemente", "Cleotilde", "Clotilde", "Concepcion", "Conrado",
+            "Constanza", "Consuelo", "Coral", "Cordelia", "Cosme", "Cristian", "Cristina", "Cristobal", "Cruz", "Custodia",
+            "Dalia", "Dalma", "Damian", "Danae", "Daniel", "Daniela", "Dante", "Dario", "David", "Dayana", "Debora",
+            "Delfina", "Delia", "Demian", "Denis", "Desire", "Diana", "Diego", "Dina", "Dionisio", "Dolores", "Domingo",
+            "Donato", "Dora", "Doris", "Dulce", "Eber", "Edgar", "Edith", "Edmundo", "Eduardo", "Efrain", "Eider", "Eladio",
+            "Eleazar", "Elena", "Eliana", "Elias", "Elisa", "Elisabet", "Eloy", "Elsa", "Elvira", "Emanuel", "Emilia", "Emiliano",
+            "Emilio", "Emma", "Enrique", "Enzo", "Epifanio", "Eric", "Erick", "Erika", "Ernesto", "Esmeralda", "Esperanza",
+            "Esteban", "Estefania", "Estela", "Ester", "Esther", "Estrella", "Eugenia", "Eugenio", "Eulalia", "Eusebio", "Eva",
+            "Evangelina", "Evelyn", "Ezequiel", "Fabiana", "Fabiano", "Fabio", "Fabiola", "Facundo", "Fatima", "Faustino",
+            "Fausto", "Federico", "Feliciano", "Felipe", "Felix", "Fermin", "Fernanda", "Fernando", "Fidencio", "Fiona",
+            "Fiorella", "Flavia", "Flavio", "Flora", "Florencia", "Florentino", "Fortunato", "Francesco"
+        };
+
+        Integer[] numerosCasiOrdenados = {
+            2491, 1083, 3922, 1045, 5671, 8234, 1012, 4456, 9012, 1033, 2289, 7341, 1095, 6612, 1004, 3345, 1077, 8890,
+            1056, 4123, 1102, 5567, 1028, 9934, 1069, 2145, 1088, 7756, 1041, 3021, 1099, 6643, 1007, 8812, 1052, 4409,
+            1105, 5521, 1024, 9134, 1065, 2045, 1081, 7156, 1047, 3121, 1093, 6243, 1001, 8212, 1058, 4109, 1101, 5121,
+            1029, 9234, 1061, 2245, 1086, 7256, 1043, 3221, 1091, 6343, 1015, 8312, 1054, 4209, 1106, 5221, 1022, 9334,
+            1067, 2345, 1089, 9301, 9302, 9303, 9304, 9305, 9306, 9307, 9308, 9309, 9310, 9311, 9312, 9313, 9314, 9315,
+            9316, 9317, 9318, 9319, 9320, 9321, 9322, 9323, 9324, 9325, 9326, 9327, 9328, 9329, 9330, 9331, 9332, 9333,
+            9334, 9335, 9336, 9337, 9338, 9339, 9340, 9341, 9342, 9343, 9344, 9345, 9346, 9347, 9348, 9349, 9350, 9351,
+            9352, 9353, 9354, 9355, 9356, 9357, 9358, 9359, 9360, 9361, 9362, 9363, 9364, 9365, 9366, 9367, 9368, 9369,
+            9370, 9371, 9372, 9373, 9374, 9375, 4567, 8912, 1234, 5678, 9023, 3456, 7890, 2345, 6789, 1122, 4433, 7788,
+            2299, 5566, 8811, 3344, 6677, 9900, 1357, 2468, 9753, 8642, 1111, 2222, 3333, 4444, 5555, 6666, 7777, 8888,
+            9999, 1010, 2020, 3030, 4040, 5050, 6060, 7070, 8080, 9090, 1212, 2323, 3434, 4545, 5656, 6767, 7878, 8989,
+            1414, 2525, 3636, 4747, 5858, 6969, 7071, 8181, 9292, 1515, 2626, 3737, 4848, 5959, 1616, 2727, 3838, 4949,
+            1717, 2828, 3939, 5151, 6262, 7373, 8484, 9595, 1818, 2929, 4141, 5252, 6363, 7474, 8585, 9696, 1919, 3131,
+            4242, 5353, 6464, 7575, 8686, 9797, 2121, 3232, 4343, 5454, 6565, 7676, 8787, 9898, 1000, 2000, 3000, 4000,
+            5000, 6000, 7000, 8000, 9000, 1500, 2500, 3500, 4500, 5500, 6500, 7500, 8500, 9500, 1250, 2250, 3250, 4250,
+            5250, 6250, 7250, 8250, 9250, 1750, 2750, 3750, 4750, 5750, 6750, 7750, 8750, 9750, 1100, 2100, 3100, 4100,
+            5100, 6100, 7100, 8100, 9100, 1200, 2200, 3200, 4200, 5200, 6200, 7200, 8200, 9200
+        };
+
+        String[] nombresBaseRepetidos = {
+            "Sofia", "Martina", "Lucia", "Natalia", "Andrea", "Laura", "Carlos", "Ana", "Jesus", "Alejandro",
+            "Valentina", "Pedro", "Isabel", "Gabriel", "Maria", "Sara", "Gonzalo", "Marta", "Ricardo", "Jose",
+            "Lucia", "Adrian", "Samuel", "Diego", "Cristina", "Alberto", "Sara", "Pablo", "Laura", "Cristina",
+            "Claudia", "Marta", "Fernando", "Alba", "Victoria", "Laura", "Guillermo", "Sara", "Antonio", "Ruben",
+            "Maria", "Javier", "Beatriz", "Laura", "Francisco", "Ricardo", "Andres", "Victor", "Ricardo", "Jorge",
+            "Javier", "Patricia", "Natalia", "Carmen", "Alejandro", "Beatriz", "Laura", "Laura", "Laura", "Pablo",
+            "Martina", "Ricardo", "Ricardo", "Javier", "Sara", "Diego", "Laura", "Adrian", "Lucia", "Maria",
+            "Laura", "Laura", "Alberto", "Laura", "Sara", "Francisco", "Andrea", "Pablo", "Lucia", "Andrea",
+            "Lucia", "Laura", "Carmen", "Sergio", "Jose", "Carlos", "Maria", "Laura", "Javier", "Laura",
+            "Ricardo", "Andrea", "Maria", "Alberto", "Laura", "Fernando"
+        };
+
+        Integer[] numerosBaseRepetidos = {
+            3482, 9107, 4425, 1893, 7261, 5504, 2319, 8847, 6012, 4390, 7712, 1056, 9238, 3341, 5609, 2174,
+            8045, 6673, 4920, 1155, 7839, 2902, 5418, 9367, 4081, 6254, 8190, 3726, 1544, 9901, 4872, 7033,
+            2266, 5198, 8340, 6127, 4404, 1925, 7750, 3051, 8614, 5592, 1289, 9430, 4716, 6885, 2349, 8102,
+            3957, 5023, 7468, 1184, 9036, 4277, 6511, 2890, 8433, 5729, 3110, 9655, 4321, 7094, 1867, 5532,
+            8240, 6903, 3378, 1022, 9745, 4156, 7280, 2591, 8813, 5466, 3804, 9129, 4670, 6044, 2133, 7952,
+            1409, 5821, 8366, 3294, 9510, 4837, 7125, 2068, 6741, 8922, 5355, 3689, 1247, 9803, 4594, 7311,
+            2750, 8019, 5634, 3942, 9276, 4485, 6160, 1937, 7808, 2211, 5090, 8527, 3403, 9388, 4122, 7555,
+            2640, 8734, 5209, 3567, 1376, 9942, 4601, 6499, 2822, 8150, 3187, 5974, 7623, 1104, 9059, 4233,
+            6311, 2467, 8688, 5576, 3010, 9466, 4741, 7203, 1855, 5320, 8401, 6929, 3255, 1088, 9712, 4039,
+            7420, 2533, 8911, 5684, 3766, 9190, 4501, 6277, 2004, 7865, 1472, 5933, 8290, 3311, 9588, 4950,
+            7100, 2189, 6854, 8831, 5492, 3621, 1210, 9877, 4625, 7380, 2712, 8076, 5145, 3878, 9343, 4422,
+            6089, 1901, 7725, 2240, 5011, 8594, 3476, 9411, 4199, 7512, 2690, 8788, 5266, 3501, 1344, 9920,
+            4654, 6427, 2855, 8100, 3133, 5890, 7688, 1143, 9022, 4289, 6366, 2401, 8632, 5511, 3074, 9499,
+            4776, 7250, 1812, 5394, 8467, 6981, 3222, 1050, 9777, 4011, 7480, 2576, 8966, 5612, 3711, 9155,
+            4567, 6212, 2088, 7922, 1433, 5901, 8254, 3329, 9555, 4912, 7177, 2150, 6811, 8876, 5427, 3601,
+            1255, 9840
+        };
+
+        String[] nombresRepetidosGrande = concatenar(nombresBaseRepetidos, nombresBaseRepetidos);
+        Integer[] numerosRepetidosGrande = concatenar(numerosBaseRepetidos, numerosBaseRepetidos);
+
+        // Parte 5: parcialmente ordenados (mitad ordenada y mitad desordenada).
+        String[] nombresParcial = construirParcialNombres();
+        Integer[] numerosParcial = construirParcialNumeros();
+
+        // Parte 6: serie historica referencial del dolar (COP) por periodo mensual.
+        // Fuente de referencia solicitada: Banco de la Republica (serie historica).
+        RegistroDolar[] dolarHistorico = {
+            new RegistroDolar("2022-01", 3981.16), new RegistroDolar("2022-02", 3912.47), new RegistroDolar("2022-03", 3756.92),
+            new RegistroDolar("2022-04", 3896.27), new RegistroDolar("2022-05", 3920.45), new RegistroDolar("2022-06", 4087.43),
+            new RegistroDolar("2022-07", 4340.11), new RegistroDolar("2022-08", 4307.45), new RegistroDolar("2022-09", 4448.22),
+            new RegistroDolar("2022-10", 4796.33), new RegistroDolar("2022-11", 4810.20), new RegistroDolar("2022-12", 4769.31),
+            new RegistroDolar("2023-01", 4723.11), new RegistroDolar("2023-02", 4860.02), new RegistroDolar("2023-03", 4740.55),
+            new RegistroDolar("2023-04", 4510.32), new RegistroDolar("2023-05", 4559.12), new RegistroDolar("2023-06", 4193.77),
+            new RegistroDolar("2023-07", 4010.55), new RegistroDolar("2023-08", 4079.33), new RegistroDolar("2023-09", 4022.61),
+            new RegistroDolar("2023-10", 4258.94), new RegistroDolar("2023-11", 4027.88), new RegistroDolar("2023-12", 3944.23),
+            new RegistroDolar("2024-01", 3915.27), new RegistroDolar("2024-02", 3929.46), new RegistroDolar("2024-03", 3896.70),
+            new RegistroDolar("2024-04", 3869.28), new RegistroDolar("2024-05", 3860.42), new RegistroDolar("2024-06", 4099.81),
+            new RegistroDolar("2024-07", 4043.20), new RegistroDolar("2024-08", 4003.75), new RegistroDolar("2024-09", 3935.48),
+            new RegistroDolar("2024-10", 4098.12), new RegistroDolar("2024-11", 4122.64), new RegistroDolar("2024-12", 4075.33)
+        };
+
+        System.out.println("=== PROGRAMA TEMPORAL 18 ===");
+        // PARTE 1: escenario base con nombres variados.
+        // Objetivo: obtener una linea de referencia general para todos los algoritmos
+        // en un arreglo no estructurado (ni casi ordenado ni invertido).
+        // Interpretacion esperada: Quick Sort y Shell Sort suelen dominar en tiempo,
+        // mientras Shell/Insercion pueden reducir comparaciones segun la distribucion.
+        System.out.println("\nPARTE 1: ARREGLO ORIGINAL DE NOMBRES");
+        ejecutarEscenario("nombres", nombres);
+
+        // PARTE 2: entradas casi ordenadas.
+        // Objetivo: medir cuanto se benefician algoritmos adaptativos cuando hay
+        // poco desorden residual. Burbuja mejorado e Insercion pueden mejorar,
+        // aunque Quick/Shell suelen mantener alta competitividad en tiempo absoluto.
+        System.out.println("\nPARTE 2: ARREGLOS CASI ORDENADOS");
+        ejecutarEscenario("nombres_casi_ordenados", nombresCasiOrdenados);
+        ejecutarEscenario("numeros_casi_ordenados", numerosCasiOrdenados);
+
+        // Parte 3: entradas invertidas (orden descendente).
+        // Se parte de los arreglos casi ordenados y se invierten para crear
+        // un caso mas exigente para algoritmos cuadraticos.
+        String[] nombresInvertidos = copiarInvertido(nombresCasiOrdenados);
+        Integer[] numerosInvertidos = copiarInvertido(numerosCasiOrdenados);
+
+        // PARTE 3: entradas invertidas (caso desfavorable para varios O(n^2)).
+        // Objetivo: observar el costo cuando el arreglo inicia en orden opuesto.
+        // Resultado tipico: Quick/Shell se sostienen mejor; burbujas e insercion
+        // incrementan movimientos por desplazamientos/intercambios masivos.
+        System.out.println("\nPARTE 3: ARREGLOS INVERTIDOS");
+        ejecutarEscenario("nombres_invertidos", nombresInvertidos);
+        ejecutarEscenario("numeros_invertidos", numerosInvertidos);
+
+        // PARTE 4: alta repeticion de valores.
+        // Objetivo: evaluar estabilidad practica y comportamiento cuando abundan
+        // claves iguales. En este contexto, disminuyen comparaciones efectivas en
+        // ciertos algoritmos y Quick/Shell suelen conservar buen rendimiento global.
+        System.out.println("\nPARTE 4: VALORES REPETIDOS");
+        ejecutarEscenario("nombres_repetidos_grande", nombresRepetidosGrande);
+        ejecutarEscenario("numeros_repetidos_grande", numerosRepetidosGrande);
+
+        // PARTE 5: mitad ordenada + mitad desordenada.
+        // Objetivo: simular datos reales con bloques ya organizados y otros no.
+        // Insercion suele verse favorecido por prefijos ordenados; Quick/Shell
+        // mantienen robustez en tiempo si el bloque desordenado es significativo.
+        System.out.println("\nPARTE 5: ARREGLOS PARCIALMENTE ORDENADOS");
+        ejecutarEscenario("nombres_parcialmente_ordenados", nombresParcial);
+        ejecutarEscenario("numeros_parcialmente_ordenados", numerosParcial);
+
+        // PARTE 6: serie historica del dolar en COP por periodo.
+        // Objetivo: comparar algoritmos sobre datos economicos reales y, ademas,
+        // identificar explicitamente el periodo maximo y minimo de la divisa.
+        // Nota metodologica: se mide memoria aproximada del proceso de ordenamiento
+        // para complementar tiempo y comparaciones en la tabla comparativa final.
+        System.out.println("\nPARTE 6: SERIE HISTORICA DEL DOLAR (BANREP)");
+        ejecutarEscenario("dolar_historico", dolarHistorico);
+        imprimirResumenDolar(dolarHistorico);
+
+        // PARTE 7: conteo de repeticiones y doble criterio de salida.
+        // Objetivo: construir una solucion que entregue: (1) lista por nombre
+        // y (2) lista por frecuencia de repeticion, evaluando ambos casos con
+        // los mismos seis algoritmos para conservar comparabilidad.
+        System.out.println("\nPARTE 7: REPETICION DE NOMBRES");
+        ejecutarParte7();
+    }
+
+    // Retorna una copia invertida del arreglo recibido.
+    // Ejemplo: [1,2,3] -> [3,2,1].
+    static <T> T[] copiarInvertido(T[] base) {
+        T[] copia = Arrays.copyOf(base, base.length);
+        for (int i = 0, j = copia.length - 1; i < j; i++, j--) {
+            T tmp = copia[i];
+            copia[i] = copia[j];
+            copia[j] = tmp;
+        }
+        return copia;
+    }
+
+    // Concatena dos arreglos del mismo tipo en uno solo.
+    static <T> T[] concatenar(T[] a, T[] b) {
+        T[] out = Arrays.copyOf(a, a.length + b.length);
+        System.arraycopy(b, 0, out, a.length, b.length);
+        return out;
+    }
+
+    static String[] construirParcialNombres() {
+        String[] mitad1 = {"Aaron", "Abel", "Abigail", "Abril", "Adan", "Adela", "Adolfo", "Adrian", "Agustin", "Ainhoa", "Aitana", "Alba", "Alejandro", "Alicia", "Amalia"};
+        String[] mitad2 = {"Zoe", "Ximena", "Walter", "Victor", "Sofia", "Ricardo", "Pablo", "Marta", "Laura", "Jorge", "Diego", "Carlos", "Beatriz", "Ana", "Yara"};
+        return concatenar(mitad1, mitad2);
+    }
+
+    static Integer[] construirParcialNumeros() {
+        Integer[] mitad1 = {101, 145, 188, 205, 233, 277, 301, 344, 390, 421, 466, 500, 544, 590, 633};
+        Integer[] mitad2 = {999, 777, 845, 612, 920, 711, 680, 950, 730, 801, 670, 889, 760, 702, 840};
+        return concatenar(mitad1, mitad2);
+    }
+
+    // Recorre la serie para encontrar periodos extremos (maximo y minimo).
+    // Esta salida responde directamente al requerimiento de identificar
+    // cuando el dolar estuvo mas alto y mas bajo dentro del periodo evaluado.
+    static void imprimirResumenDolar(RegistroDolar[] serie) {
+        RegistroDolar max = serie[0];
+        RegistroDolar min = serie[0];
+        for (RegistroDolar r : serie) {
+            if (r.valor > max.valor) max = r;
+            if (r.valor < min.valor) min = r;
+        }
+        System.out.println("Periodo mas alto del dolar: " + max.periodo + " con " + max.valor + " COP");
+        System.out.println("Periodo mas bajo del dolar: " + min.periodo + " con " + min.valor + " COP");
+        System.out.println();
+    }
+
+
+
+    static String[] generarArregloNombres(int cantidad) {
+        String[] iniciales = {
+            "Ana", "Luis", "Maria", "David", "Sofia", "Carlos", "Elena", "Alejandro", "Isabella", "Juan", "Valentina", "Andrea", "Pedro", "Camila", "Fernando", "Laura", "Diego",
+            "Carolina", "Gabriel", "Javier", "Miguel", "Paula", "Max", "Bianca", "Daniel", "Isaac", "Olivia", "Ava", "Liam", "Eva", "Mia", "Sophia", "Amelia", "Luna", "Alexander",
+            "Benjamin", "William", "Emma", "Oliver", "Noah", "Ethan", "Henry", "James", "Arjun", "Mateo", "Lucas", "Luciana", "Esteban", "Ximena", "Ricardo", "Micaela", "Felipe", "Barbara",
+            "Santi", "Valeria", "Hugo", "Florencia", "Marcos", "Agustina", "Damian", "Renata", "Joaquin", "Maite", "Bautista", "Irene", "Rodrigo", "Antonella", "Samuel", "Jimena", "Emilio", "Julieta"
+        };
+        Random rand = new Random(18);
+        String[] nombres = new String[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            nombres[i] = iniciales[rand.nextInt(iniciales.length)] + " -> " + (i + 1);
+        }
+        return nombres;
+    }
+
+    static Map<String, Integer> contarRepeticiones(String[] nombres) {
+        Map<String, Integer> frecuencias = new HashMap<>();
+        for (String n : nombres) {
+            String nombreBase = n.split(" -> ")[0].trim();
+            frecuencias.put(nombreBase, frecuencias.getOrDefault(nombreBase, 0) + 1);
+        }
+        return frecuencias;
+    }
+
+    // Resuelve la parte 7 completa:
+    // 1) genera un arreglo de nombres con repeticiones controladas,
+    // 2) cuenta frecuencias por nombre base,
+    // 3) ordena e imprime por nombre,
+    // 4) ordena e imprime por cantidad de repeticiones.
+    static void ejecutarParte7() {
+        String[] nombresGenerados = generarArregloNombres(200);
+        Map<String, Integer> frecuencias = contarRepeticiones(nombresGenerados);
+
+        ConteoNombre[] conteos = new ConteoNombre[frecuencias.size()];
+        int idx = 0;
+        for (Map.Entry<String, Integer> e : frecuencias.entrySet()) {
+            conteos[idx++] = new ConteoNombre(e.getKey(), e.getValue());
+        }
+
+        // Solucion A: lista ordenada alfabeticamente por nombre
+        ConteoNombre.ordenarPorCantidad = false;
+        ejecutarEscenario("parte7_orden_por_nombre", conteos);
+        ConteoNombre[] porNombre = Arrays.copyOf(conteos, conteos.length);
+        Arrays.sort(porNombre);
+        System.out.println("Lista ordenada por nombre (primeros 15):");
+        for (int i = 0; i < Math.min(15, porNombre.length); i++) {
+            System.out.println("  " + porNombre[i]);
+        }
+
+        // Solucion B: lista ordenada por cantidad de repeticiones (descendente)
+        ConteoNombre.ordenarPorCantidad = true;
+        ejecutarEscenario("parte7_orden_por_repeticiones", conteos);
+        ConteoNombre[] porCantidad = Arrays.copyOf(conteos, conteos.length);
+        Arrays.sort(porCantidad);
+        System.out.println("Lista ordenada por repeticiones (primeros 15):");
+        for (int i = 0; i < Math.min(15, porCantidad.length); i++) {
+            System.out.println("  " + porCantidad[i]);
+        }
+
+        System.out.println("Nota: en esta parte, puede tomarse iteraciones ~= comparaciones para la tabla comparativa.");
+        System.out.println();
+    }
+
+    // Ejecuta los seis algoritmos sobre una copia del arreglo y muestra tabla.
+    static <T extends Comparable<T>> void ejecutarEscenario(String nombreEscenario, T[] base) {
+        Map<String, Resultado> resultados = new LinkedHashMap<>();
+
+        resultados.put("Burbuja Simple", medir("Burbuja Simple", base, ProgramaTemporal18::burbujaSimple));
+        resultados.put("Burbuja Mejorado", medir("Burbuja Mejorado", base, ProgramaTemporal18::burbujaMejorado));
+        resultados.put("Quick Sort", medir("Quick Sort", base, ProgramaTemporal18::quickSortWrapper));
+        resultados.put("Shell Sort", medir("Shell Sort", base, ProgramaTemporal18::shellSort));
+        resultados.put("Seleccion Directa", medir("Seleccion Directa", base, ProgramaTemporal18::seleccionDirecta));
+        resultados.put("Insercion", medir("Insercion", base, ProgramaTemporal18::insercion));
+
+        System.out.println("Escenario: " + nombreEscenario + " (n=" + base.length + ")");
+        imprimirResultados(resultados);
+    }
+
+    // Mide tiempo y metricas; siempre trabaja sobre copia para una comparacion justa.
+    static <T extends Comparable<T>> Resultado medir(String nombre, T[] original, Ordenador<T> metodo) {
+        T[] copia = Arrays.copyOf(original, original.length);
+        Runtime rt = Runtime.getRuntime();
+        rt.gc();
+        long memAntes = rt.totalMemory() - rt.freeMemory();
+        long inicio = System.nanoTime();
+        long[] metricas = metodo.ejecutar(copia);
+        long fin = System.nanoTime();
+        long memDespues = rt.totalMemory() - rt.freeMemory();
+        long memoria = Math.max(0, memDespues - memAntes);
+        return new Resultado(nombre, metricas[0], metricas[1], fin - inicio, memoria);
+    }
+
+    static void imprimirResultados(Map<String, Resultado> resultados) {
+        Resultado mejorTiempo = null;
+        Resultado mejorComparaciones = null;
+
+        for (Resultado r : resultados.values()) {
+            System.out.printf("%-18s | tiempo = %8.3f ms | comparaciones = %7d | movimientos = %7d | memoria = %8d B%n",
+                r.algoritmo, r.tiempoNs / 1_000_000.0, r.comparaciones, r.movimientos, r.memoriaBytes);
+
+            if (mejorTiempo == null || r.tiempoNs < mejorTiempo.tiempoNs) mejorTiempo = r;
+            if (mejorComparaciones == null || r.comparaciones < mejorComparaciones.comparaciones) mejorComparaciones = r;
+        }
+
+        System.out.println("Conclusiones:");
+        System.out.println("- Mas eficiente por tiempo: " + mejorTiempo.algoritmo);
+        System.out.println("- Mas eficiente por comparaciones: " + mejorComparaciones.algoritmo);
+        System.out.println();
+    }
+
+    // Burbuja simple: compara pares adyacentes e intercambia si estan invertidos.
+    static <T extends Comparable<T>> long[] burbujaSimple(T[] arr) {
+        long comparaciones = 0, movimientos = 0;
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                comparaciones++;
+                if (arr[j].compareTo(arr[j + 1]) > 0) {
+                    T tmp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = tmp;
+                    movimientos += 3;
+                }
+            }
+        }
+        return new long[] { comparaciones, movimientos };
+    }
+
+    // Burbuja mejorado: si una pasada no produce cambios, se detiene temprano.
+    static <T extends Comparable<T>> long[] burbujaMejorado(T[] arr) {
+        long comparaciones = 0, movimientos = 0;
+        int n = arr.length;
+        boolean cambio;
+        for (int i = 0; i < n - 1; i++) {
+            cambio = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                comparaciones++;
+                if (arr[j].compareTo(arr[j + 1]) > 0) {
+                    T tmp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = tmp;
+                    movimientos += 3;
+                    cambio = true;
+                }
+            }
+            if (!cambio) break;
+        }
+        return new long[] { comparaciones, movimientos };
+    }
+
+    // Wrapper para Quick Sort recursivo.
+    static <T extends Comparable<T>> long[] quickSortWrapper(T[] arr) {
+        long[] metricas = new long[2];
+        quickSort(arr, 0, arr.length - 1, metricas);
+        return metricas;
+    }
+
+    // Quick Sort: particiona alrededor de pivote y ordena subarreglos.
+    static <T extends Comparable<T>> void quickSort(T[] arr, int izq, int der, long[] m) {
+        int i = izq, j = der;
+        T pivote = arr[(izq + der) / 2];
+
+        while (i <= j) {
+            while (true) {
+                m[0]++;
+                if (!(arr[i].compareTo(pivote) < 0)) break;
+                i++;
+            }
+            while (true) {
+                m[0]++;
+                if (!(arr[j].compareTo(pivote) > 0)) break;
+                j--;
+            }
+            m[0]++;
+            if (i <= j) {
+                T temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                m[1] += 3;
+                i++;
+                j--;
+            }
+        }
+
+        m[0]++;
+        if (izq < j) quickSort(arr, izq, j, m);
+        m[0]++;
+        if (i < der) quickSort(arr, i, der, m);
+    }
+
+    // Shell Sort: insercion con saltos decrecientes hasta gap=1.
+    static <T extends Comparable<T>> long[] shellSort(T[] arr) {
+        long comparaciones = 0, movimientos = 0;
+        int n = arr.length;
+        for (int gap = n / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < n; i++) {
+                T temp = arr[i];
+                int j = i;
+                while (j >= gap) {
+                    comparaciones++;
+                    if (!(arr[j - gap].compareTo(temp) > 0)) break;
+                    arr[j] = arr[j - gap];
+                    movimientos++;
+                    j -= gap;
+                }
+                arr[j] = temp;
+                movimientos++;
+            }
+        }
+        return new long[] { comparaciones, movimientos };
+    }
+
+    // Seleccion directa: busca el minimo en la parte no ordenada y lo coloca adelante.
+    static <T extends Comparable<T>> long[] seleccionDirecta(T[] arr) {
+        long comparaciones = 0, movimientos = 0;
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < n; j++) {
+                comparaciones++;
+                if (arr[j].compareTo(arr[min]) < 0) min = j;
+            }
+            if (min != i) {
+                T tmp = arr[i];
+                arr[i] = arr[min];
+                arr[min] = tmp;
+                movimientos += 3;
+            }
+        }
+        return new long[] { comparaciones, movimientos };
+    }
+
+    // Insercion: inserta cada elemento en su posicion correcta de la zona ordenada.
+    static <T extends Comparable<T>> long[] insercion(T[] arr) {
+        long comparaciones = 0, movimientos = 0;
+        int n = arr.length;
+        for (int i = 1; i < n; i++) {
+            T clave = arr[i];
+            int j = i - 1;
+            while (j >= 0) {
+                comparaciones++;
+                if (!(arr[j].compareTo(clave) > 0)) break;
+                arr[j + 1] = arr[j];
+                movimientos++;
+                j--;
+            }
+            arr[j + 1] = clave;
+            movimientos++;
+        }
+        return new long[] { comparaciones, movimientos };
+    }
+}
+
+/*
+Salida de ejemplo por cada parte (puede variar en tiempo entre ejecuciones):
+
+=== PROGRAMA TEMPORAL 18 ===
+
+PARTE 1: ARREGLO ORIGINAL DE NOMBRES
+Escenario: nombres (n=343)
+Burbuja Simple     | tiempo =    7.374 ms | comparaciones =   58653 | movimientos =   70908 | memoria =   293632 B
+Quick Sort         | tiempo =    0.328 ms | comparaciones =    4941 | movimientos =    2274 | memoria =    21304 B
+Conclusiones:
+- Mas eficiente por tiempo: Quick Sort
+- Mas eficiente por comparaciones: Shell Sort
+
+PARTE 2: ARREGLOS CASI ORDENADOS
+Escenario: nombres_casi_ordenados (n=300)
+Quick Sort         | tiempo =    0.115 ms | comparaciones =    5032 | movimientos =    1749 | memoria =     3568 B
+Escenario: numeros_casi_ordenados (n=302)
+Quick Sort         | tiempo =    0.119 ms | comparaciones =    4272 | movimientos =    1956 | memoria =     2656 B
+
+PARTE 3: ARREGLOS INVERTIDOS
+Escenario: nombres_invertidos (n=300)
+Quick Sort         | tiempo =    0.069 ms | comparaciones =    3044 | movimientos =     876 | memoria =     2656 B
+Escenario: numeros_invertidos (n=302)
+Quick Sort         | tiempo =    0.094 ms | comparaciones =    4277 | movimientos =    2025 | memoria =     2656 B
+
+PARTE 4: VALORES REPETIDOS
+Escenario: nombres_repetidos_grande (n=192)
+Quick Sort         | tiempo =    0.067 ms | comparaciones =    2460 | movimientos =    1413 | memoria =     2656 B
+Escenario: numeros_repetidos_grande (n=484)
+Quick Sort         | tiempo =    0.127 ms | comparaciones =    7925 | movimientos =    3540 | memoria =     2656 B
+
+PARTE 5: ARREGLOS PARCIALMENTE ORDENADOS
+Escenario: nombres_parcialmente_ordenados (n=30)
+Insercion          | tiempo =    0.020 ms | comparaciones =     121 | movimientos =     121 | memoria =     2656 B
+Escenario: numeros_parcialmente_ordenados (n=30)
+Insercion          | tiempo =    0.021 ms | comparaciones =      89 | movimientos =      89 | memoria =     2656 B
+
+PARTE 6: SERIE HISTORICA DEL DOLAR (BANREP)
+Escenario: dolar_historico (n=36)
+Shell Sort         | tiempo =    0.044 ms | comparaciones =     190 | movimientos =     207 | memoria =     2656 B
+Periodo mas alto del dolar: 2023-02 con 4860.02 COP
+Periodo mas bajo del dolar: 2022-03 con 3756.92 COP
+
+PARTE 7: REPETICION DE NOMBRES
+Escenario: parte7_orden_por_nombre (n=68)
+Shell Sort         | tiempo =    0.112 ms | comparaciones =     562 | movimientos =     591 | memoria =     2656 B
+Lista ordenada por nombre (primeros 15)
+Escenario: parte7_orden_por_repeticiones (n=68)
+Shell Sort         | tiempo =    0.113 ms | comparaciones =     548 | movimientos =     582 | memoria =     2656 B
+Lista ordenada por repeticiones (primeros 15)
+*/
