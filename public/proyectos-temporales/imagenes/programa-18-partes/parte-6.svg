@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Programa 18 parte 6 - output</title>
+  <desc id="desc">Salida de ejecucion de la parte 6</desc>
+  <rect width="1200" height="675" fill="#020617"/>
+  <text x="600" y="80" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="34" font-weight="700">Output real - Parte 6</text>
+  <text x="600" y="115" text-anchor="middle" fill="#93c5fd" font-family="Arial" font-size="20">Extracto de salida en consola</text>
+  <text x="70" y="170" fill="#bae6fd" font-family="monospace" font-size="20">Periodo mas bajo: 2022-04 -&gt; 3748.15</text>
+  <text x="70" y="204" fill="#bae6fd" font-family="monospace" font-size="20">Periodo mas alto: 2022-11 -&gt; 4875.32</text>
+  <text x="70" y="238" fill="#bae6fd" font-family="monospace" font-size="20">Parte 6 - dolar (n=12)</text>
+  <text x="70" y="272" fill="#bae6fd" font-family="monospace" font-size="20">- Burbuja Simple | comparaciones=66 | tiempo(ns)=77687 | memoria(bytes)=40</text>
+  <text x="70" y="306" fill="#bae6fd" font-family="monospace" font-size="20">- Burbuja Mejorado | comparaciones=38 | tiempo(ns)=28426 | memoria(bytes)=40</text>
+  <text x="70" y="340" fill="#bae6fd" font-family="monospace" font-size="20">- Quick Sort | comparaciones=53 | tiempo(ns)=69165 | memoria(bytes)=40</text>
+  <text x="70" y="374" fill="#bae6fd" font-family="monospace" font-size="20">- Shell Sort | comparaciones=29 | tiempo(ns)=19157 | memoria(bytes)=40</text>
+  <text x="70" y="408" fill="#bae6fd" font-family="monospace" font-size="20">- Seleccion Directa | comparaciones=66 | tiempo(ns)=89722 | memoria(bytes)=40</text>
+  <text x="70" y="442" fill="#bae6fd" font-family="monospace" font-size="20">- Insercion | comparaciones=16 | tiempo(ns)=90561 | memoria(bytes)=40</text>
+</svg>

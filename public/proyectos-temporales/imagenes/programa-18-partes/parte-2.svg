@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Programa 18 parte 2 - output</title>
+  <desc id="desc">Salida de ejecucion de la parte 2</desc>
+  <rect width="1200" height="675" fill="#020617"/>
+  <text x="600" y="80" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="34" font-weight="700">Output real - Parte 2</text>
+  <text x="600" y="115" text-anchor="middle" fill="#93c5fd" font-family="Arial" font-size="20">Extracto de salida en consola</text>
+  <text x="70" y="170" fill="#bae6fd" font-family="monospace" font-size="20">Parte 2 - nombres (n=10)</text>
+  <text x="70" y="204" fill="#bae6fd" font-family="monospace" font-size="20">- Burbuja Simple | comparaciones=45 | tiempo(ns)=69495 | memoria(bytes)=40</text>
+  <text x="70" y="238" fill="#bae6fd" font-family="monospace" font-size="20">- Burbuja Mejorado | comparaciones=45 | tiempo(ns)=58011 | memoria(bytes)=40</text>
+  <text x="70" y="272" fill="#bae6fd" font-family="monospace" font-size="20">- Quick Sort | comparaciones=45 | tiempo(ns)=56966 | memoria(bytes)=40</text>
+  <text x="70" y="306" fill="#bae6fd" font-family="monospace" font-size="20">- Shell Sort | comparaciones=29 | tiempo(ns)=33608 | memoria(bytes)=40</text>
+  <text x="70" y="340" fill="#bae6fd" font-family="monospace" font-size="20">- Seleccion Directa | comparaciones=45 | tiempo(ns)=61443 | memoria(bytes)=40</text>
+  <text x="70" y="374" fill="#bae6fd" font-family="monospace" font-size="20">- Insercion | comparaciones=17 | tiempo(ns)=41840 | memoria(bytes)=40</text>
+  <text x="70" y="408" fill="#bae6fd" font-family="monospace" font-size="20">Parte 2 - numeros (n=10)</text>
+  <text x="70" y="442" fill="#bae6fd" font-family="monospace" font-size="20">- Burbuja Simple | comparaciones=45 | tiempo(ns)=35620 | memoria(bytes)=40</text>
+  <text x="70" y="476" fill="#bae6fd" font-family="monospace" font-size="20">- Burbuja Mejorado | comparaciones=35 | tiempo(ns)=11863 | memoria(bytes)=40</text>
+  <text x="70" y="510" fill="#bae6fd" font-family="monospace" font-size="20">- Quick Sort | comparaciones=25 | tiempo(ns)=16321 | memoria(bytes)=40</text>
+  <text x="70" y="544" fill="#bae6fd" font-family="monospace" font-size="20">- Shell Sort | comparaciones=26 | tiempo(ns)=14202 | memoria(bytes)=40</text>
+  <text x="70" y="578" fill="#bae6fd" font-family="monospace" font-size="20">- Seleccion Directa | comparaciones=45 | tiempo(ns)=11397 | memoria(bytes)=40</text>
+  <text x="70" y="612" fill="#bae6fd" font-family="monospace" font-size="20">- Insercion | comparaciones=13 | tiempo(ns)=6614 | memoria(bytes)=40</text>
+</svg>
