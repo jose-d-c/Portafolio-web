@@ -2,6 +2,14 @@ import java.util.*;
 
 public class ProgramaTemporal18 {
 
+    // ============================================================
+    // PROGRAMA TEMPORAL 18 (RECONSTRUIDO)
+    // Seccionado por puntos 1..7 del enunciado
+    // Algoritmos usados en todos los puntos:
+    // Burbuja Simple, Burbuja Mejorado, Quick Sort, Shell Sort,
+    // Seleccion Directa e Insercion.
+    // ============================================================
+
     // Estructura para guardar las metricas de cada algoritmo.
     // comparaciones: cuantas veces se comparan dos elementos.
     // movimientos: asignaciones/intercambios/desplazamientos realizados.
@@ -11,10 +19,12 @@ public class ProgramaTemporal18 {
         long comparaciones;
         long movimientos;
         long tiempoNs;
+        long iteraciones;
         long memoriaBytes;
 
-        Resultado(String algoritmo, long comparaciones, long movimientos, long tiempoNs, long memoriaBytes) {
+        Resultado(String algoritmo, long iteraciones, long comparaciones, long movimientos, long tiempoNs, long memoriaBytes) {
             this.algoritmo = algoritmo;
+            this.iteraciones = iteraciones;
             this.comparaciones = comparaciones;
             this.movimientos = movimientos;
             this.tiempoNs = tiempoNs;
@@ -222,8 +232,9 @@ public class ProgramaTemporal18 {
             new RegistroDolar("2024-10", 4098.12), new RegistroDolar("2024-11", 4122.64), new RegistroDolar("2024-12", 4075.33)
         };
 
-        System.out.println("=== PROGRAMA TEMPORAL 18 ===");
-        // PARTE 1: escenario base con nombres variados.
+        System.out.println("=== PROGRAMA TEMPORAL 18 (RECONSTRUIDO) ===");
+        // ================= PUNTO 1 =================
+        // Implementacion y ejecucion en arreglo base de Nombres.
         // Objetivo: obtener una linea de referencia general para todos los algoritmos
         // en un arreglo no estructurado (ni casi ordenado ni invertido).
         // Interpretacion esperada: Quick Sort y Shell Sort suelen dominar en tiempo,
@@ -231,7 +242,8 @@ public class ProgramaTemporal18 {
         System.out.println("\nPARTE 1: ARREGLO ORIGINAL DE NOMBRES");
         ejecutarEscenario("nombres", nombres);
 
-        // PARTE 2: entradas casi ordenadas.
+        // ================= PUNTO 2 =================
+        // Ejecucion en arreglos casi ordenados (nombres y numeros).
         // Objetivo: medir cuanto se benefician algoritmos adaptativos cuando hay
         // poco desorden residual. Burbuja mejorado e Insercion pueden mejorar,
         // aunque Quick/Shell suelen mantener alta competitividad en tiempo absoluto.
@@ -245,7 +257,8 @@ public class ProgramaTemporal18 {
         String[] nombresInvertidos = copiarInvertido(nombresCasiOrdenados);
         Integer[] numerosInvertidos = copiarInvertido(numerosCasiOrdenados);
 
-        // PARTE 3: entradas invertidas (caso desfavorable para varios O(n^2)).
+        // ================= PUNTO 3 =================
+        // Comparacion en arreglos invertidos (peor caso para varios O(n^2)).
         // Objetivo: observar el costo cuando el arreglo inicia en orden opuesto.
         // Resultado tipico: Quick/Shell se sostienen mejor; burbujas e insercion
         // incrementan movimientos por desplazamientos/intercambios masivos.
@@ -253,7 +266,8 @@ public class ProgramaTemporal18 {
         ejecutarEscenario("nombres_invertidos", nombresInvertidos);
         ejecutarEscenario("numeros_invertidos", numerosInvertidos);
 
-        // PARTE 4: alta repeticion de valores.
+        // ================= PUNTO 4 =================
+        // Ordenamiento de valores repetidos.
         // Objetivo: evaluar estabilidad practica y comportamiento cuando abundan
         // claves iguales. En este contexto, disminuyen comparaciones efectivas en
         // ciertos algoritmos y Quick/Shell suelen conservar buen rendimiento global.
@@ -261,7 +275,8 @@ public class ProgramaTemporal18 {
         ejecutarEscenario("nombres_repetidos_grande", nombresRepetidosGrande);
         ejecutarEscenario("numeros_repetidos_grande", numerosRepetidosGrande);
 
-        // PARTE 5: mitad ordenada + mitad desordenada.
+        // ================= PUNTO 5 =================
+        // Arreglos parcialmente ordenados (mitad ordenada, mitad desordenada).
         // Objetivo: simular datos reales con bloques ya organizados y otros no.
         // Insercion suele verse favorecido por prefijos ordenados; Quick/Shell
         // mantienen robustez en tiempo si el bloque desordenado es significativo.
@@ -269,7 +284,8 @@ public class ProgramaTemporal18 {
         ejecutarEscenario("nombres_parcialmente_ordenados", nombresParcial);
         ejecutarEscenario("numeros_parcialmente_ordenados", numerosParcial);
 
-        // PARTE 6: serie historica del dolar en COP por periodo.
+        // ================= PUNTO 6 =================
+        // Serie historica del dolar (referencia Banrep).
         // Objetivo: comparar algoritmos sobre datos economicos reales y, ademas,
         // identificar explicitamente el periodo maximo y minimo de la divisa.
         // Nota metodologica: se mide memoria aproximada del proceso de ordenamiento
@@ -278,7 +294,8 @@ public class ProgramaTemporal18 {
         ejecutarEscenario("dolar_historico", dolarHistorico);
         imprimirResumenDolar(dolarHistorico);
 
-        // PARTE 7: conteo de repeticiones y doble criterio de salida.
+        // ================= PUNTO 7 =================
+        // Conteo de repeticiones con dos salidas: por nombre y por frecuencia.
         // Objetivo: construir una solucion que entregue: (1) lista por nombre
         // y (2) lista por frecuencia de repeticion, evaluando ambos casos con
         // los mismos seis algoritmos para conservar comparabilidad.
@@ -423,16 +440,21 @@ public class ProgramaTemporal18 {
         long fin = System.nanoTime();
         long memDespues = rt.totalMemory() - rt.freeMemory();
         long memoria = Math.max(0, memDespues - memAntes);
-        return new Resultado(nombre, metricas[0], metricas[1], fin - inicio, memoria);
+        long iteracionesAprox = metricas[0]; // aproximacion didactica
+        return new Resultado(nombre, iteracionesAprox, metricas[0], metricas[1], fin - inicio, memoria);
     }
 
+    // Imprime tabla comparativa solicitada: tiempos, memoria,
+    // comparaciones, iteraciones e intercambios/desplazamientos.
     static void imprimirResultados(Map<String, Resultado> resultados) {
         Resultado mejorTiempo = null;
         Resultado mejorComparaciones = null;
 
+        System.out.println("Algoritmo           | Tiempo(ms) | Memoria(B) | Comparaciones | Iteraciones | Intercambios");
+        System.out.println("--------------------+------------+------------+---------------+-------------+-------------");
         for (Resultado r : resultados.values()) {
-            System.out.printf("%-18s | tiempo = %8.3f ms | comparaciones = %7d | movimientos = %7d | memoria = %8d B%n",
-                r.algoritmo, r.tiempoNs / 1_000_000.0, r.comparaciones, r.movimientos, r.memoriaBytes);
+            System.out.printf("%-19s | %10.3f | %10d | %13d | %11d | %11d%n",
+                r.algoritmo, r.tiempoNs / 1_000_000.0, r.memoriaBytes, r.comparaciones, r.iteraciones, r.movimientos);
 
             if (mejorTiempo == null || r.tiempoNs < mejorTiempo.tiempoNs) mejorTiempo = r;
             if (mejorComparaciones == null || r.comparaciones < mejorComparaciones.comparaciones) mejorComparaciones = r;
@@ -588,53 +610,12 @@ public class ProgramaTemporal18 {
 }
 
 /*
-Salida de ejemplo por cada parte (puede variar en tiempo entre ejecuciones):
-
-=== PROGRAMA TEMPORAL 18 ===
-
-PARTE 1: ARREGLO ORIGINAL DE NOMBRES
-Escenario: nombres (n=343)
-Burbuja Simple     | tiempo =    7.374 ms | comparaciones =   58653 | movimientos =   70908 | memoria =   293632 B
-Quick Sort         | tiempo =    0.328 ms | comparaciones =    4941 | movimientos =    2274 | memoria =    21304 B
-Conclusiones:
-- Mas eficiente por tiempo: Quick Sort
-- Mas eficiente por comparaciones: Shell Sort
-
-PARTE 2: ARREGLOS CASI ORDENADOS
-Escenario: nombres_casi_ordenados (n=300)
-Quick Sort         | tiempo =    0.115 ms | comparaciones =    5032 | movimientos =    1749 | memoria =     3568 B
-Escenario: numeros_casi_ordenados (n=302)
-Quick Sort         | tiempo =    0.119 ms | comparaciones =    4272 | movimientos =    1956 | memoria =     2656 B
-
-PARTE 3: ARREGLOS INVERTIDOS
-Escenario: nombres_invertidos (n=300)
-Quick Sort         | tiempo =    0.069 ms | comparaciones =    3044 | movimientos =     876 | memoria =     2656 B
-Escenario: numeros_invertidos (n=302)
-Quick Sort         | tiempo =    0.094 ms | comparaciones =    4277 | movimientos =    2025 | memoria =     2656 B
-
-PARTE 4: VALORES REPETIDOS
-Escenario: nombres_repetidos_grande (n=192)
-Quick Sort         | tiempo =    0.067 ms | comparaciones =    2460 | movimientos =    1413 | memoria =     2656 B
-Escenario: numeros_repetidos_grande (n=484)
-Quick Sort         | tiempo =    0.127 ms | comparaciones =    7925 | movimientos =    3540 | memoria =     2656 B
-
-PARTE 5: ARREGLOS PARCIALMENTE ORDENADOS
-Escenario: nombres_parcialmente_ordenados (n=30)
-Insercion          | tiempo =    0.020 ms | comparaciones =     121 | movimientos =     121 | memoria =     2656 B
-Escenario: numeros_parcialmente_ordenados (n=30)
-Insercion          | tiempo =    0.021 ms | comparaciones =      89 | movimientos =      89 | memoria =     2656 B
-
-PARTE 6: SERIE HISTORICA DEL DOLAR (BANREP)
-Escenario: dolar_historico (n=36)
-Shell Sort         | tiempo =    0.044 ms | comparaciones =     190 | movimientos =     207 | memoria =     2656 B
-Periodo mas alto del dolar: 2023-02 con 4860.02 COP
-Periodo mas bajo del dolar: 2022-03 con 3756.92 COP
-
-PARTE 7: REPETICION DE NOMBRES
-Escenario: parte7_orden_por_nombre (n=68)
-Shell Sort         | tiempo =    0.112 ms | comparaciones =     562 | movimientos =     591 | memoria =     2656 B
-Lista ordenada por nombre (primeros 15)
-Escenario: parte7_orden_por_repeticiones (n=68)
-Shell Sort         | tiempo =    0.113 ms | comparaciones =     548 | movimientos =     582 | memoria =     2656 B
-Lista ordenada por repeticiones (primeros 15)
+Salida de ejemplo (resumen por punto):
+PUNTO 1 -> tabla comparativa para Nombres.
+PUNTO 2 -> tablas para nombres_casi_ordenados y numeros_casi_ordenados.
+PUNTO 3 -> tablas para nombres_invertidos y numeros_invertidos.
+PUNTO 4 -> tablas para nombres_repetidos_grande y numeros_repetidos_grande.
+PUNTO 5 -> tablas para arreglos parcialmente ordenados.
+PUNTO 6 -> tabla para dolar_historico + periodo maximo/minimo del dolar.
+PUNTO 7 -> tabla por nombre y tabla por repeticiones + listas ordenadas.
 */
