@@ -14,28 +14,37 @@ public class ProgramaTemporal18 {
     // comparaciones: cuantas veces se comparan dos elementos.
     // movimientos: asignaciones/intercambios/desplazamientos realizados.
     // tiempoNs: tiempo total de ejecucion en nanosegundos.
+    static class Metricas {
+        long iteraciones;
+        long comparaciones;
+        long intercambios; // swaps reales entre dos posiciones
+        long movimientos;  // asignaciones/desplazamientos
+    }
+
     static class Resultado {
         String algoritmo;
+        long iteraciones;
         long comparaciones;
+        long intercambios;
         long movimientos;
         long tiempoNs;
-        long iteraciones;
         long memoriaBytes;
+        boolean ok;
 
-        Resultado(String algoritmo, long iteraciones, long comparaciones, long movimientos, long tiempoNs, long memoriaBytes) {
+        Resultado(String algoritmo, Metricas m, long tiempoNs, long memoriaBytes, boolean ok) {
             this.algoritmo = algoritmo;
-            this.iteraciones = iteraciones;
-            this.comparaciones = comparaciones;
-            this.movimientos = movimientos;
+            this.iteraciones = m.iteraciones;
+            this.comparaciones = m.comparaciones;
+            this.intercambios = m.intercambios;
+            this.movimientos = m.movimientos;
             this.tiempoNs = tiempoNs;
             this.memoriaBytes = memoriaBytes;
+            this.ok = ok;
         }
     }
 
-    // Interfaz funcional para cualquier algoritmo de ordenamiento
-    // que retorne [comparaciones, movimientos].
     interface Ordenador<T extends Comparable<T>> {
-        long[] ejecutar(T[] arr);
+        Metricas ejecutar(T[] arr);
     }
 
 
@@ -211,7 +220,7 @@ public class ProgramaTemporal18 {
         String[] nombresRepetidosGrande = concatenar(nombresBaseRepetidos, nombresBaseRepetidos);
         Integer[] numerosRepetidosGrande = concatenar(numerosBaseRepetidos, numerosBaseRepetidos);
 
-        // Parte 5: parcialmente ordenados (mitad ordenada y mitad desordenada).
+        // Parte 5: parcialmente ordenados por cuartos (Q1,Q2,Q3,Q4).
         String[] nombresParcial = construirParcialNombres();
         Integer[] numerosParcial = construirParcialNumeros();
 
@@ -221,15 +230,7 @@ public class ProgramaTemporal18 {
             new RegistroDolar("2022-01", 3981.16), new RegistroDolar("2022-02", 3912.47), new RegistroDolar("2022-03", 3756.92),
             new RegistroDolar("2022-04", 3896.27), new RegistroDolar("2022-05", 3920.45), new RegistroDolar("2022-06", 4087.43),
             new RegistroDolar("2022-07", 4340.11), new RegistroDolar("2022-08", 4307.45), new RegistroDolar("2022-09", 4448.22),
-            new RegistroDolar("2022-10", 4796.33), new RegistroDolar("2022-11", 4810.20), new RegistroDolar("2022-12", 4769.31),
-            new RegistroDolar("2023-01", 4723.11), new RegistroDolar("2023-02", 4860.02), new RegistroDolar("2023-03", 4740.55),
-            new RegistroDolar("2023-04", 4510.32), new RegistroDolar("2023-05", 4559.12), new RegistroDolar("2023-06", 4193.77),
-            new RegistroDolar("2023-07", 4010.55), new RegistroDolar("2023-08", 4079.33), new RegistroDolar("2023-09", 4022.61),
-            new RegistroDolar("2023-10", 4258.94), new RegistroDolar("2023-11", 4027.88), new RegistroDolar("2023-12", 3944.23),
-            new RegistroDolar("2024-01", 3915.27), new RegistroDolar("2024-02", 3929.46), new RegistroDolar("2024-03", 3896.70),
-            new RegistroDolar("2024-04", 3869.28), new RegistroDolar("2024-05", 3860.42), new RegistroDolar("2024-06", 4099.81),
-            new RegistroDolar("2024-07", 4043.20), new RegistroDolar("2024-08", 4003.75), new RegistroDolar("2024-09", 3935.48),
-            new RegistroDolar("2024-10", 4098.12), new RegistroDolar("2024-11", 4122.64), new RegistroDolar("2024-12", 4075.33)
+            new RegistroDolar("2022-10", 4796.33), new RegistroDolar("2022-11", 4810.20), new RegistroDolar("2022-12", 4769.31)
         };
 
         System.out.println("=== PROGRAMA TEMPORAL 18 (RECONSTRUIDO) ===");
@@ -281,6 +282,8 @@ public class ProgramaTemporal18 {
         // Insercion suele verse favorecido por prefijos ordenados; Quick/Shell
         // mantienen robustez en tiempo si el bloque desordenado es significativo.
         System.out.println("\nPARTE 5: ARREGLOS PARCIALMENTE ORDENADOS");
+        imprimirEvidenciaCuartos("nombresParcial", nombresParcial);
+        imprimirEvidenciaCuartos("numerosParcial", numerosParcial);
         ejecutarEscenario("nombres_parcialmente_ordenados", nombresParcial);
         ejecutarEscenario("numeros_parcialmente_ordenados", numerosParcial);
 
@@ -323,15 +326,50 @@ public class ProgramaTemporal18 {
     }
 
     static String[] construirParcialNombres() {
-        String[] mitad1 = {"Aaron", "Abel", "Abigail", "Abril", "Adan", "Adela", "Adolfo", "Adrian", "Agustin", "Ainhoa", "Aitana", "Alba", "Alejandro", "Alicia", "Amalia"};
-        String[] mitad2 = {"Zoe", "Ximena", "Walter", "Victor", "Sofia", "Ricardo", "Pablo", "Marta", "Laura", "Jorge", "Diego", "Carlos", "Beatriz", "Ana", "Yara"};
-        return concatenar(mitad1, mitad2);
+        // Tamano 48: 4 cuartos de 12 elementos.
+        String[] q1 = {"Aaron","Abel","Abril","Adela","Adrian","Agustin","Ainhoa","Aitana","Alba","Alberto","Alejandro","Alicia"}; // ordenado
+        String[] q2 = {"Zoe","Ximena","Walter","Victor","Sofia","Ricardo","Pablo","Marta","Laura","Jorge","Diego","Carlos"}; // desordenado
+        String[] q3 = {"Beatriz","Camila","Candela","Carla","Carmen","Celia","Clara","Daniel","Elena","Emma","Fabio","Flor"}; // ordenado
+        String[] q4 = {"Yara","Ulises","Noah","Mateo","Liam","Isabel","Hugo","Gael","Enzo","Dylan","Bruno","Axel"}; // desordenado
+        barajar(q2, 50);
+        barajar(q4, 51);
+        return concatenar(concatenar(q1, q2), concatenar(q3, q4));
     }
 
     static Integer[] construirParcialNumeros() {
-        Integer[] mitad1 = {101, 145, 188, 205, 233, 277, 301, 344, 390, 421, 466, 500, 544, 590, 633};
-        Integer[] mitad2 = {999, 777, 845, 612, 920, 711, 680, 950, 730, 801, 670, 889, 760, 702, 840};
-        return concatenar(mitad1, mitad2);
+        Integer[] q1 = {10, 22, 35, 47, 58, 63, 75, 81, 96, 104, 118, 127}; // ordenado
+        Integer[] q2 = {990, 875, 760, 645, 530, 415, 300, 285, 170, 155, 140, 125}; // desordenado
+        Integer[] q3 = {130, 148, 166, 184, 202, 220, 238, 256, 274, 292, 310, 328}; // ordenado
+        Integer[] q4 = {999, 888, 777, 666, 555, 444, 333, 222, 111, 1000, 950, 905}; // desordenado
+        barajar(q2, 60);
+        barajar(q4, 61);
+        return concatenar(concatenar(q1, q2), concatenar(q3, q4));
+    }
+
+    static <T> void barajar(T[] arr, long semilla) {
+        Random r = new Random(semilla);
+        for (int i = arr.length - 1; i > 0; i--) {
+            int j = r.nextInt(i + 1);
+            T t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+    }
+
+    static <T> void imprimirEvidenciaCuartos(String nombre, T[] arr) {
+        int q = arr.length / 4;
+        System.out.println("Evidencia " + nombre + " (primeros 10 de cada cuarto):");
+        imprimirRango("Q1", arr, 0, Math.min(10, q));
+        imprimirRango("Q2", arr, q, Math.min(q + 10, 2 * q));
+        imprimirRango("Q3", arr, 2 * q, Math.min(2 * q + 10, 3 * q));
+        imprimirRango("Q4", arr, 3 * q, Math.min(3 * q + 10, 4 * q));
+    }
+
+    static <T> void imprimirRango(String etiqueta, T[] arr, int ini, int fin) {
+        System.out.print("  " + etiqueta + ": ");
+        for (int i = ini; i < fin; i++) {
+            if (i > ini) System.out.print(", ");
+            System.out.print(arr[i]);
+        }
+        System.out.println();
     }
 
     // Recorre la serie para encontrar periodos extremos (maximo y minimo).
@@ -393,8 +431,7 @@ public class ProgramaTemporal18 {
         // Solucion A: lista ordenada alfabeticamente por nombre
         ConteoNombre.ordenarPorCantidad = false;
         ejecutarEscenario("parte7_orden_por_nombre", conteos);
-        ConteoNombre[] porNombre = Arrays.copyOf(conteos, conteos.length);
-        Arrays.sort(porNombre);
+        ConteoNombre[] porNombre = ordenarYRetornar(conteos, "Insercion");
         System.out.println("Lista ordenada por nombre (primeros 15):");
         for (int i = 0; i < Math.min(15, porNombre.length); i++) {
             System.out.println("  " + porNombre[i]);
@@ -403,15 +440,27 @@ public class ProgramaTemporal18 {
         // Solucion B: lista ordenada por cantidad de repeticiones (descendente)
         ConteoNombre.ordenarPorCantidad = true;
         ejecutarEscenario("parte7_orden_por_repeticiones", conteos);
-        ConteoNombre[] porCantidad = Arrays.copyOf(conteos, conteos.length);
-        Arrays.sort(porCantidad);
+        ConteoNombre[] porCantidad = ordenarYRetornar(conteos, "Shell Sort");
         System.out.println("Lista ordenada por repeticiones (primeros 15):");
         for (int i = 0; i < Math.min(15, porCantidad.length); i++) {
             System.out.println("  " + porCantidad[i]);
         }
 
-        System.out.println("Nota: en esta parte, puede tomarse iteraciones ~= comparaciones para la tabla comparativa.");
+        System.out.println("Nota: en esta parte, iteraciones se reportan como conteo de ciclos principales.");
         System.out.println();
+    }
+
+    static <T extends Comparable<T>> T[] ordenarYRetornar(T[] base, String algoritmo) {
+        T[] copia = Arrays.copyOf(base, base.length);
+        switch (algoritmo) {
+            case "Burbuja Simple" -> burbujaSimple(copia);
+            case "Burbuja Mejorado" -> burbujaMejorado(copia);
+            case "Quick Sort" -> quickSortWrapper(copia);
+            case "Shell Sort" -> shellSort(copia);
+            case "Seleccion Directa" -> seleccionDirecta(copia);
+            default -> insercion(copia);
+        }
+        return copia;
     }
 
     // Ejecuta los seis algoritmos sobre una copia del arreglo y muestra tabla.
@@ -429,19 +478,28 @@ public class ProgramaTemporal18 {
         imprimirResultados(resultados);
     }
 
-    // Mide tiempo y metricas; siempre trabaja sobre copia para una comparacion justa.
     static <T extends Comparable<T>> Resultado medir(String nombre, T[] original, Ordenador<T> metodo) {
         T[] copia = Arrays.copyOf(original, original.length);
         Runtime rt = Runtime.getRuntime();
         rt.gc();
         long memAntes = rt.totalMemory() - rt.freeMemory();
         long inicio = System.nanoTime();
-        long[] metricas = metodo.ejecutar(copia);
+        Metricas m = metodo.ejecutar(copia);
         long fin = System.nanoTime();
         long memDespues = rt.totalMemory() - rt.freeMemory();
         long memoria = Math.max(0, memDespues - memAntes);
-        long iteracionesAprox = metricas[0]; // aproximacion didactica
-        return new Resultado(nombre, iteracionesAprox, metricas[0], metricas[1], fin - inicio, memoria);
+        boolean ok = estaOrdenado(copia);
+        if (!ok) {
+            System.out.println("ERROR: no ordeno correctamente -> " + nombre);
+        }
+        return new Resultado(nombre, m, fin - inicio, memoria, ok);
+    }
+
+    static <T extends Comparable<T>> boolean estaOrdenado(T[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i - 1].compareTo(arr[i]) > 0) return false;
+        }
+        return true;
     }
 
     // Imprime tabla comparativa solicitada: tiempos, memoria,
@@ -449,163 +507,176 @@ public class ProgramaTemporal18 {
     static void imprimirResultados(Map<String, Resultado> resultados) {
         Resultado mejorTiempo = null;
         Resultado mejorComparaciones = null;
+        Resultado mejorIntercambios = null;
 
-        System.out.println("Algoritmo           | Tiempo(ms) | Memoria(B) | Comparaciones | Iteraciones | Intercambios");
-        System.out.println("--------------------+------------+------------+---------------+-------------+-------------");
+        System.out.println("Algoritmo           | Tiempo(ms) | Memoria(B) | Comparaciones | Iteraciones | Intercambios | Movimientos");
+        System.out.println("--------------------+------------+------------+---------------+-------------+--------------+------------");
         for (Resultado r : resultados.values()) {
-            System.out.printf("%-19s | %10.3f | %10d | %13d | %11d | %11d%n",
-                r.algoritmo, r.tiempoNs / 1_000_000.0, r.memoriaBytes, r.comparaciones, r.iteraciones, r.movimientos);
+            System.out.printf("%-19s | %10.3f | %10d | %13d | %11d | %12d | %10d%s%n",
+                r.algoritmo, r.tiempoNs / 1_000_000.0, r.memoriaBytes, r.comparaciones, r.iteraciones, r.intercambios, r.movimientos,
+                r.ok ? "" : "  <- ERROR");
 
+            if (!r.ok) continue;
             if (mejorTiempo == null || r.tiempoNs < mejorTiempo.tiempoNs) mejorTiempo = r;
             if (mejorComparaciones == null || r.comparaciones < mejorComparaciones.comparaciones) mejorComparaciones = r;
+            if (mejorIntercambios == null || r.intercambios < mejorIntercambios.intercambios) mejorIntercambios = r;
         }
 
         System.out.println("Conclusiones:");
-        System.out.println("- Mas eficiente por tiempo: " + mejorTiempo.algoritmo);
-        System.out.println("- Mas eficiente por comparaciones: " + mejorComparaciones.algoritmo);
+        System.out.println("- Mejor por tiempo: " + (mejorTiempo == null ? "N/A" : mejorTiempo.algoritmo));
+        System.out.println("- Mejor por comparaciones: " + (mejorComparaciones == null ? "N/A" : mejorComparaciones.algoritmo));
+        System.out.println("- Mejor por intercambios: " + (mejorIntercambios == null ? "N/A" : mejorIntercambios.algoritmo));
         System.out.println();
     }
 
     // Burbuja simple: compara pares adyacentes e intercambia si estan invertidos.
-    static <T extends Comparable<T>> long[] burbujaSimple(T[] arr) {
-        long comparaciones = 0, movimientos = 0;
+    static <T extends Comparable<T>> Metricas burbujaSimple(T[] arr) {
+        Metricas m = new Metricas();
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
+            m.iteraciones++;
             for (int j = 0; j < n - 1 - i; j++) {
-                comparaciones++;
+                m.iteraciones++;
+                m.comparaciones++;
                 if (arr[j].compareTo(arr[j + 1]) > 0) {
-                    T tmp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = tmp;
-                    movimientos += 3;
+                    T tmp = arr[j]; m.movimientos++;
+                    arr[j] = arr[j + 1]; m.movimientos++;
+                    arr[j + 1] = tmp; m.movimientos++;
+                    m.intercambios++;
                 }
             }
         }
-        return new long[] { comparaciones, movimientos };
+        return m;
     }
 
     // Burbuja mejorado: si una pasada no produce cambios, se detiene temprano.
-    static <T extends Comparable<T>> long[] burbujaMejorado(T[] arr) {
-        long comparaciones = 0, movimientos = 0;
+    static <T extends Comparable<T>> Metricas burbujaMejorado(T[] arr) {
+        Metricas m = new Metricas();
         int n = arr.length;
         boolean cambio;
         for (int i = 0; i < n - 1; i++) {
+            m.iteraciones++;
             cambio = false;
             for (int j = 0; j < n - 1 - i; j++) {
-                comparaciones++;
+                m.iteraciones++;
+                m.comparaciones++;
                 if (arr[j].compareTo(arr[j + 1]) > 0) {
-                    T tmp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = tmp;
-                    movimientos += 3;
+                    T tmp = arr[j]; m.movimientos++;
+                    arr[j] = arr[j + 1]; m.movimientos++;
+                    arr[j + 1] = tmp; m.movimientos++;
+                    m.intercambios++;
                     cambio = true;
                 }
             }
             if (!cambio) break;
         }
-        return new long[] { comparaciones, movimientos };
+        return m;
     }
 
     // Wrapper para Quick Sort recursivo.
-    static <T extends Comparable<T>> long[] quickSortWrapper(T[] arr) {
-        long[] metricas = new long[2];
-        quickSort(arr, 0, arr.length - 1, metricas);
-        return metricas;
+    static <T extends Comparable<T>> Metricas quickSortWrapper(T[] arr) {
+        Metricas m = new Metricas();
+        quickSort(arr, 0, arr.length - 1, m);
+        return m;
     }
 
-    // Quick Sort: particiona alrededor de pivote y ordena subarreglos.
-    static <T extends Comparable<T>> void quickSort(T[] arr, int izq, int der, long[] m) {
+    // Quick Sort seguro: controla limites i<=der y j>=izq antes de acceder.
+    static <T extends Comparable<T>> void quickSort(T[] arr, int izq, int der, Metricas m) {
         int i = izq, j = der;
         T pivote = arr[(izq + der) / 2];
 
         while (i <= j) {
-            while (true) {
-                m[0]++;
+            m.iteraciones++;
+            while (i <= der) {
+                m.iteraciones++;
+                m.comparaciones++;
                 if (!(arr[i].compareTo(pivote) < 0)) break;
                 i++;
             }
-            while (true) {
-                m[0]++;
+            while (j >= izq) {
+                m.iteraciones++;
+                m.comparaciones++;
                 if (!(arr[j].compareTo(pivote) > 0)) break;
                 j--;
             }
-            m[0]++;
+            m.comparaciones++;
             if (i <= j) {
-                T temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-                m[1] += 3;
+                T temp = arr[i]; m.movimientos++;
+                arr[i] = arr[j]; m.movimientos++;
+                arr[j] = temp; m.movimientos++;
+                m.intercambios++;
                 i++;
                 j--;
             }
         }
 
-        m[0]++;
         if (izq < j) quickSort(arr, izq, j, m);
-        m[0]++;
         if (i < der) quickSort(arr, i, der, m);
     }
 
     // Shell Sort: insercion con saltos decrecientes hasta gap=1.
-    static <T extends Comparable<T>> long[] shellSort(T[] arr) {
-        long comparaciones = 0, movimientos = 0;
+    static <T extends Comparable<T>> Metricas shellSort(T[] arr) {
+        Metricas m = new Metricas();
         int n = arr.length;
         for (int gap = n / 2; gap > 0; gap /= 2) {
+            m.iteraciones++;
             for (int i = gap; i < n; i++) {
-                T temp = arr[i];
+                m.iteraciones++;
+                T temp = arr[i]; m.movimientos++;
                 int j = i;
                 while (j >= gap) {
-                    comparaciones++;
+                    m.iteraciones++;
+                    m.comparaciones++;
                     if (!(arr[j - gap].compareTo(temp) > 0)) break;
-                    arr[j] = arr[j - gap];
-                    movimientos++;
+                    arr[j] = arr[j - gap]; m.movimientos++;
                     j -= gap;
                 }
-                arr[j] = temp;
-                movimientos++;
+                arr[j] = temp; m.movimientos++;
             }
         }
-        return new long[] { comparaciones, movimientos };
+        return m;
     }
 
     // Seleccion directa: busca el minimo en la parte no ordenada y lo coloca adelante.
-    static <T extends Comparable<T>> long[] seleccionDirecta(T[] arr) {
-        long comparaciones = 0, movimientos = 0;
+    static <T extends Comparable<T>> Metricas seleccionDirecta(T[] arr) {
+        Metricas m = new Metricas();
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
+            m.iteraciones++;
             int min = i;
             for (int j = i + 1; j < n; j++) {
-                comparaciones++;
+                m.iteraciones++;
+                m.comparaciones++;
                 if (arr[j].compareTo(arr[min]) < 0) min = j;
             }
             if (min != i) {
-                T tmp = arr[i];
-                arr[i] = arr[min];
-                arr[min] = tmp;
-                movimientos += 3;
+                T tmp = arr[i]; m.movimientos++;
+                arr[i] = arr[min]; m.movimientos++;
+                arr[min] = tmp; m.movimientos++;
+                m.intercambios++;
             }
         }
-        return new long[] { comparaciones, movimientos };
+        return m;
     }
 
     // Insercion: inserta cada elemento en su posicion correcta de la zona ordenada.
-    static <T extends Comparable<T>> long[] insercion(T[] arr) {
-        long comparaciones = 0, movimientos = 0;
+    static <T extends Comparable<T>> Metricas insercion(T[] arr) {
+        Metricas m = new Metricas();
         int n = arr.length;
         for (int i = 1; i < n; i++) {
-            T clave = arr[i];
+            m.iteraciones++;
+            T clave = arr[i]; m.movimientos++;
             int j = i - 1;
             while (j >= 0) {
-                comparaciones++;
+                m.iteraciones++;
+                m.comparaciones++;
                 if (!(arr[j].compareTo(clave) > 0)) break;
-                arr[j + 1] = arr[j];
-                movimientos++;
+                arr[j + 1] = arr[j]; m.movimientos++;
                 j--;
             }
-            arr[j + 1] = clave;
-            movimientos++;
+            arr[j + 1] = clave; m.movimientos++;
         }
-        return new long[] { comparaciones, movimientos };
+        return m;
     }
 }
 
