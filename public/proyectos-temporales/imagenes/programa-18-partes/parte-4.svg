@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Programa 18 parte 4</title>
+  <desc id="desc">Salida de referencia de la parte 4</desc>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <text x="600" y="90" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="40" font-weight="700">Programa 18 - Parte 4</text>
+  <text x="80" y="170" fill="#93c5fd" font-family="monospace" font-size="24">Output 1: comparaciones = ...</text>
+  <text x="80" y="220" fill="#93c5fd" font-family="monospace" font-size="24">Output 2: tiempo(ns) = ...</text>
+  <text x="80" y="270" fill="#93c5fd" font-family="monospace" font-size="24">Output 3: memoria(bytes) = ...</text>
+  <text x="80" y="340" fill="#cbd5e1" font-family="monospace" font-size="22">(Plantilla visual separada por parte para documentar resultados)</text>
+</svg>
