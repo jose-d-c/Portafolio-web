@@ -13,7 +13,7 @@ import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class ProgramaTemporal18 {
+import java.util.*;
 
     static class Resultado<T> {
         long comparaciones;
@@ -469,7 +469,22 @@ public class ProgramaTemporal18 {
         ejecutarYMostrar("Insercion", dolar2022, comparadorDolar, ProgramaTemporal18::insercion);
     }
 
+    // ================================ PARTE 6 =================================
+    static void ejecutarParte6() {
+        System.out.println("\n================ PARTE 6: SERIE HISTORICA DOLAR 2022 =================");
+        RegistroDolar[] serie = {
+                new RegistroDolar("2022-01", 3968.86), new RegistroDolar("2022-02", 3910.57),
+                new RegistroDolar("2022-03", 3781.51), new RegistroDolar("2022-04", 3748.15),
+                new RegistroDolar("2022-05", 3928.58), new RegistroDolar("2022-06", 4014.24),
+                new RegistroDolar("2022-07", 4327.61), new RegistroDolar("2022-08", 4357.89),
+                new RegistroDolar("2022-09", 4479.13), new RegistroDolar("2022-10", 4766.21),
+                new RegistroDolar("2022-11", 4875.32), new RegistroDolar("2022-12", 4810.20)
+        };
 
+        RegistroDolar min = Arrays.stream(serie).min(Comparator.comparingDouble(s -> s.valor)).orElse(serie[0]);
+        RegistroDolar max = Arrays.stream(serie).max(Comparator.comparingDouble(s -> s.valor)).orElse(serie[0]);
+        System.out.println("Periodo mas bajo: " + min.periodo + " -> " + min.valor);
+        System.out.println("Periodo mas alto: " + max.periodo + " -> " + max.valor);
 
     // =============================== PARTE 7 ===============================
     static void ejecutarParte7() {
