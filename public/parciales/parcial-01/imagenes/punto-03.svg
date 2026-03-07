@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="760" viewBox="0 0 1700 760" role="img" aria-labelledby="title desc">
+  <title id="title">Salida de consola real - Parcial 1 Punto 3</title>
+  <desc id="desc">Salida exacta de consola para las situaciones 1 y 2 del punto 3.</desc>
+  <rect width="1700" height="760" fill="#020617"/>
+  <text x="40" y="50" fill="#93c5fd" font-family="Arial" font-size="30" font-weight="700">Parcial 1 - Punto 3 (salida exacta de consola)</text>
+  <text x="40" y="95" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">=== RESULTADOS PUNTO 3 - SITUACION 1 (nombres_invertidos) ===</text>
+  <text x="40" y="127" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Burbuja Simple     | Comparaciones: 218791    | Tiempo: 845378587 ns</text>
+  <text x="40" y="159" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Burbuja Mejorado   | Comparaciones: 218791    | Tiempo: 119690906 ns</text>
+  <text x="40" y="191" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Quick Sort         | Comparaciones: 216382    | Tiempo: 319743913 ns</text>
+  <text x="40" y="223" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Shell Sort         | Comparaciones: 7383      | Tiempo: 3833614 ns</text>
+  <text x="40" y="255" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Seleccion Directa  | Comparaciones: 218791    | Tiempo: 111284495 ns</text>
+  <text x="40" y="287" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Insercion          | Comparaciones: 218790    | Tiempo: 320732914 ns</text>
+  <text x="40" y="319" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">---------------------------------------------</text>
+  <text x="40" y="351" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Algoritmo mas eficiente (por tiempo): Shell Sort</text>
+  <text x="40" y="403" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">=== RESULTADOS PUNTO 3 - SITUACION 2 (numeros_invertidos) ===</text>
+  <text x="40" y="435" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Burbuja Simple     | Comparaciones: 91378     | Tiempo: 2788923 ns</text>
+  <text x="40" y="467" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Burbuja Mejorado   | Comparaciones: 91378     | Tiempo: 2922909 ns</text>
+  <text x="40" y="499" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Quick Sort         | Comparaciones: 68480     | Tiempo: 1372705 ns</text>
+  <text x="40" y="531" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Shell Sort         | Comparaciones: 4094      | Tiempo: 148687 ns</text>
+  <text x="40" y="563" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Seleccion Directa  | Comparaciones: 91378     | Tiempo: 1661208 ns</text>
+  <text x="40" y="595" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Insercion          | Comparaciones: 91378     | Tiempo: 1753275 ns</text>
+  <text x="40" y="627" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">---------------------------------------------</text>
+  <text x="40" y="659" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Algoritmo mas eficiente (por tiempo): Shell Sort</text>
+</svg>
