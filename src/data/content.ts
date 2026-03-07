@@ -1,4 +1,5 @@
 import { programasTemporales } from "../programas-temporales/programas";
+import { parciales } from "../parciales/parciales";
 
 export const perfil = {
   nombre: "Jose David Consuegra Medina",
@@ -56,6 +57,14 @@ export const proyectosTemporales = programasTemporales.map((programa) => ({
   titulo: programa.titulo,
   descripcion: programa.descripcion,
   enlace: programa.enlaceExterno,
+}));
+
+
+export const parcialesAcademicos = parciales.map((parcial) => ({
+  id: parcial.id,
+  titulo: parcial.titulo,
+  descripcion: parcial.descripcion,
+  enlace: parcial.enlaceExterno,
 }));
 
 export const habilidades = [

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="t d">
+  <title id="t">Parcial 1 punto 1 output</title>
+  <desc id="d">Salida comparativa de tiempo y comparaciones para 6 algoritmos.</desc>
+  <rect width="1200" height="640" fill="#0f172a"/>
+  <text x="60" y="95" fill="#e2e8f0" font-size="40" font-family="Arial" font-weight="700">Parcial 1 - Punto 1</text>
+  <text x="60" y="145" fill="#93c5fd" font-size="26" font-family="Courier New">Comparacion de Burbuja, Burbuja Mejorado, Quick, Shell, Seleccion e Insercion</text>
+  <text x="60" y="210" fill="#cbd5e1" font-size="24" font-family="Courier New">Burbuja Simple      | Comparaciones: ... | Tiempo: ... ns</text>
+  <text x="60" y="250" fill="#cbd5e1" font-size="24" font-family="Courier New">Burbuja Mejorado    | Comparaciones: ... | Tiempo: ... ns</text>
+  <text x="60" y="290" fill="#cbd5e1" font-size="24" font-family="Courier New">Quick Sort          | Comparaciones: ... | Tiempo: ... ns</text>
+  <text x="60" y="330" fill="#cbd5e1" font-size="24" font-family="Courier New">Shell Sort          | Comparaciones: ... | Tiempo: ... ns</text>
+  <text x="60" y="370" fill="#cbd5e1" font-size="24" font-family="Courier New">Seleccion Directa   | Comparaciones: ... | Tiempo: ... ns</text>
+  <text x="60" y="410" fill="#cbd5e1" font-size="24" font-family="Courier New">Insercion           | Comparaciones: ... | Tiempo: ... ns</text>
+  <text x="60" y="490" fill="#86efac" font-size="28" font-family="Courier New">Algoritmo mas eficiente (por tiempo): ...</text>
+</svg>
