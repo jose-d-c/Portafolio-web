@@ -1,23 +1,198 @@
-// Parcial 1 - Punto 1
-// Burbuja con enteros
+/*
+PARCIAL 1 - PUNTO 1
 
-public class Punto01Burbuja {
+Enunciado:
+Implementa y ejecuta Burbuja Simple, Burbuja Mejorado, Quick Sort, Shell Sort,
+Seleccion Directa e Insercion en el arreglo de NOMBRES del parcial.
+Compara tiempo de ejecucion y numero de comparaciones para deducir el metodo
+mas eficiente en este escenario.
+*/
+
+import java.text.Normalizer;
+import java.util.Arrays;
+
+public class Parcial01Punto01 {
+
+    static class Resultado {
+        String algoritmo;
+        long comparaciones;
+        long tiempoNs;
+
+        Resultado(String algoritmo, long comparaciones, long tiempoNs) {
+            this.algoritmo = algoritmo;
+            this.comparaciones = comparaciones;
+            this.tiempoNs = tiempoNs;
+        }
+    }
+
+    static String normalizar(String s) {
+        return Normalizer.normalize(s, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}+", "")
+                .toLowerCase();
+    }
+
+    static int comparar(String a, String b) {
+        return normalizar(a).compareTo(normalizar(b));
+    }
+
+    // Lista del enunciado (puedes pegar completa sin cambiar el algoritmo).
+    static String[] NOMBRES = {
+            "Juan", "Luciana", "Esteban", "Ximena", "Ricardo", "Micaela", "Felipe", "Bárbara",
+            "Santi", "Valeria", "Hugo", "Florencia", "Marcos", "Agustina", "Damián", "Renata",
+            "Joaquín", "Maite", "Bautista", "Irene", "Rodrigo", "Antonella", "Samuel", "Jimena",
+            "Emilio", "Julieta", "Tomás", "Amparo", "Benjamín", "Celia", "Vicente", "Ainhoa",
+            "Mateo", "Belén", "Nicolás", "Fátima", "Sebastián", "Gloria", "Leonardo", "Nuria",
+            "Matías", "Silvia", "Agustín", "Rocío", "Bruno", "Miriam", "Ignacio", "Leticia",
+            "Simón", "Esther", "Félix", "Raquel", "Manuel", "Salomé", "Valentino", "Triana",
+            "Thiago", "Naiara", "Ciro", "Guadalupe", "Enzo", "Malena", "Gael", "Aitana",
+            "Ian", "Manuela", "Liam", "Consuelo", "Noah", "Milagros", "Dylan", "Paloma",
+            "Axel", "Esperanza", "Luca", "Verónica", "Izan", "Angélica", "Leo", "Viviana",
+            "Joel", "Yolanda", "Elias", "Pilar", "Isaac", "Lidia", "Aaron", "Aurora"
+    };
+
     public static void main(String[] args) {
-        int[] datos = {8, 3, 6, 1, 7, 2};
+        Resultado[] resultados = new Resultado[] {
+                medir("Burbuja Simple", NOMBRES, Parcial01Punto01::burbujaSimple),
+                medir("Burbuja Mejorado", NOMBRES, Parcial01Punto01::burbujaMejorado),
+                medir("Quick Sort", NOMBRES, Parcial01Punto01::quickSort),
+                medir("Shell Sort", NOMBRES, Parcial01Punto01::shellSort),
+                medir("Seleccion Directa", NOMBRES, Parcial01Punto01::seleccionDirecta),
+                medir("Insercion", NOMBRES, Parcial01Punto01::insercion)
+        };
 
-        for (int i = 0; i < datos.length - 1; i++) {
-            for (int j = 0; j < datos.length - 1 - i; j++) {
-                if (datos[j] > datos[j + 1]) {
-                    int aux = datos[j];
-                    datos[j] = datos[j + 1];
-                    datos[j + 1] = aux;
-                }
+        System.out.println("=== RESULTADOS PUNTO 1 ===");
+        Resultado mejor = resultados[0];
+        for (Resultado r : resultados) {
+            System.out.printf("%-18s | Comparaciones: %-9d | Tiempo: %d ns%n", r.algoritmo, r.comparaciones, r.tiempoNs);
+            if (r.tiempoNs < mejor.tiempoNs) {
+                mejor = r;
             }
         }
 
-        System.out.print("Ordenado: ");
-        for (int n : datos) {
-            System.out.print(n + " ");
+        System.out.println("---------------------------------------------");
+        System.out.println("Algoritmo mas eficiente (por tiempo): " + mejor.algoritmo);
+    }
+
+    interface Ordenador {
+        long ordenar(String[] arr);
+    }
+
+    static Resultado medir(String nombre, String[] base, Ordenador metodo) {
+        String[] copia = Arrays.copyOf(base, base.length);
+        long inicio = System.nanoTime();
+        long comparaciones = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        return new Resultado(nombre, comparaciones, (fin - inicio));
+    }
+
+    static long burbujaSimple(String[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (comparar(arr[j], arr[j + 1]) > 0) {
+                    String t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                }
+            }
         }
+        return comp;
+    }
+
+    static long burbujaMejorado(String[] arr) {
+        long comp = 0;
+        boolean huboCambio;
+        for (int i = 0; i < arr.length - 1; i++) {
+            huboCambio = false;
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (comparar(arr[j], arr[j + 1]) > 0) {
+                    String t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                    huboCambio = true;
+                }
+            }
+            if (!huboCambio) break;
+        }
+        return comp;
+    }
+
+    static long quickSort(String[] arr) {
+        long[] comp = {0};
+        quickSortRec(arr, 0, arr.length - 1, comp);
+        return comp[0];
+    }
+
+    static void quickSortRec(String[] arr, int low, int high, long[] comp) {
+        if (low < high) {
+            int p = particion(arr, low, high, comp);
+            quickSortRec(arr, low, p - 1, comp);
+            quickSortRec(arr, p + 1, high, comp);
+        }
+    }
+
+    static int particion(String[] arr, int low, int high, long[] comp) {
+        String pivote = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            comp[0]++;
+            if (comparar(arr[j], pivote) <= 0) {
+                i++;
+                String t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+            }
+        }
+        String t = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = t;
+        return i + 1;
+    }
+
+    static long shellSort(String[] arr) {
+        long comp = 0;
+        for (int gap = arr.length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < arr.length; i++) {
+                String temp = arr[i];
+                int j = i;
+                while (j >= gap) {
+                    comp++;
+                    if (comparar(arr[j - gap], temp) > 0) {
+                        arr[j] = arr[j - gap];
+                        j -= gap;
+                    } else {
+                        break;
+                    }
+                }
+                arr[j] = temp;
+            }
+        }
+        return comp;
+    }
+
+    static long seleccionDirecta(String[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                comp++;
+                if (comparar(arr[j], arr[min]) < 0) min = j;
+            }
+            String t = arr[i]; arr[i] = arr[min]; arr[min] = t;
+        }
+        return comp;
+    }
+
+    static long insercion(String[] arr) {
+        long comp = 0;
+        for (int i = 1; i < arr.length; i++) {
+            String clave = arr[i];
+            int j = i - 1;
+            while (j >= 0) {
+                comp++;
+                if (comparar(arr[j], clave) > 0) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                } else {
+                    break;
+                }
+            }
+            arr[j + 1] = clave;
+        }
+        return comp;
     }
 }
