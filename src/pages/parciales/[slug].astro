@@ -1,7 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { parciales } from "../../parciales/parciales";
 
 export function getStaticPaths() {
@@ -12,17 +10,11 @@ export function getStaticPaths() {
 }
 
 const { parcial } = Astro.props;
-const puntoInicial = parcial.puntos[0];
-
-const codigoPlantilla = await readFile(
-  join(process.cwd(), "public", puntoInicial.rutaCodigo.replace(/^\//, "")),
-  "utf-8"
-);
 ---
 
 <BaseLayout title={`${parcial.titulo} | Parciales`}>
-  <main class="app-shell programa-shell">
-    <section class="panel encabezado-programa">
+  <main class="app-shell parcial-shell">
+    <section class="panel encabezado-parcial">
       <img src="/programas-temporales/uis-logo.svg" alt="Logotipo de la Universidad Industrial de Santander" loading="eager" decoding="async" />
       <div>
         <p class="eyebrow">Evaluaciones academicas</p>
@@ -34,76 +26,35 @@ const codigoPlantilla = await readFile(
       </a>
     </section>
 
-    <section class="panel subpanel zona-codigo">
-      <div class="encabezado-cuadro">
-        <h2><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Codigo del punto</h2>
-        <div class="selector-salidas">
-          <label for="selector-puntos">Selecciona un punto del parcial</label>
-          <select id="selector-puntos" aria-label="Seleccionar punto del parcial">
-            {parcial.puntos.map((item) => (
-              <option value={item.id}>{item.nombre}</option>
-            ))}
-          </select>
-        </div>
-      </div>
+    <section class="panel subpanel">
+      <h2><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Puntos del parcial</h2>
+      <p class="textoSuave">Selecciona un punto para ver su descripcion, plantilla de codigo y su output.</p>
 
-      <p id="descripcion-punto" class="textoSuave">{puntoInicial.descripcion}</p>
-      <pre class="cuadro-codigo"><code id="codigo-punto">{codigoPlantilla}</code></pre>
-    </section>
-
-    <section class="panel subpanel zona-imagen">
-      <h2><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Output del punto</h2>
-      <div class="marco-imagen">
-        <img
-          id="imagen-salida-punto"
-          src={puntoInicial.rutaImagen}
-          alt={`Imagen de salida de ${puntoInicial.nombre}`}
-          loading="lazy"
-          decoding="async"
-        />
+      <div class="grilla-puntos">
+        {parcial.puntos.map((punto) => (
+          <a class="tarjeta-punto" href={`/parciales/${parcial.slug}/${punto.slug}`}>
+            <h3>{punto.nombre}</h3>
+            <p>{punto.descripcion}</p>
+            <span>Ver punto</span>
+          </a>
+        ))}
       </div>
     </section>
   </main>
-
-  <script is:inline data-puntos={JSON.stringify(parcial.puntos)}>
-    const selectorPuntos = document.querySelector("#selector-puntos");
-    const codigoPunto = document.querySelector("#codigo-punto");
-    const descripcionPunto = document.querySelector("#descripcion-punto");
-    const imagenPunto = document.querySelector("#imagen-salida-punto");
-    const puntos = JSON.parse(document.currentScript?.dataset.puntos ?? "[]");
-
-    selectorPuntos?.addEventListener("change", async (event) => {
-      const destino = event.target;
-      if (!(destino instanceof HTMLSelectElement)) return;
-
-      const punto = puntos.find((item) => item.id === destino.value);
-      if (!punto || !codigoPunto || !descripcionPunto || !imagenPunto) return;
-
-      const respuesta = await fetch(punto.rutaCodigo);
-      const textoCodigo = await respuesta.text();
-
-      codigoPunto.textContent = textoCodigo;
-      descripcionPunto.textContent = punto.descripcion;
-      imagenPunto.src = punto.rutaImagen;
-      imagenPunto.alt = `Imagen de salida de ${punto.nombre}`;
-    });
-  </script>
 </BaseLayout>
 
 <style>
-.programa-shell{ max-width: 1260px; display: grid; gap: 1.1rem; }
-.encabezado-programa{ display: grid; grid-template-columns: 110px 1fr auto; gap: 1.2rem; padding: 1.4rem; align-items: center; }
-.encabezado-programa > img{ width: 100%; max-width: 110px; border-radius: .8rem; background: #fff; padding: 6px; border: 1px solid var(--line); }
-.encabezado-programa h1{ font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: .5rem; }
+.parcial-shell{ max-width: 1260px; display: grid; gap: 1.1rem; }
+.encabezado-parcial{ display: grid; grid-template-columns: 110px 1fr auto; gap: 1.2rem; padding: 1.4rem; align-items: center; }
+.encabezado-parcial > img{ width: 100%; max-width: 110px; border-radius: .8rem; background: #fff; padding: 6px; border: 1px solid var(--line); }
+.encabezado-parcial h1{ font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: .5rem; }
 .icono-volver{ width: 3.7rem; height: 3.7rem; border-radius: .8rem; border: 1px solid var(--line); background: var(--panel); color: var(--text); display: inline-flex; align-items: center; justify-content: center; }
 .icono-volver .ui-icon{ margin-right: 0; width: 1.9rem; height: 1.9rem; }
-.encabezado-cuadro{ display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; flex-wrap: wrap; }
-.encabezado-cuadro h2,.zona-imagen h2{ display: inline-flex; align-items: center; font-size: 1.5rem; margin: 0; }
-.selector-salidas{ display: grid; gap: .3rem; min-width: 330px; }
-.selector-salidas label{ font-size: .95rem; color: var(--textSoft); }
-.selector-salidas select{ background: var(--panel); border: 1px solid var(--line); color: var(--text); border-radius: .6rem; padding: .6rem .7rem; }
-.cuadro-codigo{ margin: .4rem 0 0; min-height: 460px; max-height: 460px; overflow: auto; border: 1px solid var(--line); border-radius: .8rem; padding: 1rem; background: var(--panel); color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 1rem; line-height: 1.55; }
-.marco-imagen{ margin-top: .8rem; min-height: 460px; border-radius: .8rem; border: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; padding: .6rem; background: var(--panel); }
-.marco-imagen img{ width: 100%; height: 100%; object-fit: cover; border-radius: .6rem; }
-@media (max-width: 900px){ .encabezado-programa{ grid-template-columns: 1fr; justify-items: center; text-align: center; } .selector-salidas{ min-width: 100%; } }
+h2{ margin-top: 0; display: inline-flex; align-items: center; }
+.grilla-puntos{ margin-top: .8rem; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+.tarjeta-punto{ border: 1px solid var(--line); border-radius: .8rem; padding: 1rem; text-decoration: none; color: var(--text); background: var(--panel); display: grid; gap: .6rem; }
+.tarjeta-punto h3{ margin: 0; }
+.tarjeta-punto p{ margin: 0; color: var(--textSoft); }
+.tarjeta-punto span{ font-weight: 600; color: var(--accent); }
+@media (max-width: 900px){ .encabezado-parcial{ grid-template-columns: 1fr; justify-items: center; text-align: center; } .grilla-puntos{ grid-template-columns: 1fr; } }
 </style>

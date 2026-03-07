@@ -104,9 +104,10 @@ import { habilidades, parcialesAcademicos, perfil, proyectos, proyectosTemporale
             </summary>
             <div class="cards">
               {parcialesAcademicos.map((item) => (
-                <a class="card temporary-card" href={item.enlace}>
+                <a class="card temporary-card boton-parcial" href={item.enlace}>
                   <h4>{item.titulo}</h4>
                   <p>{item.descripcion}</p>
+                  <small>Entrar al apartado del parcial</small>
                 </a>
               ))}
             </div>
@@ -143,3 +144,8 @@ import { habilidades, parcialesAcademicos, perfil, proyectos, proyectosTemporale
     </div>
   </main>
 </BaseLayout>
+
+
+<style>
+.boton-parcial small{ opacity:.9; }
+</style>
