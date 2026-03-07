@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "../data/content";
+import { habilidades, parcialesAcademicos, perfil, proyectos, proyectosTemporales, sobreMi } from "../data/content";
 ---
 
 <BaseLayout>
@@ -88,6 +88,22 @@ import { habilidades, perfil, proyectos, proyectosTemporales, sobreMi } from "..
             </summary>
             <div class="cards">
               {proyectosTemporales.map((item) => (
+                <a class="card temporary-card" href={item.enlace}>
+                  <h4>{item.titulo}</h4>
+                  <p>{item.descripcion}</p>
+                </a>
+              ))}
+            </div>
+          </details>
+
+
+          <details class="panel subpanel temporary">
+            <summary>
+              <h3><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Parciales</h3>
+              <span>Desplegar</span>
+            </summary>
+            <div class="cards">
+              {parcialesAcademicos.map((item) => (
                 <a class="card temporary-card" href={item.enlace}>
                   <h4>{item.titulo}</h4>
                   <p>{item.descripcion}</p>

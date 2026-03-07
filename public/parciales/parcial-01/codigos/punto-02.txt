@@ -1,0 +1,25 @@
+// Parcial 1 - Punto 2
+// Seleccion con cadenas
+
+public class Punto02Seleccion {
+    public static void main(String[] args) {
+        String[] palabras = {"nube", "arbol", "zorro", "barco", "dado"};
+
+        for (int i = 0; i < palabras.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < palabras.length; j++) {
+                if (palabras[j].compareTo(palabras[min]) < 0) {
+                    min = j;
+                }
+            }
+            String aux = palabras[i];
+            palabras[i] = palabras[min];
+            palabras[min] = aux;
+        }
+
+        System.out.println("Orden alfabetico: ");
+        for (String palabra : palabras) {
+            System.out.println(palabra);
+        }
+    }
+}
