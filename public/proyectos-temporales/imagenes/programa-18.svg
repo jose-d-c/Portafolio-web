@@ -1,22 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
-  <title id="title">Programa temporal 18 unificado</title>
-  <desc id="desc">Resumen de las 7 partes y sus salidas separadas</desc>
-  <rect width="1200" height="675" fill="#020617"/>
-  <text x="600" y="60" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="38" font-weight="700">Programa temporal 18 - Plantilla unificada (Partes 1 a 7)</text>
-  <text x="600" y="95" text-anchor="middle" fill="#93c5fd" font-family="Arial" font-size="20">Cada parte tiene su salida separada e imagen dedicada en /programa-18-partes/parte-N.svg</text>
-
-  <g font-family="Arial" font-size="20" fill="#cbd5e1">
-    <rect x="40" y="130" width="330" height="70" rx="10" fill="#1e293b"/><text x="205" y="174" text-anchor="middle">Parte 1: Base</text>
-    <rect x="435" y="130" width="330" height="70" rx="10" fill="#1e293b"/><text x="600" y="174" text-anchor="middle">Parte 2: Casi ordenado</text>
-    <rect x="830" y="130" width="330" height="70" rx="10" fill="#1e293b"/><text x="995" y="174" text-anchor="middle">Parte 3: Invertido</text>
-
-    <rect x="40" y="240" width="330" height="70" rx="10" fill="#1e293b"/><text x="205" y="284" text-anchor="middle">Parte 4: Repetidos</text>
-    <rect x="435" y="240" width="330" height="70" rx="10" fill="#1e293b"/><text x="600" y="284" text-anchor="middle">Parte 5: Parcialmente ordenado</text>
-    <rect x="830" y="240" width="330" height="70" rx="10" fill="#1e293b"/><text x="995" y="284" text-anchor="middle">Parte 6: Dólar 2022</text>
-
-    <rect x="435" y="350" width="330" height="70" rx="10" fill="#1e293b"/><text x="600" y="394" text-anchor="middle">Parte 7: Repetición de nombres</text>
-  </g>
-
-  <text x="600" y="500" text-anchor="middle" fill="#a5b4fc" font-family="monospace" font-size="20">Outputs por parte: comparaciones | tiempo(ns) | memoria(bytes)</text>
-  <text x="600" y="535" text-anchor="middle" fill="#a5b4fc" font-family="monospace" font-size="20">Parte 7 adicional: lista por nombre y lista por repeticiones</text>
+  <title id="title">Programa temporal 18 partes 1 2 3 4 5 6 y 7</title>
+  <desc id="desc">Comparacion de algoritmos para partes 1 2 3 4 5 6 y 7</desc>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <text x="600" y="90" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="42" font-weight="700">Programa temporal 18 - Partes 1, 2, 3, 4, 5, 6 y 7</text>
+  <text x="600" y="145" text-anchor="middle" fill="#93c5fd" font-family="Arial" font-size="28">Comparacion de algoritmos de ordenamiento</text>
+  <text x="600" y="220" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 1: arreglo base de nombres</text>
+  <text x="600" y="260" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 2: arreglos casi ordenados</text>
+  <text x="600" y="300" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 3: arreglos invertidos</text>
+  <text x="600" y="340" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 4: valores repetidos</text>
+  <text x="600" y="380" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 5: arreglos parcialmente ordenados</text>
+  <text x="600" y="420" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 6: serie dolar 2022</text>
+  <text x="600" y="460" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 7: repeticion de nombres</text>
+  <text x="600" y="510" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="22">Salida separada por partes en menu desplegable</text>
 </svg>
