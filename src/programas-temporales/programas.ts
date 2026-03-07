@@ -95,9 +95,9 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
       "Programa Java que mide iteraciones, comparaciones e intercambios/desplazamientos en Burbuja, Burbuja mejorado, QuickSort, ShellSort, Seleccion e Insercion para datos pequenos, moderados y grandes.",
   },
   18: {
-    titulo: "Programa temporal 18 (partes 1 a 7): Comparacion de algoritmos",
+    titulo: "Programa temporal 18 (partes 1, 2, 3, 4, 5, 6 y 7): Comparacion de algoritmos",
     descripcion:
-      "Implementacion en Java de Burbuja simple, Burbuja mejorado, Quick Sort, Shell Sort, Seleccion directa e Insercion. Incluye parte 1 con arreglo base de nombres, parte 2 con arreglos casi ordenados (nombres y numeros) y parte 3 con arreglos invertidos, parte 4 con valores repetidos, parte 5 con arreglos parcialmente ordenados, parte 6 con serie historica del dolar y parte 7 con conteo de repeticiones de nombres ordenado por nombre y por frecuencia, midiendo comparaciones, tiempo y memoria.",
+      "Implementacion en Java por secciones para Parte 1 (arreglo base), Parte 2 (arreglos casi ordenados) y Parte 3 (arreglos invertidos), Parte 4 (valores repetidos) y Parte 5 (arreglos parcialmente ordenados) y Parte 6 (serie historica del dolar 2022) y Parte 7 (repeticion de nombres), comparando Burbuja simple, Burbuja mejorado, Quick Sort, Shell Sort, Seleccion directa e Insercion por tiempo y comparaciones.",
   },
 };
 

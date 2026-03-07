@@ -1,20 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
-  <title id="title">Programa 18 reconstruido</title>
-  <desc id="desc">Salida por puntos 1 a 7 con solucion comparativa y tabla de metricas.</desc>
-  <rect width="1200" height="700" fill="#0f172a"/>
-  <rect x="24" y="24" width="1152" height="652" rx="20" fill="#111827" stroke="#334155" stroke-width="3"/>
-  <text x="600" y="68" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="28">Programa 18 reconstruido - Solucion por puntos</text>
-  <text x="600" y="95" text-anchor="middle" fill="#93c5fd" font-family="Arial" font-size="15">Cada punto imprime tabla: Tiempo | Memoria | Comparaciones | Iteraciones | Intercambios</text>
-
-  <rect x="58" y="118" width="1084" height="522" rx="14" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
-  <text x="80" y="160" fill="#22d3ee" font-family="Courier New" font-size="17">PUNTO 1:</text><text x="220" y="160" fill="#cbd5e1" font-family="Courier New" font-size="16">Arreglo base de nombres (eficiencia por tiempo/comparaciones).</text>
-  <text x="80" y="205" fill="#22d3ee" font-family="Courier New" font-size="17">PUNTO 2:</text><text x="220" y="205" fill="#cbd5e1" font-family="Courier New" font-size="16">Arreglos casi ordenados (nombres y numeros).</text>
-  <text x="80" y="250" fill="#22d3ee" font-family="Courier New" font-size="17">PUNTO 3:</text><text x="220" y="250" fill="#cbd5e1" font-family="Courier New" font-size="16">Arreglos invertidos (comparacion en escenario exigente).</text>
-  <text x="80" y="295" fill="#22d3ee" font-family="Courier New" font-size="17">PUNTO 4:</text><text x="220" y="295" fill="#cbd5e1" font-family="Courier New" font-size="16">Valores repetidos (comportamiento con duplicados).</text>
-  <text x="80" y="340" fill="#22d3ee" font-family="Courier New" font-size="17">PUNTO 5:</text><text x="220" y="340" fill="#cbd5e1" font-family="Courier New" font-size="16">Parcialmente ordenados (mitad ordenada / mitad desordenada).</text>
-  <text x="80" y="385" fill="#22d3ee" font-family="Courier New" font-size="17">PUNTO 6:</text><text x="220" y="385" fill="#cbd5e1" font-family="Courier New" font-size="16">Serie dolar: identifica periodo mas alto y mas bajo.</text>
-  <text x="80" y="430" fill="#22d3ee" font-family="Courier New" font-size="17">PUNTO 7:</text><text x="220" y="430" fill="#cbd5e1" font-family="Courier New" font-size="16">Conteo de nombres: lista por nombre y por repeticiones.</text>
-
-  <text x="80" y="500" fill="#86efac" font-family="Courier New" font-size="16">Solucion comparativa: no existe ganador unico; depende del tipo de entrada.</text>
-  <text x="80" y="530" fill="#94a3b8" font-family="Courier New" font-size="15">El codigo esta dividido por comentarios exactos para cada punto y su explicacion.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Programa temporal 18 partes 1 2 3 4 5 6 y 7</title>
+  <desc id="desc">Comparacion de algoritmos para partes 1 2 3 4 5 6 y 7</desc>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <text x="600" y="90" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="42" font-weight="700">Programa temporal 18 - Partes 1, 2, 3, 4, 5, 6 y 7</text>
+  <text x="600" y="145" text-anchor="middle" fill="#93c5fd" font-family="Arial" font-size="28">Comparacion de algoritmos de ordenamiento</text>
+  <text x="600" y="220" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 1: arreglo base de nombres</text>
+  <text x="600" y="260" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 2: arreglos casi ordenados</text>
+  <text x="600" y="300" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 3: arreglos invertidos</text>
+  <text x="600" y="340" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 4: valores repetidos</text>
+  <text x="600" y="380" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 5: arreglos parcialmente ordenados</text>
+  <text x="600" y="420" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 6: serie dolar 2022</text>
+  <text x="600" y="460" text-anchor="middle" fill="#cbd5e1" font-family="Arial" font-size="24">Parte 7: repeticion de nombres</text>
+  <text x="600" y="510" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="22">Salida separada por partes en menu desplegable</text>
 </svg>

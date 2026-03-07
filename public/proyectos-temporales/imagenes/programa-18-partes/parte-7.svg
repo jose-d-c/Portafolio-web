@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Programa 18 parte 7 output</title>
+  <desc id="desc">Salida real de ejecucion parte 7</desc>
+  <rect width="1200" height="675" fill="#020617"/>
+  <text x="600" y="88" text-anchor="middle" fill="#e2e8f0" font-family="Arial" font-size="36" font-weight="700">Programa 18 - Parte 7 (output real)</text>
+  <text x="600" y="128" text-anchor="middle" fill="#93c5fd" font-family="Arial" font-size="20">Conteo de repeticiones y doble criterio de orden</text>
+  <text x="60" y="175" fill="#bae6fd" font-family="monospace" font-size="20">Nombres generados: 200 | Nombres unicos: 170</text>
+  <text x="60" y="209" fill="#bae6fd" font-family="monospace" font-size="20">Orden por nombre (A-Z): Quick Sort 1207 comp | 458060 ns | 2097152 bytes</text>
+  <text x="60" y="243" fill="#bae6fd" font-family="monospace" font-size="20">Orden por nombre (A-Z): Shell Sort 1699 comp | 661608 ns | 2097152 bytes</text>
+  <text x="60" y="277" fill="#bae6fd" font-family="monospace" font-size="20">Top muestra A-Z: [Acisclo(1), Adelaide(1), Adolfo(1), Agapito(1), Ainhoa(1)]</text>
+  <text x="60" y="345" fill="#bae6fd" font-family="monospace" font-size="20">Orden por repeticiones (desc): Quick Sort 1183 comp | 621121 ns | 2097152 bytes</text>
+  <text x="60" y="379" fill="#bae6fd" font-family="monospace" font-size="20">Orden por repeticiones (desc): Shell Sort 1674 comp | 872578 ns | 2097152 bytes</text>
+  <text x="60" y="413" fill="#bae6fd" font-family="monospace" font-size="20">Top repeticiones: [Dorotea(3), Elias(3), Orencio(3), Alejandro(2), Arsenio(2)]</text>
+  <text x="60" y="481" fill="#bae6fd" font-family="monospace" font-size="20">Salida requerida cubierta:</text>
+  <text x="60" y="515" fill="#bae6fd" font-family="monospace" font-size="20">1) Lista ordenada por nombre | 2) Lista ordenada por cantidad de repeticiones</text>
+</svg>
