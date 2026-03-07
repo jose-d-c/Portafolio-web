@@ -1,30 +1,396 @@
-// Parcial 1 - Punto 3
-// Insercion con metricas basicas
+/*
+PARCIAL 1 - PUNTO 3
 
-public class Punto03Insercion {
+Compara Burbuja Simple, Burbuja Mejorado, Quick Sort, Shell Sort,
+Seleccion Directa e Insercion para arreglos invertidos.
+*/
+
+import java.text.Normalizer;
+import java.util.Arrays;
+
+public class Parcial01Punto03 {
+
+    static class Resultado {
+        String algoritmo;
+        long comparaciones;
+        long tiempoNs;
+
+        Resultado(String algoritmo, long comparaciones, long tiempoNs) {
+            this.algoritmo = algoritmo;
+            this.comparaciones = comparaciones;
+            this.tiempoNs = tiempoNs;
+        }
+    }
+
+    static String normalizar(String s) {
+        return Normalizer.normalize(s, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}+", "")
+                .toLowerCase();
+    }
+
+    static int compararTexto(String a, String b) {
+        return normalizar(a).compareTo(normalizar(b));
+    }
+
+    interface OrdenadorTexto { long ordenar(String[] arr); }
+    interface OrdenadorNumero { long ordenar(int[] arr); }
+
+    // Situacion 1 (exacta)
+    static String[] nombres_invertidos = { "Zuri", "Zulma", "Zósimo", "Zoren", "Zoe", "Zigor", "Zenón", "Zaira",
+"Zacarías", "Yuvia", "Yusef", "Yurena", "Yolanda", "Yara", "Yanis", "Yago", "Yael", "Xoán", "Ximena",
+"Xerach", "Xenia", "Xavier", "Xavi", "Xandra", "Xana", "Wyatt", "Winona", "Wilson", "Wilfredo",
+"Wifredo", "Wendy", "Wenceslao", "Walter", "Walda", "Viviana", "Visitación", "Viriato", "Virginia",
+"Violeta", "Vidal", "Victoria", "Victoriano", "Víctor", "Vicente", "Verónica", "Vera", "Veneranda",
+"Venancio", "Vania", "Vanesa", "Valery", "Valerio", "Valeriano", "Valeria", "Valentino", "Valentina",
+"Uxía", "Úrsula", "Urraca", "Urbano", "Unai", "Umi", "Uma", "Ulpiano", "Ulises", "Ubaldo", "Trinidad",
+"Triana", "Torcuato", "Tomás", "Tobías", "Timoteo", "Tiburcio", "Thiago", "Thais", "Teresa", "Teonila",
+"Teófilo", "Teodora", "Teo", "Telesforo", "Telefón", "Tatiana", "Tania", "Tamara", "Tadeo", "Susana",
+"Soraya", "Sonia", "Sofía", "Socorro", "Sixto", "Sisenando", "Sira", "Simón", "Silvestre", "Silvia",
+"Silvana", "Sheila", "Severo", "Severiano", "Servando", "Sergio", "Serafín", "Selena", "Segunda",
+"Sebastián", "Saúl", "Saturio", "Sasha", "Sara", "Santiago", "Santi", "Sandra", "Samuel", "Salvador",
+"Salomé", "Sabrina", "Sabina", "Ruth", "Ruperto", "Rufina", "Rubén", "Rosario", "Rosana", "Rosalía",
+"Rosa", "Roque", "Rómulo", "Rogelio", "Rodrigo", "Rocío", "Rocco", "Roberto", "Rita", "Rigoberto",
+"Ricardo", "Restituto", "Renato", "Renata", "Remedios", "Regina", "Recaredo", "Rebeca",
+"Raymundo", "Raúl", "Raquel", "Ramona", "Ramón", "Ramiro", "Rafaela", "Rafael", "Radamel",
+"Quiterio", "Quirino", "Quintín", "Quinn", "Quina", "Quiles", "Queralt", "Queila", "Purificación",
+"Próspero", "Priscila", "Primitivo", "Pol", "Plácido", "Pilar", "Piedad", "Petrona", "Perla", "Penélope",
+"Pedro", "Pavel", "Paulina", "Paula", "Pau", "Patricio", "Patricia", "Pastora", "Pascual", "Paola",
+"Pánfilo", "Paloma", "Paco", "Pablo", "Ovidio", "Otilia", "Oswaldo", "Oscar", "Orlando", "Oriol",
+"Orencio", "Onofre", "Ona", "Omar", "Olivia", "Oliver", "Olimpia", "Olga", "Olegario", "Odorico",
+"Octavio", "Nuria", "Norberto", "Nora", "Noemí", "Noelia", "Noe", "Noah", "Niza", "Nilo", "Nil",
+"Nicolás", "Nicanor", "Néstor", "Nerea", "Nemesio", "Nélida", "Nazareno", "Natividad", "Natalia",
+"Narciso", "Nancy", "Naiara", "Nadir", "Morgana", "Montserrat", "Mónica", "Moisés", "Modesto",
+"Miriam", "Mireia", "Miranda", "Miqueas", "Milena", "Milagros", "Mila", "Miguel", "Micaela",
+"Mercedes", "Melisa", "Melina", "Melchor", "Melania", "Maya", "Máximo", "Mauro", "Mauricio",
+"Maura", "Matilde", "Matías", "Mateo", "Martina", "Martí", "Marta", "Marisa", "Mario", "Marina",
+"Mariano", "Margarita", "Marga", "Marcos", "Marcelo", "Marc", "Mara", "Manuela", "Manuel",
+"Manolo", "Malena", "Maite", "Magdalena", "Madeline", "Macario", "Macarena", "Luz", "Luján",
+"Luisa", "Luis", "Lucrecia", "Luciano", "Luciana", "Lucía", "Lucas", "Luca", "Lourdes", "Lorenzo",
+"Lorena", "Lola", "Lisandro", "Lino", "Lina", "Liliana", "Lidia", "Libertad", "Liam", "Leyre", "Leticia",
+"Leonor", "Leoncio", "Leonardo", "Leocadia", "Leo", "Leila", "Leandro", "Lázaro", "Laura", "Lara",
+"Laia", "Ladislao", "Kilian", "Kevin", "Katia", "Karina", "Karen", "Justo", "Juncal", "Julio", "Julieta",
+"Juliana", "Julián", "Julia", "Judith", "Juanjo", "Juana", "Juan", "Josué", "Josefina", "Josefa", "José",
+"Jorge", "Jordi", "Jonathan", "Jonás", "Jon", "Joel", "Joaquina", "Joaquín", "Joan", "Jimena", "Jesús",
+"Jerónimo", "Jenaro", "Javier", "Jara", "Jana", "Jan", "Jairo", "Jair", "Jaime", "Jade", "Jacobo", "Jacinto",
+"Izan", "Ivonne", "Iván", "Itzel", "Israel", "Ismael", "Isidra", "Isidoro", "Isaías", "Isadora", "Isabela",
+"Isabel", "Isaac", "Irma", "Iris", "Irene", "Iñigo", "Iñaki", "Inmaculada", "Ingrid", "Inés", "Indalecio",
+"Imelda", "Imanol", "Iliana", "Ildefonso", "Iker", "Igor", "Ignacio", "Ibrahim", "Ibai", "Ian", "Iago",
+"Humberto", "Hugo", "Horacio", "Honorio", "Homero", "Hipólito", "Hilda", "Hilario", "Hernando",
+"Hernán", "Herminio", "Hermenegildo", "Heriberto", "Henar", "Heliodoro", "Helena", "Héctor",
+"Guzmán", "Gustavo", "Guillermo", "Guido", "Guadalupe", "Greta", "Gregorio", "Graciela", "Gracia",
+"Gonzalo", "Gloria", "Gladys", "Gisela", "Gina", "Gilda", "Gilberto", "Gianluca", "Gervasio", "Gerson", "Germán", "Gerardo", "Genoveva", "Genaro", "Gema", "Gastón", "Gaspar", "Gala", "Gael", "Gabriela",
+"Gabriel", "Fulgencio", "Franco", "Francisco", "Francisca", "Francesc", "Fortunato", "Florentino",
+"Florencia", "Flora", "Flavio", "Flavia", "Fiorella", "Fiona", "Fidencio", "Fernando", "Fernanda",
+"Fermín", "Félix", "Felipe", "Feliciano", "Federico", "Fausto", "Faustino", "Fátima", "Facundo",
+"Fabiola", "Fabio", "Fabiano", "Fabiana", "Ezequiel", "Evelyn", "Evangelina", "Eva", "Eusebio",
+"Eulalia", "Eugenio", "Eugenia", "Estrella", "Esther", "Ester", "Estela", "Estefanía", "Esteban",
+"Esperanza", "Esmeralda", "Ernesto", "Erika", "Erick", "Eric", "Epifanio", "Enzo", "Enrique", "Emma",
+"Emilio", "Emiliano", "Emilia", "Emanuel", "Elvira", "Elsa", "Eloy", "Elisabet", "Elisa", "Elías", "Eliana",
+"Elena", "Eleazar", "Eladio", "Eider", "Efraín", "Eduardo", "Edmundo", "Edith", "Edgar", "Eber",
+"Dulce", "Doris", "Dora", "Donato", "Domingo", "Dolores", "Dionisio", "Dina", "Diego", "Diana",
+"Desiré", "Denis", "Demian", "Delia", "Delfina", "Débora", "Dayana", "David", "Darío", "Dante",
+"Daniela", "Daniel", "Dánae", "Damián", "Dalma", "Dalia", "Custodia", "Cruz", "Cristóbal", "Cristina",
+"Cristian", "Cosme", "Cordelia", "Coral", "Consuelo", "Constanza", "Conrado", "Concepción",
+"Clotilde", "Cleotilde", "Clemente", "Claudio", "Clara", "Ciro", "Cira", "Cipriano", "Cintia", "Christian",
+"Chema", "Charo", "Chantal", "César", "Celina", "Celia", "Ceferino", "Cecilia", "Cayetana", "Catalina",
+"Casimiro", "Casandra", "Carolina", "Carmen", "Carmelo", "Carlos", "Carla", "Carina", "Candelaria",
+"Candela", "Camilo", "Caleb", "Caín", "Bryan", "Bruno", "Bruna", "Brígida", "Breixo", "Braulio", "Boris",
+"Blas", "Blanca", "Biel", "Bianca", "Berta", "Bernardo", "Berenice", "Benito", "Benjamín", "Benicio",
+"Beltrán", "Belén", "Begoña", "Beatriz", "Bautista", "Basilio", "Bartolomé", "Bárbara", "Azahara",
+"Aylin", "Axel", "Aurora", "Aurea", "Augusto", "Asunción", "Asier", "Arturo", "Arnau", "Arnaldo",
+"Arlet", "Ariel", "Ariadna", "Antonio", "Antonia", "Antón", "Antía", "Aníbal", "Angélica", "Ángela",
+"Ángel", "Andrés", "Andrea", "Ander", "Anahí", "Anabel", "Ana", "Amparo", "Amanda", "Amalia",
+"Amadeo", "Álvaro", "Alonso", "Almudena", "Alma", "Alicia", "Alfonso", "Alfonsina", "Alex",
+"Alessandra", "Alejo", "Alejandro", "Aldana", "Alberto", "Alba", "Alan", "Aitana", "Ainhoa", "Agustín",
+"Adriana", "Adrián", "Adolfo", "Adela", "Adán", "Abril", "Abigail", "Abel", "Aaron" };
+
+    // Situacion 2 (exacta)
+    static int[] numeros_invertidos = { 9842, 9842, 9815, 9815, 9760, 9760, 9734, 9734, 9688, 9688, 9651,
+9651, 9610, 9610, 9543, 9543, 9512, 9512, 9487, 9487, 9421, 9421, 9390, 9390, 9354, 9354, 9311,
+9311, 9287, 9287, 9245, 9245, 9210, 9210, 9176, 9176, 9143, 9143, 9088, 9088, 9054, 9054, 9012,
+9012, 8977, 8977, 8943, 8943, 8890, 8890, 8845, 8845, 8812, 8812, 8765, 8765, 8711, 8711, 8688,
+8688, 8642, 8642, 8599, 8599, 8554, 8554, 8521, 8521, 8488, 8488, 8432, 8432, 8391, 8391, 8345,
+8345, 8301, 8301, 8267, 8267, 8211, 8211, 8176, 8176, 8143, 8143, 8098, 8098, 8055, 8055, 8012,
+8012, 7966, 7966, 7921, 7921, 7888, 7888, 7834, 7834, 7791, 7791, 7745, 7745, 7711, 7711, 7676,
+7676, 7632, 7632, 7598, 7598, 7554, 7554, 7511, 7511, 7467, 7467, 7421, 7421, 7388, 7388, 7345,
+7345, 7301, 7301, 7267, 7267, 7211, 7211, 7176, 7176, 7143, 7143, 7098, 7098, 7054, 7054, 7012,
+7012, 6966, 6966, 6921, 6921, 6888, 6888, 6843, 6843, 6791, 6791, 6745, 6745, 6711, 6711, 6676,
+6676, 6632, 6632, 6598, 6598, 6554, 6554, 6511, 6511, 6467, 6467, 6421, 6421, 6388, 6388, 6345,
+6345, 6301, 6301, 6267, 6267, 6211, 6211, 6176, 6176, 6143, 6143, 6098, 6098, 6054, 6054, 6012,
+6012, 5966, 5966, 5921, 5921, 5888, 5888, 5843, 5843, 5791, 5791, 5745, 5745, 5711, 5711, 5676,
+5676, 5632, 5632, 5598, 5598, 5554, 5554, 5511, 5511, 5467, 5467, 5421, 5421, 5388, 5388, 5345,
+5345, 5301, 5301, 5267, 5267, 5211, 5211, 5176, 5176, 5143, 5143, 5098, 5098, 5054, 5054, 5012,
+5012, 4966, 4966, 4921, 4921, 4888, 4888, 4843, 4843, 4791, 4791, 4745, 4745, 4711, 4711, 4676,
+4676, 4632, 4632, 4598, 4598, 4554, 4554, 4511, 4511, 4467, 4467, 4421, 4421, 4388, 4388, 4345,
+4345, 4301, 4301, 4267, 4267, 4211, 4211, 4176, 4176, 4143, 4143, 4098, 4098, 4054, 4054, 4012,
+4012, 3966, 3966, 3921, 3921, 3888, 3888, 3843, 3843, 3791, 3791, 3745, 3745, 3711, 3711, 3676,
+3676, 3632, 3632, 3598, 3598, 3554, 3554, 3511, 3511, 3467, 3467, 3421, 3421, 3388, 3388, 3345,
+3345, 3301, 3301, 3267, 3267, 3211, 3211, 3176, 3176, 3143, 3143, 3098, 3098, 3054, 3054, 3012,
+3012, 2966, 2966, 2921, 2921, 2888, 2888, 2843, 2843, 2791, 2791, 2745, 2745, 2711, 2711, 2676, 2676, 2632, 2632, 2598, 2598, 2554, 2554, 2511, 2511, 2467, 2467, 2421, 2421, 2388, 2388, 2345,
+2345, 2301, 2301, 2267, 2267, 2211, 2211, 2176, 2176, 2143, 2143, 2098, 2098, 2054, 2054, 2012,
+2012, 1966, 1966, 1921, 1921, 1888, 1888, 1843, 1843, 1791, 1791, 1745, 1745, 1711, 1711, 1676,
+1676, 1632, 1632, 1598, 1598, 1554, 1554, 1511, 1511, 1467, 1467, 1421, 1421, 1388, 1388, 1345,
+1345, 1301, 1301, 1267, 1267, 1211, 1211, 1176, 1176, 1143, 1143, 1098, 1098, 1054, 1054, 1012,
+1012 };
+
     public static void main(String[] args) {
-        int[] datos = {9, 4, 8, 2, 5, 1};
-        int comparaciones = 0;
-        int desplazamientos = 0;
+        System.out.println("=== RESULTADOS PUNTO 3 - SITUACION 1 (nombres_invertidos) ===");
+        Resultado[] r1 = new Resultado[] {
+                medirTexto("Burbuja Simple", nombres_invertidos, Parcial01Punto03::burbujaSimpleTexto),
+                medirTexto("Burbuja Mejorado", nombres_invertidos, Parcial01Punto03::burbujaMejoradoTexto),
+                medirTexto("Quick Sort", nombres_invertidos, Parcial01Punto03::quickSortTexto),
+                medirTexto("Shell Sort", nombres_invertidos, Parcial01Punto03::shellSortTexto),
+                medirTexto("Seleccion Directa", nombres_invertidos, Parcial01Punto03::seleccionDirectaTexto),
+                medirTexto("Insercion", nombres_invertidos, Parcial01Punto03::insercionTexto)
+        };
+        imprimirResultados(r1);
 
-        for (int i = 1; i < datos.length; i++) {
-            int clave = datos[i];
-            int j = i - 1;
+        System.out.println();
+        System.out.println("=== RESULTADOS PUNTO 3 - SITUACION 2 (numeros_invertidos) ===");
+        Resultado[] r2 = new Resultado[] {
+                medirNumero("Burbuja Simple", numeros_invertidos, Parcial01Punto03::burbujaSimpleNum),
+                medirNumero("Burbuja Mejorado", numeros_invertidos, Parcial01Punto03::burbujaMejoradoNum),
+                medirNumero("Quick Sort", numeros_invertidos, Parcial01Punto03::quickSortNum),
+                medirNumero("Shell Sort", numeros_invertidos, Parcial01Punto03::shellSortNum),
+                medirNumero("Seleccion Directa", numeros_invertidos, Parcial01Punto03::seleccionDirectaNum),
+                medirNumero("Insercion", numeros_invertidos, Parcial01Punto03::insercionNum)
+        };
+        imprimirResultados(r2);
+    }
 
-            while (j >= 0) {
-                comparaciones++;
-                if (datos[j] > clave) {
-                    datos[j + 1] = datos[j];
-                    desplazamientos++;
-                    j--;
-                } else {
-                    break;
+    static void imprimirResultados(Resultado[] resultados) {
+        Resultado mejor = resultados[0];
+        for (Resultado r : resultados) {
+            System.out.printf("%-18s | Comparaciones: %-9d | Tiempo: %d ns%n", r.algoritmo, r.comparaciones, r.tiempoNs);
+            if (r.tiempoNs < mejor.tiempoNs) mejor = r;
+        }
+        System.out.println("---------------------------------------------");
+        System.out.println("Algoritmo mas eficiente (por tiempo): " + mejor.algoritmo);
+    }
+
+    static Resultado medirTexto(String nombre, String[] base, OrdenadorTexto metodo) {
+        String[] copia = Arrays.copyOf(base, base.length);
+        long inicio = System.nanoTime();
+        long comparaciones = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        return new Resultado(nombre, comparaciones, fin - inicio);
+    }
+
+    static Resultado medirNumero(String nombre, int[] base, OrdenadorNumero metodo) {
+        int[] copia = Arrays.copyOf(base, base.length);
+        long inicio = System.nanoTime();
+        long comparaciones = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        return new Resultado(nombre, comparaciones, fin - inicio);
+    }
+
+    static long burbujaSimpleTexto(String[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++)
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (compararTexto(arr[j], arr[j + 1]) > 0) {
+                    String t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
                 }
             }
-            datos[j + 1] = clave;
-        }
+        return comp;
+    }
 
-        System.out.println("Comparaciones: " + comparaciones);
-        System.out.println("Desplazamientos: " + desplazamientos);
+    static long burbujaMejoradoTexto(String[] arr) {
+        long comp = 0;
+        boolean huboCambio;
+        for (int i = 0; i < arr.length - 1; i++) {
+            huboCambio = false;
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (compararTexto(arr[j], arr[j + 1]) > 0) {
+                    String t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                    huboCambio = true;
+                }
+            }
+            if (!huboCambio) break;
+        }
+        return comp;
+    }
+
+    static long quickSortTexto(String[] arr) {
+        long[] comp = {0};
+        quickSortRecTexto(arr, 0, arr.length - 1, comp);
+        return comp[0];
+    }
+
+    static void quickSortRecTexto(String[] arr, int low, int high, long[] comp) {
+        if (low < high) {
+            int p = particionTexto(arr, low, high, comp);
+            quickSortRecTexto(arr, low, p - 1, comp);
+            quickSortRecTexto(arr, p + 1, high, comp);
+        }
+    }
+
+    static int particionTexto(String[] arr, int low, int high, long[] comp) {
+        String pivote = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            comp[0]++;
+            if (compararTexto(arr[j], pivote) <= 0) {
+                i++;
+                String t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+            }
+        }
+        String t = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = t;
+        return i + 1;
+    }
+
+    static long shellSortTexto(String[] arr) {
+        long comp = 0;
+        for (int gap = arr.length / 2; gap > 0; gap /= 2)
+            for (int i = gap; i < arr.length; i++) {
+                String temp = arr[i];
+                int j = i;
+                while (j >= gap) {
+                    comp++;
+                    if (compararTexto(arr[j - gap], temp) > 0) {
+                        arr[j] = arr[j - gap];
+                        j -= gap;
+                    } else break;
+                }
+                arr[j] = temp;
+            }
+        return comp;
+    }
+
+    static long seleccionDirectaTexto(String[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                comp++;
+                if (compararTexto(arr[j], arr[min]) < 0) min = j;
+            }
+            String t = arr[i]; arr[i] = arr[min]; arr[min] = t;
+        }
+        return comp;
+    }
+
+    static long insercionTexto(String[] arr) {
+        long comp = 0;
+        for (int i = 1; i < arr.length; i++) {
+            String clave = arr[i];
+            int j = i - 1;
+            while (j >= 0) {
+                comp++;
+                if (compararTexto(arr[j], clave) > 0) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                } else break;
+            }
+            arr[j + 1] = clave;
+        }
+        return comp;
+    }
+
+    static long burbujaSimpleNum(int[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++)
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (arr[j] > arr[j + 1]) {
+                    int t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                }
+            }
+        return comp;
+    }
+
+    static long burbujaMejoradoNum(int[] arr) {
+        long comp = 0;
+        boolean huboCambio;
+        for (int i = 0; i < arr.length - 1; i++) {
+            huboCambio = false;
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (arr[j] > arr[j + 1]) {
+                    int t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                    huboCambio = true;
+                }
+            }
+            if (!huboCambio) break;
+        }
+        return comp;
+    }
+
+    static long quickSortNum(int[] arr) {
+        long[] comp = {0};
+        quickSortRecNum(arr, 0, arr.length - 1, comp);
+        return comp[0];
+    }
+
+    static void quickSortRecNum(int[] arr, int low, int high, long[] comp) {
+        if (low < high) {
+            int p = particionNum(arr, low, high, comp);
+            quickSortRecNum(arr, low, p - 1, comp);
+            quickSortRecNum(arr, p + 1, high, comp);
+        }
+    }
+
+    static int particionNum(int[] arr, int low, int high, long[] comp) {
+        int pivote = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            comp[0]++;
+            if (arr[j] <= pivote) {
+                i++;
+                int t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+            }
+        }
+        int t = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = t;
+        return i + 1;
+    }
+
+    static long shellSortNum(int[] arr) {
+        long comp = 0;
+        for (int gap = arr.length / 2; gap > 0; gap /= 2)
+            for (int i = gap; i < arr.length; i++) {
+                int temp = arr[i];
+                int j = i;
+                while (j >= gap) {
+                    comp++;
+                    if (arr[j - gap] > temp) {
+                        arr[j] = arr[j - gap];
+                        j -= gap;
+                    } else break;
+                }
+                arr[j] = temp;
+            }
+        return comp;
+    }
+
+    static long seleccionDirectaNum(int[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                comp++;
+                if (arr[j] < arr[min]) min = j;
+            }
+            int t = arr[i]; arr[i] = arr[min]; arr[min] = t;
+        }
+        return comp;
+    }
+
+    static long insercionNum(int[] arr) {
+        long comp = 0;
+        for (int i = 1; i < arr.length; i++) {
+            int clave = arr[i];
+            int j = i - 1;
+            while (j >= 0) {
+                comp++;
+                if (arr[j] > clave) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                } else break;
+            }
+            arr[j + 1] = clave;
+        }
+        return comp;
     }
 }
