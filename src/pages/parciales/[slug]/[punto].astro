@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { parciales } from "../../../parciales/parciales";
+
+export function getStaticPaths() {
+  return parciales.flatMap((parcial) =>
+    parcial.puntos.map((punto) => ({
+      params: { slug: parcial.slug, punto: punto.slug },
+      props: { parcial, punto },
+    }))
+  );
+}
+
+const { parcial, punto } = Astro.props;
+const codigoPlantilla = await readFile(join(process.cwd(), "public", punto.rutaCodigo.replace(/^\//, "")), "utf-8");
+---
+
+<BaseLayout title={`${punto.nombre} | ${parcial.titulo}`}>
+  <main class="app-shell programa-shell">
+    <section class="panel encabezado-programa">
+      <img src="/programas-temporales/uis-logo.svg" alt="Logotipo de la Universidad Industrial de Santander" loading="eager" decoding="async" />
+      <div>
+        <p class="eyebrow">{parcial.titulo}</p>
+        <h1>{punto.nombre}</h1>
+        <p>{punto.descripcion}</p>
+      </div>
+      <a class="icono-volver" href={`/parciales/${parcial.slug}`} aria-label="Volver al listado de puntos" title="Volver al listado de puntos">
+        <img src="/icons/folder.svg" alt="" class="ui-icon" aria-hidden="true" />
+      </a>
+    </section>
+
+    <section class="panel subpanel zona-codigo">
+      <h2><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Codigo del punto</h2>
+      <pre class="cuadro-codigo"><code>{codigoPlantilla}</code></pre>
+    </section>
+
+    <section class="panel subpanel zona-imagen">
+      <h2><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Output del punto</h2>
+      <div class="marco-imagen">
+        <img
+          src={punto.rutaImagen}
+          alt={`Imagen de salida de ${punto.nombre}`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+.programa-shell{ max-width: 1260px; display: grid; gap: 1.1rem; }
+.encabezado-programa{ display: grid; grid-template-columns: 110px 1fr auto; gap: 1.2rem; padding: 1.4rem; align-items: center; }
+.encabezado-programa > img{ width: 100%; max-width: 110px; border-radius: .8rem; background: #fff; padding: 6px; border: 1px solid var(--line); }
+.encabezado-programa h1{ font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: .5rem; }
+.icono-volver{ width: 3.7rem; height: 3.7rem; border-radius: .8rem; border: 1px solid var(--line); background: var(--panel); color: var(--text); display: inline-flex; align-items: center; justify-content: center; }
+.icono-volver .ui-icon{ margin-right: 0; width: 1.9rem; height: 1.9rem; }
+.zona-codigo h2,.zona-imagen h2{ display: inline-flex; align-items: center; font-size: 1.5rem; margin: 0 0 .8rem 0; }
+.cuadro-codigo{ margin: 0; min-height: 460px; max-height: 460px; overflow: auto; border: 1px solid var(--line); border-radius: .8rem; padding: 1rem; background: var(--panel); color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 1rem; line-height: 1.55; }
+.marco-imagen{ margin-top: .8rem; min-height: 460px; border-radius: .8rem; border: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; padding: .6rem; background: var(--panel); }
+.marco-imagen img{ width: 100%; height: 100%; object-fit: cover; border-radius: .6rem; }
+@media (max-width: 900px){ .encabezado-programa{ grid-template-columns: 1fr; justify-items: center; text-align: center; } }
+</style>

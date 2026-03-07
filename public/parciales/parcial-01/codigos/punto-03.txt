@@ -1,0 +1,30 @@
+// Parcial 1 - Punto 3
+// Insercion con metricas basicas
+
+public class Punto03Insercion {
+    public static void main(String[] args) {
+        int[] datos = {9, 4, 8, 2, 5, 1};
+        int comparaciones = 0;
+        int desplazamientos = 0;
+
+        for (int i = 1; i < datos.length; i++) {
+            int clave = datos[i];
+            int j = i - 1;
+
+            while (j >= 0) {
+                comparaciones++;
+                if (datos[j] > clave) {
+                    datos[j + 1] = datos[j];
+                    desplazamientos++;
+                    j--;
+                } else {
+                    break;
+                }
+            }
+            datos[j + 1] = clave;
+        }
+
+        System.out.println("Comparaciones: " + comparaciones);
+        System.out.println("Desplazamientos: " + desplazamientos);
+    }
+}
