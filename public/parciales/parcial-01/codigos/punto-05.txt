@@ -1,0 +1,126 @@
+/*
+PARCIAL 1 - PUNTO 5
+
+Arreglos parcialmente ordenados:
+- Mitad 1 (inicio a mitad): ordenada
+- Mitad 2 (mitad a final): desordenada
+
+Se comparan 6 algoritmos:
+Burbuja Simple, Burbuja Mejorado, Quick Sort, Shell Sort,
+Seleccion Directa e Insercion.
+*/
+
+import java.text.Normalizer;
+import java.util.Arrays;
+
+public class Parcial01Punto05 {
+
+    static class Resultado {
+        String algoritmo;
+        long comparaciones;
+        long tiempoNs;
+
+        Resultado(String algoritmo, long comparaciones, long tiempoNs) {
+            this.algoritmo = algoritmo;
+            this.comparaciones = comparaciones;
+            this.tiempoNs = tiempoNs;
+        }
+    }
+
+    static String normalizar(String s) {
+        return Normalizer.normalize(s, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}+", "")
+                .toLowerCase();
+    }
+
+    static int compararTexto(String a, String b) {
+        return normalizar(a).compareTo(normalizar(b));
+    }
+
+    interface OrdenadorTexto { long ordenar(String[] arr); }
+    interface OrdenadorNumero { long ordenar(int[] arr); }
+
+    // Diseñado para la consigna: mitad ordenada y mitad desordenada
+    static String[] nombres_parcialmente_ordenados = {
+            // Mitad ordenada (A..L)
+            "Aaron", "Alba", "Andrea", "Bruno", "Camila", "Diana", "Elena", "Fabio", "Gabriel", "Helena", "Iris", "Javier", "Lucia",
+            // Mitad desordenada
+            "Zoe", "Mateo", "Oscar", "Nora", "Pablo", "Valeria", "Rocio", "Quino", "Tomas", "Ulises", "Sofia", "Ximena", "Yago"
+    };
+
+    static int[] numeros_parcialmente_ordenados = {
+            // Mitad ordenada
+            1001, 1050, 1090, 1140, 1200, 1260, 1300, 1350, 1400, 1450, 1500, 1550, 1600,
+            // Mitad desordenada
+            2200, 1780, 1999, 1701, 2500, 1650, 2400, 1822, 2600, 1755, 2300, 1688, 2100
+    };
+
+    public static void main(String[] args) {
+        System.out.println("=== RESULTADOS PUNTO 5 - SITUACION 1 (nombres_parcialmente_ordenados) ===");
+        Resultado[] r1 = new Resultado[] {
+                medirTexto("Burbuja Simple", nombres_parcialmente_ordenados, Parcial01Punto05::burbujaSimpleTexto),
+                medirTexto("Burbuja Mejorado", nombres_parcialmente_ordenados, Parcial01Punto05::burbujaMejoradoTexto),
+                medirTexto("Quick Sort", nombres_parcialmente_ordenados, Parcial01Punto05::quickSortTexto),
+                medirTexto("Shell Sort", nombres_parcialmente_ordenados, Parcial01Punto05::shellSortTexto),
+                medirTexto("Seleccion Directa", nombres_parcialmente_ordenados, Parcial01Punto05::seleccionDirectaTexto),
+                medirTexto("Insercion", nombres_parcialmente_ordenados, Parcial01Punto05::insercionTexto)
+        };
+        imprimirResultados(r1);
+
+        System.out.println();
+        System.out.println("=== RESULTADOS PUNTO 5 - SITUACION 2 (numeros_parcialmente_ordenados) ===");
+        Resultado[] r2 = new Resultado[] {
+                medirNumero("Burbuja Simple", numeros_parcialmente_ordenados, Parcial01Punto05::burbujaSimpleNum),
+                medirNumero("Burbuja Mejorado", numeros_parcialmente_ordenados, Parcial01Punto05::burbujaMejoradoNum),
+                medirNumero("Quick Sort", numeros_parcialmente_ordenados, Parcial01Punto05::quickSortNum),
+                medirNumero("Shell Sort", numeros_parcialmente_ordenados, Parcial01Punto05::shellSortNum),
+                medirNumero("Seleccion Directa", numeros_parcialmente_ordenados, Parcial01Punto05::seleccionDirectaNum),
+                medirNumero("Insercion", numeros_parcialmente_ordenados, Parcial01Punto05::insercionNum)
+        };
+        imprimirResultados(r2);
+    }
+
+    static void imprimirResultados(Resultado[] resultados) {
+        Resultado mejor = resultados[0];
+        for (Resultado r : resultados) {
+            System.out.printf("%-18s | Comparaciones: %-6d | Tiempo: %d ns%n", r.algoritmo, r.comparaciones, r.tiempoNs);
+            if (r.tiempoNs < mejor.tiempoNs) mejor = r;
+        }
+        System.out.println("---------------------------------------------");
+        System.out.println("Algoritmo mas eficiente (por tiempo): " + mejor.algoritmo);
+    }
+
+    static Resultado medirTexto(String nombre, String[] base, OrdenadorTexto metodo) {
+        String[] copia = Arrays.copyOf(base, base.length);
+        long inicio = System.nanoTime();
+        long comparaciones = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        return new Resultado(nombre, comparaciones, fin - inicio);
+    }
+
+    static Resultado medirNumero(String nombre, int[] base, OrdenadorNumero metodo) {
+        int[] copia = Arrays.copyOf(base, base.length);
+        long inicio = System.nanoTime();
+        long comparaciones = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        return new Resultado(nombre, comparaciones, fin - inicio);
+    }
+
+    static long burbujaSimpleTexto(String[] arr) { long c=0; for(int i=0;i<arr.length-1;i++) for(int j=0;j<arr.length-1-i;j++){ c++; if(compararTexto(arr[j],arr[j+1])>0){String t=arr[j];arr[j]=arr[j+1];arr[j+1]=t;}} return c; }
+    static long burbujaMejoradoTexto(String[] arr) { long c=0; boolean cambio; for(int i=0;i<arr.length-1;i++){ cambio=false; for(int j=0;j<arr.length-1-i;j++){ c++; if(compararTexto(arr[j],arr[j+1])>0){String t=arr[j];arr[j]=arr[j+1];arr[j+1]=t;cambio=true;}} if(!cambio) break;} return c; }
+    static long quickSortTexto(String[] arr){ long[] c={0}; qst(arr,0,arr.length-1,c); return c[0]; }
+    static void qst(String[] a,int l,int h,long[] c){ if(l<h){ int p=pt(a,l,h,c); qst(a,l,p-1,c); qst(a,p+1,h,c);} }
+    static int pt(String[] a,int l,int h,long[] c){ String p=a[h]; int i=l-1; for(int j=l;j<h;j++){ c[0]++; if(compararTexto(a[j],p)<=0){ i++; String t=a[i]; a[i]=a[j]; a[j]=t; }} String t=a[i+1]; a[i+1]=a[h]; a[h]=t; return i+1; }
+    static long shellSortTexto(String[] a){ long c=0; for(int g=a.length/2;g>0;g/=2) for(int i=g;i<a.length;i++){ String t=a[i]; int j=i; while(j>=g){ c++; if(compararTexto(a[j-g],t)>0){ a[j]=a[j-g]; j-=g; } else break; } a[j]=t; } return c; }
+    static long seleccionDirectaTexto(String[] a){ long c=0; for(int i=0;i<a.length-1;i++){ int m=i; for(int j=i+1;j<a.length;j++){ c++; if(compararTexto(a[j],a[m])<0) m=j; } String t=a[i]; a[i]=a[m]; a[m]=t; } return c; }
+    static long insercionTexto(String[] a){ long c=0; for(int i=1;i<a.length;i++){ String k=a[i]; int j=i-1; while(j>=0){ c++; if(compararTexto(a[j],k)>0){ a[j+1]=a[j]; j--; } else break; } a[j+1]=k; } return c; }
+
+    static long burbujaSimpleNum(int[] a){ long c=0; for(int i=0;i<a.length-1;i++) for(int j=0;j<a.length-1-i;j++){ c++; if(a[j]>a[j+1]){ int t=a[j]; a[j]=a[j+1]; a[j+1]=t; }} return c; }
+    static long burbujaMejoradoNum(int[] a){ long c=0; boolean cambio; for(int i=0;i<a.length-1;i++){ cambio=false; for(int j=0;j<a.length-1-i;j++){ c++; if(a[j]>a[j+1]){ int t=a[j]; a[j]=a[j+1]; a[j+1]=t; cambio=true; }} if(!cambio) break; } return c; }
+    static long quickSortNum(int[] a){ long[] c={0}; qsn(a,0,a.length-1,c); return c[0]; }
+    static void qsn(int[] a,int l,int h,long[] c){ if(l<h){ int p=pn(a,l,h,c); qsn(a,l,p-1,c); qsn(a,p+1,h,c);} }
+    static int pn(int[] a,int l,int h,long[] c){ int p=a[h]; int i=l-1; for(int j=l;j<h;j++){ c[0]++; if(a[j]<=p){ i++; int t=a[i]; a[i]=a[j]; a[j]=t; }} int t=a[i+1]; a[i+1]=a[h]; a[h]=t; return i+1; }
+    static long shellSortNum(int[] a){ long c=0; for(int g=a.length/2;g>0;g/=2) for(int i=g;i<a.length;i++){ int t=a[i]; int j=i; while(j>=g){ c++; if(a[j-g]>t){ a[j]=a[j-g]; j-=g; } else break; } a[j]=t; } return c; }
+    static long seleccionDirectaNum(int[] a){ long c=0; for(int i=0;i<a.length-1;i++){ int m=i; for(int j=i+1;j<a.length;j++){ c++; if(a[j]<a[m]) m=j; } int t=a[i]; a[i]=a[m]; a[m]=t; } return c; }
+    static long insercionNum(int[] a){ long c=0; for(int i=1;i<a.length;i++){ int k=a[i]; int j=i-1; while(j>=0){ c++; if(a[j]>k){ a[j+1]=a[j]; j--; } else break; } a[j+1]=k; } return c; }
+}

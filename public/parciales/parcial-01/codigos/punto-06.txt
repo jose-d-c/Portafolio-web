@@ -1,0 +1,217 @@
+/*
+PARCIAL 1 - PUNTO 6
+
+Serie histórica 2022 USD/COP (periodos mensuales de referencia),
+consultada y organizada con base en datos públicos del Banco de la República.
+Se comparan 6 algoritmos midiendo:
+- Comparaciones
+- Tiempo de ejecución (ns)
+- Memoria utilizada aproximada (bytes)
+
+Además, se identifica el periodo más alto y más bajo del dólar en 2022.
+*/
+
+import java.util.Arrays;
+
+public class Parcial01Punto06 {
+
+    static class Registro {
+        String periodo;
+        double valor;
+
+        Registro(String periodo, double valor) {
+            this.periodo = periodo;
+            this.valor = valor;
+        }
+    }
+
+    static class Resultado {
+        String algoritmo;
+        long comparaciones;
+        long tiempoNs;
+        long memoriaBytes;
+
+        Resultado(String algoritmo, long comparaciones, long tiempoNs, long memoriaBytes) {
+            this.algoritmo = algoritmo;
+            this.comparaciones = comparaciones;
+            this.tiempoNs = tiempoNs;
+            this.memoriaBytes = memoriaBytes;
+        }
+    }
+
+    interface Ordenador {
+        long ordenar(Registro[] arr);
+    }
+
+    // Serie 2022 (USD/COP por mes de referencia)
+    static Registro[] SERIE_2022 = {
+            new Registro("2022-01", 3968.71),
+            new Registro("2022-02", 3939.56),
+            new Registro("2022-03", 3786.53),
+            new Registro("2022-04", 3785.38),
+            new Registro("2022-05", 3924.57),
+            new Registro("2022-06", 4027.30),
+            new Registro("2022-07", 4327.29),
+            new Registro("2022-08", 4303.33),
+            new Registro("2022-09", 4435.95),
+            new Registro("2022-10", 4737.30),
+            new Registro("2022-11", 4810.20),
+            new Registro("2022-12", 4778.85)
+    };
+
+    public static void main(String[] args) {
+        Resultado[] resultados = new Resultado[] {
+                medir("Burbuja Simple", SERIE_2022, Parcial01Punto06::burbujaSimple),
+                medir("Burbuja Mejorado", SERIE_2022, Parcial01Punto06::burbujaMejorado),
+                medir("Quick Sort", SERIE_2022, Parcial01Punto06::quickSort),
+                medir("Shell Sort", SERIE_2022, Parcial01Punto06::shellSort),
+                medir("Seleccion Directa", SERIE_2022, Parcial01Punto06::seleccionDirecta),
+                medir("Insercion", SERIE_2022, Parcial01Punto06::insercion)
+        };
+
+        System.out.println("=== RESULTADOS PUNTO 6 - SERIE HISTORICA USD/COP 2022 ===");
+        Resultado mejor = resultados[0];
+        for (Resultado r : resultados) {
+            System.out.printf("%-18s | Comp: %-4d | Tiempo: %-8d ns | Mem: %d bytes%n",
+                    r.algoritmo, r.comparaciones, r.tiempoNs, r.memoriaBytes);
+            if (r.tiempoNs < mejor.tiempoNs) mejor = r;
+        }
+        System.out.println("----------------------------------------------------------");
+        System.out.println("Algoritmo mas eficiente (por tiempo): " + mejor.algoritmo);
+
+        Registro[] ordenado = Arrays.copyOf(SERIE_2022, SERIE_2022.length);
+        quickSort(ordenado);
+        Registro minimo = ordenado[0];
+        Registro maximo = ordenado[ordenado.length - 1];
+
+        System.out.printf("Periodo mas bajo : %s | %.2f COP%n", minimo.periodo, minimo.valor);
+        System.out.printf("Periodo mas alto : %s | %.2f COP%n", maximo.periodo, maximo.valor);
+    }
+
+    static Resultado medir(String nombre, Registro[] base, Ordenador metodo) {
+        Registro[] copia = Arrays.copyOf(base, base.length);
+        long memAntes = memoriaUsada();
+        long ini = System.nanoTime();
+        long comp = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        long memDespues = memoriaUsada();
+        long deltaMem = Math.max(0, memDespues - memAntes);
+        return new Resultado(nombre, comp, fin - ini, deltaMem);
+    }
+
+    static long memoriaUsada() {
+        Runtime r = Runtime.getRuntime();
+        return r.totalMemory() - r.freeMemory();
+    }
+
+    static int comparar(Registro a, Registro b) {
+        return Double.compare(a.valor, b.valor);
+    }
+
+    static long burbujaSimple(Registro[] a) {
+        long c = 0;
+        for (int i = 0; i < a.length - 1; i++) {
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                c++;
+                if (comparar(a[j], a[j + 1]) > 0) {
+                    Registro t = a[j]; a[j] = a[j + 1]; a[j + 1] = t;
+                }
+            }
+        }
+        return c;
+    }
+
+    static long burbujaMejorado(Registro[] a) {
+        long c = 0;
+        boolean cambio;
+        for (int i = 0; i < a.length - 1; i++) {
+            cambio = false;
+            for (int j = 0; j < a.length - 1 - i; j++) {
+                c++;
+                if (comparar(a[j], a[j + 1]) > 0) {
+                    Registro t = a[j]; a[j] = a[j + 1]; a[j + 1] = t;
+                    cambio = true;
+                }
+            }
+            if (!cambio) break;
+        }
+        return c;
+    }
+
+    static long quickSort(Registro[] a) {
+        long[] c = {0};
+        qsr(a, 0, a.length - 1, c);
+        return c[0];
+    }
+
+    static void qsr(Registro[] a, int l, int h, long[] c) {
+        if (l < h) {
+            int p = part(a, l, h, c);
+            qsr(a, l, p - 1, c);
+            qsr(a, p + 1, h, c);
+        }
+    }
+
+    static int part(Registro[] a, int l, int h, long[] c) {
+        Registro piv = a[h];
+        int i = l - 1;
+        for (int j = l; j < h; j++) {
+            c[0]++;
+            if (comparar(a[j], piv) <= 0) {
+                i++;
+                Registro t = a[i]; a[i] = a[j]; a[j] = t;
+            }
+        }
+        Registro t = a[i + 1]; a[i + 1] = a[h]; a[h] = t;
+        return i + 1;
+    }
+
+    static long shellSort(Registro[] a) {
+        long c = 0;
+        for (int g = a.length / 2; g > 0; g /= 2) {
+            for (int i = g; i < a.length; i++) {
+                Registro temp = a[i];
+                int j = i;
+                while (j >= g) {
+                    c++;
+                    if (comparar(a[j - g], temp) > 0) {
+                        a[j] = a[j - g];
+                        j -= g;
+                    } else break;
+                }
+                a[j] = temp;
+            }
+        }
+        return c;
+    }
+
+    static long seleccionDirecta(Registro[] a) {
+        long c = 0;
+        for (int i = 0; i < a.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < a.length; j++) {
+                c++;
+                if (comparar(a[j], a[min]) < 0) min = j;
+            }
+            Registro t = a[i]; a[i] = a[min]; a[min] = t;
+        }
+        return c;
+    }
+
+    static long insercion(Registro[] a) {
+        long c = 0;
+        for (int i = 1; i < a.length; i++) {
+            Registro clave = a[i];
+            int j = i - 1;
+            while (j >= 0) {
+                c++;
+                if (comparar(a[j], clave) > 0) {
+                    a[j + 1] = a[j];
+                    j--;
+                } else break;
+            }
+            a[j + 1] = clave;
+        }
+        return c;
+    }
+}

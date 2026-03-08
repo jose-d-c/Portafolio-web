@@ -1,0 +1,81 @@
+import java.util.*;
+
+class ArregloNombres {
+
+    public static String[] generarArregloNombres(int cantidad) {
+        String[] nombres = new String[cantidad];
+        String[] iniciales = {"Ana", "Luis", "María", "David", "Sofía", "Carlos", "Elena", "Alejandro", "Isabella", "Juan", "Valentina", "Andrea", "Pedro", "Camila", "Fernando", "Laura", "Diego",
+"Carolina", "Gabriel", "Javier", "Ana", "Miguel", "Paula", "Max", "Bianca", "Daniel", "Isaac", "Olivia", "Ava", "Liam", "Eva", "Mia", "Sophia", "Amelia", "Isabella", "Luna", "Alexander",
+"Benjamin", "William", "Emma", "Oliver", "Noah", "Ethan", "Henry", "James", "Arjun", "Mateo", "Lucas", "Juan", "Luciana", "Esteban", "Ximena", "Ricardo", "Micaela", "Felipe", "Bárbara",
+"Santi", "Valeria", "Hugo", "Florencia", "Marcos", "Agustina", "Damián", "Renata", "Joaquín", "Maite", "Bautista", "Irene", "Rodrigo", "Antonella", "Samuel", "Jimena", "Emilio", "Julieta",
+"Tomás", "Amparo", "Benjamín", "Celia", "Vicente", "Ainhoa", "Mateo", "Belén", "Nicolás", "Fátima", "Sebastián", "Gloria", "Leonardo", "Nuria", "Matías", "Silvia", "Agustín", "Rocío", "Bruno",
+"Miriam", "Ignacio", "Leticia", "Simón", "Esther", "Félix", "Raquel", "Manuel", "Salomé", "Valentino", "Triana", "Thiago", "Naiara", "Ciro", "Guadalupe", "Enzo", "Malena", "Gael", "Aitana",
+"Ian", "Manuela", "Liam", "Consuelo", "Noah", "Milagros", "Dylan", "Paloma", "Axel", "Esperanza", "Luca", "Verónica", "Izan", "Angélica", "Leo", "Viviana", "Joel", "Yolanda", "Elias", "Pilar",
+"Isaac", "Lidia", "Aaron", "Aurora", "Oliver", "Blanca", "Erick", "Elsa", "Omar", "Adela", "Iker", "Felisa", "Saúl", "Nerea", "Pau", "Lola", "Eric", "Candela", "Iago", "Inés", "Unai", "Amelia", "Joan",
+"Ariadna", "Marc", "Carla", "Pol", "Mireia", "Pau", "Laia", "Oriol", "Berta", "Arnau", "Jana", "Nil", "Ona", "Biel", "Arlet", "Martí", "Júlia", "Jan", "Emma", "Aleix", "Abril", "Rocío", "Santiago",
+"Cayetana", "Mario", "Virginia", "Gonzalo", "Miranda", "Alfonso", "Estefanía", "Cristóbal", "Montserrat", "Patricio", "Cándida", "Gregorio", "Genoveva", "Faustino", "Adelaide", "Marcelo",
+"Graciela", "Eugenio", "Rafaela", "Leandro", "Zaira", "Amadeo", "Violeta", "Camilo", "Delfina", "Federico", "Jacinta", "Lorenzo", "Sabina", "Gaspar", "Ursula", "Baltasar", "Teodora", "Melchor",
+"Ofelia", "Jonás", "Ramona", "Ezequiel", "Dorotea", "Abel", "Isidra", "Braulio", "Eulalia", "Hipólito", "Justina", "Mariano", "Casandra", "Donato", "Remedios", "Agapito", "Priscila", "Fidencio",
+"Amalia", "Eusebio", "Sonia", "Basilio", "Tatiana", "Cipriano", "Vanesa", "Dionisio", "Susana", "Eleuterio", "Mónica", "Feliciano", "Teresa", "Gumersindo", "Lourdes", "Heriberto", "Josefina",
+"Indalecio", "Magdalena", "Jerónimo", "Rosario", "Ladislau", "Modesta", "Macario", "Purificación", "Nicanor", "Angustias", "Olegario", "Asunción", "Pancracio", "Concepción", "Quirino",
+"Inmaculada", "Ruperto", "Visitación", "Servando", "Candelaria", "Torcuato", "Milagros", "Urbano", "Natividad", "Valeriano", "Piedad", "Wenceslao", "Socorro", "Zenón", "Aurelia",
+"Aniceto", "Benigna", "Casimiro", "Dina", "Eutropio", "Edelmira", "Florentino", "Eustaquia", "Gervasio", "Gisela", "Honorio", "Herminia", "Ildefonso", "Imelda", "Jenaro", "Joaquina",
+"Leoncio", "Leocadia", "Mauricio", "Matilde", "Nemesio", "Noemí", "Onofre", "Olga", "Perfecto", "Petrona", "Quiterio", "Quina", "Robustiano", "Rufina", "Saturio", "Segunda", "Telesforo",
+"Teófila", "Ulpiano", "Urraca", "Venancio", "Veneranda", "Wilfredo", "Walda", "Xavier", "Xenia", "Yago", "Yara", "Zacarías", "Zulma", "Adriano", "Aída", "Bernardo", "Bibiana", "Conrado",
+"Coral", "Desiderio", "Dora", "Edmundo", "Edith", "Fabio", "Fabiana", "Gerardo", "Gema", "Héctor", "Helena", "Ismael", "Iris", "Jacobo", "Jade", "Kevin", "Keyla", "Lázaro", "Leila", "Máximo",
+"Maura", "Néstor", "Niza", "Orlando", "Olivia", "Plácido", "Perla", "Quintín", "Queila", "Ramiro", "Rebeca", "Silverio", "Selena", "Tadeo", "Thais", "Ulises", "Uxia", "Valerio", "Vera", "Walter",
+"Wendy", "Xerach", "Xana", "Yusef", "Yurena", "Zigor", "Zoe", "Adolfo", "Ariadne", "Benito", "Brigida", "Claudio", "Clotilde", "Dante", "Debora", "Erasmo", "Erika", "Fausto", "Fabiola",
+"Guido", "Greta", "Hans", "Hilda", "Iñaki", "Iratxe", "Jordi", "Josefa", "Kurt", "Katia", "Lino", "Lina", "Modesto", "Mila", "Noel", "Nora", "Oswaldo", "Olimpia", "Pascual", "Pastora", "Radamel",
+"Ruth", "Serafín", "Sira", "Teo", "Teonila", "Ubaldo", "Uma", "Vidal", "Vania", "Wilson", "Winona", "Xoan", "Xandra", "Yanis", "Yuvia", "Zoren", "Zaira", "Alvaro", "Aurelio", "Bernabé",
+"Carmelo", "Celestino", "Cornelio", "Demétrio", "Efraín", "Eliseo", "Emigdio", "Epifanio", "Everardo", "Fulgencio", "Gaudencio", "Hipólito", "Inocencio", "Juvenal", "Liberato", "Longino",
+"Mamerto", "Nazario", "Niceto", "Octavio", "Ovidio", "Primitivo", "Próspero", "Rogelio", "Rómulo", "Severiano", "Severo", "Tiburcio", "Valero", "Victoriano", "Viriato", "Zósimo", "Abundio",
+"Acisclo", "Anfiloquio", "Apolonio", "Arsenio", "Ausencio", "Baldomero", "Bonifacio", "Celedonio", "Dalmacio", "Donaciano", " Egidio", "Eleazar", "Emeterio", "Esiquio", "Eufrasio",
+"Exuperio", "Florencio", "Galdino", "Hermenegildo", "Hilarión", "Indalecio", "Isidoro", "Leovigildo", "Magín", "Mamerto", "Maximino", "Medardo", "Orencio", "Pantaleón", "Policarpo",
+"Recaredo", "Restituto", "Sisenando", "Telefón", "Timoteo", "Wifredo", "Donovan", "Emanuela", "Fiorella", "Gianluca", "Isabella", "Kilian", "Lucrecia", "Morgana", "Nadir", "Ottilie", "Pavel",
+"Quinn", "Rocco", "Sasha", "Tatiana", "Umi", "Valery", "Wyatt", "Xavi", "Yael", "Zuri"};
+
+        Random rand = new Random(2022);
+        for (int i = 0; i < cantidad; i++) {
+            int index = rand.nextInt(iniciales.length);
+            nombres[i] = iniciales[index] + " -> " + (i + 1);
+        }
+        return nombres;
+    }
+
+    public static void main(String[] args) {
+        int cantidadNombres = 200;
+        String[] nombres = generarArregloNombres(cantidadNombres);
+
+        Map<String, Integer> conteo = new HashMap<>();
+        for (String item : nombres) {
+            String nombre = item.split(" -> ")[0].trim();
+            conteo.put(nombre, conteo.getOrDefault(nombre, 0) + 1);
+        }
+
+        List<Map.Entry<String, Integer>> porNombre = new ArrayList<>(conteo.entrySet());
+        porNombre.sort(Map.Entry.comparingByKey());
+
+        List<Map.Entry<String, Integer>> porRepeticiones = new ArrayList<>(conteo.entrySet());
+        porRepeticiones.sort((a, b) -> {
+            int cmp = Integer.compare(b.getValue(), a.getValue());
+            if (cmp != 0) return cmp;
+            return a.getKey().compareTo(b.getKey());
+        });
+
+        System.out.println("=== TOTAL DE NOMBRES GENERADOS ===");
+        System.out.println(cantidadNombres);
+        System.out.println("NOMBRES UNICOS: " + conteo.size());
+
+        System.out.println("\n=== LISTA ORDENADA POR NOMBRE (primeros 40) ===");
+        for (int i = 0; i < Math.min(40, porNombre.size()); i++) {
+            Map.Entry<String, Integer> e = porNombre.get(i);
+            System.out.printf("%-20s -> %d%n", e.getKey(), e.getValue());
+        }
+
+        System.out.println("\n=== LISTA ORDENADA POR CANTIDAD DE REPETICIONES (primeros 40) ===");
+        for (int i = 0; i < Math.min(40, porRepeticiones.size()); i++) {
+            Map.Entry<String, Integer> e = porRepeticiones.get(i);
+            System.out.printf("%-20s -> %d%n", e.getKey(), e.getValue());
+        }
+    }
+}

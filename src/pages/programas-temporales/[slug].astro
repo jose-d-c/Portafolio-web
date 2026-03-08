@@ -17,15 +17,6 @@ const codigoPlantilla = await readFile(
   "utf-8"
 );
 
-const imagenesPartesPrograma18 = [
-  { parte: "Parte 1", ruta: "/proyectos-temporales/imagenes/programa-18-partes/parte-1.svg" },
-  { parte: "Parte 2", ruta: "/proyectos-temporales/imagenes/programa-18-partes/parte-2.svg" },
-  { parte: "Parte 3", ruta: "/proyectos-temporales/imagenes/programa-18-partes/parte-3.svg" },
-  { parte: "Parte 4", ruta: "/proyectos-temporales/imagenes/programa-18-partes/parte-4.svg" },
-  { parte: "Parte 5", ruta: "/proyectos-temporales/imagenes/programa-18-partes/parte-5.svg" },
-  { parte: "Parte 6", ruta: "/proyectos-temporales/imagenes/programa-18-partes/parte-6.svg" },
-  { parte: "Parte 7", ruta: "/proyectos-temporales/imagenes/programa-18-partes/parte-7.svg" },
-];
 
 ---
 
@@ -60,21 +51,10 @@ const imagenesPartesPrograma18 = [
     <section class="panel subpanel zona-imagen">
       <h2><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Imagen de salida</h2>
 
-      {programa.slug === "programa-18" ? (
-        <div class="selector-salidas">
-          <label for="selector-partes">Menu desplegable de salidas por parte</label>
-          <select id="selector-partes" aria-label="Seleccionar parte de salida">
-            {imagenesPartesPrograma18.map((item) => (
-              <option value={item.ruta}>{item.parte}</option>
-            ))}
-          </select>
-        </div>
-      ) : null}
-
       <div class="marco-imagen">
         <img
           id="imagen-salida-programa"
-          src={programa.slug === "programa-18" ? imagenesPartesPrograma18[0].ruta : programa.rutaImagenPlantilla}
+          src={programa.rutaImagenPlantilla}
           alt={`Imagen de salida de ${programa.titulo}`}
           loading="lazy"
           decoding="async"
@@ -86,14 +66,6 @@ const imagenesPartesPrograma18 = [
   <script is:inline>
     const botonCopiar = document.querySelector(".boton-copiar");
     const nodoCodigo = document.querySelector(".cuadro-codigo");
-    const selectorPartes = document.querySelector("#selector-partes");
-    const imagenSalida = document.querySelector("#imagen-salida-programa");
-
-    selectorPartes?.addEventListener("change", (event) => {
-      const destino = event.target;
-      if (!(destino instanceof HTMLSelectElement) || !imagenSalida) return;
-      imagenSalida.src = destino.value;
-    });
 
     botonCopiar?.addEventListener("click", async () => {
       if (!nodoCodigo) return;
@@ -205,25 +177,6 @@ const imagenesPartesPrograma18 = [
   line-height: 1.55;
 }
 
-.selector-salidas{
-  margin-top: .8rem;
-  display: grid;
-  gap: .4rem;
-  max-width: 420px;
-}
-
-.selector-salidas label{
-  font-size: .95rem;
-  color: var(--textSoft);
-}
-
-.selector-salidas select{
-  background: var(--panel);
-  border: 1px solid var(--line);
-  color: var(--text);
-  border-radius: .6rem;
-  padding: .6rem .7rem;
-}
 
 .marco-imagen{
   margin-top: .8rem;

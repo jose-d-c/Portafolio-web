@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="2716" viewBox="0 0 1700 2716" role="img" aria-labelledby="title desc">
+  <title id="title">Salida de consola real - Parcial 1 Punto 7</title>
+  <desc id="desc">Conteo de repeticiones de nombres ordenado por nombre y por frecuencia.</desc>
+  <rect width="1700" height="2716" fill="#020617"/>
+  <text x="40" y="50" fill="#93c5fd" font-family="Arial" font-size="30" font-weight="700">Parcial 1 - Punto 7 (salida exacta de consola)</text>
+  <text x="40" y="90" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">=== TOTAL DE NOMBRES GENERADOS ===</text>
+  <text x="40" y="120" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">200</text>
+  <text x="40" y="150" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">NOMBRES UNICOS: 164</text>
+  <text x="40" y="198" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">=== LISTA ORDENADA POR NOMBRE (primeros 40) ===</text>
+  <text x="40" y="228" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Abril                -&gt; 1</text>
+  <text x="40" y="258" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Adelaide             -&gt; 2</text>
+  <text x="40" y="288" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Adriano              -&gt; 1</text>
+  <text x="40" y="318" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Agustina             -&gt; 1</text>
+  <text x="40" y="348" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Agustín              -&gt; 1</text>
+  <text x="40" y="378" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Aitana               -&gt; 1</text>
+  <text x="40" y="408" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Amalia               -&gt; 1</text>
+  <text x="40" y="438" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Amelia               -&gt; 2</text>
+  <text x="40" y="468" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Ana                  -&gt; 1</text>
+  <text x="40" y="498" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Andrea               -&gt; 2</text>
+  <text x="40" y="528" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Ariadna              -&gt; 1</text>
+  <text x="40" y="558" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Ariadne              -&gt; 1</text>
+  <text x="40" y="588" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Asunción             -&gt; 1</text>
+  <text x="40" y="618" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Aurelia              -&gt; 1</text>
+  <text x="40" y="648" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Axel                 -&gt; 1</text>
+  <text x="40" y="678" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Bautista             -&gt; 2</text>
+  <text x="40" y="708" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Benigna              -&gt; 2</text>
+  <text x="40" y="738" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Benjamin             -&gt; 1</text>
+  <text x="40" y="768" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Bernabé              -&gt; 1</text>
+  <text x="40" y="798" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Bibiana              -&gt; 1</text>
+  <text x="40" y="828" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Blanca               -&gt; 1</text>
+  <text x="40" y="858" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Braulio              -&gt; 1</text>
+  <text x="40" y="888" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Brigida              -&gt; 3</text>
+  <text x="40" y="918" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Camilo               -&gt; 1</text>
+  <text x="40" y="948" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Candela              -&gt; 1</text>
+  <text x="40" y="978" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Candelaria           -&gt; 1</text>
+  <text x="40" y="1008" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Carla                -&gt; 2</text>
+  <text x="40" y="1038" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Carmelo              -&gt; 1</text>
+  <text x="40" y="1068" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Casandra             -&gt; 2</text>
+  <text x="40" y="1098" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Celestino            -&gt; 2</text>
+  <text x="40" y="1128" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Claudio              -&gt; 3</text>
+  <text x="40" y="1158" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Clotilde             -&gt; 1</text>
+  <text x="40" y="1188" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Conrado              -&gt; 2</text>
+  <text x="40" y="1218" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Cornelio             -&gt; 1</text>
+  <text x="40" y="1248" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Cándida              -&gt; 1</text>
+  <text x="40" y="1278" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Daniel               -&gt; 2</text>
+  <text x="40" y="1308" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Desiderio            -&gt; 1</text>
+  <text x="40" y="1338" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Dina                 -&gt; 1</text>
+  <text x="40" y="1368" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Donovan              -&gt; 1</text>
+  <text x="40" y="1398" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Dora                 -&gt; 1</text>
+  <text x="40" y="1446" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">=== LISTA ORDENADA POR CANTIDAD DE REPETICIONES (primeros 40) ===</text>
+  <text x="40" y="1476" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Brigida              -&gt; 3</text>
+  <text x="40" y="1506" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Claudio              -&gt; 3</text>
+  <text x="40" y="1536" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Hipólito             -&gt; 3</text>
+  <text x="40" y="1566" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Indalecio            -&gt; 3</text>
+  <text x="40" y="1596" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Kevin                -&gt; 3</text>
+  <text x="40" y="1626" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Adelaide             -&gt; 2</text>
+  <text x="40" y="1656" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Amelia               -&gt; 2</text>
+  <text x="40" y="1686" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Andrea               -&gt; 2</text>
+  <text x="40" y="1716" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Bautista             -&gt; 2</text>
+  <text x="40" y="1746" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Benigna              -&gt; 2</text>
+  <text x="40" y="1776" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Carla                -&gt; 2</text>
+  <text x="40" y="1806" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Casandra             -&gt; 2</text>
+  <text x="40" y="1836" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Celestino            -&gt; 2</text>
+  <text x="40" y="1866" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Conrado              -&gt; 2</text>
+  <text x="40" y="1896" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Daniel               -&gt; 2</text>
+  <text x="40" y="1926" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Emma                 -&gt; 2</text>
+  <text x="40" y="1956" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Enzo                 -&gt; 2</text>
+  <text x="40" y="1986" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Fiorella             -&gt; 2</text>
+  <text x="40" y="2016" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Henry                -&gt; 2</text>
+  <text x="40" y="2046" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Isabella             -&gt; 2</text>
+  <text x="40" y="2076" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Jacinta              -&gt; 2</text>
+  <text x="40" y="2106" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Leticia              -&gt; 2</text>
+  <text x="40" y="2136" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Lidia                -&gt; 2</text>
+  <text x="40" y="2166" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Maura                -&gt; 2</text>
+  <text x="40" y="2196" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Nerea                -&gt; 2</text>
+  <text x="40" y="2226" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Olimpia              -&gt; 2</text>
+  <text x="40" y="2256" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Pol                  -&gt; 2</text>
+  <text x="40" y="2286" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Quirino              -&gt; 2</text>
+  <text x="40" y="2316" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Rocío                -&gt; 2</text>
+  <text x="40" y="2346" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Tomás                -&gt; 2</text>
+  <text x="40" y="2376" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Verónica             -&gt; 2</text>
+  <text x="40" y="2406" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Abril                -&gt; 1</text>
+  <text x="40" y="2436" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Adriano              -&gt; 1</text>
+  <text x="40" y="2466" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Agustina             -&gt; 1</text>
+  <text x="40" y="2496" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Agustín              -&gt; 1</text>
+  <text x="40" y="2526" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Aitana               -&gt; 1</text>
+  <text x="40" y="2556" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Amalia               -&gt; 1</text>
+  <text x="40" y="2586" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Ana                  -&gt; 1</text>
+  <text x="40" y="2616" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Ariadna              -&gt; 1</text>
+  <text x="40" y="2646" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Ariadne              -&gt; 1</text>
+</svg>
