@@ -1,0 +1,355 @@
+/*
+PARCIAL 1 - PUNTO 4
+
+Ordenamiento de valores repetidos:
+Comparar Burbuja Simple, Burbuja Mejorado, Quick Sort, Shell Sort,
+Seleccion Directa e Insercion en dos arreglos con repeticiones.
+*/
+
+import java.text.Normalizer;
+import java.util.Arrays;
+
+public class Parcial01Punto04 {
+
+    static class Resultado {
+        String algoritmo;
+        long comparaciones;
+        long tiempoNs;
+
+        Resultado(String algoritmo, long comparaciones, long tiempoNs) {
+            this.algoritmo = algoritmo;
+            this.comparaciones = comparaciones;
+            this.tiempoNs = tiempoNs;
+        }
+    }
+
+    static String normalizar(String s) {
+        return Normalizer.normalize(s, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}+", "")
+                .toLowerCase();
+    }
+
+    static int compararTexto(String a, String b) {
+        return normalizar(a).compareTo(normalizar(b));
+    }
+
+    interface OrdenadorTexto { long ordenar(String[] arr); }
+    interface OrdenadorNumero { long ordenar(int[] arr); }
+
+    // Situacion 1 (exacta)
+    static String[] nombres_repetidos_grande = { "Sofía", "Martina", "Lucía", "Natalia", "Andrea",
+"Laura", "Carlos", "Ana", "Jesús", "Alejandro", "Valentina", "Pedro", "Isabel", "Gabriel",
+"María", "Sara", "Gonzalo", "Marta", "Ricardo", "José", "Lucía", "Adrián", "Samuel",
+"Diego", "Cristina", "Alberto", "Sara", "Pablo", "Laura", "Cristina", "Claudia", "Marta",
+"Fernando", "Alba", "Victoria", "Laura", "Guillermo", "Sara", "Antonio", "Rubén", "María",
+"Javier", "Beatriz", "Laura", "Francisco", "Ricardo", "Andrés", "Víctor", "Ricardo", "Jorge",
+"Javier", "Patricia", "Natalia", "Carmen", "Alejandro", "Beatriz", "Laura", "Laura", "Laura",
+"Pablo", "Martina", "Ricardo", "Ricardo", "Javier", "Sara", "Diego", "Laura", "Adrián",
+"Lucía", "María", "Laura", "Laura", "Alberto", "Laura", "Sara", "Francisco", "Andrea",
+"Pablo", "Lucía", "Andrea", "Lucía", "Laura", "Carmen", "Sergio", "José", "Carlos", "María",
+"Laura", "Javier", "Laura", "Ricardo", "Andrea", "María", "Alberto", "Laura", "Fernando",
+"Sofía", "Martina", "Lucía", "Natalia", "Andrea", "Laura", "Carlos", "Ana", "Jesús",
+"Alejandro", "Valentina", "Pedro", "Isabel", "Gabriel", "María", "Sara", "Gonzalo", "Marta",
+"Ricardo", "José", "Lucía", "Adrián", "Samuel", "Diego", "Cristina", "Alberto", "Sara",
+"Pablo", "Laura", "Cristina", "Claudia", "Marta", "Fernando", "Alba", "Victoria", "Laura",
+"Guillermo", "Sara", "Antonio", "Rubén", "María", "Javier", "Beatriz", "Laura", "Francisco",
+"Ricardo", "Andrés", "Víctor", "Ricardo", "Jorge", "Javier", "Patricia", "Natalia", "Carmen",
+"Alejandro", "Beatriz", "Laura", "Laura", "Laura", "Pablo", "Martina", "Ricardo", "Ricardo",
+"Javier", "Sara", "Diego", "Laura", "Adrián", "Lucía", "María", "Laura", "Laura", "Alberto",
+"Laura", "Sara", "Francisco", "Andrea", "Pablo", "Lucía", "Andrea", "Lucía", "Laura",
+"Carmen", "Sergio", "José", "Carlos", "María", "Laura", "Javier", "Laura", "Ricardo",
+"Andrea", "María", "Alberto", "Laura", "Fernando" };
+
+    // Situacion 2 (exacta)
+    static int[] numeros_repetidos_grande = { 3482, 9107, 4425, 1893, 7261, 5504, 2319, 8847, 6012,
+4390, 7712, 1056, 9238, 3341, 5609, 2174, 8045, 6673, 4920, 1155, 7839, 2902, 5418, 9367, 4081,
+6254, 8190, 3726, 1544, 9901, 4872, 7033, 2266, 5198, 8340, 6127, 4404, 1925, 7750, 3051, 8614,
+5592, 1289, 9430, 4716, 6885, 2349, 8102, 3957, 5023, 7468, 1184, 9036, 4277, 6511, 2890, 8433,
+5729, 3110, 9655, 4321, 7094, 1867, 5532, 8240, 6903, 3378, 1022, 9745, 4156, 7280, 2591, 8813,
+5466, 3804, 9129, 4670, 6044, 2133, 7952, 1409, 5821, 8366, 3294, 9510, 4837, 7125, 2068, 6741,
+8922, 5355, 3689, 1247, 9803, 4594, 7311, 2750, 8019, 5634, 3942, 9276, 4485, 6160, 1937, 7808,
+2211, 5090, 8527, 3403, 9388, 4122, 7555, 2640, 8734, 5209, 3567, 1376, 9942, 4601, 6499, 2822,
+8150, 3187, 5974, 7623, 1104, 9059, 4233, 6311, 2467, 8688, 5576, 3010, 9466, 4741, 7203, 1855, 5320, 8401, 6929, 3255, 1088, 9712, 4039, 7420, 2533, 8911, 5684, 3766, 9190, 4501,
+6277, 2004,7865, 1472, 5933, 8290, 3311, 9588, 4950, 7100, 2189, 6854, 8831, 5492, 3621, 1210, 9877, 4625,
+7380, 2712, 8076, 5145, 3878, 9343, 4422, 6089, 1901, 7725, 2240, 5011, 8594, 3476, 9411, 4199,
+7512, 2690, 8788, 5266, 3501, 1344, 9920, 4654, 6427, 2855, 8100, 3133, 5890, 7688, 1143, 9022,
+4289, 6366, 2401, 8632, 5511, 3074, 9499, 4776, 7250, 1812, 5394, 8467, 6981, 3222, 1050, 9777,
+4011, 7480, 2576, 8966, 5612, 3711, 9155, 4567, 6212, 2088, 7922, 1433, 5901, 8254, 3329, 9555,
+4912, 7177, 2150, 6811, 8876, 5427, 3601, 1255, 9840, 3482, 9107, 4425, 1893, 7261, 5504, 2319,
+8847, 6012, 4390, 7712, 1056, 9238, 3341, 5609, 2174, 8045, 6673, 4920, 1155, 7839, 2902, 5418,
+9367, 4081, 6254, 8190, 3726, 1544, 9901, 4872, 7033, 2266, 5198, 8340, 6127, 4404, 1925, 7750,
+3051, 8614, 5592, 1289, 9430, 4716, 6885, 2349, 8102, 3957, 5023, 7468, 1184, 9036, 4277, 6511,
+2890, 8433, 5729, 3110, 9655, 4321, 7094, 1867, 5532, 8240, 6903, 3378, 1022, 9745, 4156, 7280,
+2591, 8813, 5466, 3804, 9129, 4670, 6044, 2133, 7952, 1409, 5821, 8366, 3294, 9510, 4837, 7125,
+2068, 6741, 8922, 5355, 3689, 1247, 9803, 4594, 7311, 2750, 8019, 5634, 3942, 9276, 4485, 6160,
+1937, 7808, 2211, 5090, 8527, 3403, 9388, 4122, 7555, 2640, 8734, 5209, 3567, 1376, 9942, 4601,
+6499, 2822, 8150, 3187, 5974, 7623, 1104, 9059, 4233, 6311, 2467, 8688, 5576, 3010, 9466, 4741,
+7203, 1855, 5320, 8401, 6929, 3255, 1088, 9712, 4039, 7420, 2533, 8911, 5684, 3766, 9190, 4501,
+6277, 2004, 7865, 1472, 5933, 8290, 3311, 9588, 4950, 7100, 2189, 6854, 8831, 5492, 3621, 1210,
+9877, 4625, 7380, 2712, 8076, 5145, 3878, 9343, 4422, 6089, 1901, 7725, 2240, 5011, 8594, 3476,
+9411, 4199, 7512, 2690, 8788, 5266, 3501, 1344, 9920, 4654, 6427, 2855, 8100, 3133, 5890, 7688,
+1143, 9022, 4289, 6366, 2401, 8632, 5511, 3074, 9499, 4776, 7250, 1812, 5394, 8467, 6981, 3222,
+1050, 9777, 4011, 7480, 2576, 8966, 5612, 3711, 9155, 4567, 6212, 2088, 7922, 1433, 5901, 8254,
+3329, 9555, 4912, 7177, 2150, 6811, 8876, 5427, 3601, 1255, 9840 };
+
+    public static void main(String[] args) {
+        System.out.println("=== RESULTADOS PUNTO 4 - SITUACION 1 (nombres_repetidos_grande) ===");
+        Resultado[] r1 = new Resultado[] {
+                medirTexto("Burbuja Simple", nombres_repetidos_grande, Parcial01Punto04::burbujaSimpleTexto),
+                medirTexto("Burbuja Mejorado", nombres_repetidos_grande, Parcial01Punto04::burbujaMejoradoTexto),
+                medirTexto("Quick Sort", nombres_repetidos_grande, Parcial01Punto04::quickSortTexto),
+                medirTexto("Shell Sort", nombres_repetidos_grande, Parcial01Punto04::shellSortTexto),
+                medirTexto("Seleccion Directa", nombres_repetidos_grande, Parcial01Punto04::seleccionDirectaTexto),
+                medirTexto("Insercion", nombres_repetidos_grande, Parcial01Punto04::insercionTexto)
+        };
+        imprimirResultados(r1);
+
+        System.out.println();
+        System.out.println("=== RESULTADOS PUNTO 4 - SITUACION 2 (numeros_repetidos_grande) ===");
+        Resultado[] r2 = new Resultado[] {
+                medirNumero("Burbuja Simple", numeros_repetidos_grande, Parcial01Punto04::burbujaSimpleNum),
+                medirNumero("Burbuja Mejorado", numeros_repetidos_grande, Parcial01Punto04::burbujaMejoradoNum),
+                medirNumero("Quick Sort", numeros_repetidos_grande, Parcial01Punto04::quickSortNum),
+                medirNumero("Shell Sort", numeros_repetidos_grande, Parcial01Punto04::shellSortNum),
+                medirNumero("Seleccion Directa", numeros_repetidos_grande, Parcial01Punto04::seleccionDirectaNum),
+                medirNumero("Insercion", numeros_repetidos_grande, Parcial01Punto04::insercionNum)
+        };
+        imprimirResultados(r2);
+    }
+
+    static void imprimirResultados(Resultado[] resultados) {
+        Resultado mejor = resultados[0];
+        for (Resultado r : resultados) {
+            System.out.printf("%-18s | Comparaciones: %-9d | Tiempo: %d ns%n", r.algoritmo, r.comparaciones, r.tiempoNs);
+            if (r.tiempoNs < mejor.tiempoNs) mejor = r;
+        }
+        System.out.println("---------------------------------------------");
+        System.out.println("Algoritmo mas eficiente (por tiempo): " + mejor.algoritmo);
+    }
+
+    static Resultado medirTexto(String nombre, String[] base, OrdenadorTexto metodo) {
+        String[] copia = Arrays.copyOf(base, base.length);
+        long inicio = System.nanoTime();
+        long comparaciones = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        return new Resultado(nombre, comparaciones, fin - inicio);
+    }
+
+    static Resultado medirNumero(String nombre, int[] base, OrdenadorNumero metodo) {
+        int[] copia = Arrays.copyOf(base, base.length);
+        long inicio = System.nanoTime();
+        long comparaciones = metodo.ordenar(copia);
+        long fin = System.nanoTime();
+        return new Resultado(nombre, comparaciones, fin - inicio);
+    }
+
+    static long burbujaSimpleTexto(String[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++)
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (compararTexto(arr[j], arr[j + 1]) > 0) {
+                    String t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                }
+            }
+        return comp;
+    }
+
+    static long burbujaMejoradoTexto(String[] arr) {
+        long comp = 0;
+        boolean huboCambio;
+        for (int i = 0; i < arr.length - 1; i++) {
+            huboCambio = false;
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (compararTexto(arr[j], arr[j + 1]) > 0) {
+                    String t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                    huboCambio = true;
+                }
+            }
+            if (!huboCambio) break;
+        }
+        return comp;
+    }
+
+    static long quickSortTexto(String[] arr) {
+        long[] comp = {0};
+        quickSortRecTexto(arr, 0, arr.length - 1, comp);
+        return comp[0];
+    }
+
+    static void quickSortRecTexto(String[] arr, int low, int high, long[] comp) {
+        if (low < high) {
+            int p = particionTexto(arr, low, high, comp);
+            quickSortRecTexto(arr, low, p - 1, comp);
+            quickSortRecTexto(arr, p + 1, high, comp);
+        }
+    }
+
+    static int particionTexto(String[] arr, int low, int high, long[] comp) {
+        String pivote = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            comp[0]++;
+            if (compararTexto(arr[j], pivote) <= 0) {
+                i++;
+                String t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+            }
+        }
+        String t = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = t;
+        return i + 1;
+    }
+
+    static long shellSortTexto(String[] arr) {
+        long comp = 0;
+        for (int gap = arr.length / 2; gap > 0; gap /= 2)
+            for (int i = gap; i < arr.length; i++) {
+                String temp = arr[i];
+                int j = i;
+                while (j >= gap) {
+                    comp++;
+                    if (compararTexto(arr[j - gap], temp) > 0) {
+                        arr[j] = arr[j - gap];
+                        j -= gap;
+                    } else break;
+                }
+                arr[j] = temp;
+            }
+        return comp;
+    }
+
+    static long seleccionDirectaTexto(String[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                comp++;
+                if (compararTexto(arr[j], arr[min]) < 0) min = j;
+            }
+            String t = arr[i]; arr[i] = arr[min]; arr[min] = t;
+        }
+        return comp;
+    }
+
+    static long insercionTexto(String[] arr) {
+        long comp = 0;
+        for (int i = 1; i < arr.length; i++) {
+            String clave = arr[i];
+            int j = i - 1;
+            while (j >= 0) {
+                comp++;
+                if (compararTexto(arr[j], clave) > 0) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                } else break;
+            }
+            arr[j + 1] = clave;
+        }
+        return comp;
+    }
+
+    static long burbujaSimpleNum(int[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++)
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (arr[j] > arr[j + 1]) {
+                    int t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                }
+            }
+        return comp;
+    }
+
+    static long burbujaMejoradoNum(int[] arr) {
+        long comp = 0;
+        boolean huboCambio;
+        for (int i = 0; i < arr.length - 1; i++) {
+            huboCambio = false;
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                comp++;
+                if (arr[j] > arr[j + 1]) {
+                    int t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                    huboCambio = true;
+                }
+            }
+            if (!huboCambio) break;
+        }
+        return comp;
+    }
+
+    static long quickSortNum(int[] arr) {
+        long[] comp = {0};
+        quickSortRecNum(arr, 0, arr.length - 1, comp);
+        return comp[0];
+    }
+
+    static void quickSortRecNum(int[] arr, int low, int high, long[] comp) {
+        if (low < high) {
+            int p = particionNum(arr, low, high, comp);
+            quickSortRecNum(arr, low, p - 1, comp);
+            quickSortRecNum(arr, p + 1, high, comp);
+        }
+    }
+
+    static int particionNum(int[] arr, int low, int high, long[] comp) {
+        int pivote = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            comp[0]++;
+            if (arr[j] <= pivote) {
+                i++;
+                int t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+            }
+        }
+        int t = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = t;
+        return i + 1;
+    }
+
+    static long shellSortNum(int[] arr) {
+        long comp = 0;
+        for (int gap = arr.length / 2; gap > 0; gap /= 2)
+            for (int i = gap; i < arr.length; i++) {
+                int temp = arr[i];
+                int j = i;
+                while (j >= gap) {
+                    comp++;
+                    if (arr[j - gap] > temp) {
+                        arr[j] = arr[j - gap];
+                        j -= gap;
+                    } else break;
+                }
+                arr[j] = temp;
+            }
+        return comp;
+    }
+
+    static long seleccionDirectaNum(int[] arr) {
+        long comp = 0;
+        for (int i = 0; i < arr.length - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                comp++;
+                if (arr[j] < arr[min]) min = j;
+            }
+            int t = arr[i]; arr[i] = arr[min]; arr[min] = t;
+        }
+        return comp;
+    }
+
+    static long insercionNum(int[] arr) {
+        long comp = 0;
+        for (int i = 1; i < arr.length; i++) {
+            int clave = arr[i];
+            int j = i - 1;
+            while (j >= 0) {
+                comp++;
+                if (arr[j] > clave) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                } else break;
+            }
+            arr[j + 1] = clave;
+        }
+        return comp;
+    }
+}

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="760" viewBox="0 0 1700 760" role="img" aria-labelledby="title desc">
+  <title id="title">Salida de consola real - Parcial 1 Punto 6</title>
+  <desc id="desc">Salida exacta de consola para la serie 2022 USD/COP.</desc>
+  <rect width="1700" height="760" fill="#020617"/>
+  <text x="40" y="50" fill="#93c5fd" font-family="Arial" font-size="30" font-weight="700">Parcial 1 - Punto 6 (salida exacta de consola)</text>
+  <text x="40" y="95" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">=== RESULTADOS PUNTO 6 - SERIE HISTORICA USD/COP 2022 ===</text>
+  <text x="40" y="127" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Burbuja Simple     | Comp: 66   | Tiempo: 45415    ns | Mem: 0 bytes</text>
+  <text x="40" y="159" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Burbuja Mejorado   | Comp: 38   | Tiempo: 7272     ns | Mem: 0 bytes</text>
+  <text x="40" y="191" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Quick Sort         | Comp: 46   | Tiempo: 15650    ns | Mem: 0 bytes</text>
+  <text x="40" y="223" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Shell Sort         | Comp: 30   | Tiempo: 7020     ns | Mem: 0 bytes</text>
+  <text x="40" y="255" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Seleccion Directa  | Comp: 66   | Tiempo: 8999     ns | Mem: 0 bytes</text>
+  <text x="40" y="287" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Insercion          | Comp: 18   | Tiempo: 39786    ns | Mem: 0 bytes</text>
+  <text x="40" y="319" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">----------------------------------------------------------</text>
+  <text x="40" y="351" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Algoritmo mas eficiente (por tiempo): Shell Sort</text>
+  <text x="40" y="383" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Periodo mas bajo : 2022-04 | 3785.38 COP</text>
+  <text x="40" y="415" fill="#cbd5e1" font-family="Courier New, monospace" font-size="20">Periodo mas alto : 2022-11 | 4810.20 COP</text>
+</svg>

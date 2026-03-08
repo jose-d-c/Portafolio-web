@@ -55,6 +55,46 @@ export const parciales: Parcial[] = [
         rutaCodigo: "/parciales/parcial-01/codigos/punto-03.txt",
         rutaImagen: "/parciales/parcial-01/imagenes/punto-03.svg",
       },
+
+      {
+        id: "punto-04",
+        slug: "punto-04",
+        nombre: "Punto 4: Ordenamiento con valores repetidos",
+        descripcion:
+          "Evaluar Burbuja Simple, Burbuja Mejorado, Quick Sort, Shell Sort, Seleccion Directa e Insercion en arreglos con alta repeticion para identificar el metodo mas adecuado.",
+        rutaCodigo: "/parciales/parcial-01/codigos/punto-04.txt",
+        rutaImagen: "/parciales/parcial-01/imagenes/punto-04.svg",
+      },
+
+      {
+        id: "punto-05",
+        slug: "punto-05",
+        nombre: "Punto 5: Arreglos parcialmente ordenados",
+        descripcion:
+          "Comparar Burbuja Simple, Burbuja Mejorado, Quick Sort, Shell Sort, Seleccion Directa e Insercion en arreglos donde una mitad esta ordenada y la otra desordenada.",
+        rutaCodigo: "/parciales/parcial-01/codigos/punto-05.txt",
+        rutaImagen: "/parciales/parcial-01/imagenes/punto-05.svg",
+      },
+
+      {
+        id: "punto-06",
+        slug: "punto-06",
+        nombre: "Punto 6: Serie histórica dólar 2022 (Colombia)",
+        descripcion:
+          "Evaluar los 6 algoritmos con la serie histórica 2022 de la divisa USD/COP para comparar comparaciones, tiempo y memoria, e identificar periodos de valor más alto y más bajo.",
+        rutaCodigo: "/parciales/parcial-01/codigos/punto-06.txt",
+        rutaImagen: "/parciales/parcial-01/imagenes/punto-06.svg",
+      },
+
+      {
+        id: "punto-07",
+        slug: "punto-07",
+        nombre: "Punto 7: Repetición de nombres y ordenamientos de salida",
+        descripcion:
+          "Contar repeticiones de nombres en un arreglo generado y mostrar dos salidas: ordenada por nombre y ordenada por cantidad de repeticiones.",
+        rutaCodigo: "/parciales/parcial-01/codigos/punto-07.txt",
+        rutaImagen: "/parciales/parcial-01/imagenes/punto-07.svg",
+      },
     ],
   },
 ];
