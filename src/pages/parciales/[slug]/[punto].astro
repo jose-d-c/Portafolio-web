@@ -32,7 +32,17 @@ const codigoPlantilla = await readFile(join(process.cwd(), "public", punto.rutaC
     </section>
 
     <section class="panel subpanel zona-codigo">
-      <h2><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Codigo del punto</h2>
+      <div class="encabezado-cuadro">
+        <h2><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Codigo del punto</h2>
+        {parcial.slug === "parcial-01" && (
+          <button class="boton-copiar" type="button" aria-label="Copiar codigo">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M8 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V7Zm2 0h9v11h-9V7Z" />
+              <path d="M5 4a2 2 0 0 1 2-2h9v2H7v11H5V4Zm-2 5h2v11a2 2 0 0 0 2 2h11v2H7a2 2 0 0 1-2-2V9Z" />
+            </svg>
+          </button>
+        )}
+      </div>
       <pre class="cuadro-codigo"><code>{codigoPlantilla}</code></pre>
     </section>
 
@@ -48,6 +58,31 @@ const codigoPlantilla = await readFile(join(process.cwd(), "public", punto.rutaC
       </div>
     </section>
   </main>
+
+  <script is:inline>
+    const botonCopiar = document.querySelector(".boton-copiar");
+    const nodoCodigo = document.querySelector(".cuadro-codigo");
+
+    botonCopiar?.addEventListener("click", async () => {
+      if (!nodoCodigo) return;
+
+      const texto = nodoCodigo.textContent ?? "";
+
+      try {
+        await navigator.clipboard.writeText(texto);
+        botonCopiar.innerHTML = "✅";
+        setTimeout(() => {
+          botonCopiar.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V7Zm2 0h9v11h-9V7Z" /><path d="M5 4a2 2 0 0 1 2-2h9v2H7v11H5V4Zm-2 5h2v11a2 2 0 0 0 2 2h11v2H7a2 2 0 0 1-2-2V9Z" /></svg>`;
+        }, 1400);
+      } catch {
+        const seleccion = window.getSelection();
+        const rango = document.createRange();
+        rango.selectNodeContents(nodoCodigo);
+        seleccion?.removeAllRanges();
+        seleccion?.addRange(rango);
+      }
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -55,9 +90,14 @@ const codigoPlantilla = await readFile(join(process.cwd(), "public", punto.rutaC
 .encabezado-programa{ display: grid; grid-template-columns: 110px 1fr auto; gap: 1.2rem; padding: 1.4rem; align-items: center; }
 .encabezado-programa > img{ width: 100%; max-width: 110px; border-radius: .8rem; background: #fff; padding: 6px; border: 1px solid var(--line); }
 .encabezado-programa h1{ font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: .5rem; }
-.icono-volver{ width: 3.7rem; height: 3.7rem; border-radius: .8rem; border: 1px solid var(--line); background: var(--panel); color: var(--text); display: inline-flex; align-items: center; justify-content: center; }
+.icono-volver,
+.boton-copiar{ width: 3.7rem; height: 3.7rem; border-radius: .8rem; border: 1px solid var(--line); background: var(--panel); color: var(--text); display: inline-flex; align-items: center; justify-content: center; }
 .icono-volver .ui-icon{ margin-right: 0; width: 1.9rem; height: 1.9rem; }
-.zona-codigo h2,.zona-imagen h2{ display: inline-flex; align-items: center; font-size: 1.5rem; margin: 0 0 .8rem 0; }
+.icono-volver:hover,
+.boton-copiar:hover{ transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
+.encabezado-cuadro{ display: flex; align-items: center; justify-content: space-between; gap: .7rem; margin-bottom: .8rem; }
+.encabezado-cuadro h2,
+.zona-imagen h2{ display: inline-flex; align-items: center; font-size: 1.5rem; margin: 0; }
 .cuadro-codigo{ margin: 0; min-height: 460px; max-height: 460px; overflow: auto; border: 1px solid var(--line); border-radius: .8rem; padding: 1rem; background: var(--panel); color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 1rem; line-height: 1.55; }
 .marco-imagen{ margin-top: .8rem; min-height: 460px; border-radius: .8rem; border: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; padding: .6rem; background: var(--panel); }
 .marco-imagen img{ width: 100%; height: 100%; object-fit: cover; border-radius: .6rem; }

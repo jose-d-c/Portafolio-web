@@ -16,11 +16,13 @@ public class Parcial01Punto02 {
         String algoritmo;
         long comparaciones;
         long tiempoNs;
+        long memoriaBytes;
 
-        Resultado(String algoritmo, long comparaciones, long tiempoNs) {
+        Resultado(String algoritmo, long comparaciones, long tiempoNs, long memoriaBytes) {
             this.algoritmo = algoritmo;
             this.comparaciones = comparaciones;
             this.tiempoNs = tiempoNs;
+            this.memoriaBytes = memoriaBytes;
         }
     }
 
@@ -129,7 +131,8 @@ public class Parcial01Punto02 {
     static void imprimirResultados(Resultado[] resultados) {
         Resultado mejor = resultados[0];
         for (Resultado r : resultados) {
-            System.out.printf("%-18s | Comparaciones: %-9d | Tiempo: %d ns%n", r.algoritmo, r.comparaciones, r.tiempoNs);
+            System.out.printf("%-18s | Comparaciones: %-9d | Tiempo: %-10d ns | Memoria: %d bytes%n",
+                    r.algoritmo, r.comparaciones, r.tiempoNs, r.memoriaBytes);
             if (r.tiempoNs < mejor.tiempoNs) mejor = r;
         }
         System.out.println("---------------------------------------------");
@@ -138,18 +141,29 @@ public class Parcial01Punto02 {
 
     static Resultado medirTexto(String nombre, String[] base, OrdenadorTexto metodo) {
         String[] copia = Arrays.copyOf(base, base.length);
+        long memAntes = memoriaUsada();
         long inicio = System.nanoTime();
         long comparaciones = metodo.ordenar(copia);
         long fin = System.nanoTime();
-        return new Resultado(nombre, comparaciones, fin - inicio);
+        long memDespues = memoriaUsada();
+        long deltaMem = Math.max(0, memDespues - memAntes);
+        return new Resultado(nombre, comparaciones, fin - inicio, deltaMem);
     }
 
     static Resultado medirNumero(String nombre, int[] base, OrdenadorNumero metodo) {
         int[] copia = Arrays.copyOf(base, base.length);
+        long memAntes = memoriaUsada();
         long inicio = System.nanoTime();
         long comparaciones = metodo.ordenar(copia);
         long fin = System.nanoTime();
-        return new Resultado(nombre, comparaciones, fin - inicio);
+        long memDespues = memoriaUsada();
+        long deltaMem = Math.max(0, memDespues - memAntes);
+        return new Resultado(nombre, comparaciones, fin - inicio, deltaMem);
+    }
+
+    static long memoriaUsada() {
+        Runtime runtime = Runtime.getRuntime();
+        return runtime.totalMemory() - runtime.freeMemory();
     }
 
     // ===== TEXTO =====

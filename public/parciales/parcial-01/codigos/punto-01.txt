@@ -17,11 +17,13 @@ public class Parcial01Punto01 {
         String algoritmo;
         long comparaciones;
         long tiempoNs;
+        long memoriaBytes;
 
-        Resultado(String algoritmo, long comparaciones, long tiempoNs) {
+        Resultado(String algoritmo, long comparaciones, long tiempoNs, long memoriaBytes) {
             this.algoritmo = algoritmo;
             this.comparaciones = comparaciones;
             this.tiempoNs = tiempoNs;
+            this.memoriaBytes = memoriaBytes;
         }
     }
 
@@ -100,7 +102,8 @@ public class Parcial01Punto01 {
         System.out.println("=== RESULTADOS PUNTO 1 ===");
         Resultado mejor = resultados[0];
         for (Resultado r : resultados) {
-            System.out.printf("%-18s | Comparaciones: %-9d | Tiempo: %d ns%n", r.algoritmo, r.comparaciones, r.tiempoNs);
+            System.out.printf("%-18s | Comparaciones: %-9d | Tiempo: %-10d ns | Memoria: %d bytes%n",
+                    r.algoritmo, r.comparaciones, r.tiempoNs, r.memoriaBytes);
             if (r.tiempoNs < mejor.tiempoNs) {
                 mejor = r;
             }
@@ -114,12 +117,20 @@ public class Parcial01Punto01 {
         long ordenar(String[] arr);
     }
 
+    static long memoriaUsada() {
+        Runtime runtime = Runtime.getRuntime();
+        return runtime.totalMemory() - runtime.freeMemory();
+    }
+
     static Resultado medir(String nombre, String[] base, Ordenador metodo) {
         String[] copia = Arrays.copyOf(base, base.length);
+        long memAntes = memoriaUsada();
         long inicio = System.nanoTime();
         long comparaciones = metodo.ordenar(copia);
         long fin = System.nanoTime();
-        return new Resultado(nombre, comparaciones, (fin - inicio));
+        long memDespues = memoriaUsada();
+        long deltaMem = Math.max(0, memDespues - memAntes);
+        return new Resultado(nombre, comparaciones, (fin - inicio), deltaMem);
     }
 
     static long burbujaSimple(String[] arr) {
