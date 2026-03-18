@@ -1,0 +1,90 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa implementa el algoritmo Radix Sort para ordenar numeros enteros positivos.
+// 2) Radix Sort no compara elementos entre si directamente; organiza los datos segun cada digito.
+// 3) El proceso inicia con las unidades, continua con las decenas y sigue con centenas si son necesarias.
+// 4) En cada pasada se usa Counting Sort porque permite ordenar de forma estable segun el digito actual.
+// 5) La estabilidad es importante para conservar el orden relativo de elementos con el mismo digito.
+// 6) Al terminar de procesar todos los digitos del numero mayor, el arreglo queda completamente ordenado.
+// 7) Los comentarios marcados en el ejercicio original fueron completados para explicar cada bloque clave.
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class RadixSort {
+
+    // Este metodo recorre todo el arreglo para identificar el valor mas grande.
+    // Ese dato permite saber cuantas posiciones decimales se deben procesar
+    // durante Radix Sort, por ejemplo unidades, decenas y centenas.
+    static int encontrarMaximo(int arr[]) {
+        int maximo = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > maximo) {
+                maximo = arr[i];
+            }
+        }
+        return maximo;
+    }
+
+    // Este metodo controla el algoritmo Radix Sort completo.
+    // Primero obtiene el numero mayor y luego recorre cada exponente decimal
+    // para ordenar el arreglo por unidades, decenas, centenas, etc.
+    static void radixSort(int arr[]) {
+        int maximo = encontrarMaximo(arr);
+        for (int exp = 1; maximo / exp > 0; exp *= 10) {
+            countingSort(arr, exp);
+        }
+    }
+
+    // Counting Sort ordena el arreglo segun el digito indicado por "exp".
+    // Se crea un arreglo de salida temporal y un contador de frecuencias de 0 a 9
+    // para reubicar los elementos sin perder el orden relativo entre iguales.
+    static void countingSort(int arr[], int exp) {
+        int n = arr.length;
+        int output[] = new int[n];
+        int count[] = new int[10];
+        Arrays.fill(count, 0);
+
+        // En este bloque se cuenta cuantas veces aparece cada digito
+        // en la posicion actual (unidades, decenas, centenas, etc.).
+        for (int i = 0; i < n; i++) {
+            count[(arr[i] / exp) % 10]++;
+        }
+
+        // Aqui se transforman las frecuencias en posiciones acumuladas.
+        // Esto permite saber en que indice final debe ubicarse cada elemento.
+        for (int i = 1; i < 10; i++) {
+            count[i] += count[i - 1];
+        }
+
+        // Este recorrido va de derecha a izquierda para mantener la estabilidad.
+        // Cada numero se coloca en output segun su digito actual y luego se reduce
+        // el contador correspondiente para ubicar correctamente el siguiente elemento.
+        for (int i = n - 1; i >= 0; i--) {
+            output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+            count[(arr[i] / exp) % 10]--;
+        }
+
+        // Finalmente se copia el arreglo temporal ordenado nuevamente en arr
+        // para que la siguiente pasada de Radix Sort continue sobre esos resultados.
+        System.arraycopy(output, 0, arr, 0, n);
+    }
+
+    // El metodo principal declara el arreglo de ejemplo, muestra el estado inicial,
+    // ejecuta el algoritmo Radix Sort y luego imprime el arreglo ya ordenado.
+    public static void main(String[] args) {
+        int arr[] = {45, 17, 23, 67, 21, 44, 12, 34};
+        System.out.println("Arreglo original: " + Arrays.toString(arr));
+
+        // Se llama al metodo principal de ordenamiento para reorganizar
+        // todos los valores de menor a mayor utilizando sus digitos.
+        radixSort(arr);
+        System.out.println("Arreglo ordenado: " + Arrays.toString(arr));
+    }
+}
+
+/*
+SALIDA DE REFERENCIA EN CONSOLA
+Arreglo original: [45, 17, 23, 67, 21, 44, 12, 34]
+Arreglo ordenado: [12, 17, 21, 23, 34, 44, 45, 67]
+*/
