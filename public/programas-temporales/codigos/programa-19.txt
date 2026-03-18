@@ -1,0 +1,146 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa trabaja con Shaker Sort, tambien llamado Cocktail Sort.
+// 2) En lugar de enteros, ahora se ordenan cadenas usando compareToIgnoreCase().
+// 3) El algoritmo recorre el arreglo en dos sentidos: izquierda -> derecha y luego derecha -> izquierda.
+// 4) Eso ayuda a mover palabras "grandes" al final y palabras "pequenas" al inicio mas rapidamente.
+// 5) El programa prueba tres cantidades de datos: pocas, medianas y grandes.
+// 6) Cada cantidad se estudia en tres situaciones: desordenado, casi ordenado e invertido.
+// 7) En cada prueba se reportan comparaciones, intercambios, tiempo de ejecucion y memoria usada.
+// 8) Los arreglos son fijos para que la sustentacion sea reproducible y facil de explicar.
+// 9) Los comentarios internos mantienen el mismo estilo didactico del ejemplo con enteros.
+
+import java.util.Arrays;
+
+public class Programa19ShakerSortStringsMetricas {
+
+    // Esta clase agrupa las metricas de una corrida para no manejar demasiadas variables sueltas.
+    static class Metricas {
+        long comparaciones;      // Cuantas comparaciones lexicograficas se hicieron.
+        long intercambios;       // Cuantas veces dos palabras cambiaron de posicion.
+        long tiempoNanosegundos; // Duracion medida con System.nanoTime().
+        long memoriaBytes;       // Diferencia aproximada de memoria usada.
+    }
+
+    public static void main(String[] args) {
+        // -----------------------------------------------------------------
+        // ESCENARIOS DE PRUEBA
+        // -----------------------------------------------------------------
+        // Se crean 9 arreglos fijos: 3 cantidades x 3 situaciones.
+        // Asi siempre se puede explicar el mismo comportamiento en clase.
+
+        // -------- POCAS CADENAS --------
+        ejecutarEscenario("POCAS CADENAS", "TOTALMENTE DESORDENADO",
+                new String[]{"Lima", "Andes", "Queso", "Bosque", "Nube", "Arena", "Trigo", "Cedro"});
+        ejecutarEscenario("POCAS CADENAS", "CASI ORDENADO",
+                new String[]{"Andes", "Arena", "Bosque", "Cedro", "Lima", "Nube", "Trigo", "Queso"});
+        ejecutarEscenario("POCAS CADENAS", "INVERTIDO",
+                new String[]{"Trigo", "Queso", "Nube", "Lima", "Cedro", "Bosque", "Arena", "Andes"});
+
+        // -------- CANTIDAD MEDIA DE CADENAS --------
+        ejecutarEscenario("CANTIDAD MEDIA DE CADENAS", "TOTALMENTE DESORDENADO",
+                new String[]{"Mango", "Pera", "Uva", "Coco", "Banano", "Kiwi", "Lichi", "Fresa", "Papaya", "Melon", "Ciruela", "Guayaba", "Damasco", "Naranja", "Sandia", "Mandarina", "Higo", "Pina", "Mora", "Tamarindo"});
+        ejecutarEscenario("CANTIDAD MEDIA DE CADENAS", "CASI ORDENADO",
+                new String[]{"Banano", "Ciruela", "Coco", "Damasco", "Fresa", "Guayaba", "Higo", "Kiwi", "Lichi", "Mandarina", "Mango", "Melon", "Mora", "Naranja", "Papaya", "Pera", "Pina", "Sandia", "Uva", "Tamarindo"});
+        ejecutarEscenario("CANTIDAD MEDIA DE CADENAS", "INVERTIDO",
+                new String[]{"Uva", "Tamarindo", "Sandia", "Pina", "Pera", "Papaya", "Naranja", "Mora", "Melon", "Mango", "Mandarina", "Lichi", "Kiwi", "Higo", "Guayaba", "Fresa", "Damasco", "Coco", "Ciruela", "Banano"});
+
+        // -------- GRAN CANTIDAD DE CADENAS --------
+        ejecutarEscenario("GRAN CANTIDAD DE CADENAS", "TOTALMENTE DESORDENADO",
+                new String[]{"Zorro", "Alamo", "Rosa", "Brisa", "Nectar", "Isla", "Turquesa", "Canto", "Yuca", "Delta", "Oasis", "Loto", "Vela", "Jazmin", "Sombra", "Eclipse", "Piedra", "Aroma", "Niebla", "Faro", "Quimera", "Bambu", "Utopia", "Cerezo", "Aurora", "Marea", "Kilo", "Selva", "Duna", "Heraldo", "Trueno", "Gema", "Volcan", "Cedro", "Norte", "Ladera", "Xilofono", "Coral", "Ritmo", "Bosque", "Templo", "Lumbre", "Oro", "Junco", "Sirena", "Esfera", "Prisma", "Acacia", "Neblina", "Glaciar", "Viento", "Humo", "Cumbre", "Rayo", "Lluvia", "Umbral", "Dorado", "Horizonte", "Laguna", "Aldea"});
+        ejecutarEscenario("GRAN CANTIDAD DE CADENAS", "CASI ORDENADO",
+                new String[]{"Acacia", "Alamo", "Aldea", "Aroma", "Aurora", "Bambu", "Bosque", "Brisa", "Canto", "Cedro", "Cerezo", "Coral", "Cumbre", "Delta", "Dorado", "Duna", "Eclipse", "Esfera", "Faro", "Gema", "Glaciar", "Heraldo", "Horizonte", "Humo", "Isla", "Jazmin", "Junco", "Kilo", "Ladera", "Laguna", "Lluvia", "Loto", "Lumbre", "Marea", "Neblina", "Nectar", "Niebla", "Norte", "Oasis", "Oro", "Piedra", "Prisma", "Quimera", "Rayo", "Ritmo", "Rosa", "Selva", "Sirena", "Sombra", "Templo", "Trueno", "Turquesa", "Umbral", "Utopia", "Vela", "Viento", "Volcan", "Xilofono", "Zorro", "Yuca"});
+        ejecutarEscenario("GRAN CANTIDAD DE CADENAS", "INVERTIDO",
+                new String[]{"Zorro", "Yuca", "Xilofono", "Volcan", "Viento", "Vela", "Utopia", "Umbral", "Turquesa", "Trueno", "Templo", "Sombra", "Sirena", "Selva", "Rosa", "Ritmo", "Rayo", "Quimera", "Prisma", "Piedra", "Oro", "Oasis", "Norte", "Niebla", "Nectar", "Neblina", "Marea", "Lumbre", "Loto", "Lluvia", "Laguna", "Ladera", "Kilo", "Junco", "Jazmin", "Isla", "Humo", "Horizonte", "Heraldo", "Glaciar", "Gema", "Faro", "Esfera", "Eclipse", "Duna", "Dorado", "Delta", "Cumbre", "Coral", "Cerezo", "Cedro", "Canto", "Brisa", "Bosque", "Bambu", "Aurora", "Aroma", "Aldea", "Alamo", "Acacia"});
+    }
+
+    // Este metodo centraliza la impresion de cada caso, igual que en la version de enteros.
+    private static void ejecutarEscenario(String cantidad, String situacion, String[] datosBase) {
+        String[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = shakerSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("CANTIDAD: " + cantidad);
+        System.out.println("SITUACION INICIAL: " + situacion);
+        System.out.println("ARREGLO ORIGINAL: " + Arrays.toString(datosBase));
+        System.out.println("ARREGLO ORDENADO: " + Arrays.toString(copia));
+        System.out.println("COMPARACIONES: " + metricas.comparaciones);
+        System.out.println("INTERCAMBIOS: " + metricas.intercambios);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    // -----------------------------------------------------------------
+    // METODO SHAKER SORT PARA STRINGS CON METRICAS
+    // -----------------------------------------------------------------
+    // La idea se conserva:
+    // 1) En la ida, las cadenas mayores alfabeticamente avanzan al final.
+    // 2) En el regreso, las cadenas menores alfabeticamente se acercan al inicio.
+    // 3) El rango pendiente se hace cada vez mas pequeno.
+    // 4) Si en una vuelta completa no ocurre ningun intercambio, ya terminamos.
+    private static Metricas shakerSortConMetricas(String[] arreglo) {
+        Metricas metricas = new Metricas();
+        Runtime runtime = Runtime.getRuntime();
+
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+        long inicio = System.nanoTime();
+
+        int izquierda = 0;
+        int derecha = arreglo.length - 1;
+        boolean huboCambio = true;
+
+        while (izquierda < derecha && huboCambio) {
+            huboCambio = false;
+
+            // Recorrido de izquierda a derecha.
+            for (int i = izquierda; i < derecha; i++) {
+                metricas.comparaciones++;
+
+                // compareToIgnoreCase devuelve un valor positivo si la cadena de la izquierda
+                // deberia ir despues de la cadena de la derecha en orden alfabetico.
+                if (arreglo[i].compareToIgnoreCase(arreglo[i + 1]) > 0) {
+                    intercambiar(arreglo, i, i + 1);
+                    metricas.intercambios++;
+                    huboCambio = true;
+                }
+            }
+
+            derecha--;
+
+            if (!huboCambio) {
+                break;
+            }
+
+            huboCambio = false;
+
+            // Recorrido de derecha a izquierda.
+            for (int i = derecha; i > izquierda; i--) {
+                metricas.comparaciones++;
+                if (arreglo[i - 1].compareToIgnoreCase(arreglo[i]) > 0) {
+                    intercambiar(arreglo, i - 1, i);
+                    metricas.intercambios++;
+                    huboCambio = true;
+                }
+            }
+
+            izquierda++;
+        }
+
+        long fin = System.nanoTime();
+
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+
+    // Metodo auxiliar de intercambio para no repetir el mismo bloque de tres lineas.
+    private static void intercambiar(String[] arreglo, int i, int j) {
+        String temporal = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temporal;
+    }
+}
