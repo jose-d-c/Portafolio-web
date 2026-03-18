@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1600" viewBox="0 0 1600 1600" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 19</title>
+  <desc id="desc">Salida de referencia para Shaker Sort con cadenas en escenarios pequenos, medianos y grandes.</desc>
+  <rect width="1600" height="1600" fill="#0f172a"/>
+  <rect x="30" y="30" width="1540" height="1540" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="800" y="90" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="36">Programa 19 - Shaker Sort String con metricas</text>
+  <text x="800" y="130" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="22">Referencia con situaciones: desordenado, casi ordenado e invertido</text>
+  <rect x="70" y="170" width="1460" height="1380" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <g fill="#cbd5e1" font-family="Courier New, monospace" font-size="18">
+    <text x="100" y="220">POCAS CADENAS (8) - DESORDENADO -> Comparaciones e intercambios visibles con palabras cortas.</text>
+    <text x="100" y="255">POCAS CADENAS (8) - CASI ORDENADO -> Se espera corte temprano con solo un ajuste final.</text>
+    <text x="100" y="290">POCAS CADENAS (8) - INVERTIDO -> Caso ideal para explicar el maximo movimiento de palabras.</text>
+
+    <text x="100" y="350">CANTIDAD MEDIA (20)</text>
+    <text x="130" y="385">Original: [Mango, Pera, Uva, Coco, Banano, Kiwi, Lichi, Fresa, Papaya, Melon, ...]</text>
+    <text x="130" y="420">Ordenado: [Banano, Ciruela, Coco, Damasco, Fresa, Guayaba, Higo, Kiwi, ...]</text>
+    <text x="130" y="455">Medidas: comparaciones, intercambios, tiempo(ns) y memoria(bytes).</text>
+
+    <text x="100" y="515">CANTIDAD MEDIA (20) - CASI ORDENADO</text>
+    <text x="130" y="550">Ideal para mostrar que la palabra fuera de lugar al final vuelve a su posicion correcta.</text>
+    <text x="130" y="585">Se mantiene el mismo formato didactico que el ejemplo con enteros.</text>
+
+    <text x="100" y="680">CANTIDAD MEDIA (20) - INVERTIDO</text>
+    <text x="130" y="715">Permite justificar por que Shaker Sort necesita muchos intercambios cuando todo esta al reves.</text>
+
+    <text x="100" y="805">GRAN CANTIDAD (60)</text>
+    <text x="130" y="840">Incluye palabras como Acacia, Horizonte, Prisma, Turquesa, Viento y Zorro.</text>
+    <text x="130" y="875">Hay tres situaciones: totalmente desordenado, casi ordenado e invertido.</text>
+    <text x="130" y="910">El codigo fuente conserva arreglos fijos para facilitar la sustentacion y repetir resultados.</text>
+
+    <text x="100" y="1000">Las cifras exactas de tiempo y memoria dependen de la JVM,</text>
+    <text x="100" y="1035">pero comparaciones e intercambios quedan registrados automaticamente en consola.</text>
+  </g>
+</svg>
