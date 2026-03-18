@@ -104,9 +104,14 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Programa Java con Shaker Sort sobre cadenas en cantidades pequenas, medianas y grandes, evaluando arreglos desordenados, casi ordenados e invertidos, con tiempo, memoria, comparaciones e intercambios.",
   },
+  20: {
+    titulo: "Programa temporal 20: Radix Sort en Java comentado",
+    descripcion:
+      "Implementacion de Radix Sort para enteros positivos en Java, completando los comentarios del ejercicio para explicar encontrarMaximo, las pasadas por digito y el uso de Counting Sort estable.",
+  },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
 export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero, indice) => {
   const idFuente = numero.toString().padStart(2, "0");
