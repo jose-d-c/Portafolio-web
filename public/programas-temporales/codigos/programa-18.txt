@@ -1,0 +1,192 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa usa Shell Sort sobre arreglos de enteros.
+// 2) Evalua tres tamanos: pocos datos, mediana cantidad y gran cantidad.
+// 3) Repite cada tamano en tres estados: desordenado, casi ordenado e invertido.
+// 4) Cuenta comparaciones e intercambios/desplazamientos hechos por el algoritmo.
+// 5) Tambien mide tiempo de ejecucion y memoria adicional usada por cada corrida.
+// 6) Se usan arreglos fijos para obtener resultados reproducibles en clase.
+
+import java.util.Arrays;
+
+public class Programa18ShellSortEscenarios {
+
+    static class Metricas {
+        long comparaciones;
+        long intercambios;
+        long tiempoNanosegundos;
+        long memoriaBytes;
+    }
+
+    public static void main(String[] args) {
+        ejecutarEscenario("POCOS DATOS", "TOTALMENTE DESORDENADO",
+                new int[]{34, 7, 23, 32, 5, 62, 1, 18});
+        ejecutarEscenario("POCOS DATOS", "CASI ORDENADO",
+                new int[]{1, 5, 7, 18, 23, 32, 62, 34});
+        ejecutarEscenario("POCOS DATOS", "INVERTIDO",
+                new int[]{62, 34, 32, 23, 18, 7, 5, 1});
+
+        ejecutarEscenario("MEDIANA CANTIDAD DE DATOS", "TOTALMENTE DESORDENADO",
+                new int[]{45, 12, 78, 3, 56, 29, 91, 10, 67, 24, 83, 6});
+        ejecutarEscenario("MEDIANA CANTIDAD DE DATOS", "CASI ORDENADO",
+                new int[]{3, 6, 10, 12, 24, 29, 45, 56, 67, 91, 78, 83});
+        ejecutarEscenario("MEDIANA CANTIDAD DE DATOS", "INVERTIDO",
+                new int[]{91, 83, 78, 67, 56, 45, 29, 24, 12, 10, 6, 3});
+
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS", "TOTALMENTE DESORDENADO",
+                new int[]{90, 12, 55, 3, 77, 41, 68, 24, 99, 8, 61, 37, 14, 82, 46, 29});
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS", "CASI ORDENADO",
+                new int[]{3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 99, 82, 90});
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS", "INVERTIDO",
+                new int[]{99, 90, 82, 77, 68, 61, 55, 46, 41, 37, 29, 24, 14, 12, 8, 3});
+    }
+
+    private static void ejecutarEscenario(String tamano, String estado, int[] datosBase) {
+        int[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = shellSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("TAMANO: " + tamano);
+        System.out.println("ESTADO INICIAL: " + estado);
+        System.out.println("ARREGLO ORIGINAL: " + Arrays.toString(datosBase));
+        System.out.println("ARREGLO ORDENADO: " + Arrays.toString(copia));
+        System.out.println("COMPARACIONES: " + metricas.comparaciones);
+        System.out.println("INTERCAMBIOS: " + metricas.intercambios);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    private static Metricas shellSortConMetricas(int[] arreglo) {
+        Metricas metricas = new Metricas();
+        Runtime runtime = Runtime.getRuntime();
+
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+        long inicio = System.nanoTime();
+
+        for (int gap = arreglo.length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < arreglo.length; i++) {
+                int temporal = arreglo[i];
+                int j = i;
+
+                while (j >= gap) {
+                    metricas.comparaciones++;
+                    if (arreglo[j - gap] > temporal) {
+                        arreglo[j] = arreglo[j - gap];
+                        metricas.intercambios++;
+                        j -= gap;
+                    } else {
+                        break;
+                    }
+                }
+
+                arreglo[j] = temporal;
+                if (j != i) {
+                    metricas.intercambios++;
+                }
+            }
+        }
+
+        long fin = System.nanoTime();
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+}
+
+
+/*
+SALIDA EXACTA DE REFERENCIA EN CONSOLA (ejecucion registrada)
+============================================================
+TAMANO: POCOS DATOS
+ESTADO INICIAL: TOTALMENTE DESORDENADO
+ARREGLO ORIGINAL: [34, 7, 23, 32, 5, 62, 1, 18]
+ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]
+COMPARACIONES: 20
+INTERCAMBIOS: 14
+TIEMPO DE EJECUCION (ns): 15152
+MEMORIA USADA (bytes): 104
+
+============================================================
+TAMANO: POCOS DATOS
+ESTADO INICIAL: CASI ORDENADO
+ARREGLO ORIGINAL: [1, 5, 7, 18, 23, 32, 62, 34]
+ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]
+COMPARACIONES: 18
+INTERCAMBIOS: 2
+TIEMPO DE EJECUCION (ns): 7537
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: POCOS DATOS
+ESTADO INICIAL: INVERTIDO
+ARREGLO ORIGINAL: [62, 34, 32, 23, 18, 7, 5, 1]
+ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]
+COMPARACIONES: 22
+INTERCAMBIOS: 24
+TIEMPO DE EJECUCION (ns): 7563
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: MEDIANA CANTIDAD DE DATOS
+ESTADO INICIAL: TOTALMENTE DESORDENADO
+ARREGLO ORIGINAL: [45, 12, 78, 3, 56, 29, 91, 10, 67, 24, 83, 6]
+ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]
+COMPARACIONES: 36
+INTERCAMBIOS: 27
+TIEMPO DE EJECUCION (ns): 6988
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: MEDIANA CANTIDAD DE DATOS
+ESTADO INICIAL: CASI ORDENADO
+ARREGLO ORIGINAL: [3, 6, 10, 12, 24, 29, 45, 56, 67, 91, 78, 83]
+ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]
+COMPARACIONES: 28
+INTERCAMBIOS: 4
+TIEMPO DE EJECUCION (ns): 5192
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: MEDIANA CANTIDAD DE DATOS
+ESTADO INICIAL: INVERTIDO
+ARREGLO ORIGINAL: [91, 83, 78, 67, 56, 45, 29, 24, 12, 10, 6, 3]
+ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]
+COMPARACIONES: 39
+INTERCAMBIOS: 44
+TIEMPO DE EJECUCION (ns): 7056
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: GRAN CANTIDAD DE DATOS
+ESTADO INICIAL: TOTALMENTE DESORDENADO
+ARREGLO ORIGINAL: [90, 12, 55, 3, 77, 41, 68, 24, 99, 8, 61, 37, 14, 82, 46, 29]
+ARREGLO ORDENADO: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 82, 90, 99]
+COMPARACIONES: 87
+INTERCAMBIOS: 67
+TIEMPO DE EJECUCION (ns): 10154
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: GRAN CANTIDAD DE DATOS
+ESTADO INICIAL: CASI ORDENADO
+ARREGLO ORIGINAL: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 99, 82, 90]
+ARREGLO ORDENADO: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 82, 90, 99]
+COMPARACIONES: 51
+INTERCAMBIOS: 4
+TIEMPO DE EJECUCION (ns): 10659
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: GRAN CANTIDAD DE DATOS
+ESTADO INICIAL: INVERTIDO
+ARREGLO ORIGINAL: [99, 90, 82, 77, 68, 61, 55, 46, 41, 37, 29, 24, 14, 12, 8, 3]
+ARREGLO ORDENADO: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 82, 90, 99]
+COMPARACIONES: 66
+INTERCAMBIOS: 64
+TIEMPO DE EJECUCION (ns): 10598
+MEMORIA USADA (bytes): 0
+*/
