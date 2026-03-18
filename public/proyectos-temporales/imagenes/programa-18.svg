@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1500" viewBox="0 0 1400 1500" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 18</title>
+  <desc id="desc">Salida en consola del programa de Shell Sort con metricas de tiempo, memoria, comparaciones e intercambios para nueve escenarios.</desc>
+  <rect width="1400" height="1500" fill="#0f172a"/>
+  <rect x="30" y="30" width="1340" height="1440" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="700" y="90" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="36">Programa 18 - Shell Sort con metricas</text>
+  <text x="700" y="130" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="22">Salida exacta registrada en consola</text>
+  <rect x="70" y="170" width="1260" height="1250" rx="16" fill="#0b1220" stroke="#1e293b" stroke-width="2"/>
+
+  <g fill="#cbd5e1" font-family="Courier New, monospace" font-size="18">
+    <text x="100" y="215">============================================================</text>
+    <text x="100" y="243">TAMANO: POCOS DATOS</text>
+    <text x="100" y="271">ESTADO INICIAL: TOTALMENTE DESORDENADO</text>
+    <text x="100" y="299">ARREGLO ORIGINAL: [34, 7, 23, 32, 5, 62, 1, 18]</text>
+    <text x="100" y="327">ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]</text>
+    <text x="100" y="355">COMPARACIONES: 20 | INTERCAMBIOS: 14 | TIEMPO: 15152 ns | MEMORIA: 104 bytes</text>
+
+    <text x="100" y="403">============================================================</text>
+    <text x="100" y="431">TAMANO: POCOS DATOS</text>
+    <text x="100" y="459">ESTADO INICIAL: CASI ORDENADO</text>
+    <text x="100" y="487">ARREGLO ORIGINAL: [1, 5, 7, 18, 23, 32, 62, 34]</text>
+    <text x="100" y="515">ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]</text>
+    <text x="100" y="543">COMPARACIONES: 18 | INTERCAMBIOS: 2 | TIEMPO: 7537 ns | MEMORIA: 0 bytes</text>
+
+    <text x="100" y="591">============================================================</text>
+    <text x="100" y="619">TAMANO: POCOS DATOS</text>
+    <text x="100" y="647">ESTADO INICIAL: INVERTIDO</text>
+    <text x="100" y="675">ARREGLO ORIGINAL: [62, 34, 32, 23, 18, 7, 5, 1]</text>
+    <text x="100" y="703">ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]</text>
+    <text x="100" y="731">COMPARACIONES: 22 | INTERCAMBIOS: 24 | TIEMPO: 7563 ns | MEMORIA: 0 bytes</text>
+
+    <text x="100" y="779">============================================================</text>
+    <text x="100" y="807">TAMANO: MEDIANA CANTIDAD DE DATOS</text>
+    <text x="100" y="835">ESTADO INICIAL: TOTALMENTE DESORDENADO</text>
+    <text x="100" y="863">ARREGLO ORIGINAL: [45, 12, 78, 3, 56, 29, 91, 10, 67, 24, 83, 6]</text>
+    <text x="100" y="891">ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]</text>
+    <text x="100" y="919">COMPARACIONES: 36 | INTERCAMBIOS: 27 | TIEMPO: 6988 ns | MEMORIA: 0 bytes</text>
+
+    <text x="100" y="967">============================================================</text>
+    <text x="100" y="995">TAMANO: MEDIANA CANTIDAD DE DATOS</text>
+    <text x="100" y="1023">ESTADO INICIAL: CASI ORDENADO</text>
+    <text x="100" y="1051">ARREGLO ORIGINAL: [3, 6, 10, 12, 24, 29, 45, 56, 67, 91, 78, 83]</text>
+    <text x="100" y="1079">ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]</text>
+    <text x="100" y="1107">COMPARACIONES: 28 | INTERCAMBIOS: 4 | TIEMPO: 5192 ns | MEMORIA: 0 bytes</text>
+
+    <text x="100" y="1155">============================================================</text>
+    <text x="100" y="1183">TAMANO: MEDIANA CANTIDAD DE DATOS</text>
+    <text x="100" y="1211">ESTADO INICIAL: INVERTIDO</text>
+    <text x="100" y="1239">ARREGLO ORIGINAL: [91, 83, 78, 67, 56, 45, 29, 24, 12, 10, 6, 3]</text>
+    <text x="100" y="1267">ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]</text>
+    <text x="100" y="1295">COMPARACIONES: 39 | INTERCAMBIOS: 44 | TIEMPO: 7056 ns | MEMORIA: 0 bytes</text>
+
+    <text x="100" y="1343">... la imagen resume la consola; el programa continua con GRAN CANTIDAD DE DATOS.</text>
+    <text x="100" y="1371">En el archivo de codigo se conserva la salida completa para los 9 escenarios solicitados.</text>
+  </g>
+</svg>
