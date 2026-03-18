@@ -95,9 +95,9 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
       "Programa Java que mide iteraciones, comparaciones e intercambios/desplazamientos en Burbuja, Burbuja mejorado, QuickSort, ShellSort, Seleccion e Insercion para datos pequenos, moderados y grandes.",
   },
   18: {
-    titulo: "Programa temporal 18: Shell Sort con tiempo, memoria y metricas",
+    titulo: "Programa temporal 18: Shaker Sort con tiempo, memoria y metricas",
     descripcion:
-      "Programa Java con Shell Sort sobre enteros en cantidades pequenas, medianas y grandes, evaluando arreglos desordenados, casi ordenados e invertidos, con tiempo, memoria, comparaciones e intercambios.",
+      "Programa Java con Shaker Sort sobre enteros en cantidades pequenas, medianas y grandes, evaluando arreglos desordenados, casi ordenados e invertidos, con tiempo, memoria, comparaciones e intercambios.",
   },
 };
 
