@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 20</title>
+  <desc id="desc">Salida de consola del programa temporal 20 con Radix Sort en Java.</desc>
+  <rect width="1600" height="900" fill="#0f172a"/>
+  <rect x="40" y="40" width="1520" height="820" rx="28" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="800" y="110" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="40">Programa 20 - Radix Sort en Java</text>
+  <text x="800" y="155" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="24">Comentarios completados para explicar cada bloque del algoritmo</text>
+  <rect x="90" y="210" width="1420" height="560" rx="18" fill="#020617" stroke="#1e293b" stroke-width="2"/>
+  <g fill="#cbd5e1" font-family="Courier New, monospace" font-size="30">
+    <text x="130" y="300">Arreglo original: [45, 17, 23, 67, 21, 44, 12, 34]</text>
+    <text x="130" y="365">Arreglo ordenado: [12, 17, 21, 23, 34, 44, 45, 67]</text>
+    <text x="130" y="460">Pasadas de Radix Sort:</text>
+    <text x="170" y="520">- exp = 1  - ordena por unidades</text>
+    <text x="170" y="575">- exp = 10 - ordena por decenas</text>
+    <text x="170" y="630">- El numero maximo es 67, por eso no se requieren centenas</text>
+  </g>
+  <text x="800" y="820" text-anchor="middle" fill="#94a3b8" font-family="Arial, sans-serif" font-size="22">La plantilla del codigo incluye explicaciones para encontrarMaximo, radixSort, countingSort y main.</text>
+</svg>
