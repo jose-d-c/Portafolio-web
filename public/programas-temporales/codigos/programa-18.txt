@@ -1,0 +1,274 @@
+// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
+// 1) Este programa trabaja con el metodo Shaker Sort, tambien llamado Cocktail Sort.
+// 2) A diferencia de burbuja clasico, este algoritmo recorre el arreglo en dos sentidos:
+//    primero de izquierda a derecha y luego de derecha a izquierda.
+// 3) Ese doble recorrido ayuda a mover rapido los valores grandes al final y los pequenos al inicio.
+// 4) El programa prueba tres tamanos de entrada: pocos datos, mediana cantidad y gran cantidad.
+// 5) Cada tamano se estudia en tres estados distintos: totalmente desordenado, casi ordenado e invertido.
+// 6) En cada prueba se reportan comparaciones, intercambios, tiempo de ejecucion y memoria usada.
+// 7) Los arreglos son fijos para que los resultados sean reproducibles durante la sustentacion.
+// 8) Los comentarios internos explican cada paso con lenguaje sencillo para facilitar el aprendizaje.
+
+import java.util.Arrays;
+
+public class Programa18ShakerSortMetricas {
+
+    // Esta clase sirve para guardar todas las metricas de una sola ejecucion.
+    // De esta manera no necesitamos muchas variables sueltas y el programa es
+    // mas facil de leer, mantener y mostrar en consola.
+    static class Metricas {
+        long comparaciones;      // Cuenta cuantas veces se comparan dos elementos.
+        long intercambios;       // Cuenta cuantas veces se intercambian dos posiciones.
+        long tiempoNanosegundos; // Guarda la duracion medida con System.nanoTime().
+        long memoriaBytes;       // Guarda la diferencia aproximada de memoria usada.
+    }
+
+    public static void main(String[] args) {
+        // -----------------------------------------------------------------
+        // ESCENARIOS DE PRUEBA
+        // -----------------------------------------------------------------
+        // Se crean 9 arreglos fijos: 3 tamanos x 3 estados de orden.
+        // Esto evita aleatoriedad y permite que todas las personas obtengan
+        // la misma estructura de salida al ejecutar el programa.
+
+        // -------- POCOS DATOS --------
+        ejecutarEscenario("POCOS DATOS", "TOTALMENTE DESORDENADO",
+                new int[]{34, 7, 23, 32, 5, 62, 1, 18});
+        ejecutarEscenario("POCOS DATOS", "CASI ORDENADO",
+                new int[]{1, 5, 7, 18, 23, 32, 62, 34});
+        ejecutarEscenario("POCOS DATOS", "INVERTIDO",
+                new int[]{62, 34, 32, 23, 18, 7, 5, 1});
+
+        // -------- MEDIANA CANTIDAD DE DATOS --------
+        ejecutarEscenario("MEDIANA CANTIDAD DE DATOS", "TOTALMENTE DESORDENADO",
+                new int[]{45, 12, 78, 3, 56, 29, 91, 10, 67, 24, 83, 6});
+        ejecutarEscenario("MEDIANA CANTIDAD DE DATOS", "CASI ORDENADO",
+                new int[]{3, 6, 10, 12, 24, 29, 45, 56, 67, 91, 78, 83});
+        ejecutarEscenario("MEDIANA CANTIDAD DE DATOS", "INVERTIDO",
+                new int[]{91, 83, 78, 67, 56, 45, 29, 24, 12, 10, 6, 3});
+
+        // -------- GRAN CANTIDAD DE DATOS --------
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS", "TOTALMENTE DESORDENADO",
+                new int[]{90, 12, 55, 3, 77, 41, 68, 24, 99, 8, 61, 37, 14, 82, 46, 29});
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS", "CASI ORDENADO",
+                new int[]{3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 99, 82, 90});
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS", "INVERTIDO",
+                new int[]{99, 90, 82, 77, 68, 61, 55, 46, 41, 37, 29, 24, 14, 12, 8, 3});
+    }
+
+    // Este metodo centraliza la impresion de cada caso de prueba.
+    // Recibe el tamano, el estado del arreglo y los datos originales.
+    // Luego clona el arreglo para preservar la version original, ejecuta
+    // el algoritmo y finalmente imprime todas las metricas solicitadas.
+    private static void ejecutarEscenario(String tamano, String estado, int[] datosBase) {
+        int[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = shakerSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("TAMANO: " + tamano);
+        System.out.println("ESTADO INICIAL: " + estado);
+        System.out.println("ARREGLO ORIGINAL: " + Arrays.toString(datosBase));
+        System.out.println("ARREGLO ORDENADO: " + Arrays.toString(copia));
+        System.out.println("COMPARACIONES: " + metricas.comparaciones);
+        System.out.println("INTERCAMBIOS: " + metricas.intercambios);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    // -----------------------------------------------------------------
+    // METODO SHAKER SORT CON METRICAS
+    // -----------------------------------------------------------------
+    // La idea principal del algoritmo es la siguiente:
+    // 1) En el recorrido hacia adelante, el valor mas grande "sube" al final.
+    // 2) En el recorrido hacia atras, el valor mas pequeno "baja" al inicio.
+    // 3) Despues de cada ida y vuelta, el rango no ordenado se hace mas pequeno.
+    // 4) Si en una pasada completa no hubo cambios, el arreglo ya esta ordenado.
+    private static Metricas shakerSortConMetricas(int[] arreglo) {
+        Metricas metricas = new Metricas();
+
+        // Runtime permite observar memoria total y libre de la JVM.
+        // La diferencia entre ambas cifras da una aproximacion de memoria usada.
+        Runtime runtime = Runtime.getRuntime();
+
+        // Se pide recoleccion de basura para reducir ruido en la medicion.
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+
+        // Se inicia el cronometro de alta precision.
+        long inicio = System.nanoTime();
+
+        // "izquierda" marca el inicio de la zona aun no ordenada.
+        int izquierda = 0;
+        // "derecha" marca el final de la zona aun no ordenada.
+        int derecha = arreglo.length - 1;
+        // Esta bandera ayuda a detectar si hubo o no intercambios.
+        boolean huboCambio = true;
+
+        // Mientras la zona activa tenga al menos dos elementos y se sigan
+        // produciendo cambios, el algoritmo debe continuar.
+        while (izquierda < derecha && huboCambio) {
+            huboCambio = false;
+
+            // -------------------------------------------------------------
+            // RECORRIDO HACIA ADELANTE
+            // -------------------------------------------------------------
+            // Compara pares adyacentes desde izquierda hasta derecha.
+            // Si el elemento izquierdo es mayor que el derecho, se intercambian.
+            for (int i = izquierda; i < derecha; i++) {
+                metricas.comparaciones++;
+                if (arreglo[i] > arreglo[i + 1]) {
+                    intercambiar(arreglo, i, i + 1);
+                    metricas.intercambios++;
+                    huboCambio = true;
+                }
+            }
+
+            // Despues del recorrido hacia adelante, el mayor ya quedo al final,
+            // por eso se reduce el borde derecho.
+            derecha--;
+
+            // Si no hubo cambios en el recorrido hacia adelante, significa que el
+            // arreglo ya estaba ordenado y no hace falta seguir recorriendo.
+            if (!huboCambio) {
+                break;
+            }
+
+            // Se reinicia la bandera para verificar si en el regreso ocurre algun cambio.
+            huboCambio = false;
+
+            // -------------------------------------------------------------
+            // RECORRIDO HACIA ATRAS
+            // -------------------------------------------------------------
+            // Ahora se avanza de derecha a izquierda. En este paso, los valores
+            // mas pequenos se mueven rapidamente al inicio del arreglo.
+            for (int i = derecha; i > izquierda; i--) {
+                metricas.comparaciones++;
+                if (arreglo[i - 1] > arreglo[i]) {
+                    intercambiar(arreglo, i - 1, i);
+                    metricas.intercambios++;
+                    huboCambio = true;
+                }
+            }
+
+            // Despues del recorrido hacia atras, el menor ya quedo en la primera
+            // posicion util, asi que el borde izquierdo tambien se desplaza.
+            izquierda++;
+        }
+
+        // Se detiene el tiempo cuando el arreglo ya termino de ordenarse.
+        long fin = System.nanoTime();
+
+        // Nueva toma de memoria al finalizar.
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+
+    // Metodo auxiliar para intercambiar dos posiciones del arreglo.
+    // Se separa en un metodo propio para que la intencion del codigo sea
+    // clara y evitar repetir estas tres lineas varias veces.
+    private static void intercambiar(int[] arreglo, int i, int j) {
+        int temporal = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temporal;
+    }
+}
+
+
+/*
+SALIDA EXACTA DE REFERENCIA EN CONSOLA (ejecucion registrada)
+Nota: comparaciones, intercambios y arreglos son reproducibles; tiempo y memoria pueden variar ligeramente segun la JVM.
+============================================================
+TAMANO: POCOS DATOS
+ESTADO INICIAL: TOTALMENTE DESORDENADO
+ARREGLO ORIGINAL: [34, 7, 23, 32, 5, 62, 1, 18]
+ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]
+COMPARACIONES: 27
+INTERCAMBIOS: 17
+TIEMPO DE EJECUCION (ns): 13693
+MEMORIA USADA (bytes): 104
+
+============================================================
+TAMANO: POCOS DATOS
+ESTADO INICIAL: CASI ORDENADO
+ARREGLO ORIGINAL: [1, 5, 7, 18, 23, 32, 62, 34]
+ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]
+COMPARACIONES: 13
+INTERCAMBIOS: 1
+TIEMPO DE EJECUCION (ns): 9540
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: POCOS DATOS
+ESTADO INICIAL: INVERTIDO
+ARREGLO ORIGINAL: [62, 34, 32, 23, 18, 7, 5, 1]
+ARREGLO ORDENADO: [1, 5, 7, 18, 23, 32, 34, 62]
+COMPARACIONES: 28
+INTERCAMBIOS: 28
+TIEMPO DE EJECUCION (ns): 10072
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: MEDIANA CANTIDAD DE DATOS
+ESTADO INICIAL: TOTALMENTE DESORDENADO
+ARREGLO ORIGINAL: [45, 12, 78, 3, 56, 29, 91, 10, 67, 24, 83, 6]
+ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]
+COMPARACIONES: 56
+INTERCAMBIOS: 33
+TIEMPO DE EJECUCION (ns): 11375
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: MEDIANA CANTIDAD DE DATOS
+ESTADO INICIAL: CASI ORDENADO
+ARREGLO ORIGINAL: [3, 6, 10, 12, 24, 29, 45, 56, 67, 91, 78, 83]
+ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]
+COMPARACIONES: 21
+INTERCAMBIOS: 2
+TIEMPO DE EJECUCION (ns): 7108
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: MEDIANA CANTIDAD DE DATOS
+ESTADO INICIAL: INVERTIDO
+ARREGLO ORIGINAL: [91, 83, 78, 67, 56, 45, 29, 24, 12, 10, 6, 3]
+ARREGLO ORDENADO: [3, 6, 10, 12, 24, 29, 45, 56, 67, 78, 83, 91]
+COMPARACIONES: 66
+INTERCAMBIOS: 66
+TIEMPO DE EJECUCION (ns): 14104
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: GRAN CANTIDAD DE DATOS
+ESTADO INICIAL: TOTALMENTE DESORDENADO
+ARREGLO ORIGINAL: [90, 12, 55, 3, 77, 41, 68, 24, 99, 8, 61, 37, 14, 82, 46, 29]
+ARREGLO ORDENADO: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 82, 90, 99]
+COMPARACIONES: 105
+INTERCAMBIOS: 63
+TIEMPO DE EJECUCION (ns): 14835
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: GRAN CANTIDAD DE DATOS
+ESTADO INICIAL: CASI ORDENADO
+ARREGLO ORIGINAL: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 99, 82, 90]
+ARREGLO ORDENADO: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 82, 90, 99]
+COMPARACIONES: 29
+INTERCAMBIOS: 2
+TIEMPO DE EJECUCION (ns): 7250
+MEMORIA USADA (bytes): 0
+
+============================================================
+TAMANO: GRAN CANTIDAD DE DATOS
+ESTADO INICIAL: INVERTIDO
+ARREGLO ORIGINAL: [99, 90, 82, 77, 68, 61, 55, 46, 41, 37, 29, 24, 14, 12, 8, 3]
+ARREGLO ORDENADO: [3, 8, 12, 14, 24, 29, 37, 41, 46, 55, 61, 68, 77, 82, 90, 99]
+COMPARACIONES: 120
+INTERCAMBIOS: 120
+TIEMPO DE EJECUCION (ns): 124287
+MEMORIA USADA (bytes): 0
+*/
