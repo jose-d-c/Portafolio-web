@@ -1,278 +1,63 @@
-// GUIA DE APRENDIZAJE (lectura recomendada antes del codigo)
-// 1) Este programa no busca tiempo ni memoria; mide trabajo interno del algoritmo.
-// 2) En cada metodo se cuentan iteraciones, comparaciones e intercambios/desplazamientos.
-// 3) Se usan tres arreglos fijos (pequeno, moderado y grande).
-// 4) Cada algoritmo recibe una copia del mismo arreglo del escenario.
-// 5) Eso permite comparar resultados de forma justa y reproducible.
-// 6) Los comentarios internos explican la logica para personas sin experiencia previa.
-
-// Programa temporal 17 (version corregida)
-// -----------------------------------------------------------------------------
-// OBJETIVO
-// Medir, para cada algoritmo de ordenamiento visto anteriormente, tres metricas:
-// 1) Iteraciones (pasadas)
-// 2) Comparaciones
-// 3) Intercambios o desplazamientos
+// ============================================================================
+// PROGRAMA 17 - METRICAS COMPLETAS DE VARIOS ALGORITMOS DE ORDENAMIENTO
+// ============================================================================
+// Este programa compara varios algoritmos usando exactamente los mismos 9
+// escenarios de prueba que se usan en otros programas temporales modernos:
+// - tamanos: 10, 50 y 200 elementos
+// - estados: totalmente desorganizados, parcialmente organizados e invertidos
 //
-// IMPORTANTE (ajuste solicitado):
-// - NO se generan arreglos aleatorios.
-// - Se usan arreglos ESPECIFICOS (fijos) para cada escenario.
-// - Cada algoritmo recibe una COPIA (clon) del mismo arreglo del escenario,
-//   para garantizar una comparacion justa.
+// PARA QUE SIRVE?
+// Para ver, en una misma tabla de salida, que tanto trabajo hace cada algoritmo.
 //
-// ESCENARIOS
-// - Pequena cantidad de datos
-// - Moderada cantidad de datos
-// - Gran cantidad de datos
-//
-// SALIDA REQUERIDA
-// System.out.println("Iteraciones (pasadas): " + iteraciones);
-// System.out.println("Comparaciones: " + comparaciones);
-// System.out.println("Intercambios: " + intercambios);
-//
-// DEFINICION DE METRICAS (segun tabla)
-// - Burbuja Simple: pasadas del ciclo externo, comparaciones por pares, swaps.
-// - Burbuja Mejorado: pasadas efectivas (solo con swap), comparaciones por pares, swaps.
-// - QuickSort: llamadas recursivas, comparaciones al particionar, swaps al particionar.
-// - ShellSort: iteraciones por gap, comparaciones por gap, desplazamientos por gap.
-// - Seleccion Directa: pasadas del externo, comparaciones para minimo, swaps finales.
-// - Insercion Simple: pasadas del externo, comparaciones para ubicar clave, desplazamientos.
+// QUE SE MIDE?
+// - iteraciones
+// - comparaciones
+// - intercambios o movimientos
+// - tiempo
+// - memoria
+// ============================================================================
 
 import java.util.Arrays;
 
 public class Programa17MetricasOrdenamientos {
-
-    // Estructura para centralizar el conteo de metricas.
-    static class Metricas {
-        long iteraciones;
-        long comparaciones;
-        long intercambios; // Para Shell/Insercion tambien representa desplazamientos.
-    }
+    static class Metricas { long iteraciones, comparaciones, intercambios, tiempoNanosegundos, memoriaBytes; }
+    interface Algoritmo { Metricas aplicar(int[] datos); }
 
     public static void main(String[] args) {
-        // ---------------------------------------------------------------------
-        // ARREGLOS FIJOS (NO ALEATORIOS)
-        // Cada escenario tiene su propio arreglo base definido manualmente.
-        // Estos datos se mantienen constantes entre ejecuciones para que los
-        // resultados siempre sean reproducibles.
-
-        int[] basePequena = {
-                38, 12, 57, 9, 41, 23, 6, 71, 30, 18
-        };
-
-        int[] baseModerada = {
-                84, 15, 63, 29, 47, 91, 52, 6, 73, 34,
-                11, 58, 26, 99, 40, 2, 68, 77, 19, 55
-        };
-
-        int[] baseGrande = {
-                120, 35, 89, 14, 73, 61, 92, 8, 47, 56,
-                101, 23, 67, 39, 85, 5, 96, 42, 74, 18,
-                109, 31, 64, 12, 88, 53, 79, 3, 97, 45,
-                70, 21, 83, 16, 94, 58, 76, 9, 102, 37
-        };
-
-        ejecutarEscenario("PEQUENA CANTIDAD DE DATOS", basePequena);
-        ejecutarEscenario("MODERADA CANTIDAD DE DATOS", baseModerada);
-        ejecutarEscenario("GRAN CANTIDAD DE DATOS", baseGrande);
+        ejecutarEscenario("POCOS DATOS (10)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(10));
+        ejecutarEscenario("DATOS MODERADOS (50)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(50));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(200));
     }
-
-    // Ejecuta todos los algoritmos sobre CLONES del mismo arreglo base.
-    // Esto evita sesgo: ningun algoritmo recibe datos "ya ordenados" por otro.
-    private static void ejecutarEscenario(String nombreEscenario, int[] base) {
-        System.out.println("\n====================================================");
-        System.out.println("ESCENARIO: " + nombreEscenario + " (n = " + base.length + ")");
-        System.out.println("Arreglo base fijo: " + Arrays.toString(base));
-        System.out.println("====================================================");
-
-        imprimirResultado("Burbuja Simple", burbujaSimple(Arrays.copyOf(base, base.length)));
-        imprimirResultado("Burbuja Mejorado", burbujaMejorado(Arrays.copyOf(base, base.length)));
-        imprimirResultado("QuickSort", quickSortConMetricas(Arrays.copyOf(base, base.length)));
-        imprimirResultado("ShellSort", shellSort(Arrays.copyOf(base, base.length)));
-        imprimirResultado("Seleccion Directa", seleccionDirecta(Arrays.copyOf(base, base.length)));
-        imprimirResultado("Insercion Simple", insercionSimple(Arrays.copyOf(base, base.length)));
+    private static void ejecutarEscenario(String tamano,String estado,int[] base){
+        System.out.println("============================================================");
+        System.out.println("TAMANO: "+tamano); System.out.println("ESTADO: "+estado); System.out.println("BASE: "+resumir(base,20));
+        medir("Burbuja",Arrays.copyOf(base,base.length),Programa17MetricasOrdenamientos::burbuja);
+        medir("Burbuja Mejorado",Arrays.copyOf(base,base.length),Programa17MetricasOrdenamientos::burbujaMejorado);
+        medir("QuickSort",Arrays.copyOf(base,base.length),Programa17MetricasOrdenamientos::quickSort);
+        medir("ShellSort",Arrays.copyOf(base,base.length),Programa17MetricasOrdenamientos::shellSort);
+        medir("Seleccion",Arrays.copyOf(base,base.length),Programa17MetricasOrdenamientos::seleccion);
+        medir("Insercion",Arrays.copyOf(base,base.length),Programa17MetricasOrdenamientos::insercion);
+        System.out.println();
     }
-
-    // Impresion exacta del bloque solicitado.
-    private static void imprimirResultado(String nombreAlgoritmo, Metricas m) {
-        System.out.println("\n--- " + nombreAlgoritmo + " ---");
-        System.out.println("Iteraciones (pasadas): " + m.iteraciones);
-        System.out.println("Comparaciones: " + m.comparaciones);
-        System.out.println("Intercambios: " + m.intercambios);
-    }
-
-    // -------------------------------------------------------------------------
-    // 1) BURBUJA SIMPLE
-    private static Metricas burbujaSimple(int[] a) {
-        Metricas m = new Metricas();
-
-        for (int i = 0; i < a.length - 1; i++) {
-            m.iteraciones++; // Una pasada del ciclo externo.
-            for (int j = 0; j < a.length - 1 - i; j++) {
-                m.comparaciones++; // Comparacion entre pares adyacentes.
-                if (a[j] > a[j + 1]) {
-                    intercambiar(a, j, j + 1);
-                    m.intercambios++; // Swap real.
-                }
-            }
-        }
-
-        return m;
-    }
-
-    // -------------------------------------------------------------------------
-    // 2) BURBUJA MEJORADO
-    private static Metricas burbujaMejorado(int[] a) {
-        Metricas m = new Metricas();
-
-        for (int i = 0; i < a.length - 1; i++) {
-            boolean huboSwap = false;
-
-            for (int j = 0; j < a.length - 1 - i; j++) {
-                m.comparaciones++;
-                if (a[j] > a[j + 1]) {
-                    intercambiar(a, j, j + 1);
-                    m.intercambios++;
-                    huboSwap = true;
-                }
-            }
-
-            // Solo cuenta como iteracion efectiva si hubo intercambio.
-            if (huboSwap) {
-                m.iteraciones++;
-            } else {
-                // Si no hubo swap, ya esta ordenado: corte temprano.
-                break;
-            }
-        }
-
-        return m;
-    }
-
-    // -------------------------------------------------------------------------
-    // 3) QUICKSORT
-    private static Metricas quickSortConMetricas(int[] a) {
-        Metricas m = new Metricas();
-        quickSort(a, 0, a.length - 1, m);
-        return m;
-    }
-
-    private static void quickSort(int[] a, int izq, int der, Metricas m) {
-        m.iteraciones++; // Cada llamada recursiva.
-
-        if (izq >= der) {
-            return;
-        }
-
-        int pivote = a[der];
-        int i = izq - 1;
-
-        for (int j = izq; j < der; j++) {
-            m.comparaciones++; // Comparacion contra pivote.
-            if (a[j] <= pivote) {
-                i++;
-                intercambiar(a, i, j);
-                m.intercambios++;
-            }
-        }
-
-        intercambiar(a, i + 1, der);
-        m.intercambios++; // Colocacion final del pivote.
-        int posPivote = i + 1;
-
-        quickSort(a, izq, posPivote - 1, m);
-        quickSort(a, posPivote + 1, der, m);
-    }
-
-    // -------------------------------------------------------------------------
-    // 4) SHELL SORT
-    private static Metricas shellSort(int[] a) {
-        Metricas m = new Metricas();
-
-        for (int gap = a.length / 2; gap > 0; gap /= 2) {
-            for (int i = gap; i < a.length; i++) {
-                m.iteraciones++; // Iteraciones por gap (for interno).
-
-                int temp = a[i];
-                int j = i;
-
-                while (j >= gap) {
-                    m.comparaciones++;
-                    if (a[j - gap] > temp) {
-                        a[j] = a[j - gap];
-                        m.intercambios++; // Desplazamiento por gap.
-                        j -= gap;
-                    } else {
-                        break;
-                    }
-                }
-
-                a[j] = temp;
-                m.intercambios++; // Insercion final dentro del subarreglo por gap.
-            }
-        }
-
-        return m;
-    }
-
-    // -------------------------------------------------------------------------
-    // 5) SELECCION DIRECTA
-    private static Metricas seleccionDirecta(int[] a) {
-        Metricas m = new Metricas();
-
-        for (int i = 0; i < a.length - 1; i++) {
-            m.iteraciones++; // Pasada del ciclo externo.
-            int indiceMin = i;
-
-            for (int j = i + 1; j < a.length; j++) {
-                m.comparaciones++; // Buscar menor en la zona no ordenada.
-                if (a[j] < a[indiceMin]) {
-                    indiceMin = j;
-                }
-            }
-
-            if (indiceMin != i) {
-                intercambiar(a, i, indiceMin);
-                m.intercambios++; // Intercambio de la pasada.
-            }
-        }
-
-        return m;
-    }
-
-    // -------------------------------------------------------------------------
-    // 6) INSERCION SIMPLE
-    private static Metricas insercionSimple(int[] a) {
-        Metricas m = new Metricas();
-
-        for (int i = 1; i < a.length; i++) {
-            m.iteraciones++; // Pasada del ciclo externo.
-
-            int clave = a[i];
-            int j = i - 1;
-
-            while (j >= 0) {
-                m.comparaciones++; // Comparar para hallar la posicion de insercion.
-                if (a[j] > clave) {
-                    a[j + 1] = a[j];
-                    m.intercambios++; // Desplazamiento hacia la derecha.
-                    j--;
-                } else {
-                    break;
-                }
-            }
-
-            a[j + 1] = clave;
-            m.intercambios++; // Insercion final de la clave.
-        }
-
-        return m;
-    }
-
-    // Utilidad para intercambio tradicional.
-    private static void intercambiar(int[] a, int i, int j) {
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
+    private static void medir(String nombre,int[] datos,Algoritmo algoritmo){ Metricas m=algoritmo.aplicar(datos); System.out.println("--- "+nombre+" ---"); System.out.println("ITERACIONES: "+m.iteraciones); System.out.println("COMPARACIONES: "+m.comparaciones); System.out.println("INTERCAMBIOS/MOVIMIENTOS: "+m.intercambios); System.out.println("TIEMPO (ns): "+m.tiempoNanosegundos); System.out.println("MEMORIA (bytes): "+m.memoriaBytes); }
+    private static Metricas preparar(){ return new Metricas(); }
+    private static Metricas burbuja(int[] a){ Metricas m=preparar(); Runtime r=Runtime.getRuntime(); r.gc(); long mb=r.totalMemory()-r.freeMemory(); long ini=System.nanoTime(); for(int i=0;i<a.length-1;i++){m.iteraciones++; for(int j=0;j<a.length-1-i;j++){m.comparaciones++; if(a[j]>a[j+1]){int t=a[j];a[j]=a[j+1];a[j+1]=t;m.intercambios++;}}} m.tiempoNanosegundos=System.nanoTime()-ini; r.gc(); m.memoriaBytes=Math.max((r.totalMemory()-r.freeMemory())-mb,0); return m; }
+    private static Metricas burbujaMejorado(int[] a){ Metricas m=preparar(); Runtime r=Runtime.getRuntime(); r.gc(); long mb=r.totalMemory()-r.freeMemory(); long ini=System.nanoTime(); for(int i=0;i<a.length-1;i++){boolean cambio=false; m.iteraciones++; for(int j=0;j<a.length-1-i;j++){m.comparaciones++; if(a[j]>a[j+1]){int t=a[j];a[j]=a[j+1];a[j+1]=t;m.intercambios++; cambio=true;}} if(!cambio) break;} m.tiempoNanosegundos=System.nanoTime()-ini; r.gc(); m.memoriaBytes=Math.max((r.totalMemory()-r.freeMemory())-mb,0); return m; }
+    private static Metricas quickSort(int[] a){ Metricas m=preparar(); Runtime r=Runtime.getRuntime(); r.gc(); long mb=r.totalMemory()-r.freeMemory(); long ini=System.nanoTime(); quickSortRec(a,0,a.length-1,m); m.tiempoNanosegundos=System.nanoTime()-ini; r.gc(); m.memoriaBytes=Math.max((r.totalMemory()-r.freeMemory())-mb,0); return m; }
+    private static void quickSortRec(int[] a,int izq,int der,Metricas m){ m.iteraciones++; if(izq>=der)return; int piv=a[der],i=izq-1; for(int j=izq;j<der;j++){m.comparaciones++; if(a[j]<=piv){i++; int t=a[i];a[i]=a[j];a[j]=t;m.intercambios++;}} int t=a[i+1];a[i+1]=a[der];a[der]=t;m.intercambios++; int p=i+1; quickSortRec(a,izq,p-1,m); quickSortRec(a,p+1,der,m);} 
+    private static Metricas shellSort(int[] a){ Metricas m=preparar(); Runtime r=Runtime.getRuntime(); r.gc(); long mb=r.totalMemory()-r.freeMemory(); long ini=System.nanoTime(); for(int gap=a.length/2;gap>0;gap/=2){ for(int i=gap;i<a.length;i++){m.iteraciones++; int temp=a[i],j=i; while(j>=gap){m.comparaciones++; if(a[j-gap]>temp){a[j]=a[j-gap];m.intercambios++;j-=gap;} else break;} a[j]=temp; m.intercambios++; }} m.tiempoNanosegundos=System.nanoTime()-ini; r.gc(); m.memoriaBytes=Math.max((r.totalMemory()-r.freeMemory())-mb,0); return m; }
+    private static Metricas seleccion(int[] a){ Metricas m=preparar(); Runtime r=Runtime.getRuntime(); r.gc(); long mb=r.totalMemory()-r.freeMemory(); long ini=System.nanoTime(); for(int i=0;i<a.length-1;i++){m.iteraciones++; int min=i; for(int j=i+1;j<a.length;j++){m.comparaciones++; if(a[j]<a[min]) min=j;} if(min!=i){int t=a[i];a[i]=a[min];a[min]=t;m.intercambios++;}} m.tiempoNanosegundos=System.nanoTime()-ini; r.gc(); m.memoriaBytes=Math.max((r.totalMemory()-r.freeMemory())-mb,0); return m; }
+    private static Metricas insercion(int[] a){ Metricas m=preparar(); Runtime r=Runtime.getRuntime(); r.gc(); long mb=r.totalMemory()-r.freeMemory(); long ini=System.nanoTime(); for(int i=1;i<a.length;i++){m.iteraciones++; int clave=a[i],j=i-1; while(j>=0){m.comparaciones++; if(a[j]>clave){a[j+1]=a[j];m.intercambios++;j--;} else break;} a[j+1]=clave; m.intercambios++;} m.tiempoNanosegundos=System.nanoTime()-ini; r.gc(); m.memoriaBytes=Math.max((r.totalMemory()-r.freeMemory())-mb,0); return m; }
+    private static int[] generarEnterosInvertidos(int n){ int[] d=new int[n]; for(int i=0;i<n;i++) d[i]=n-i; return d; }
+    private static int[] generarEnterosParcialmenteOrdenados(int n){ int[] d=generarEnterosAscendentes(n); if(n>=4){ intercambiar(d,n/4,n/4+1); intercambiar(d,n/2,Math.min(n-1,n/2+2)); intercambiar(d,Math.max(0,n-3),n-1);} return d; }
+    private static int[] generarEnterosDesordenados(int n){ int[] d=new int[n]; for(int i=0;i<n;i++) d[i]=((i*37)+11)%(n*3+17)+1; return d; }
+    private static int[] generarEnterosAscendentes(int n){ int[] d=new int[n]; for(int i=0;i<n;i++) d[i]=i+1; return d; }
+    private static void intercambiar(int[] a,int i,int j){ int t=a[i]; a[i]=a[j]; a[j]=t; }
+    private static String resumir(int[] a,int limite){ return a.length<=limite?Arrays.toString(a):Arrays.toString(Arrays.copyOf(a, limite))+" ... (total "+a.length+" elementos)"; }
 }

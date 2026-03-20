@@ -1,0 +1,282 @@
+// ============================================================================
+// GUIA SUPER EXPLICADA DEL PROGRAMA 22
+// ============================================================================
+// Este programa hace casi lo mismo que el programa 21, pero en vez de ordenar
+// numeros enteros, ordena nombres (cadenas de texto).
+//
+// IDEA GENERAL:
+// 1) Tenemos arreglos de nombres.
+// 2) Queremos acomodarlos alfabeticamente.
+// 3) Para hacerlo usamos Merge Sort.
+// 4) Medimos comparaciones, movimientos, tiempo y memoria.
+// 5) Lo probamos con 9 escenarios:
+//    - 10, 50 y 200 nombres.
+//    - desorganizados, parcialmente organizados e invertidos.
+//
+// EXPLICACION MUY BASICA DEL ALGORITMO:
+// Imagina dos filas de tarjetas con nombres.
+// Cada fila ya esta ordenada alfabeticamente.
+// Si quieres unirlas en una sola fila ordenada, miras el primer nombre de cada
+// fila y eliges el que va primero alfabeticamente.
+// Luego repites lo mismo otra vez, y otra vez, hasta terminar.
+//
+// Merge Sort hace eso, pero antes de mezclar, primero parte el problema en
+// trozos cada vez mas pequenos hasta que quedan pedacitos de 1 nombre.
+// Como un solo nombre ya esta "ordenado", luego empieza la mezcla ordenada.
+//
+// EN RESUMEN:
+// - divide,
+// - divide otra vez,
+// - divide otra vez,
+// - luego une comparando bien,
+// - y termina con todo ordenado.
+//
+// IMPORTANTE EN STRINGS:
+// Para comparar nombres usamos compareToIgnoreCase().
+// Eso significa que Java compara el texto ignorando mayusculas/minusculas.
+// Por ejemplo, "Ana" y "ana" se comparan sin considerar la diferencia de caso.
+// ============================================================================
+
+import java.util.Arrays;
+
+public class Programa22MergeSortStringsMetricas {
+
+    // Esta clase guarda las 4 metricas de cada prueba en un solo objeto.
+    static class Metricas {
+        long comparaciones;      // Cuantas comparaciones alfabeticas hacemos.
+        long intercambios;       // Cuantos movimientos/copias de nombres hacemos.
+        long tiempoNanosegundos; // Tiempo de ejecucion.
+        long memoriaBytes;       // Memoria aproximada usada.
+        long iteraciones;       // Cuenta divisiones/fusiones relevantes del algoritmo.
+    }
+
+    // Banco base de nombres.
+    // Lo usamos para construir arreglos mas grandes sin tener que escribir
+    // manualmente 50 o 200 nombres distintos uno por uno.
+    private static final String[] BASE_NOMBRES = {
+            "Ana", "Luis", "Marta", "Carlos", "Elena", "Jorge", "Paula", "Diego", "Sofia", "Ramon",
+            "Lucia", "Mateo", "Valeria", "Andres", "Camila", "Bruno", "Daniela", "Esteban", "Gabriela", "Hector"
+    };
+
+    public static void main(String[] args) {
+        // "main" es el inicio del programa.
+        // Desde aqui lanzamos las 9 pruebas que nos interesan.
+
+        // ===========================
+        // POCOS NOMBRES: 10 DATOS
+        // ===========================
+        ejecutarEscenario("POCOS NOMBRES (10)", "TOTALMENTE DESORGANIZADOS", generarNombresDesordenados(10));
+        ejecutarEscenario("POCOS NOMBRES (10)", "PARCIALMENTE ORGANIZADOS", generarNombresParcialmenteOrdenados(10));
+        ejecutarEscenario("POCOS NOMBRES (10)", "ORDENADOS INVERTIDAMENTE", generarNombresInvertidos(10));
+
+        // ===============================
+        // NOMBRES MODERADOS: 50 DATOS
+        // ===============================
+        ejecutarEscenario("NOMBRES MODERADOS (50)", "TOTALMENTE DESORGANIZADOS", generarNombresDesordenados(50));
+        ejecutarEscenario("NOMBRES MODERADOS (50)", "PARCIALMENTE ORGANIZADOS", generarNombresParcialmenteOrdenados(50));
+        ejecutarEscenario("NOMBRES MODERADOS (50)", "ORDENADOS INVERTIDAMENTE", generarNombresInvertidos(50));
+
+        // =====================================
+        // GRAN CANTIDAD DE NOMBRES: 200 DATOS
+        // =====================================
+        ejecutarEscenario("GRAN CANTIDAD DE NOMBRES (200)", "TOTALMENTE DESORGANIZADOS", generarNombresDesordenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE NOMBRES (200)", "PARCIALMENTE ORGANIZADOS", generarNombresParcialmenteOrdenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE NOMBRES (200)", "ORDENADOS INVERTIDAMENTE", generarNombresInvertidos(200));
+    }
+
+    // Este metodo organiza una prueba completa.
+    // PASO A PASO:
+    // 1) recibe un arreglo base de nombres,
+    // 2) hace una copia para conservar el original,
+    // 3) ordena la copia con Merge Sort,
+    // 4) imprime el antes y el despues,
+    // 5) muestra las metricas.
+    private static void ejecutarEscenario(String cantidad, String situacion, String[] datosBase) {
+        String[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = mergeSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("CANTIDAD: " + cantidad);
+        System.out.println("SITUACION INICIAL: " + situacion);
+        System.out.println("PRIMEROS 20 DEL ORIGINAL: " + resumirArreglo(datosBase, 20));
+        System.out.println("PRIMEROS 20 DEL ORDENADO: " + resumirArreglo(copia, 20));
+        System.out.println("ITERACIONES: " + metricas.iteraciones);
+        System.out.println("COMPARACIONES: " + metricas.comparaciones);
+        System.out.println("INTERCAMBIOS/MOVIMIENTOS: " + metricas.intercambios);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    // Este metodo prepara la medicion de rendimiento.
+    // No es la parte que "piensa" el ordenamiento, sino la parte que mide.
+    private static Metricas mergeSortConMetricas(String[] arreglo) {
+        Metricas metricas = new Metricas();
+        Runtime runtime = Runtime.getRuntime();
+
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+        long inicio = System.nanoTime();
+
+        // Arreglo auxiliar necesario para la etapa de mezcla.
+        String[] auxiliar = new String[arreglo.length];
+        mergeSort(arreglo, auxiliar, 0, arreglo.length - 1, metricas);
+
+        long fin = System.nanoTime();
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+
+    // Esta version de mergeSort trabaja con nombres.
+    // La logica es exactamente la misma que con enteros:
+    // 1) dividir,
+    // 2) ordenar la mitad izquierda,
+    // 3) ordenar la mitad derecha,
+    // 4) fusionar ambas mitades.
+    private static void mergeSort(String[] arreglo, String[] auxiliar, int izquierda, int derecha, Metricas metricas) {
+        // Caso base: 1 nombre o menos = ya esta ordenado.
+        metricas.iteraciones++;
+        if (izquierda >= derecha) {
+            return;
+        }
+
+        int medio = izquierda + (derecha - izquierda) / 2;
+
+        mergeSort(arreglo, auxiliar, izquierda, medio, metricas);
+        mergeSort(arreglo, auxiliar, medio + 1, derecha, metricas);
+        fusionar(arreglo, auxiliar, izquierda, medio, derecha, metricas);
+    }
+
+    // Aqui ocurre la mezcla ordenada.
+    // Si tienes dos grupos ya ordenados alfabeticamente, este metodo los une
+    // en un solo grupo tambien ordenado alfabeticamente.
+    private static void fusionar(String[] arreglo, String[] auxiliar, int izquierda, int medio, int derecha, Metricas metricas) {
+        int i = izquierda;   // recorre la mitad izquierda
+        int j = medio + 1;   // recorre la mitad derecha
+        int k = izquierda;   // indica donde escribir en auxiliar
+
+        // Mientras haya nombres disponibles en ambas mitades...
+        while (i <= medio && j <= derecha) {
+            metricas.comparaciones++;
+
+            // compareToIgnoreCase() devuelve:
+            // - valor negativo si arreglo[i] va antes alfabeticamente
+            // - cero si son equivalentes en comparacion
+            // - valor positivo si arreglo[i] va despues
+            if (arreglo[i].compareToIgnoreCase(arreglo[j]) <= 0) {
+                auxiliar[k++] = arreglo[i++];
+            } else {
+                auxiliar[k++] = arreglo[j++];
+            }
+
+            metricas.intercambios++;
+        }
+
+        // Si quedaron nombres en la mitad izquierda, los copiamos.
+        while (i <= medio) {
+            auxiliar[k++] = arreglo[i++];
+            metricas.intercambios++;
+        }
+
+        // Si quedaron nombres en la mitad derecha, los copiamos.
+        while (j <= derecha) {
+            auxiliar[k++] = arreglo[j++];
+            metricas.intercambios++;
+        }
+
+        // Finalmente copiamos el resultado ordenado al arreglo principal.
+        for (int indice = izquierda; indice <= derecha; indice++) {
+            arreglo[indice] = auxiliar[indice];
+            metricas.intercambios++;
+        }
+    }
+
+    // Caso desorganizado.
+    // Construimos nombres con una formula fija para que siempre se repita el mismo caso.
+    private static String[] generarNombresDesordenados(int cantidad) {
+        String[] datos = new String[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = BASE_NOMBRES[(i * 7 + 3) % BASE_NOMBRES.length] + String.format("_%03d", (i * 17 + 5) % (cantidad * 2 + 31));
+        }
+        return datos;
+    }
+
+    // Caso parcialmente organizado.
+    // Primero se crea un arreglo alfabetico y luego se "desacomoda" un poquito.
+    private static String[] generarNombresParcialmenteOrdenados(int cantidad) {
+        String[] datos = generarNombresAscendentes(cantidad);
+        if (cantidad >= 4) {
+            intercambiar(datos, cantidad / 5, cantidad / 5 + 1);
+            intercambiar(datos, cantidad / 2, Math.min(cantidad - 1, cantidad / 2 + 3));
+            intercambiar(datos, Math.max(0, cantidad - 4), cantidad - 1);
+        }
+        return datos;
+    }
+
+    // Caso invertido.
+    // Toma un arreglo alfabetico y lo pone al reves.
+    private static String[] generarNombresInvertidos(int cantidad) {
+        String[] datos = generarNombresAscendentes(cantidad);
+        for (int i = 0, j = datos.length - 1; i < j; i++, j--) {
+            intercambiar(datos, i, j);
+        }
+        return datos;
+    }
+
+    // Caso ascendente/alfabetico.
+    // Creamos nombres basados en el banco base y luego ordenamos alfabeticamente.
+    private static String[] generarNombresAscendentes(int cantidad) {
+        String[] datos = new String[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = BASE_NOMBRES[i % BASE_NOMBRES.length] + String.format("_%03d", i + 1);
+        }
+
+        // Aqui Java deja el arreglo en orden alfabetico ignorando mayusculas.
+        Arrays.sort(datos, String::compareToIgnoreCase);
+        return datos;
+    }
+
+    // Intercambia dos nombres de posicion.
+    private static void intercambiar(String[] arreglo, int i, int j) {
+        String temporal = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temporal;
+    }
+
+    // Para arreglos grandes solo mostramos una parte para no saturar la consola.
+    private static String resumirArreglo(String[] arreglo, int limite) {
+        if (arreglo.length <= limite) {
+            return Arrays.toString(arreglo);
+        }
+        return Arrays.toString(Arrays.copyOf(arreglo, limite)) + " ... (total " + arreglo.length + " elementos)";
+    }
+}
+
+/*
+SALIDA DE REFERENCIA (comparaciones e intercambios reproducibles; tiempo/memoria pueden variar)
+============================================================
+CANTIDAD: POCOS NOMBRES (10)
+SITUACION INICIAL: TOTALMENTE DESORGANIZADOS
+PRIMEROS 20 DEL ORIGINAL: [Carlos_005, Lucia_022, Esteban_039, Elena_005, Mateo_022, Gabriela_039, Jorge_005, Valeria_022, Hector_039, Paula_005]
+PRIMEROS 20 DEL ORDENADO: [Carlos_005, Elena_005, Esteban_039, Gabriela_039, Hector_039, Jorge_005, Lucia_022, Mateo_022, Paula_005, Valeria_022]
+COMPARACIONES: 24
+INTERCAMBIOS/MOVIMIENTOS: 68
+
+CANTIDAD: NOMBRES MODERADOS (50)
+SITUACION INICIAL: PARCIALMENTE ORGANIZADOS
+PRIMEROS 20 DEL ORIGINAL: [Ana_001, Ana_021, Ana_041, Andres_014, Andres_034, Bruno_016, Bruno_036, Camila_015, Camila_035, Carlos_004, Carlos_044, Carlos_024, Daniela_017, Daniela_037, Diego_008, Diego_028, Diego_048, Elena_005, Elena_025, Elena_045] ... (total 50 elementos)
+PRIMEROS 20 DEL ORDENADO: [Ana_001, Ana_021, Ana_041, Andres_014, Andres_034, Bruno_016, Bruno_036, Camila_015, Camila_035, Carlos_004, Carlos_024, Carlos_044, Daniela_017, Daniela_037, Diego_008, Diego_028, Diego_048, Elena_005, Elena_025, Elena_045] ... (total 50 elementos)
+COMPARACIONES: 155
+INTERCAMBIOS/MOVIMIENTOS: 572
+
+CANTIDAD: GRAN CANTIDAD DE NOMBRES (200)
+SITUACION INICIAL: ORDENADOS INVERTIDAMENTE
+PRIMEROS 20 DEL ORIGINAL: [Valeria_193, Valeria_173, Valeria_153, Valeria_133, Valeria_113, Valeria_093, Valeria_073, Valeria_053, Valeria_033, Valeria_013, Sofia_189, Sofia_169, Sofia_149, Sofia_129, Sofia_109, Sofia_089, Sofia_069, Sofia_049, Sofia_029, Sofia_009] ... (total 200 elementos)
+PRIMEROS 20 DEL ORDENADO: [Ana_001, Ana_021, Ana_041, Ana_061, Ana_081, Ana_101, Ana_121, Ana_141, Ana_161, Ana_181, Andres_014, Andres_034, Andres_054, Andres_074, Andres_094, Andres_114, Andres_134, Andres_154, Andres_174, Andres_194] ... (total 200 elementos)
+COMPARACIONES: 732
+INTERCAMBIOS/MOVIMIENTOS: 3088
+*/
