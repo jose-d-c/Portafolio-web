@@ -123,6 +123,24 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
 
 const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
 
+const construirTituloProgramaTemporal = (numero: number, tituloBase?: string) => {
+  const numeroFormateado = numero.toString().padStart(2, "0");
+  const prefijo = `Programa temporal ${numeroFormateado}:`;
+
+  if (!tituloBase) {
+    return `${prefijo} Programa ${numeroFormateado}`;
+  }
+
+  const tituloNormalizado = tituloBase.trim();
+  const expresionTituloActual = new RegExp(`^Programa temporal\\s+0?${numero}\\s*:`, "i");
+
+  if (expresionTituloActual.test(tituloNormalizado)) {
+    return tituloNormalizado.replace(expresionTituloActual, prefijo);
+  }
+
+  return `${prefijo} ${tituloNormalizado}`;
+};
+
 export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero, indice) => {
   const idFuente = numero.toString().padStart(2, "0");
   const configuracion = configuracionesPersonalizadas[numero];
@@ -130,7 +148,7 @@ export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.
   return {
     id: indice + 1,
     slug: `programa-${idFuente}`,
-    titulo: configuracion?.titulo ?? `Programa ${idFuente}`,
+    titulo: construirTituloProgramaTemporal(numero, configuracion?.titulo),
     descripcion:
       configuracion?.descripcion ??
       "Plantilla temporal para agregar analisis, pseudocodigo, pruebas y evidencia visual del programa.",
