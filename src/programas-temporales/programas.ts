@@ -109,9 +109,19 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Implementacion de Radix Sort para enteros positivos en Java, completando los comentarios del ejercicio para explicar encontrarMaximo, las pasadas por digito y el uso de Counting Sort estable.",
   },
+  21: {
+    titulo: "Programa temporal 21: Merge Sort con enteros y metricas completas",
+    descripcion:
+      "Programa Java con Merge Sort sobre arreglos de enteros en tamanos 10, 50 y 200, evaluando casos totalmente desorganizados, parcialmente organizados e invertidos con tiempo, memoria, comparaciones y movimientos.",
+  },
+  22: {
+    titulo: "Programa temporal 22: Merge Sort con nombres y metricas completas",
+    descripcion:
+      "Programa Java con Merge Sort sobre arreglos de nombres en tamanos 10, 50 y 200, evaluando casos totalmente desorganizados, parcialmente organizados e invertidos con tiempo, memoria, comparaciones y movimientos.",
+  },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
 
 export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.map((numero, indice) => {
   const idFuente = numero.toString().padStart(2, "0");
