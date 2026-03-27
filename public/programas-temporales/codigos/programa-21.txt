@@ -1,0 +1,385 @@
+// ============================================================================
+// GUIA SUPER EXPLICADA DEL PROGRAMA 21
+// ============================================================================
+// Este archivo esta pensado como material de apoyo para una persona que apenas
+// esta empezando y no sabe programacion o algoritmos.
+//
+// IDEA GENERAL DEL PROGRAMA:
+// 1) Tenemos varios arreglos de numeros enteros.
+// 2) Queremos ordenarlos de menor a mayor.
+// 3) Para eso usamos el algoritmo Merge Sort.
+// 4) Ademas de ordenar, medimos 4 cosas:
+//    - comparaciones: cuantas veces preguntamos "este numero va antes que este otro?"
+//    - intercambios/movimientos: cuantas copias de datos hacemos al mezclar.
+//    - tiempo: cuanto tarda la ejecucion.
+//    - memoria: cuanta memoria adicional parece usar la JVM.
+//    - iteraciones: cuantas divisiones/fusiones importantes registra el algoritmo.
+// 5) No probamos un solo caso, sino 9 casos distintos:
+//    - 3 tamanos: 10, 50 y 200 elementos.
+//    - 3 situaciones iniciales: desorganizado, parcialmente organizado e invertido.
+//
+// EXPLICACION DEL ALGORITMO MERGE SORT "COMO PARA ALGUIEN QUE NUNCA LO HA VISTO":
+// Imagina que tienes muchas cartas desordenadas.
+// Si intentas ordenar todas de una vez, puede ser confuso.
+// Merge Sort hace algo mas inteligente:
+//
+// PASO A PASO:
+// A) Divide el arreglo grande en dos mitades.
+// B) Luego vuelve a dividir cada mitad en dos partes mas pequenas.
+// C) Sigue dividiendo hasta que cada pedacito tenga solo 1 elemento.
+//    - Un arreglo de 1 solo elemento ya esta "ordenado" porque no hay nada que comparar.
+// D) Despues empieza a unir pedacitos.
+// E) Cada vez que une dos partes, compara sus elementos y los va acomodando en orden.
+// F) Al final, de tanto dividir y volver a unir ordenadamente, todo el arreglo queda ordenado.
+//
+// RESUMEN MENTAL RAPIDO:
+// "DIVIDIR, ORDENAR LAS PARTES, Y MEZCLAR BIEN".
+//
+// IMPORTANTE:
+// Merge Sort casi no hace "intercambios" clasicos como Burbuja.
+// Aqui es mas correcto pensar en MOVIMIENTOS o COPIAS de datos hacia un arreglo
+// auxiliar y luego de regreso al arreglo principal.
+// Por eso en este programa la variable "intercambios" realmente representa
+// movimientos de datos durante la fusion.
+// ============================================================================
+
+import java.util.Arrays;
+
+public class Programa21MergeSortEnterosMetricas {
+
+    // ------------------------------------------------------------------------
+    // CLASE METRICAS
+    // ------------------------------------------------------------------------
+    // En vez de tener 4 variables separadas por todo el programa, las guardamos
+    // en una sola cajita llamada Metricas.
+    // Eso hace el codigo mas ordenado y mas facil de entender.
+    static class Metricas {
+        long comparaciones;      // Cuantas veces comparamos un numero con otro.
+        long intercambios;       // Cuantos movimientos/copias de datos hacemos.
+        long tiempoNanosegundos; // Cuanto tarda la ejecucion completa.
+        long memoriaBytes;       // Memoria aproximada usada durante la corrida.
+        long iteraciones;       // Cuenta llamadas o fusiones relevantes del algoritmo.
+    }
+
+    public static void main(String[] args) {
+        // --------------------------------------------------------------------
+        // QUE HACE MAIN?
+        // --------------------------------------------------------------------
+        // "main" es el punto de inicio del programa.
+        // Cuando Java ejecuta este archivo, empieza aqui.
+        //
+        // Lo que hacemos en este metodo es lanzar 9 pruebas:
+        // 3 tamanos x 3 estados iniciales.
+        //
+        // Cada llamada a ejecutarEscenario(...) hace TODO lo siguiente:
+        // 1) toma un arreglo base,
+        // 2) lo copia para no dañar el original,
+        // 3) lo ordena con Merge Sort,
+        // 4) mide tiempo y memoria,
+        // 5) imprime resultados.
+
+        // =========================
+        // TAMANO PEQUENO: 10 DATOS
+        // =========================
+        ejecutarEscenario("POCOS DATOS (10)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(10));
+
+        // ============================
+        // TAMANO MODERADO: 50 DATOS
+        // ============================
+        ejecutarEscenario("DATOS MODERADOS (50)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(50));
+
+        // ==========================
+        // TAMANO GRANDE: 200 DATOS
+        // ==========================
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(200));
+    }
+
+    // ------------------------------------------------------------------------
+    // METODO: ejecutarEscenario
+    // ------------------------------------------------------------------------
+    // Este metodo sirve para no repetir siempre el mismo bloque de codigo.
+    //
+    // RECIBE:
+    // - tamano: una etiqueta como "POCOS DATOS (10)"
+    // - estado: una etiqueta como "TOTALMENTE DESORGANIZADOS"
+    // - datosBase: el arreglo original que vamos a estudiar
+    //
+    // LOGICA HUMANA DEL METODO:
+    // 1) Hacemos una copia del arreglo original.
+    //    ¿Por que?
+    //    Porque si ordenamos el original, lo perdemos y ya no lo podemos mostrar
+    //    tal como estaba al inicio.
+    // 2) Llamamos al metodo que ordena y mide metricas.
+    // 3) Imprimimos toda la informacion en pantalla.
+    private static void ejecutarEscenario(String tamano, String estado, int[] datosBase) {
+        int[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = mergeSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("TAMANO: " + tamano);
+        System.out.println("ESTADO INICIAL: " + estado);
+        System.out.println("PRIMEROS 20 DEL ORIGINAL: " + resumirArreglo(datosBase, 20));
+        System.out.println("PRIMEROS 20 DEL ORDENADO: " + resumirArreglo(copia, 20));
+        System.out.println("ITERACIONES: " + metricas.iteraciones);
+        System.out.println("COMPARACIONES: " + metricas.comparaciones);
+        System.out.println("INTERCAMBIOS/MOVIMIENTOS: " + metricas.intercambios);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    // ------------------------------------------------------------------------
+    // METODO: mergeSortConMetricas
+    // ------------------------------------------------------------------------
+    // Este metodo es como un "envoltorio" alrededor del algoritmo.
+    //
+    // Su trabajo NO es ordenar directamente paso a paso.
+    // Su trabajo es preparar la medicion:
+    // 1) crear la estructura de metricas,
+    // 2) medir memoria antes,
+    // 3) medir tiempo antes,
+    // 4) ejecutar Merge Sort,
+    // 5) medir tiempo despues,
+    // 6) medir memoria despues,
+    // 7) devolver todos los resultados.
+    private static Metricas mergeSortConMetricas(int[] arreglo) {
+        Metricas metricas = new Metricas();
+        Runtime runtime = Runtime.getRuntime();
+
+        // Pedimos al recolector de basura que intente limpiar memoria para
+        // reducir un poco el ruido en la medicion. No es perfecto, pero ayuda.
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+
+        // Aqui empieza el cronometro de alta precision.
+        long inicio = System.nanoTime();
+
+        // Merge Sort necesita un arreglo auxiliar para ir mezclando resultados.
+        // Piensalo como una mesa extra donde vamos acomodando temporalmente
+        // las cartas antes de volverlas a poner en su sitio final.
+        int[] auxiliar = new int[arreglo.length];
+
+        // Aqui ocurre el ordenamiento real.
+        mergeSort(arreglo, auxiliar, 0, arreglo.length - 1, metricas);
+
+        // Aqui termina el cronometro.
+        long fin = System.nanoTime();
+
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+
+    // ------------------------------------------------------------------------
+    // METODO: mergeSort
+    // ------------------------------------------------------------------------
+    // ESTE ES EL CORAZON DE LA IDEA DE "DIVIDIR Y VENCER".
+    //
+    // PARAMETROS:
+    // - arreglo: los datos que estamos ordenando.
+    // - auxiliar: espacio temporal para ayudar a mezclar.
+    // - izquierda: inicio del tramo que vamos a trabajar.
+    // - derecha: final del tramo que vamos a trabajar.
+    // - metricas: donde guardamos comparaciones y movimientos.
+    //
+    // QUE HACE?
+    // 1) Si solo hay 1 elemento (o ninguno), no hace nada.
+    //    Porque un tramo de 1 elemento ya esta ordenado.
+    // 2) Calcula el punto medio.
+    // 3) Ordena la mitad izquierda.
+    // 4) Ordena la mitad derecha.
+    // 5) Fusiona ambas mitades ya ordenadas.
+    private static void mergeSort(int[] arreglo, int[] auxiliar, int izquierda, int derecha, Metricas metricas) {
+        // CASO BASE:
+        // Si izquierda >= derecha, significa que el tramo tiene 1 elemento o menos.
+        // En ese caso no hay nada que dividir ni ordenar.
+        metricas.iteraciones++;
+        if (izquierda >= derecha) {
+            return;
+        }
+
+        // Calculamos el centro del tramo actual.
+        int medio = izquierda + (derecha - izquierda) / 2;
+
+        // Primero ordenamos la mitad izquierda.
+        mergeSort(arreglo, auxiliar, izquierda, medio, metricas);
+
+        // Luego ordenamos la mitad derecha.
+        mergeSort(arreglo, auxiliar, medio + 1, derecha, metricas);
+
+        // Por ultimo, unimos ambas mitades ya ordenadas.
+        fusionar(arreglo, auxiliar, izquierda, medio, derecha, metricas);
+    }
+
+    // ------------------------------------------------------------------------
+    // METODO: fusionar
+    // ------------------------------------------------------------------------
+    // Esta es la parte MAS IMPORTANTE para entender Merge Sort.
+    //
+    // Supongamos que ya tenemos dos mitades ordenadas:
+    // - mitad 1: [2, 8, 15]
+    // - mitad 2: [3, 9, 20]
+    //
+    // La fusion hace esto:
+    // - compara 2 con 3  -> gana 2
+    // - compara 8 con 3  -> gana 3
+    // - compara 8 con 9  -> gana 8
+    // - compara 15 con 9 -> gana 9
+    // - compara 15 con 20 -> gana 15
+    // - sobra 20, entonces se copia al final
+    // Resultado: [2, 3, 8, 9, 15, 20]
+    //
+    // En otras palabras:
+    // Va mirando el "frente" de cada mitad y siempre elige el menor.
+    private static void fusionar(int[] arreglo, int[] auxiliar, int izquierda, int medio, int derecha, Metricas metricas) {
+        // i recorre la mitad izquierda.
+        int i = izquierda;
+
+        // j recorre la mitad derecha.
+        int j = medio + 1;
+
+        // k indica donde escribir en el arreglo auxiliar.
+        int k = izquierda;
+
+        // Mientras TODAVIA haya elementos en ambas mitades...
+        while (i <= medio && j <= derecha) {
+            // Vamos a comparar el elemento actual de la izquierda con el actual de la derecha.
+            metricas.comparaciones++;
+
+            // Si el de la izquierda es menor o igual, ese va primero.
+            if (arreglo[i] <= arreglo[j]) {
+                auxiliar[k++] = arreglo[i++];
+            } else {
+                // Si no, va primero el de la derecha.
+                auxiliar[k++] = arreglo[j++];
+            }
+
+            // Cada copia al auxiliar cuenta como movimiento de datos.
+            metricas.intercambios++;
+        }
+
+        // Si quedaron elementos sin usar en la mitad izquierda, se copian tal cual.
+        while (i <= medio) {
+            auxiliar[k++] = arreglo[i++];
+            metricas.intercambios++;
+        }
+
+        // Si quedaron elementos sin usar en la mitad derecha, se copian tal cual.
+        while (j <= derecha) {
+            auxiliar[k++] = arreglo[j++];
+            metricas.intercambios++;
+        }
+
+        // Ahora copiamos el tramo ya ordenado desde el auxiliar hasta el arreglo original.
+        // Esto deja el segmento [izquierda..derecha] ordenado definitivamente.
+        for (int indice = izquierda; indice <= derecha; indice++) {
+            arreglo[indice] = auxiliar[indice];
+            metricas.intercambios++;
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    // GENERADORES DE DATOS
+    // ------------------------------------------------------------------------
+    // Estos metodos crean los arreglos de prueba.
+    // Los hacemos por separado para controlar muy bien cada escenario.
+
+    // Caso 1: arreglo invertido.
+    // Ejemplo con 5 elementos: [5, 4, 3, 2, 1]
+    // Sirve para estudiar como se comporta el algoritmo cuando todo esta al reves.
+    private static int[] generarEnterosInvertidos(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = cantidad - i;
+        }
+        return datos;
+    }
+
+    // Caso 2: arreglo parcialmente organizado.
+    // Primero creamos [1, 2, 3, 4, 5, ...]
+    // Luego hacemos unos pocos cambios pequenos.
+    // La idea es simular un arreglo que "casi" esta ordenado, pero no del todo.
+    private static int[] generarEnterosParcialmenteOrdenados(int cantidad) {
+        int[] datos = generarEnterosAscendentes(cantidad);
+        if (cantidad >= 4) {
+            intercambiar(datos, cantidad / 4, cantidad / 4 + 1);
+            intercambiar(datos, cantidad / 2, Math.min(cantidad - 1, cantidad / 2 + 2));
+            intercambiar(datos, Math.max(0, cantidad - 3), cantidad - 1);
+        }
+        return datos;
+    }
+
+    // Caso 3: arreglo desordenado.
+    // En lugar de usar numeros aleatorios puros, usamos una formula fija.
+    // Eso permite que SIEMPRE salga el mismo arreglo para el mismo tamano.
+    // Es util para que el profesor, el estudiante y cualquier persona obtengan
+    // resultados comparables al ejecutar el programa.
+    private static int[] generarEnterosDesordenados(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = ((i * 37) + 11) % (cantidad * 3 + 17) + 1;
+        }
+        return datos;
+    }
+
+    // Este metodo construye un arreglo perfectamente ascendente:
+    // [1, 2, 3, 4, ..., cantidad]
+    private static int[] generarEnterosAscendentes(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = i + 1;
+        }
+        return datos;
+    }
+
+    // Metodo auxiliar para intercambiar dos posiciones.
+    // Lo usamos cuando queremos "desacomodar" un arreglo parcialmente ordenado.
+    private static void intercambiar(int[] arreglo, int i, int j) {
+        int temporal = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temporal;
+    }
+
+    // Si el arreglo es pequeno, lo mostramos completo.
+    // Si es grande, mostramos solo los primeros 20 valores para no llenar la consola.
+    private static String resumirArreglo(int[] arreglo, int limite) {
+        if (arreglo.length <= limite) {
+            return Arrays.toString(arreglo);
+        }
+        return Arrays.toString(Arrays.copyOf(arreglo, limite)) + " ... (total " + arreglo.length + " elementos)";
+    }
+}
+
+/*
+SALIDA DE REFERENCIA (comparaciones e intercambios reproducibles; tiempo/memoria pueden variar)
+============================================================
+TAMANO: POCOS DATOS (10)
+ESTADO INICIAL: TOTALMENTE DESORGANIZADOS
+PRIMEROS 20 DEL ORIGINAL: [12, 2, 39, 29, 19, 9, 46, 36, 26, 16]
+PRIMEROS 20 DEL ORDENADO: [2, 9, 12, 16, 19, 26, 29, 36, 39, 46]
+COMPARACIONES: 24
+INTERCAMBIOS/MOVIMIENTOS: 68
+
+TAMANO: DATOS MODERADOS (50)
+ESTADO INICIAL: PARCIALMENTE ORGANIZADOS
+PRIMEROS 20 DEL ORIGINAL: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 13, 15, 16, 17, 18, 19, 20] ... (total 50 elementos)
+PRIMEROS 20 DEL ORDENADO: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] ... (total 50 elementos)
+COMPARACIONES: 154
+INTERCAMBIOS/MOVIMIENTOS: 572
+
+TAMANO: GRAN CANTIDAD DE DATOS (200)
+ESTADO INICIAL: ORDENADOS INVERTIDAMENTE
+PRIMEROS 20 DEL ORIGINAL: [200, 199, 198, 197, 196, 195, 194, 193, 192, 191, 190, 189, 188, 187, 186, 185, 184, 183, 182, 181] ... (total 200 elementos)
+PRIMEROS 20 DEL ORDENADO: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] ... (total 200 elementos)
+COMPARACIONES: 732
+INTERCAMBIOS/MOVIMIENTOS: 3088
+*/

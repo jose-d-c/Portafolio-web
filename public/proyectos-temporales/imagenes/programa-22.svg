@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 22</title>
+  <desc id="desc">Salida de referencia para Merge Sort con nombres en cantidades 10, 50 y 200, con tres modos de orden inicial.</desc>
+  <rect width="1600" height="1000" fill="#0f172a"/>
+  <rect x="40" y="40" width="1520" height="920" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="800" y="100" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="34">Programa 22 - Merge Sort con nombres y metricas</text>
+  <text x="800" y="140" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="21">Escenarios: 10, 50 y 200 nombres en modo desorganizado, parcial e invertido</text>
+  <rect x="90" y="185" width="1420" height="720" rx="16" fill="#020617" stroke="#1e293b" stroke-width="2"/>
+  <g fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">
+    <text x="120" y="245">POCOS NOMBRES (10) - TOTALMENTE DESORGANIZADOS</text>
+    <text x="150" y="285">Original: [Carlos_005, Lucia_022, Esteban_039, Elena_005, Mateo_022, ...]</text>
+    <text x="150" y="320">Ordenado: [Carlos_005, Elena_005, Esteban_039, Gabriela_039, Hector_039, ...]</text>
+    <text x="150" y="355">Comparaciones: 24 | Movimientos: 68</text>
+
+    <text x="120" y="430">NOMBRES MODERADOS (50) - PARCIALMENTE ORGANIZADOS</text>
+    <text x="150" y="470">Original: [Ana_001, Ana_021, Ana_041, Andres_014, Andres_034, Bruno_016, ...]</text>
+    <text x="150" y="505">Ordenado: [Ana_001, Ana_021, Ana_041, Andres_014, Andres_034, Bruno_016, ...]</text>
+    <text x="150" y="540">Comparaciones: 155 | Movimientos: 572</text>
+
+    <text x="120" y="615">GRAN CANTIDAD DE NOMBRES (200) - ORDENADOS INVERTIDAMENTE</text>
+    <text x="150" y="655">Original: [Valeria_193, Valeria_173, Valeria_153, Valeria_133, Sofia_189, ...]</text>
+    <text x="150" y="690">Ordenado: [Ana_001, Ana_021, Ana_041, Ana_061, Ana_081, Andres_014, ...]</text>
+    <text x="150" y="725">Comparaciones: 732 | Movimientos: 3088</text>
+
+    <text x="120" y="800">La comparacion alfabetica usa compareToIgnoreCase() y los datos son reproducibles.</text>
+    <text x="120" y="835">Tiempo y memoria pueden cambiar ligeramente entre ejecuciones.</text>
+  </g>
+</svg>

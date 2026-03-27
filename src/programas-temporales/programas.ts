@@ -120,7 +120,7 @@ export const programasTemporales: ProgramaTemporal[] = ordenProgramasTemporales.
   return {
     id: indice + 1,
     slug: `programa-${idFuente}`,
-    titulo: configuracion?.titulo ?? `Programa ${idFuente}`,
+    titulo: construirTituloProgramaTemporal(numero, configuracion?.titulo),
     descripcion:
       configuracion?.descripcion ??
       "Plantilla temporal para agregar analisis, pseudocodigo, pruebas y evidencia visual del programa.",
