@@ -1,0 +1,71 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Grafica comparativa de tiempo de ejecucion Merge Sort vs Quick Sort</title>
+  <desc id="desc">Curvas Big O para n log n y peor caso n cuadrado con puntos de tiempo estimados para varios tamanos.</desc>
+  <rect width="1280" height="720" rx="24" fill="#0B1220"/>
+  <rect x="70" y="70" width="1140" height="580" rx="18" fill="#111A2E" stroke="#334155"/>
+
+  <text x="110" y="130" fill="#E2E8F0" font-size="34" font-family="Inter, Arial, sans-serif" font-weight="700">
+    Tiempo de ejecucion (Big-O): Merge Sort vs Quick Sort
+  </text>
+  <text x="110" y="165" fill="#94A3B8" font-size="20" font-family="Inter, Arial, sans-serif">
+    Merge Sort (estable O(n log n)) • Quick Sort promedio O(n log n) y peor caso O(n²)
+  </text>
+
+  <line x1="150" y1="590" x2="1120" y2="590" stroke="#64748B" stroke-width="2"/>
+  <line x1="150" y1="590" x2="150" y2="220" stroke="#64748B" stroke-width="2"/>
+
+  <text x="1125" y="615" fill="#CBD5E1" font-size="18" font-family="Inter, Arial, sans-serif">n (tamano de arreglo)</text>
+  <text x="70" y="225" fill="#CBD5E1" font-size="18" font-family="Inter, Arial, sans-serif" transform="rotate(-90 70 225)">tiempo relativo</text>
+
+  <line x1="150" y1="510" x2="1120" y2="510" stroke="#1E293B"/>
+  <line x1="150" y1="430" x2="1120" y2="430" stroke="#1E293B"/>
+  <line x1="150" y1="350" x2="1120" y2="350" stroke="#1E293B"/>
+  <line x1="150" y1="270" x2="1120" y2="270" stroke="#1E293B"/>
+
+  <text x="140" y="595" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">0</text>
+  <text x="140" y="515" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">1</text>
+  <text x="140" y="435" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">2</text>
+  <text x="140" y="355" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">3</text>
+  <text x="140" y="275" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">4</text>
+
+  <line x1="260" y1="590" x2="260" y2="220" stroke="#1E293B"/>
+  <line x1="420" y1="590" x2="420" y2="220" stroke="#1E293B"/>
+  <line x1="620" y1="590" x2="620" y2="220" stroke="#1E293B"/>
+  <line x1="860" y1="590" x2="860" y2="220" stroke="#1E293B"/>
+  <line x1="1060" y1="590" x2="1060" y2="220" stroke="#1E293B"/>
+
+  <text x="245" y="620" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">10</text>
+  <text x="405" y="620" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">50</text>
+  <text x="602" y="620" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">200</text>
+  <text x="845" y="620" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">500</text>
+  <text x="1037" y="620" fill="#94A3B8" font-size="16" font-family="Inter, Arial, sans-serif">1000</text>
+
+  <path d="M260 548 C340 520, 500 470, 620 430 C700 400, 790 380, 860 360 C930 340, 995 325, 1060 310" stroke="#2DD4BF" stroke-width="5" fill="none"/>
+  <circle cx="260" cy="548" r="7" fill="#2DD4BF"/>
+  <circle cx="420" cy="492" r="7" fill="#2DD4BF"/>
+  <circle cx="620" cy="430" r="7" fill="#2DD4BF"/>
+  <circle cx="860" cy="360" r="7" fill="#2DD4BF"/>
+  <circle cx="1060" cy="310" r="7" fill="#2DD4BF"/>
+
+  <path d="M260 544 C350 500, 500 445, 620 395 C700 360, 790 330, 860 300 C930 270, 995 250, 1060 230" stroke="#F59E0B" stroke-width="5" fill="none" stroke-dasharray="8 6"/>
+  <circle cx="260" cy="544" r="7" fill="#F59E0B"/>
+  <circle cx="420" cy="486" r="7" fill="#F59E0B"/>
+  <circle cx="620" cy="395" r="7" fill="#F59E0B"/>
+  <circle cx="860" cy="300" r="7" fill="#F59E0B"/>
+  <circle cx="1060" cy="230" r="7" fill="#F59E0B"/>
+
+  <path d="M260 552 C360 545, 520 535, 620 505 C700 475, 790 420, 860 340 C930 255, 995 165, 1060 95" stroke="#FB7185" stroke-width="5" fill="none"/>
+  <circle cx="260" cy="552" r="7" fill="#FB7185"/>
+  <circle cx="420" cy="542" r="7" fill="#FB7185"/>
+  <circle cx="620" cy="505" r="7" fill="#FB7185"/>
+  <circle cx="860" cy="340" r="7" fill="#FB7185"/>
+  <circle cx="1060" cy="95" r="7" fill="#FB7185"/>
+
+  <rect x="820" y="105" width="330" height="126" rx="12" fill="#0F172A" stroke="#334155"/>
+  <circle cx="850" cy="138" r="7" fill="#2DD4BF"/>
+  <text x="868" y="144" fill="#E2E8F0" font-size="17" font-family="Inter, Arial, sans-serif">Merge Sort (n log n)</text>
+  <circle cx="850" cy="172" r="7" fill="#F59E0B"/>
+  <text x="868" y="178" fill="#E2E8F0" font-size="17" font-family="Inter, Arial, sans-serif">Quick Sort promedio (n log n)</text>
+  <circle cx="850" cy="206" r="7" fill="#FB7185"/>
+  <text x="868" y="212" fill="#E2E8F0" font-size="17" font-family="Inter, Arial, sans-serif">Quick Sort peor caso (n²)</text>
+</svg>
