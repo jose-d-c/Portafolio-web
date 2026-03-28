@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia de salida Programa 27</title>
+  <desc id="desc">Salida de referencia para Bucket Sort con strings, evaluando cantidades 10, 50 y 200 en casos desorganizado, parcial e invertido.</desc>
+  <rect width="1600" height="1000" fill="#0f172a"/>
+  <rect x="40" y="40" width="1520" height="920" rx="24" fill="#111827" stroke="#334155" stroke-width="4"/>
+  <text x="800" y="100" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="34">Programa 27 - Bucket Sort con strings y metricas</text>
+  <text x="800" y="140" text-anchor="middle" fill="#93c5fd" font-family="Arial, sans-serif" font-size="21">Buckets alfabeticos por inicial + orden interno por compareToIgnoreCase</text>
+  <rect x="90" y="185" width="1420" height="720" rx="16" fill="#020617" stroke="#1e293b" stroke-width="2"/>
+  <g fill="#cbd5e1" font-family="Courier New, monospace" font-size="21">
+    <text x="120" y="245">POCOS NOMBRES (10) - TOTALMENTE DESORGANIZADOS</text>
+    <text x="150" y="285">Original: [Carlos_005, Lucia_024, Esteban_043, Elena_007, Mateo_026, ...]</text>
+    <text x="150" y="320">Ordenado: [Ana_001, Bruno_016, Carlos_005, Elena_007, Esteban_043, ...]</text>
+    <text x="150" y="355">Iteraciones: 30 | Comparaciones: 28 | Movimientos: 20</text>
+
+    <text x="120" y="430">NOMBRES MODERADOS (50) - PARCIALMENTE ORGANIZADOS</text>
+    <text x="150" y="470">Original: [Ana_001, Ana_021, Ana_041, Andres_014, Bruno_016, ...]</text>
+    <text x="150" y="505">Ordenado: [Ana_001, Ana_021, Ana_041, Andres_014, Bruno_016, ...]</text>
+    <text x="150" y="540">Iteraciones: 150 | Comparaciones: 232 | Movimientos: 100</text>
+
+    <text x="120" y="615">GRAN CANTIDAD DE NOMBRES (200) - ORDENADOS INVERTIDAMENTE</text>
+    <text x="150" y="655">Original: [Valeria_193, Valeria_173, Sofia_189, Ramon_170, ...]</text>
+    <text x="150" y="690">Ordenado: [Ana_001, Ana_021, Andres_014, Bruno_016, Camila_015, ...]</text>
+    <text x="150" y="725">Iteraciones: 600 | Comparaciones: 1118 | Movimientos: 400</text>
+
+    <text x="120" y="800">Cada bucket se ordena con Collections.sort(String.CASE_INSENSITIVE_ORDER).</text>
+    <text x="120" y="835">Tiempo y memoria pueden variar ligeramente en cada ejecucion.</text>
+  </g>
+</svg>

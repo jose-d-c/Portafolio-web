@@ -1,0 +1,178 @@
+// ============================================================================
+// GUIA SUPER EXPLICADA DEL PROGRAMA 26
+// ============================================================================
+// OBJETIVO:
+// Implementar Bucket Sort para enteros y evaluar su comportamiento bajo:
+// - Cantidades: 10, 50 y 200 datos.
+// - Situaciones: desorganizados, parcialmente organizados e invertidos.
+// - Metricas: iteraciones, comparaciones, movimientos, tiempo y memoria.
+// ============================================================================
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class Programa26BucketSortEnterosMetricas {
+
+    static class Metricas {
+        long iteraciones;
+        long comparaciones;
+        long movimientos;
+        long tiempoNanosegundos;
+        long memoriaBytes;
+    }
+
+    public static void main(String[] args) {
+        ejecutarEscenario("POCOS DATOS (10)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(10));
+
+        ejecutarEscenario("DATOS MODERADOS (50)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(50));
+
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(200));
+    }
+
+    private static void ejecutarEscenario(String cantidad, String situacion, int[] datosBase) {
+        int[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = bucketSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("CANTIDAD: " + cantidad);
+        System.out.println("SITUACION INICIAL: " + situacion);
+        System.out.println("PRIMEROS 20 DEL ORIGINAL: " + resumirArreglo(datosBase, 20));
+        System.out.println("PRIMEROS 20 DEL ORDENADO: " + resumirArreglo(copia, 20));
+        System.out.println("ITERACIONES: " + metricas.iteraciones);
+        System.out.println("COMPARACIONES (estimadas): " + metricas.comparaciones);
+        System.out.println("MOVIMIENTOS: " + metricas.movimientos);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    private static Metricas bucketSortConMetricas(int[] arreglo) {
+        Metricas metricas = new Metricas();
+        Runtime runtime = Runtime.getRuntime();
+
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+        long inicio = System.nanoTime();
+
+        bucketSort(arreglo, metricas);
+
+        long fin = System.nanoTime();
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+
+    private static void bucketSort(int[] arreglo, Metricas metricas) {
+        if (arreglo.length <= 1) {
+            return;
+        }
+
+        int min = arreglo[0];
+        int max = arreglo[0];
+
+        for (int valor : arreglo) {
+            metricas.iteraciones++;
+            metricas.comparaciones += 2;
+            if (valor < min) min = valor;
+            if (valor > max) max = valor;
+        }
+
+        int cantidadBuckets = (int) Math.sqrt(arreglo.length);
+        cantidadBuckets = Math.max(cantidadBuckets, 1);
+
+        List<Integer>[] buckets = new ArrayList[cantidadBuckets];
+        for (int i = 0; i < cantidadBuckets; i++) {
+            buckets[i] = new ArrayList<>();
+        }
+
+        double rango = (double) (max - min + 1) / cantidadBuckets;
+
+        for (int valor : arreglo) {
+            metricas.iteraciones++;
+            int indice = (int) ((valor - min) / rango);
+            if (indice >= cantidadBuckets) indice = cantidadBuckets - 1;
+            buckets[indice].add(valor);
+            metricas.movimientos++;
+        }
+
+        int posicion = 0;
+        for (List<Integer> bucket : buckets) {
+            Collections.sort(bucket);
+            if (!bucket.isEmpty()) {
+                int tam = bucket.size();
+                metricas.comparaciones += (long) (tam * (Math.log(Math.max(tam, 1)) / Math.log(2)));
+            }
+
+            for (int valor : bucket) {
+                arreglo[posicion++] = valor;
+                metricas.movimientos++;
+                metricas.iteraciones++;
+            }
+        }
+    }
+
+    private static int[] generarEnterosDesordenados(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = (i * 37 + 11) % (cantidad * 4 + 53);
+        }
+        return datos;
+    }
+
+    private static int[] generarEnterosParcialmenteOrdenados(int cantidad) {
+        int[] datos = generarEnterosAscendentes(cantidad);
+        if (cantidad >= 4) {
+            intercambiarSinMetricas(datos, cantidad / 6, cantidad / 6 + 1);
+            intercambiarSinMetricas(datos, cantidad / 2, Math.min(cantidad - 1, cantidad / 2 + 2));
+            intercambiarSinMetricas(datos, Math.max(0, cantidad - 3), cantidad - 1);
+        }
+        return datos;
+    }
+
+    private static int[] generarEnterosInvertidos(int cantidad) {
+        int[] datos = generarEnterosAscendentes(cantidad);
+        for (int i = 0, j = datos.length - 1; i < j; i++, j--) {
+            intercambiarSinMetricas(datos, i, j);
+        }
+        return datos;
+    }
+
+    private static int[] generarEnterosAscendentes(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = i + 1;
+        }
+        return datos;
+    }
+
+    private static void intercambiarSinMetricas(int[] arreglo, int i, int j) {
+        int temp = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temp;
+    }
+
+    private static String resumirArreglo(int[] arreglo, int limite) {
+        if (arreglo.length <= limite) {
+            return Arrays.toString(arreglo);
+        }
+        return Arrays.toString(Arrays.copyOf(arreglo, limite)) + " ... (total " + arreglo.length + " elementos)";
+    }
+}
+
+/*
+NOTA:
+- En Bucket Sort, las comparaciones dentro de Collections.sort(bucket) se
+  estiman para dar una referencia general en cada escenario.
+- Tiempo y memoria pueden variar segun la JVM y el equipo.
+*/
