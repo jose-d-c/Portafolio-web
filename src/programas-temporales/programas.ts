@@ -122,7 +122,7 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
   23: {
     titulo: "Programa temporal 23: Comparativa interactiva Merge Sort vs Quick Sort",
     descripcion:
-      "Comparativa visual e interactiva entre Merge Sort y Quick Sort con accesos directos a sus implementaciones, tablas dinamicas por tamano/tipo/escenario y analisis de ventajas/desventajas con metricas.",
+      "Comparativa visual e interactiva entre Merge Sort y Quick Sort con accesos directos a sus implementaciones, tablas dinamicas por tamano/tipo/escenario, definiciones detalladas y grafica de tiempo de ejecucion basada en Big-O.",
   },
 };
 

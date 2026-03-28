@@ -110,6 +110,19 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
           </table>
         </div>
 
+        <div class="tabla-contenedor">
+          <table class="tabla-comparativa" id="tabla-complejidad">
+            <thead>
+              <tr>
+                <th>Analisis</th>
+                <th>Merge Sort</th>
+                <th>Quick Sort</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
         <div class="paneles-analisis">
           <article class="panel-analisis">
             <h3>Ventajas destacadas</h3>
@@ -124,6 +137,14 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
             <p id="texto-recomendacion"></p>
           </article>
         </div>
+
+        <section class="panel-definiciones">
+          <div class="selector-definicion" role="tablist" aria-label="Definiciones detalladas">
+            <button type="button" class="tab-definicion activo" data-algoritmo="merge">Merge Sort</button>
+            <button type="button" class="tab-definicion" data-algoritmo="quick">Quick Sort</button>
+          </div>
+          <article class="detalle-algoritmo" id="detalle-algoritmo"></article>
+        </section>
       </section>
     )}
 
@@ -184,9 +205,12 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
     const filtroTipo = document.querySelector("#filtro-tipo");
     const filtroEscenario = document.querySelector("#filtro-escenario");
     const cuerpoTabla = document.querySelector("#tabla-comparativa tbody");
+    const cuerpoTablaComplejidad = document.querySelector("#tabla-complejidad tbody");
     const listaVentajas = document.querySelector("#lista-ventajas");
     const listaDesventajas = document.querySelector("#lista-desventajas");
     const textoRecomendacion = document.querySelector("#texto-recomendacion");
+    const tabsDefinicion = document.querySelectorAll(".tab-definicion");
+    const detalleAlgoritmo = document.querySelector("#detalle-algoritmo");
 
     const metricas = [
       { clave: "tiempo", etiqueta: "Tiempo (ms)", menorEsMejor: true },
@@ -201,8 +225,68 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
       return mergeValor > quickValor ? "Merge Sort" : "Quick Sort";
     };
 
+    const definicionesDetalladas = {
+      merge: {
+        titulo: "Merge Sort",
+        funcionalidad: [
+          "Divide recursivamente el arreglo en mitades hasta tener subarreglos de un elemento.",
+          "Conquista mezclando subarreglos ya ordenados mediante comparacion secuencial.",
+          "Mantiene orden estable: elementos iguales conservan su posicion relativa."
+        ],
+        ventajas: [
+          "Complejidad temporal estable O(n log n) en mejor, promedio y peor caso.",
+          "Excelente comportamiento en entradas invertidas o con patron adverso.",
+          "Muy util para listas enlazadas y para ordenamiento externo en disco."
+        ],
+        desventajas: [
+          "Requiere memoria auxiliar O(n) para el proceso de mezcla.",
+          "Puede ser menos rapido que Quick Sort en arreglos pequenos en memoria RAM.",
+          "Coste adicional de copiado/movimientos durante cada fase de merge."
+        ]
+      },
+      quick: {
+        titulo: "Quick Sort",
+        funcionalidad: [
+          "Selecciona un pivote y particiona el arreglo en menores/mayores al pivote.",
+          "Ordena recursivamente ambos lados de la particion (divide y venceras).",
+          "Su eficiencia depende de la calidad de las particiones logradas."
+        ],
+        ventajas: [
+          "En promedio logra O(n log n) y suele ser muy rapido en practica.",
+          "Uso de memoria auxiliar bajo (aprox. O(log n) por recursion promedio).",
+          "Muy eficiente en arreglos en memoria cuando el pivote esta bien elegido."
+        ],
+        desventajas: [
+          "Puede degradar a O(n²) en particiones muy desbalanceadas.",
+          "No es estable por defecto (iguales pueden cambiar su orden relativo).",
+          "Puede aumentar la profundidad de recursion en escenarios adversos."
+        ]
+      }
+    };
+
+    const complejidadesBase = {
+      merge: { mejor: "O(n log n)", promedio: "O(n log n)", peor: "O(n log n)", memoria: "O(n)" },
+      quick: { mejor: "O(n log n)", promedio: "O(n log n)", peor: "O(n²)", memoria: "O(log n) promedio / O(n) peor caso" }
+    };
+
+    const renderizarDefinicionAlgoritmo = (algoritmo) => {
+      if (!detalleAlgoritmo) return;
+      const datos = definicionesDetalladas[algoritmo];
+      if (!datos) return;
+
+      const listaHtml = (titulo, items) =>
+        `<h4>${titulo}</h4><ol>${items.map((item) => `<li>${item}</li>`).join("")}</ol>`;
+
+      detalleAlgoritmo.innerHTML = `
+        <h3>${datos.titulo}: definicion detallada</h3>
+        ${listaHtml("Funcionalidad del algoritmo", datos.funcionalidad)}
+        ${listaHtml("Ventajas", datos.ventajas)}
+        ${listaHtml("Desventajas", datos.desventajas)}
+      `;
+    };
+
     const renderizarComparativa = () => {
-      if (!filtroLongitud || !filtroTipo || !filtroEscenario || !cuerpoTabla || !listaVentajas || !listaDesventajas || !textoRecomendacion) return;
+      if (!filtroLongitud || !filtroTipo || !filtroEscenario || !cuerpoTabla || !cuerpoTablaComplejidad || !listaVentajas || !listaDesventajas || !textoRecomendacion) return;
 
       const longitud = filtroLongitud.value;
       const tipo = filtroTipo.value;
@@ -236,6 +320,41 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
         `;
         cuerpoTabla.appendChild(fila);
       });
+
+      const factorEscenario = escenario === "invertido" ? "alto" : escenario === "parcial" ? "medio" : "normal";
+      const factorTipo = tipo === "string" ? "Comparacion lexicografica (costo adicional por longitud de texto)." : "Comparacion numerica directa.";
+      cuerpoTablaComplejidad.innerHTML = `
+        <tr>
+          <td>Mejor caso</td>
+          <td>${complejidadesBase.merge.mejor}</td>
+          <td>${complejidadesBase.quick.mejor}</td>
+        </tr>
+        <tr>
+          <td>Promedio</td>
+          <td>${complejidadesBase.merge.promedio}</td>
+          <td>${complejidadesBase.quick.promedio}</td>
+        </tr>
+        <tr>
+          <td>Peor caso (situacion actual: ${escenario})</td>
+          <td>${complejidadesBase.merge.peor}</td>
+          <td>${escenario === "invertido" ? "Se aproxima a O(n²) con pivote simple." : complejidadesBase.quick.peor}</td>
+        </tr>
+        <tr>
+          <td>Memoria adicional</td>
+          <td>${complejidadesBase.merge.memoria}</td>
+          <td>${complejidadesBase.quick.memoria}</td>
+        </tr>
+        <tr>
+          <td>Contexto de ${longitud} elementos (${tipo})</td>
+          <td>Rendimiento estable con factor ${factorEscenario}.</td>
+          <td>${escenario === "invertido" ? "Particiones desfavorables elevan comparaciones." : "Buen rendimiento promedio con pivote favorable."}</td>
+        </tr>
+        <tr>
+          <td>Tipo de dato seleccionado</td>
+          <td>${factorTipo}</td>
+          <td>${factorTipo}</td>
+        </tr>
+      `;
 
       if (quick.tiempo < merge.tiempo) {
         ventajas.push("Quick Sort domina en tiempo promedio en este escenario.");
@@ -275,6 +394,14 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
     filtroLongitud?.addEventListener("change", renderizarComparativa);
     filtroTipo?.addEventListener("change", renderizarComparativa);
     filtroEscenario?.addEventListener("change", renderizarComparativa);
+    tabsDefinicion.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabsDefinicion.forEach((item) => item.classList.remove("activo"));
+        tab.classList.add("activo");
+        renderizarDefinicionAlgoritmo(tab.dataset.algoritmo ?? "merge");
+      });
+    });
+    renderizarDefinicionAlgoritmo("merge");
     renderizarComparativa();
 
     botonCopiar?.addEventListener("click", async () => {
@@ -518,6 +645,46 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
 .panel-analisis ul{
   margin: 0;
   padding-left: 1rem;
+}
+
+.panel-definiciones{
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  padding: .9rem;
+  background: color-mix(in srgb, var(--panel) 86%, #0f172a 14%);
+}
+
+.selector-definicion{
+  display: inline-flex;
+  gap: .55rem;
+  margin-bottom: .8rem;
+}
+
+.tab-definicion{
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  padding: .45rem .75rem;
+  border-radius: 999px;
+}
+
+.tab-definicion.activo{
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, var(--panel));
+}
+
+.detalle-algoritmo h3{
+  margin: 0 0 .5rem;
+}
+
+.detalle-algoritmo h4{
+  margin: .7rem 0 .3rem;
+  font-size: .98rem;
+}
+
+.detalle-algoritmo ol{
+  margin: 0;
+  padding-left: 1.1rem;
 }
 
 @media (max-width: 900px){

@@ -13,6 +13,11 @@
 //    - Ventajas
 //    - Desventajas
 //    - Recomendacion automatica
+// 4) Definicion detallada interactiva:
+//    - Funcionalidad de cada algoritmo
+//    - Ventajas enumeradas
+//    - Desventajas enumeradas
+// 5) Tabla de complejidad (Big-O) dinamica segun escenario y tipo de dato.
 //
 // Referencias teoricas utilizadas:
 // - Merge Sort: O(n log n) en mejor, promedio y peor caso; requiere memoria auxiliar.
