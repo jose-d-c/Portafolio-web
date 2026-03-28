@@ -1,0 +1,180 @@
+// ============================================================================
+// GUIA SUPER EXPLICADA DEL PROGRAMA 27
+// ============================================================================
+// OBJETIVO:
+// Implementar Bucket Sort para cadenas (String) y medir su rendimiento en:
+// - Cantidades: 10, 50 y 200 datos.
+// - Situaciones: desorganizados, parcialmente organizados e invertidos.
+// - Metricas: iteraciones, comparaciones, movimientos, tiempo y memoria.
+// ============================================================================
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class Programa27BucketSortStringsMetricas {
+
+    static class Metricas {
+        long iteraciones;
+        long comparaciones;
+        long movimientos;
+        long tiempoNanosegundos;
+        long memoriaBytes;
+    }
+
+    private static final String[] BASE_NOMBRES = {
+            "Ana", "Luis", "Marta", "Carlos", "Elena", "Jorge", "Paula", "Diego", "Sofia", "Ramon",
+            "Lucia", "Mateo", "Valeria", "Andres", "Camila", "Bruno", "Daniela", "Esteban", "Gabriela", "Hector"
+    };
+
+    public static void main(String[] args) {
+        ejecutarEscenario("POCOS NOMBRES (10)", "TOTALMENTE DESORGANIZADOS", generarNombresDesordenados(10));
+        ejecutarEscenario("POCOS NOMBRES (10)", "PARCIALMENTE ORGANIZADOS", generarNombresParcialmenteOrdenados(10));
+        ejecutarEscenario("POCOS NOMBRES (10)", "ORDENADOS INVERTIDAMENTE", generarNombresInvertidos(10));
+
+        ejecutarEscenario("NOMBRES MODERADOS (50)", "TOTALMENTE DESORGANIZADOS", generarNombresDesordenados(50));
+        ejecutarEscenario("NOMBRES MODERADOS (50)", "PARCIALMENTE ORGANIZADOS", generarNombresParcialmenteOrdenados(50));
+        ejecutarEscenario("NOMBRES MODERADOS (50)", "ORDENADOS INVERTIDAMENTE", generarNombresInvertidos(50));
+
+        ejecutarEscenario("GRAN CANTIDAD DE NOMBRES (200)", "TOTALMENTE DESORGANIZADOS", generarNombresDesordenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE NOMBRES (200)", "PARCIALMENTE ORGANIZADOS", generarNombresParcialmenteOrdenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE NOMBRES (200)", "ORDENADOS INVERTIDAMENTE", generarNombresInvertidos(200));
+    }
+
+    private static void ejecutarEscenario(String cantidad, String situacion, String[] datosBase) {
+        String[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = bucketSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("CANTIDAD: " + cantidad);
+        System.out.println("SITUACION INICIAL: " + situacion);
+        System.out.println("PRIMEROS 20 DEL ORIGINAL: " + resumirArreglo(datosBase, 20));
+        System.out.println("PRIMEROS 20 DEL ORDENADO: " + resumirArreglo(copia, 20));
+        System.out.println("ITERACIONES: " + metricas.iteraciones);
+        System.out.println("COMPARACIONES (estimadas): " + metricas.comparaciones);
+        System.out.println("MOVIMIENTOS: " + metricas.movimientos);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    private static Metricas bucketSortConMetricas(String[] arreglo) {
+        Metricas metricas = new Metricas();
+        Runtime runtime = Runtime.getRuntime();
+
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+        long inicio = System.nanoTime();
+
+        bucketSort(arreglo, metricas);
+
+        long fin = System.nanoTime();
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+
+    private static void bucketSort(String[] arreglo, Metricas metricas) {
+        if (arreglo.length <= 1) {
+            return;
+        }
+
+        int cantidadBuckets = 27; // 26 letras + bucket "otros"
+        List<String>[] buckets = new ArrayList[cantidadBuckets];
+        for (int i = 0; i < cantidadBuckets; i++) {
+            buckets[i] = new ArrayList<>();
+        }
+
+        for (String valor : arreglo) {
+            metricas.iteraciones++;
+            int indice = obtenerIndiceBucket(valor);
+            buckets[indice].add(valor);
+            metricas.movimientos++;
+        }
+
+        int posicion = 0;
+        for (List<String> bucket : buckets) {
+            Collections.sort(bucket, String.CASE_INSENSITIVE_ORDER);
+            if (!bucket.isEmpty()) {
+                int tam = bucket.size();
+                metricas.comparaciones += (long) (tam * (Math.log(Math.max(tam, 1)) / Math.log(2)));
+            }
+
+            for (String valor : bucket) {
+                arreglo[posicion++] = valor;
+                metricas.movimientos++;
+                metricas.iteraciones++;
+            }
+        }
+    }
+
+    private static int obtenerIndiceBucket(String valor) {
+        if (valor == null || valor.isEmpty()) {
+            return 26;
+        }
+        char inicial = Character.toUpperCase(valor.charAt(0));
+        if (inicial >= 'A' && inicial <= 'Z') {
+            return inicial - 'A';
+        }
+        return 26;
+    }
+
+    private static String[] generarNombresDesordenados(int cantidad) {
+        String[] datos = new String[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = BASE_NOMBRES[(i * 7 + 3) % BASE_NOMBRES.length] + String.format("_%03d", (i * 19 + 5) % (cantidad * 2 + 29));
+        }
+        return datos;
+    }
+
+    private static String[] generarNombresParcialmenteOrdenados(int cantidad) {
+        String[] datos = generarNombresAscendentes(cantidad);
+        if (cantidad >= 4) {
+            intercambiarSinMetricas(datos, cantidad / 5, cantidad / 5 + 1);
+            intercambiarSinMetricas(datos, cantidad / 2, Math.min(cantidad - 1, cantidad / 2 + 3));
+            intercambiarSinMetricas(datos, Math.max(0, cantidad - 4), cantidad - 1);
+        }
+        return datos;
+    }
+
+    private static String[] generarNombresInvertidos(int cantidad) {
+        String[] datos = generarNombresAscendentes(cantidad);
+        for (int i = 0, j = datos.length - 1; i < j; i++, j--) {
+            intercambiarSinMetricas(datos, i, j);
+        }
+        return datos;
+    }
+
+    private static String[] generarNombresAscendentes(int cantidad) {
+        String[] datos = new String[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = BASE_NOMBRES[i % BASE_NOMBRES.length] + String.format("_%03d", i + 1);
+        }
+        Arrays.sort(datos, String.CASE_INSENSITIVE_ORDER);
+        return datos;
+    }
+
+    private static void intercambiarSinMetricas(String[] arreglo, int i, int j) {
+        String temp = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temp;
+    }
+
+    private static String resumirArreglo(String[] arreglo, int limite) {
+        if (arreglo.length <= limite) {
+            return Arrays.toString(arreglo);
+        }
+        return Arrays.toString(Arrays.copyOf(arreglo, limite)) + " ... (total " + arreglo.length + " elementos)";
+    }
+}
+
+/*
+NOTA:
+- En la variante para String, Bucket Sort usa la inicial de cada palabra para
+  distribuir en buckets alfabeticos.
+- La ordenacion interna de cada bucket se hace con Collections.sort(...).
+*/
