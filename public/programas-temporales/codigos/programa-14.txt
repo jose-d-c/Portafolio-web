@@ -1,5 +1,5 @@
 // ============================================================================
-// PROGRAMA 13 - COMPARACION DE MEMORIA DE VARIOS ALGORITMOS DE ORDENAMIENTO
+// PROGRAMA 14 - COMPARACION DE MEMORIA DE VARIOS ALGORITMOS DE ORDENAMIENTO
 // ============================================================================
 // EXPLICACION MUY SIMPLE:
 // Este programa no se concentra en un solo algoritmo.
