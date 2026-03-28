@@ -1,0 +1,19 @@
+// Programa temporal 23
+// Comparativa Merge Sort vs Quick Sort (contenido visual interactivo)
+//
+// Esta vista integra:
+// 1) Accesos rapidos a los programas existentes:
+//    - Merge Sort (programa-21)
+//    - Quick Sort (programa-07)
+// 2) Tabla dinamica por:
+//    - Longitud de arreglo (10, 50, 200)
+//    - Tipo de datos (int, string)
+//    - Escenario (desordenado, parcialmente desordenado, invertido)
+// 3) Paneles explicativos interactivos con:
+//    - Ventajas
+//    - Desventajas
+//    - Recomendacion automatica
+//
+// Referencias teoricas utilizadas:
+// - Merge Sort: O(n log n) en mejor, promedio y peor caso; requiere memoria auxiliar.
+// - Quick Sort: O(n log n) promedio, O(n^2) en peores particiones; menor memoria auxiliar en promedio.
