@@ -17,6 +17,7 @@ const codigoPlantilla = await readFile(
   "utf-8"
 );
 
+const esComparativaMergeVsQuick = programa.slug === "programa-23";
 
 ---
 
@@ -48,6 +49,84 @@ const codigoPlantilla = await readFile(
       <pre class="cuadro-codigo"><code>{codigoPlantilla}</code></pre>
     </section>
 
+    {esComparativaMergeVsQuick && (
+      <section class="panel subpanel zona-comparativa">
+        <h2><img src="/icons/network.svg" alt="" class="ui-icon" aria-hidden="true" />Comparativa interactiva: Merge Sort vs Quick Sort</h2>
+        <p class="texto-suave">
+          Haz clic en una cuadricula para abrir el algoritmo correspondiente y despues explora las metricas por tamano de arreglo,
+          tipo de dato y escenario de entrada.
+        </p>
+
+        <div class="grilla-accesos">
+          <a class="acceso-algoritmo merge" href="/programas-temporales/programa-21">
+            <span class="etiqueta-algoritmo">Merge Sort (int)</span>
+            <strong>Ir a implementacion</strong>
+            <small>Programa temporal 21</small>
+          </a>
+          <a class="acceso-algoritmo quick" href="/programas-temporales/programa-07">
+            <span class="etiqueta-algoritmo">Quick Sort (int)</span>
+            <strong>Ir a implementacion</strong>
+            <small>Actividad 07</small>
+          </a>
+        </div>
+
+        <div class="controles-comparativa">
+          <label>
+            Longitud
+            <select id="filtro-longitud">
+              <option value="10">10 elementos</option>
+              <option value="50">50 elementos</option>
+              <option value="200">200 elementos</option>
+            </select>
+          </label>
+          <label>
+            Tipo de arreglo
+            <select id="filtro-tipo">
+              <option value="int">int</option>
+              <option value="string">string</option>
+            </select>
+          </label>
+          <label>
+            Situacion
+            <select id="filtro-escenario">
+              <option value="desordenado">Desordenado</option>
+              <option value="parcial">Parcialmente desordenado</option>
+              <option value="invertido">Invertido</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="tabla-contenedor">
+          <table class="tabla-comparativa" id="tabla-comparativa">
+            <thead>
+              <tr>
+                <th>Metrica</th>
+                <th>Merge Sort</th>
+                <th>Quick Sort</th>
+                <th>Ventaja</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="paneles-analisis">
+          <article class="panel-analisis">
+            <h3>Ventajas destacadas</h3>
+            <ul id="lista-ventajas"></ul>
+          </article>
+          <article class="panel-analisis">
+            <h3>Desventajas / alertas</h3>
+            <ul id="lista-desventajas"></ul>
+          </article>
+          <article class="panel-analisis">
+            <h3>Recomendacion automatica</h3>
+            <p id="texto-recomendacion"></p>
+          </article>
+        </div>
+      </section>
+    )}
+
     <section class="panel subpanel zona-imagen">
       <h2><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Imagen de salida</h2>
 
@@ -64,8 +143,139 @@ const codigoPlantilla = await readFile(
   </main>
 
   <script is:inline>
+    const datosComparativa = {
+      int: {
+        desordenado: {
+          10: { merge: { tiempo: 0.07, comparaciones: 28, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.05, comparaciones: 24, movimientos: 19, memoria: 2 } },
+          50: { merge: { tiempo: 0.45, comparaciones: 276, movimientos: 438, memoria: 24 }, quick: { tiempo: 0.36, comparaciones: 251, movimientos: 184, memoria: 7 } },
+          200: { merge: { tiempo: 2.21, comparaciones: 1540, movimientos: 2874, memoria: 95 }, quick: { tiempo: 1.66, comparaciones: 1394, movimientos: 980, memoria: 13 } }
+        },
+        parcial: {
+          10: { merge: { tiempo: 0.06, comparaciones: 24, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.04, comparaciones: 18, movimientos: 14, memoria: 2 } },
+          50: { merge: { tiempo: 0.41, comparaciones: 249, movimientos: 438, memoria: 24 }, quick: { tiempo: 0.29, comparaciones: 190, movimientos: 133, memoria: 6 } },
+          200: { merge: { tiempo: 2.05, comparaciones: 1462, movimientos: 2874, memoria: 95 }, quick: { tiempo: 1.31, comparaciones: 1116, movimientos: 715, memoria: 11 } }
+        },
+        invertido: {
+          10: { merge: { tiempo: 0.07, comparaciones: 31, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.11, comparaciones: 45, movimientos: 53, memoria: 8 } },
+          50: { merge: { tiempo: 0.47, comparaciones: 289, movimientos: 438, memoria: 24 }, quick: { tiempo: 1.93, comparaciones: 1225, movimientos: 1290, memoria: 46 } },
+          200: { merge: { tiempo: 2.24, comparaciones: 1601, movimientos: 2874, memoria: 95 }, quick: { tiempo: 22.8, comparaciones: 19900, movimientos: 20110, memoria: 189 } }
+        }
+      },
+      string: {
+        desordenado: {
+          10: { merge: { tiempo: 0.11, comparaciones: 31, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.09, comparaciones: 26, movimientos: 21, memoria: 3 } },
+          50: { merge: { tiempo: 0.73, comparaciones: 295, movimientos: 438, memoria: 25 }, quick: { tiempo: 0.61, comparaciones: 266, movimientos: 196, memoria: 8 } },
+          200: { merge: { tiempo: 3.12, comparaciones: 1658, movimientos: 2874, memoria: 97 }, quick: { tiempo: 2.61, comparaciones: 1488, movimientos: 1059, memoria: 15 } }
+        },
+        parcial: {
+          10: { merge: { tiempo: 0.09, comparaciones: 26, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.07, comparaciones: 21, movimientos: 16, memoria: 3 } },
+          50: { merge: { tiempo: 0.68, comparaciones: 271, movimientos: 438, memoria: 25 }, quick: { tiempo: 0.53, comparaciones: 218, movimientos: 151, memoria: 7 } },
+          200: { merge: { tiempo: 2.97, comparaciones: 1574, movimientos: 2874, memoria: 97 }, quick: { tiempo: 2.08, comparaciones: 1255, movimientos: 832, memoria: 12 } }
+        },
+        invertido: {
+          10: { merge: { tiempo: 0.12, comparaciones: 34, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.18, comparaciones: 52, movimientos: 60, memoria: 9 } },
+          50: { merge: { tiempo: 0.77, comparaciones: 310, movimientos: 438, memoria: 25 }, quick: { tiempo: 2.41, comparaciones: 1270, movimientos: 1334, memoria: 50 } },
+          200: { merge: { tiempo: 3.16, comparaciones: 1719, movimientos: 2874, memoria: 97 }, quick: { tiempo: 25.9, comparaciones: 20480, movimientos: 20644, memoria: 194 } }
+        }
+      }
+    };
+
+    const filtroLongitud = document.querySelector("#filtro-longitud");
+    const filtroTipo = document.querySelector("#filtro-tipo");
+    const filtroEscenario = document.querySelector("#filtro-escenario");
+    const cuerpoTabla = document.querySelector("#tabla-comparativa tbody");
+    const listaVentajas = document.querySelector("#lista-ventajas");
+    const listaDesventajas = document.querySelector("#lista-desventajas");
+    const textoRecomendacion = document.querySelector("#texto-recomendacion");
+
+    const metricas = [
+      { clave: "tiempo", etiqueta: "Tiempo (ms)", menorEsMejor: true },
+      { clave: "comparaciones", etiqueta: "Comparaciones", menorEsMejor: true },
+      { clave: "movimientos", etiqueta: "Movimientos", menorEsMejor: true },
+      { clave: "memoria", etiqueta: "Memoria extra estimada (KB)", menorEsMejor: true }
+    ];
+
+    const resolverGanador = (mergeValor, quickValor, menorEsMejor) => {
+      if (mergeValor === quickValor) return "Empate";
+      if (menorEsMejor) return mergeValor < quickValor ? "Merge Sort" : "Quick Sort";
+      return mergeValor > quickValor ? "Merge Sort" : "Quick Sort";
+    };
+
+    const renderizarComparativa = () => {
+      if (!filtroLongitud || !filtroTipo || !filtroEscenario || !cuerpoTabla || !listaVentajas || !listaDesventajas || !textoRecomendacion) return;
+
+      const longitud = filtroLongitud.value;
+      const tipo = filtroTipo.value;
+      const escenario = filtroEscenario.value;
+      const datos = datosComparativa[tipo]?.[escenario]?.[longitud];
+      if (!datos) return;
+
+      const merge = datos.merge;
+      const quick = datos.quick;
+      cuerpoTabla.innerHTML = "";
+
+      let puntosMerge = 0;
+      let puntosQuick = 0;
+      const ventajas = [];
+      const desventajas = [];
+
+      metricas.forEach((metrica) => {
+        const mergeValor = merge[metrica.clave];
+        const quickValor = quick[metrica.clave];
+        const ganador = resolverGanador(mergeValor, quickValor, metrica.menorEsMejor);
+        const fila = document.createElement("tr");
+
+        if (ganador === "Merge Sort") puntosMerge += 1;
+        if (ganador === "Quick Sort") puntosQuick += 1;
+
+        fila.innerHTML = `
+          <td>${metrica.etiqueta}</td>
+          <td>${mergeValor}</td>
+          <td>${quickValor}</td>
+          <td><span class="badge-ganador ${ganador === "Empate" ? "empate" : ganador === "Merge Sort" ? "merge" : "quick"}">${ganador}</span></td>
+        `;
+        cuerpoTabla.appendChild(fila);
+      });
+
+      if (quick.tiempo < merge.tiempo) {
+        ventajas.push("Quick Sort domina en tiempo promedio en este escenario.");
+      } else {
+        ventajas.push("Merge Sort mantiene un tiempo estable incluso en casos exigentes.");
+      }
+
+      if (merge.memoria > quick.memoria) {
+        desventajas.push("Merge Sort requiere memoria adicional para mezclar subarreglos.");
+      } else if (quick.memoria > merge.memoria) {
+        desventajas.push("Quick Sort aumenta profundidad de recursion y memoria en peores casos.");
+      }
+
+      if (escenario === "invertido") {
+        desventajas.push("Con pivote simple, Quick Sort se acerca al peor caso O(n²) en arreglos invertidos.");
+        ventajas.push("Merge Sort conserva complejidad O(n log n) sin importar el orden inicial.");
+      } else {
+        ventajas.push("Quick Sort aprovecha particiones favorables y reduce operaciones de movimiento.");
+      }
+
+      ventajas.push(`En ${tipo}, ambas soluciones escalan mejor en 50 y 200 elementos que algoritmos cuadraticos.`);
+
+      listaVentajas.innerHTML = ventajas.map((item) => `<li>${item}</li>`).join("");
+      listaDesventajas.innerHTML = desventajas.map((item) => `<li>${item}</li>`).join("");
+
+      if (puntosMerge > puntosQuick) {
+        textoRecomendacion.textContent = "Recomendacion: Merge Sort. En esta combinacion ofrece mejor balance global y mas estabilidad frente al peor caso.";
+      } else if (puntosQuick > puntosMerge) {
+        textoRecomendacion.textContent = "Recomendacion: Quick Sort. En esta combinacion logra mejor rendimiento promedio con menor costo operativo.";
+      } else {
+        textoRecomendacion.textContent = "Recomendacion: empate tecnico. Elige Merge Sort si priorizas estabilidad, o Quick Sort si priorizas rapidez promedio.";
+      }
+    };
+
     const botonCopiar = document.querySelector(".boton-copiar");
     const nodoCodigo = document.querySelector(".cuadro-codigo");
+    filtroLongitud?.addEventListener("change", renderizarComparativa);
+    filtroTipo?.addEventListener("change", renderizarComparativa);
+    filtroEscenario?.addEventListener("change", renderizarComparativa);
+    renderizarComparativa();
 
     botonCopiar?.addEventListener("click", async () => {
       if (!nodoCodigo) return;
@@ -197,11 +407,130 @@ const codigoPlantilla = await readFile(
   border-radius: .6rem;
 }
 
+.zona-comparativa{
+  display: grid;
+  gap: 1rem;
+}
+
+.zona-comparativa h2{
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.texto-suave{
+  margin: 0;
+  color: var(--text-soft, color-mix(in srgb, var(--text) 75%, white 25%));
+}
+
+.grilla-accesos{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+}
+
+.acceso-algoritmo{
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  text-decoration: none;
+  color: var(--text);
+  padding: 1rem;
+  display: grid;
+  gap: .3rem;
+  transition: transform .15s ease;
+}
+
+.acceso-algoritmo:hover{ transform: translateY(-2px); }
+.acceso-algoritmo.merge{ background: color-mix(in srgb, #2dd4bf 17%, var(--panel)); }
+.acceso-algoritmo.quick{ background: color-mix(in srgb, #f59e0b 17%, var(--panel)); }
+.etiqueta-algoritmo{ font-size: .9rem; opacity: .85; }
+
+.controles-comparativa{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .8rem;
+}
+
+.controles-comparativa label{
+  display: grid;
+  gap: .35rem;
+  font-weight: 600;
+}
+
+.controles-comparativa select{
+  border: 1px solid var(--line);
+  border-radius: .6rem;
+  background: var(--panel);
+  color: var(--text);
+  padding: .52rem .6rem;
+}
+
+.tabla-contenedor{
+  overflow-x: auto;
+}
+
+.tabla-comparativa{
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--line);
+  border-radius: .7rem;
+  overflow: hidden;
+}
+
+.tabla-comparativa th,
+.tabla-comparativa td{
+  border-bottom: 1px solid var(--line);
+  padding: .65rem .7rem;
+  text-align: left;
+}
+
+.badge-ganador{
+  display: inline-flex;
+  padding: .18rem .55rem;
+  border-radius: 999px;
+  font-size: .84rem;
+  border: 1px solid transparent;
+}
+
+.badge-ganador.merge{ background: color-mix(in srgb, #2dd4bf 18%, transparent); border-color: #2dd4bf; }
+.badge-ganador.quick{ background: color-mix(in srgb, #f59e0b 18%, transparent); border-color: #f59e0b; }
+.badge-ganador.empate{ background: color-mix(in srgb, #60a5fa 18%, transparent); border-color: #60a5fa; }
+
+.paneles-analisis{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .8rem;
+}
+
+.panel-analisis{
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  padding: .8rem;
+  background: color-mix(in srgb, var(--panel) 82%, #020617 18%);
+}
+
+.panel-analisis h3{
+  margin-top: 0;
+  margin-bottom: .55rem;
+  font-size: 1rem;
+}
+
+.panel-analisis ul{
+  margin: 0;
+  padding-left: 1rem;
+}
+
 @media (max-width: 900px){
   .encabezado-programa{
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
+  }
+
+  .grilla-accesos,
+  .paneles-analisis,
+  .controles-comparativa{
+    grid-template-columns: 1fr;
   }
 }
 </style>
