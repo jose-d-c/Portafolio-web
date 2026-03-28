@@ -1,0 +1,178 @@
+// ============================================================================
+// GUIA SUPER EXPLICADA DEL PROGRAMA 24
+// ============================================================================
+// OBJETIVO:
+// Implementar Heap Sort con enteros y medir el comportamiento del algoritmo en
+// los mismos escenarios usados en programas anteriores:
+// - Cantidades: 10, 50 y 200 datos.
+// - Situaciones iniciales: desorganizado, parcialmente organizado e invertido.
+// - Mediciones: iteraciones, comparaciones, intercambios/movimientos, tiempo y
+//   memoria aproximada usada.
+// ============================================================================
+
+import java.util.Arrays;
+
+public class Programa24HeapSortEnterosMetricas {
+
+    static class Metricas {
+        long iteraciones;
+        long comparaciones;
+        long intercambios;
+        long tiempoNanosegundos;
+        long memoriaBytes;
+    }
+
+    public static void main(String[] args) {
+        ejecutarEscenario("POCOS DATOS (10)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(10));
+        ejecutarEscenario("POCOS DATOS (10)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(10));
+
+        ejecutarEscenario("DATOS MODERADOS (50)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(50));
+        ejecutarEscenario("DATOS MODERADOS (50)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(50));
+
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "TOTALMENTE DESORGANIZADOS", generarEnterosDesordenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "PARCIALMENTE ORGANIZADOS", generarEnterosParcialmenteOrdenados(200));
+        ejecutarEscenario("GRAN CANTIDAD DE DATOS (200)", "ORDENADOS INVERTIDAMENTE", generarEnterosInvertidos(200));
+    }
+
+    private static void ejecutarEscenario(String cantidad, String situacion, int[] datosBase) {
+        int[] copia = Arrays.copyOf(datosBase, datosBase.length);
+        Metricas metricas = heapSortConMetricas(copia);
+
+        System.out.println("============================================================");
+        System.out.println("CANTIDAD: " + cantidad);
+        System.out.println("SITUACION INICIAL: " + situacion);
+        System.out.println("PRIMEROS 20 DEL ORIGINAL: " + resumirArreglo(datosBase, 20));
+        System.out.println("PRIMEROS 20 DEL ORDENADO: " + resumirArreglo(copia, 20));
+        System.out.println("ITERACIONES: " + metricas.iteraciones);
+        System.out.println("COMPARACIONES: " + metricas.comparaciones);
+        System.out.println("INTERCAMBIOS/MOVIMIENTOS: " + metricas.intercambios);
+        System.out.println("TIEMPO DE EJECUCION (ns): " + metricas.tiempoNanosegundos);
+        System.out.println("MEMORIA USADA (bytes): " + metricas.memoriaBytes);
+        System.out.println();
+    }
+
+    private static Metricas heapSortConMetricas(int[] arreglo) {
+        Metricas metricas = new Metricas();
+        Runtime runtime = Runtime.getRuntime();
+
+        runtime.gc();
+        long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
+        long inicio = System.nanoTime();
+
+        heapSort(arreglo, metricas);
+
+        long fin = System.nanoTime();
+        runtime.gc();
+        long memoriaDespues = runtime.totalMemory() - runtime.freeMemory();
+
+        metricas.tiempoNanosegundos = fin - inicio;
+        metricas.memoriaBytes = Math.max(memoriaDespues - memoriaAntes, 0);
+        return metricas;
+    }
+
+    private static void heapSort(int[] arreglo, Metricas metricas) {
+        int n = arreglo.length;
+
+        // 1) Construir max-heap.
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arreglo, n, i, metricas);
+        }
+
+        // 2) Extraer uno por uno el maximo y mandarlo al final.
+        for (int i = n - 1; i > 0; i--) {
+            intercambiar(arreglo, 0, i, metricas);
+            heapify(arreglo, i, 0, metricas);
+            metricas.iteraciones++;
+        }
+    }
+
+    private static void heapify(int[] arreglo, int tamHeap, int raiz, Metricas metricas) {
+        metricas.iteraciones++;
+
+        int mayor = raiz;
+        int izquierda = 2 * raiz + 1;
+        int derecha = 2 * raiz + 2;
+
+        if (izquierda < tamHeap) {
+            metricas.comparaciones++;
+            if (arreglo[izquierda] > arreglo[mayor]) {
+                mayor = izquierda;
+            }
+        }
+
+        if (derecha < tamHeap) {
+            metricas.comparaciones++;
+            if (arreglo[derecha] > arreglo[mayor]) {
+                mayor = derecha;
+            }
+        }
+
+        if (mayor != raiz) {
+            intercambiar(arreglo, raiz, mayor, metricas);
+            heapify(arreglo, tamHeap, mayor, metricas);
+        }
+    }
+
+    private static void intercambiar(int[] arreglo, int i, int j, Metricas metricas) {
+        int temporal = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temporal;
+        metricas.intercambios++;
+    }
+
+    private static int[] generarEnterosDesordenados(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = (i * 37 + 11) % (cantidad * 3 + 47);
+        }
+        return datos;
+    }
+
+    private static int[] generarEnterosParcialmenteOrdenados(int cantidad) {
+        int[] datos = generarEnterosAscendentes(cantidad);
+        if (cantidad >= 4) {
+            intercambiarSinMetricas(datos, cantidad / 6, cantidad / 6 + 1);
+            intercambiarSinMetricas(datos, cantidad / 2, Math.min(cantidad - 1, cantidad / 2 + 2));
+            intercambiarSinMetricas(datos, Math.max(0, cantidad - 3), cantidad - 1);
+        }
+        return datos;
+    }
+
+    private static int[] generarEnterosInvertidos(int cantidad) {
+        int[] datos = generarEnterosAscendentes(cantidad);
+        for (int i = 0, j = datos.length - 1; i < j; i++, j--) {
+            intercambiarSinMetricas(datos, i, j);
+        }
+        return datos;
+    }
+
+    private static int[] generarEnterosAscendentes(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = i + 1;
+        }
+        return datos;
+    }
+
+    private static void intercambiarSinMetricas(int[] arreglo, int i, int j) {
+        int temporal = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temporal;
+    }
+
+    private static String resumirArreglo(int[] arreglo, int limite) {
+        if (arreglo.length <= limite) {
+            return Arrays.toString(arreglo);
+        }
+        return Arrays.toString(Arrays.copyOf(arreglo, limite)) + " ... (total " + arreglo.length + " elementos)";
+    }
+}
+
+/*
+NOTA:
+- Comparaciones, intercambios e iteraciones son reproducibles porque los datos
+  se generan de forma determinista.
+- Tiempo y memoria pueden cambiar entre ejecuciones dependiendo de la JVM.
+*/

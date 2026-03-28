@@ -124,9 +124,19 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Comparativa visual e interactiva entre Merge Sort y Quick Sort con accesos directos a sus implementaciones, tablas dinamicas por tamano/tipo/escenario, definiciones detalladas y grafica de tiempo de ejecucion basada en Big-O.",
   },
+  24: {
+    titulo: "Programa temporal 24: Heap Sort con enteros y metricas completas",
+    descripcion:
+      "Programa Java con Heap Sort para enteros en tamanos 10, 50 y 200, evaluando casos totalmente desorganizados, parcialmente organizados e invertidos con tiempo, memoria, comparaciones, intercambios e iteraciones.",
+  },
+  25: {
+    titulo: "Programa temporal 25: Heap Sort con strings y metricas completas",
+    descripcion:
+      "Programa Java con Heap Sort para nombres en tamanos 10, 50 y 200, evaluando casos totalmente desorganizados, parcialmente organizados e invertidos con tiempo, memoria, comparaciones, intercambios e iteraciones.",
+  },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 
 const construirTituloProgramaTemporal = (numero: number, tituloBase?: string) => {
   const numeroFormateado = numero.toString().padStart(2, "0");
