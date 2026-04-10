@@ -144,9 +144,14 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Programa Java con Bucket Sort para cadenas en tamanos 10, 50 y 200, evaluando casos desorganizados, parcialmente organizados e invertidos con tiempo, memoria, comparaciones, movimientos e iteraciones.",
   },
+  28: {
+    titulo: "Programa temporal 28: Búsqueda Binaria en Java",
+    descripcion:
+      "Se utiliza cuando el vector está previamente ordenado y reduce exponencialmente el número de iteraciones necesarias; por ejemplo, en 50.000.000 de elementos requiere como máximo 26 comparaciones en el peor caso.",
+  },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
 
 const construirTituloProgramaTemporal = (numero: number, tituloBase?: string) => {
   const numeroFormateado = numero.toString().padStart(2, "0");

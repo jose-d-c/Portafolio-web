@@ -1,0 +1,49 @@
+public class Programa28BusquedaBinaria {
+
+    public static int busquedaBinaria(int[] datos, int objetivo) {
+        int izquierda = 0;
+        int derecha = datos.length - 1;
+
+        while (izquierda <= derecha) {
+            int medio = izquierda + (derecha - izquierda) / 2;
+
+            if (datos[medio] == objetivo) {
+                return medio;
+            }
+
+            if (datos[medio] < objetivo) {
+                izquierda = medio + 1;
+            } else {
+                derecha = medio - 1;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int[] crearArregloOrdenado(int tamano) {
+        int[] arreglo = new int[tamano];
+        for (int i = 0; i < tamano; i++) {
+            arreglo[i] = i + 1;
+        }
+        return arreglo;
+    }
+
+    public static int calcularMaximoComparaciones(int tamano) {
+        return (int) Math.ceil(Math.log(tamano) / Math.log(2));
+    }
+
+    public static void main(String[] args) {
+        final int CANTIDAD_ELEMENTOS = 50_000_000;
+        int[] vector = crearArregloOrdenado(CANTIDAD_ELEMENTOS);
+        int numeroBuscado = 49_999_991;
+
+        int posicion = busquedaBinaria(vector, numeroBuscado);
+        int maxComparaciones = calcularMaximoComparaciones(CANTIDAD_ELEMENTOS);
+
+        System.out.println("Cantidad exacta de elementos: " + CANTIDAD_ELEMENTOS);
+        System.out.println("Numero buscado: " + numeroBuscado);
+        System.out.println("Indice encontrado: " + posicion);
+        System.out.println("Comparaciones maximas en el peor caso: " + maxComparaciones);
+    }
+}
