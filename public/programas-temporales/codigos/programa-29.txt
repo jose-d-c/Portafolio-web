@@ -1,0 +1,89 @@
+// Programa temporal 29: Counting Sort en Java (int)
+//
+// Objetivo:
+// Ordenar un arreglo de enteros NO negativos usando Counting Sort,
+// mostrando en consola como se transforma el algoritmo paso a paso.
+//
+// Logica resumida:
+// 1) Encontrar el valor maximo para dimensionar el arreglo de conteo.
+// 2) Contar cuantas veces aparece cada numero.
+// 3) Convertir ese conteo en acumulado para conocer posiciones finales.
+// 4) Construir el arreglo de salida de atras hacia adelante (estable).
+// 5) Copiar la salida al arreglo original.
+
+import java.util.Arrays;
+
+public class Programa29CountingSort {
+    public static void main(String[] args) {
+        int[] arr = {12, 11, 13, 5, 6, 7, 20, 1, 15};
+
+        System.out.println("=== COUNTING SORT (DEMO) ===");
+        System.out.println("Arreglo original: " + Arrays.toString(arr));
+
+        countingSortConExplicacion(arr);
+
+        System.out.println("Arreglo ordenado final: " + Arrays.toString(arr));
+    }
+
+    public static void countingSortConExplicacion(int[] arr) {
+        int n = arr.length;
+        if (n == 0) return;
+
+        // 1) Buscar el maximo
+        int max = arr[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > max) max = arr[i];
+        }
+        System.out.println("\n1) Valor maximo encontrado: " + max);
+
+        // 2) Crear estructuras auxiliares
+        int[] conteo = new int[max + 1];
+        int[] salida = new int[n];
+        System.out.println("2) Arreglo conteo inicial: " + Arrays.toString(conteo));
+        System.out.println("   Arreglo salida inicial: " + Arrays.toString(salida));
+
+        // 3) Contar frecuencias
+        for (int i = 0; i < n; i++) {
+            conteo[arr[i]]++;
+        }
+        System.out.println("\n3) Frecuencias en conteo: " + Arrays.toString(conteo));
+
+        // 4) Acumular conteos para obtener posiciones finales
+        for (int i = 1; i <= max; i++) {
+            conteo[i] += conteo[i - 1];
+        }
+        System.out.println("4) Conteo acumulado (posiciones): " + Arrays.toString(conteo));
+
+        // 5) Construir salida de derecha a izquierda para mantener estabilidad
+        for (int i = n - 1; i >= 0; i--) {
+            int valor = arr[i];
+            int posicion = conteo[valor] - 1;
+            salida[posicion] = valor;
+            conteo[valor]--;
+        }
+        System.out.println("5) Arreglo salida construido: " + Arrays.toString(salida));
+
+        // 6) Copiar resultado al arreglo original
+        for (int i = 0; i < n; i++) {
+            arr[i] = salida[i];
+        }
+        System.out.println("6) Arreglo original actualizado: " + Arrays.toString(arr));
+    }
+}
+
+/*
+SALIDA ESPERADA (referencial)
+
+=== COUNTING SORT (DEMO) ===
+Arreglo original: [12, 11, 13, 5, 6, 7, 20, 1, 15]
+
+1) Valor maximo encontrado: 20
+2) Arreglo conteo inicial: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   Arreglo salida inicial: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+3) Frecuencias en conteo: [0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1]
+4) Conteo acumulado (posiciones): [0, 1, 1, 1, 1, 2, 3, 4, 4, 4, 4, 5, 6, 7, 7, 8, 8, 8, 8, 8, 9]
+5) Arreglo salida construido: [1, 5, 6, 7, 11, 12, 13, 15, 20]
+6) Arreglo original actualizado: [1, 5, 6, 7, 11, 12, 13, 15, 20]
+Arreglo ordenado final: [1, 5, 6, 7, 11, 12, 13, 15, 20]
+*/
