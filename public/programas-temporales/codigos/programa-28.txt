@@ -1,0 +1,74 @@
+public class Programa28BusquedaBinaria {
+
+    // Funcion principal del algoritmo de busqueda binaria.
+    // Recibe un arreglo ordenado y el valor objetivo.
+    // Devuelve el indice donde se encontro el elemento o -1 si no existe.
+    public static int busquedaBinaria(int[] datos, int objetivo) {
+        // Limites iniciales del espacio de busqueda.
+        int izquierda = 0;
+        int derecha = datos.length - 1;
+
+        // Repetimos mientras exista una ventana valida [izquierda, derecha].
+        while (izquierda <= derecha) {
+            // Punto medio calculado de forma segura para evitar overflow.
+            int medio = izquierda + (derecha - izquierda) / 2;
+
+            // Caso 1: el elemento del centro es exactamente el objetivo.
+            if (datos[medio] == objetivo) {
+                return medio;
+            }
+
+            // Caso 2: el valor central es menor, se descarta la mitad izquierda.
+            if (datos[medio] < objetivo) {
+                izquierda = medio + 1;
+            } else {
+                // Caso 3: el valor central es mayor, se descarta la mitad derecha.
+                derecha = medio - 1;
+            }
+        }
+
+        // Si salimos del bucle, el elemento no se encuentra en el arreglo.
+        return -1;
+    }
+
+    // Crea un arreglo ordenado de 1..tamano para simular un caso grande de prueba.
+    public static int[] crearArregloOrdenado(int tamano) {
+        int[] arreglo = new int[tamano];
+
+        // Llenado secuencial para garantizar orden ascendente.
+        for (int i = 0; i < tamano; i++) {
+            arreglo[i] = i + 1;
+        }
+
+        return arreglo;
+    }
+
+    // Calcula el numero maximo teorico de comparaciones en el peor caso.
+    // Para busqueda binaria, ese limite es ceil(log2(n)).
+    public static int calcularMaximoComparaciones(int tamano) {
+        return (int) Math.ceil(Math.log(tamano) / Math.log(2));
+    }
+
+    public static void main(String[] args) {
+        // Cantidad exacta pedida en la consigna.
+        final int CANTIDAD_ELEMENTOS = 50_000_000;
+
+        // 1) Se construye el vector ordenado con 50 millones de elementos.
+        int[] vector = crearArregloOrdenado(CANTIDAD_ELEMENTOS);
+
+        // 2) Se define un valor a buscar dentro del arreglo.
+        int numeroBuscado = 49_999_991;
+
+        // 3) Se ejecuta la busqueda binaria para obtener su posicion.
+        int posicion = busquedaBinaria(vector, numeroBuscado);
+
+        // 4) Se calcula la cota maxima de comparaciones del peor escenario.
+        int maxComparaciones = calcularMaximoComparaciones(CANTIDAD_ELEMENTOS);
+
+        // 5) Se imprimen resultados para documentar la evidencia del programa.
+        System.out.println("Cantidad exacta de elementos: " + CANTIDAD_ELEMENTOS);
+        System.out.println("Numero buscado: " + numeroBuscado);
+        System.out.println("Indice encontrado: " + posicion);
+        System.out.println("Comparaciones maximas en el peor caso: " + maxComparaciones);
+    }
+}
