@@ -1,0 +1,41 @@
+import java.util.Arrays;
+
+public class Programa28BusquedaBinaria {
+
+    public static int busquedaBinaria(int[] datos, int objetivo) {
+        int izquierda = 0;
+        int derecha = datos.length - 1;
+
+        while (izquierda <= derecha) {
+            int medio = izquierda + (derecha - izquierda) / 2;
+
+            if (datos[medio] == objetivo) {
+                return medio;
+            }
+
+            if (datos[medio] < objetivo) {
+                izquierda = medio + 1;
+            } else {
+                derecha = medio - 1;
+            }
+        }
+
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] vector = {3, 5, 8, 12, 15, 21, 34, 55, 89, 144};
+        int numeroBuscado = 55;
+
+        System.out.println("Vector ordenado: " + Arrays.toString(vector));
+        System.out.println("Numero buscado: " + numeroBuscado);
+
+        int posicion = busquedaBinaria(vector, numeroBuscado);
+
+        if (posicion >= 0) {
+            System.out.println("Elemento encontrado en el indice: " + posicion);
+        } else {
+            System.out.println("Elemento no encontrado en el vector.");
+        }
+    }
+}
