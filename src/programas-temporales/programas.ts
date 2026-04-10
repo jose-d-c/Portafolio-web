@@ -149,9 +149,14 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Se utiliza cuando el vector está previamente ordenado y reduce exponencialmente el número de iteraciones necesarias; por ejemplo, en 50.000.000 de elementos requiere como máximo 26 comparaciones en el peor caso.",
   },
+  29: {
+    titulo: "Programa temporal 29: Counting Sort en Java (int)",
+    descripcion:
+      "Implementacion de Counting Sort con enteros no negativos, incluyendo trazas en consola y explicacion por pasos sobre conteo, acumulacion y construccion estable del arreglo ordenado.",
+  },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29];
 
 const construirTituloProgramaTemporal = (numero: number, tituloBase?: string) => {
   const numeroFormateado = numero.toString().padStart(2, "0");
