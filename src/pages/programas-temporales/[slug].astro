@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { programasTemporales } from "../../programas-temporales/programas";
+import { metricasProgramas } from "../../programas-temporales/metricas";
 
 export function getStaticPaths() {
   return programasTemporales.map((programa) => ({
@@ -18,15 +19,30 @@ const codigoPlantilla = await readFile(
 );
 
 const esComparativaMergeVsQuick = programa.slug === "programa-23";
+const esSimuladorOrdenamientos = programa.slug === "programa-30";
+const metricasPrograma = metricasProgramas[programa.slug];
+const escenariosOrdenados: ["desordenado", "parcial", "intercalado", "invertido"] = [
+  "desordenado",
+  "parcial",
+  "intercalado",
+  "invertido",
+];
+const tamanosOrdenados: ["10", "100", "1000"] = ["10", "100", "1000"];
+const tipoDatoLabels: Record<string, string> = {
+  int: "números enteros",
+  string: "cadenas de texto",
+  binario: "colecciones ordenadas para búsqueda",
+  mixto: "datos mixtos",
+};
 
 ---
 
 <BaseLayout title={`${programa.titulo} | Programas temporales`}>
-  <main class="app-shell programa-shell">
-    <section class="panel encabezado-programa">
+  <main class="programa-shell">
+    <section class="program-hero">
       <img src="/programas-temporales/uis-logo.svg" alt="Logotipo de la Universidad Industrial de Santander" loading="eager" decoding="async" />
       <div>
-        <p class="eyebrow">Estructura de Datos y Analisis Algoritmicos</p>
+        <p class="ds-eyebrow">Estructura de Datos y Analisis Algoritmicos</p>
         <h1>{programa.titulo}</h1>
         <p>{programa.descripcion}</p>
       </div>
@@ -35,19 +51,88 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
       </a>
     </section>
 
-    <section class="panel subpanel zona-codigo">
-      <div class="encabezado-cuadro">
-        <h2><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Codigo del programa</h2>
-        <button class="boton-copiar" type="button" aria-label="Copiar codigo">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-            <path d="M8 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V7Zm2 0h9v11h-9V7Z" />
-            <path d="M5 4a2 2 0 0 1 2-2h9v2H7v11H5V4Zm-2 5h2v11a2 2 0 0 0 2 2h11v2H7a2 2 0 0 1-2-2V9Z" />
-          </svg>
-        </button>
-      </div>
+    {metricasPrograma && !esSimuladorOrdenamientos && (
+      <section class="ds-card-grid info-programa">
+        <article class="ds-card">
+          <p class="ds-eyebrow">Autor del laboratorio</p>
+          <h2>Jose David Consuegra Medina</h2>
+          <p class="identidad-codigo">Código 2250167</p>
+          <p>
+            Cada ejecución cubre escenarios totalmente desordenados, parcialmente ordenados, intercalados e invertidos con 10, 100 y 1000 datos de tipo {tipoDatoLabels[metricasPrograma.tipoDato] ?? "base"}.
+          </p>
+        </article>
+        <article class="ds-card">
+          <h3>Ver simulador general</h3>
+          <p>Explora el laboratorio visual con métricas en tiempo real para comparar algoritmos adicionales.</p>
+          <a class="ds-button" href="/programas-temporales/programa-30">Abrir simulador</a>
+        </article>
+      </section>
+    )}
 
-      <pre class="cuadro-codigo"><code>{codigoPlantilla}</code></pre>
-    </section>
+    {metricasPrograma && !esSimuladorOrdenamientos && (
+      <section class="ds-card-grid" aria-live="polite">
+        {escenariosOrdenados.map((escenario) => {
+          const datosEscenario = metricasPrograma.escenarios[escenario];
+          if (!datosEscenario) return null;
+          return (
+            <article class="ds-card" data-escenario={escenario}>
+              <header>
+                <h3>{datosEscenario["10"].escenarioLabel}</h3>
+                <p>Entradas: {datosEscenario["10"].entrada.replace(/\(10 elementos\)/, "(10, 100 y 1000)")}</p>
+              </header>
+              <div class="tabla-contenedor">
+                <table class="tabla-comparativa">
+                  <thead>
+                    <tr>
+                      <th>Datos</th>
+                      <th>Tiempo (ms)</th>
+                      <th>Memoria (KB)</th>
+                      <th>Iteraciones</th>
+                      <th>Comparaciones</th>
+                      <th>Intercambios</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tamanosOrdenados.map((tamano) => {
+                      const registro = datosEscenario[tamano];
+                      return (
+                        <tr>
+                          <td>{tamano}</td>
+                          <td>{registro.tiempoMs}</td>
+                          <td>{registro.memoriaKb}</td>
+                          <td>{registro.iteraciones}</td>
+                          <td>{registro.comparaciones}</td>
+                          <td>{registro.intercambios}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <footer>
+                <p>Ejemplo de salida: <strong>{datosEscenario["10"].salida}</strong></p>
+              </footer>
+            </article>
+          );
+        })}
+      </section>
+    )}
+
+    {!esSimuladorOrdenamientos && (
+      <section class="ds-panel zona-codigo">
+        <div class="encabezado-cuadro">
+          <h2><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Código del programa</h2>
+          <button class="boton-copiar" type="button" aria-label="Copiar codigo">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M8 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V7Zm2 0h9v11h-9V7Z" />
+              <path d="M5 4a2 2 0 0 1 2-2h9v2H7v11H5V4Zm-2 5h2v11a2 2 0 0 0 2 2h11v2H7a2 2 0 0 1-2-2V9Z" />
+            </svg>
+          </button>
+        </div>
+
+        <pre class="cuadro-codigo"><code>{codigoPlantilla}</code></pre>
+      </section>
+    )}
 
     {esComparativaMergeVsQuick && (
       <section class="panel subpanel zona-comparativa">
@@ -146,6 +231,272 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
           <article class="detalle-algoritmo" id="detalle-algoritmo"></article>
         </section>
       </section>
+
+      <section class="panel subpanel simulator-lab" aria-labelledby="simulador-heading">
+        <div class="viz-head">
+          <div>
+            <p class="section-tag">visualización en vivo</p>
+            <h2 id="simulador-heading">Simulador interactivo de algoritmos de ordenamiento</h2>
+            <p>Explora cómo se comportan los algoritmos con arreglos configurables. Ajusta tamaño, velocidad y distribución inicial para observar comparaciones, intercambios y tiempos aproximados.</p>
+          </div>
+          <button class="contact-btn contact-mail viz-reset" type="button" id="simReset">Reiniciar</button>
+        </div>
+
+        <div class="viz-tabs" id="simTabs" role="tablist" aria-label="Algoritmos disponibles"></div>
+
+        <div class="viz-controls">
+          <label class="viz-ctrl">
+            <span>Cantidad de elementos</span>
+            <input type="range" id="simSize" min="8" max="80" value="30" step="1" />
+            <strong id="simSizeVal">30</strong>
+          </label>
+          <label class="viz-ctrl">
+            <span>Velocidad de animación</span>
+            <input type="range" id="simSpeed" min="1" max="10" value="5" step="1" />
+            <strong id="simSpeedVal">5 — normal</strong>
+          </label>
+          <label class="viz-ctrl">
+            <span>Orden inicial</span>
+            <select id="simOrder">
+              <option value="random">Aleatorio</option>
+              <option value="sorted">Ya ordenado</option>
+              <option value="reverse">Invertido</option>
+              <option value="nearlySorted">Casi ordenado</option>
+              <option value="fewUnique">Pocos valores únicos</option>
+              <option value="mountain">Montaña</option>
+              <option value="valley">Valle</option>
+              <option value="pipes">Zigzag</option>
+            </select>
+          </label>
+          <label class="viz-ctrl">
+            <span>Rango máximo</span>
+            <input type="range" id="simRange" min="10" max="500" value="100" step="10" />
+            <strong id="simRangeVal">1 – 100</strong>
+          </label>
+        </div>
+
+        <div class="viz-actions">
+          <button type="button" id="simGenerate">Generar arreglo</button>
+          <button type="button" id="simStart">Iniciar</button>
+          <button type="button" id="simPause" disabled>Pausar</button>
+          <button type="button" id="simStep" disabled>Paso a paso</button>
+        </div>
+
+        <div class="viz-progress" aria-live="polite">
+          <div class="viz-progress__fill" id="simProgress"></div>
+        </div>
+
+        <div class="viz-canvas">
+          <canvas id="simCanvas" height="220" aria-label="Visualización de barras ordenadas"></canvas>
+          <div class="viz-legend">
+            <span><span class="viz-dot viz-dot--idle"></span>Sin tocar</span>
+            <span><span class="viz-dot viz-dot--compare"></span>Comparando</span>
+            <span><span class="viz-dot viz-dot--swap"></span>Intercambiando</span>
+            <span><span class="viz-dot viz-dot--sorted"></span>Ordenado</span>
+            <span><span class="viz-dot viz-dot--pivot"></span>Pivote</span>
+            <span><span class="viz-dot viz-dot--min"></span>Mínimo</span>
+          </div>
+        </div>
+
+        <div class="viz-stats">
+          <article>
+            <p>Comparaciones</p>
+            <strong id="simComp">0</strong>
+          </article>
+          <article>
+            <p>Intercambios</p>
+            <strong id="simSwap">0</strong>
+          </article>
+          <article>
+            <p>Tiempo (ms)</p>
+            <strong id="simTime">0</strong>
+          </article>
+          <article>
+            <p>Estado</p>
+            <strong id="simState">listo</strong>
+          </article>
+        </div>
+
+        <div class="viz-log" id="simLog" aria-live="polite">Selecciona un algoritmo y pulsa "Iniciar".</div>
+
+        <div class="viz-info">
+          <div>
+            <h3 id="simInfoTitle">Bubble Sort</h3>
+            <p id="simInfoDesc"></p>
+          </div>
+          <div class="viz-tags" id="simInfoComplexity"></div>
+        </div>
+      </section>
+    )}
+
+    {esSimuladorOrdenamientos && (
+      <section class="ds-panel simulador-panel" data-simulador>
+        <div class="sim-head">
+          <div>
+            <h2><img src="/icons/network.svg" alt="" class="ui-icon" aria-hidden="true" />Simulador visual de ordenamientos</h2>
+            <p>
+              Configura el tamaño, tipo de dato y situación del arreglo para comparar métricas clave de cada algoritmo mientras observas
+              una animación en vivo del que selecciones. Cada pasada sincroniza la tabla comparativa con la ejecución actual.
+            </p>
+          </div>
+          <div class="sim-head-badges">
+            <span class="sim-badge">Tiempo real</span>
+            <span class="sim-badge">Métricas completas</span>
+            <span class="sim-badge">Datos dinamicos</span>
+          </div>
+        </div>
+
+        <div class="sim-grid">
+          <section class="sim-config" aria-labelledby="sim-config-titulo">
+            <h3 id="sim-config-titulo">Panel de configuración</h3>
+            <label class="sim-slider" for="sim-cantidad">
+              <span>Datos a ordenar</span>
+              <output id="sim-cantidad-valor" for="sim-cantidad">32 datos</output>
+              <input id="sim-cantidad" type="range" min="8" max="60" step="2" value="32" />
+            </label>
+
+            <div class="sim-group">
+              <p class="sim-group-title">Tipo de dato</p>
+              <div class="sim-pill-group" role="group" aria-label="Tipo de dato">
+                <button type="button" class="sim-pill activo" data-tipo="int">Enteros</button>
+                <button type="button" class="sim-pill" data-tipo="string">Strings</button>
+              </div>
+            </div>
+
+            <div class="sim-group">
+              <p class="sim-group-title">Situación del arreglo</p>
+              <div class="sim-scenarios" role="group" aria-label="Situación del arreglo">
+                <button type="button" class="sim-scenario activo" data-escenario="desordenado">
+                  <strong>Totalmente desordenado</strong>
+                  <small>Nuevo shuffle en cada ejecución</small>
+                </button>
+                <button type="button" class="sim-scenario" data-escenario="parcial">
+                  <strong>Parcialmente ordenado</strong>
+                  <small>Subbloques ordenados y swaps puntuales</small>
+                </button>
+                <button type="button" class="sim-scenario" data-escenario="intercalado">
+                  <strong>Intercalado</strong>
+                  <small>Oscila entre valores altos y bajos</small>
+                </button>
+                <button type="button" class="sim-scenario" data-escenario="invertido">
+                  <strong>Invertido</strong>
+                  <small>Mayor a menor estricto</small>
+                </button>
+              </div>
+            </div>
+
+            <div class="sim-group">
+              <p class="sim-group-title">Algoritmo a visualizar</p>
+              <div class="sim-pill-group" role="tablist" aria-label="Algoritmos disponibles" id="sim-algoritmos">
+                <button type="button" class="sim-pill activo" data-algoritmo="bubble" data-programa="/programas-temporales/programa-01">Bubble</button>
+                <button type="button" class="sim-pill" data-algoritmo="bubblePlus" data-programa="/programas-temporales/programa-05">Bubble+</button>
+                <button type="button" class="sim-pill" data-algoritmo="selection" data-programa="/programas-temporales/programa-11">Selection</button>
+                <button type="button" class="sim-pill" data-algoritmo="insertion" data-programa="/programas-temporales/programa-15">Insertion</button>
+                <button type="button" class="sim-pill" data-algoritmo="shell" data-programa="/programas-temporales/programa-09">Shell</button>
+                <button type="button" class="sim-pill" data-algoritmo="shaker" data-programa="/programas-temporales/programa-18">Shaker</button>
+                <button type="button" class="sim-pill" data-algoritmo="merge" data-programa="/programas-temporales/programa-21">Merge</button>
+                <button type="button" class="sim-pill" data-algoritmo="quick" data-programa="/programas-temporales/programa-07">Quick</button>
+                <button type="button" class="sim-pill" data-algoritmo="heap" data-programa="/programas-temporales/programa-24">Heap</button>
+                <button type="button" class="sim-pill" data-algoritmo="bucket" data-programa="/programas-temporales/programa-26">Bucket</button>
+                <button type="button" class="sim-pill" data-algoritmo="radix" data-programa="/programas-temporales/programa-20">Radix</button>
+                <button type="button" class="sim-pill" data-algoritmo="counting" data-programa="/programas-temporales/programa-29">Counting</button>
+              </div>
+            </div>
+            <a class="sim-program-link" id="sim-program-link" href="/programas-temporales/programa-01" target="_blank" rel="noreferrer">Ver programa individual</a>
+
+            <div class="sim-controls">
+              <label class="sim-select">
+                <span>Velocidad de animacion</span>
+                <select id="sim-velocidad">
+                  <option value="750">Calmada</option>
+                  <option value="420" selected>Dinámica</option>
+                  <option value="200">Rápida</option>
+                </select>
+              </label>
+              <div class="sim-actions">
+                <button type="button" class="sim-btn primario" id="sim-start">Simular</button>
+                <button type="button" class="sim-btn" id="sim-pause">Pausar</button>
+                <button type="button" class="sim-btn fantasma" id="sim-reset">Reiniciar</button>
+              </div>
+            </div>
+
+            <p class="sim-config-note" id="sim-config-estado">Configura y presiona "Simular" para generar los datos.</p>
+          </section>
+
+          <section class="sim-table" aria-live="polite">
+            <div class="sim-table-head">
+              <h3>Tabla comparativa paso a paso</h3>
+              <span class="sim-tag" id="sim-etiqueta-escenario">Desordenado · Enteros</span>
+            </div>
+            <div class="tabla-contenedor">
+                <table class="tabla-comparativa" id="sim-tabla">
+                  <thead>
+                    <tr>
+                      <th>Algoritmo</th>
+                      <th>Paso</th>
+                      <th>Comparaciones</th>
+                      <th>Intercambios</th>
+                      <th>Iteraciones</th>
+                      <th>Tiempo (ms)</th>
+                      <th>Memoria (KB)</th>
+                      <th>Recursivo</th>
+                      <th>Estable</th>
+                      <th>Programa</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="10">Aún no hay datos procesados.</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            <div class="sim-legend">
+              <p>Las barras usan colores proporcionales al valor; para strings cada letra recibe un color dedicado y las barras resaltadas indican comparaciones activas. Cuando un algoritmo requiere estructuras auxiliares se muestra un grafo animado.</p>
+            </div>
+          </section>
+
+          <section class="sim-visual">
+            <div class="sim-visual-head">
+              <h3>Animacion del algoritmo</h3>
+              <span class="sim-tag" id="sim-estado">En espera</span>
+            </div>
+            <div class="sim-visual-stage" id="sim-visual">
+              <p class="sim-placeholder">Inicia la simulación para ver las barras en movimiento.</p>
+            </div>
+            <div class="sim-timeline">
+              <div class="sim-timeline-track">
+                <div class="sim-timeline-thumb" id="sim-timeline"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="sim-descripcion">
+            <h3>Ficha descriptiva</h3>
+            <dl>
+              <div>
+                <dt>Descripcion</dt>
+                <dd id="sim-descripcion">Selecciona un algoritmo para revisar su logica y estabilidad.</dd>
+              </div>
+              <div>
+                <dt>Estabilidad</dt>
+                <dd id="sim-estabilidad">—</dd>
+              </div>
+              <div>
+                <dt>Recursividad</dt>
+                <dd id="sim-recursion">—</dd>
+              </div>
+              <div>
+                <dt>Situacion actual</dt>
+                <dd id="sim-situacion">—</dd>
+              </div>
+            </dl>
+            <div class="sim-log" id="sim-log">
+              <p>El registro mostrará el evento más reciente de la animación.</p>
+            </div>
+          </section>
+        </div>
+      </section>
     )}
 
     <section class="panel subpanel zona-imagen">
@@ -164,540 +515,1755 @@ const esComparativaMergeVsQuick = programa.slug === "programa-23";
   </main>
 
   <script is:inline>
-    const datosComparativa = {
-      int: {
-        desordenado: {
-          10: { merge: { tiempo: 0.07, comparaciones: 28, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.05, comparaciones: 24, movimientos: 19, memoria: 2 } },
-          50: { merge: { tiempo: 0.45, comparaciones: 276, movimientos: 438, memoria: 24 }, quick: { tiempo: 0.36, comparaciones: 251, movimientos: 184, memoria: 7 } },
-          200: { merge: { tiempo: 2.21, comparaciones: 1540, movimientos: 2874, memoria: 95 }, quick: { tiempo: 1.66, comparaciones: 1394, movimientos: 980, memoria: 13 } }
-        },
-        parcial: {
-          10: { merge: { tiempo: 0.06, comparaciones: 24, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.04, comparaciones: 18, movimientos: 14, memoria: 2 } },
-          50: { merge: { tiempo: 0.41, comparaciones: 249, movimientos: 438, memoria: 24 }, quick: { tiempo: 0.29, comparaciones: 190, movimientos: 133, memoria: 6 } },
-          200: { merge: { tiempo: 2.05, comparaciones: 1462, movimientos: 2874, memoria: 95 }, quick: { tiempo: 1.31, comparaciones: 1116, movimientos: 715, memoria: 11 } }
-        },
-        invertido: {
-          10: { merge: { tiempo: 0.07, comparaciones: 31, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.11, comparaciones: 45, movimientos: 53, memoria: 8 } },
-          50: { merge: { tiempo: 0.47, comparaciones: 289, movimientos: 438, memoria: 24 }, quick: { tiempo: 1.93, comparaciones: 1225, movimientos: 1290, memoria: 46 } },
-          200: { merge: { tiempo: 2.24, comparaciones: 1601, movimientos: 2874, memoria: 95 }, quick: { tiempo: 22.8, comparaciones: 19900, movimientos: 20110, memoria: 189 } }
+    (function setupClipboard() {
+      const trigger = document.querySelector(".boton-copiar");
+      const codigo = document.querySelector(".cuadro-codigo");
+      if (!trigger || !codigo) return;
+
+      trigger.addEventListener("click", async () => {
+        const texto = codigo.textContent ?? "";
+        try {
+          await navigator.clipboard.writeText(texto);
+          trigger.innerHTML = "✅";
+          setTimeout(() => {
+            trigger.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V7Zm2 0h9v11h-9V7Z" /><path d="M5 4a2 2 0 0 1 2-2h9v2H7v11H5V4Zm-2 5h2v11a2 2 0 0 0 2 2h11v2H7a2 2 0 0 1-2-2V9Z" /></svg>`;
+          }, 1400);
+        } catch {
+          const seleccion = window.getSelection();
+          const rango = document.createRange();
+          rango.selectNodeContents(codigo);
+          seleccion?.removeAllRanges();
+          seleccion?.addRange(rango);
         }
-      },
-      string: {
-        desordenado: {
-          10: { merge: { tiempo: 0.11, comparaciones: 31, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.09, comparaciones: 26, movimientos: 21, memoria: 3 } },
-          50: { merge: { tiempo: 0.73, comparaciones: 295, movimientos: 438, memoria: 25 }, quick: { tiempo: 0.61, comparaciones: 266, movimientos: 196, memoria: 8 } },
-          200: { merge: { tiempo: 3.12, comparaciones: 1658, movimientos: 2874, memoria: 97 }, quick: { tiempo: 2.61, comparaciones: 1488, movimientos: 1059, memoria: 15 } }
+      });
+    })();
+
+    (function setupComparativa() {
+      const tabla = document.querySelector("#tabla-comparativa");
+      if (!tabla) return;
+
+      const datosComparativa = {
+        int: {
+          desordenado: {
+            10: { merge: { tiempo: 0.07, comparaciones: 28, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.05, comparaciones: 24, movimientos: 19, memoria: 2 } },
+            50: { merge: { tiempo: 0.45, comparaciones: 276, movimientos: 438, memoria: 24 }, quick: { tiempo: 0.36, comparaciones: 251, movimientos: 184, memoria: 7 } },
+            200: { merge: { tiempo: 2.21, comparaciones: 1540, movimientos: 2874, memoria: 95 }, quick: { tiempo: 1.66, comparaciones: 1394, movimientos: 980, memoria: 13 } }
+          },
+          parcial: {
+            10: { merge: { tiempo: 0.06, comparaciones: 24, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.04, comparaciones: 18, movimientos: 14, memoria: 2 } },
+            50: { merge: { tiempo: 0.41, comparaciones: 249, movimientos: 438, memoria: 24 }, quick: { tiempo: 0.29, comparaciones: 190, movimientos: 133, memoria: 6 } },
+            200: { merge: { tiempo: 2.05, comparaciones: 1462, movimientos: 2874, memoria: 95 }, quick: { tiempo: 1.31, comparaciones: 1116, movimientos: 715, memoria: 11 } }
+          },
+          invertido: {
+            10: { merge: { tiempo: 0.07, comparaciones: 31, movimientos: 40, memoria: 6 }, quick: { tiempo: 0.11, comparaciones: 45, movimientos: 53, memoria: 8 } },
+            50: { merge: { tiempo: 0.47, comparaciones: 289, movimientos: 438, memoria: 24 }, quick: { tiempo: 1.93, comparaciones: 1225, movimientos: 1290, memoria: 46 } },
+            200: { merge: { tiempo: 2.24, comparaciones: 1601, movimientos: 2874, memoria: 95 }, quick: { tiempo: 22.8, comparaciones: 19900, movimientos: 20110, memoria: 189 } }
+          }
         },
-        parcial: {
-          10: { merge: { tiempo: 0.09, comparaciones: 26, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.07, comparaciones: 21, movimientos: 16, memoria: 3 } },
-          50: { merge: { tiempo: 0.68, comparaciones: 271, movimientos: 438, memoria: 25 }, quick: { tiempo: 0.53, comparaciones: 218, movimientos: 151, memoria: 7 } },
-          200: { merge: { tiempo: 2.97, comparaciones: 1574, movimientos: 2874, memoria: 97 }, quick: { tiempo: 2.08, comparaciones: 1255, movimientos: 832, memoria: 12 } }
-        },
-        invertido: {
-          10: { merge: { tiempo: 0.12, comparaciones: 34, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.18, comparaciones: 52, movimientos: 60, memoria: 9 } },
-          50: { merge: { tiempo: 0.77, comparaciones: 310, movimientos: 438, memoria: 25 }, quick: { tiempo: 2.41, comparaciones: 1270, movimientos: 1334, memoria: 50 } },
-          200: { merge: { tiempo: 3.16, comparaciones: 1719, movimientos: 2874, memoria: 97 }, quick: { tiempo: 25.9, comparaciones: 20480, movimientos: 20644, memoria: 194 } }
+        string: {
+          desordenado: {
+            10: { merge: { tiempo: 0.11, comparaciones: 31, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.09, comparaciones: 26, movimientos: 21, memoria: 3 } },
+            50: { merge: { tiempo: 0.73, comparaciones: 295, movimientos: 438, memoria: 25 }, quick: { tiempo: 0.61, comparaciones: 266, movimientos: 196, memoria: 8 } },
+            200: { merge: { tiempo: 3.12, comparaciones: 1658, movimientos: 2874, memoria: 97 }, quick: { tiempo: 2.61, comparaciones: 1488, movimientos: 1059, memoria: 15 } }
+          },
+          parcial: {
+            10: { merge: { tiempo: 0.09, comparaciones: 26, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.07, comparaciones: 21, movimientos: 16, memoria: 3 } },
+            50: { merge: { tiempo: 0.68, comparaciones: 271, movimientos: 438, memoria: 25 }, quick: { tiempo: 0.53, comparaciones: 218, movimientos: 151, memoria: 7 } },
+            200: { merge: { tiempo: 2.97, comparaciones: 1574, movimientos: 2874, memoria: 97 }, quick: { tiempo: 2.08, comparaciones: 1255, movimientos: 832, memoria: 12 } }
+          },
+          invertido: {
+            10: { merge: { tiempo: 0.12, comparaciones: 34, movimientos: 40, memoria: 7 }, quick: { tiempo: 0.18, comparaciones: 52, movimientos: 60, memoria: 9 } },
+            50: { merge: { tiempo: 0.77, comparaciones: 310, movimientos: 438, memoria: 25 }, quick: { tiempo: 2.41, comparaciones: 1270, movimientos: 1334, memoria: 50 } },
+            200: { merge: { tiempo: 3.16, comparaciones: 1719, movimientos: 2874, memoria: 97 }, quick: { tiempo: 25.9, comparaciones: 20480, movimientos: 20644, memoria: 194 } }
+          }
         }
+      };
+
+      const filtroLongitud = document.querySelector("#filtro-longitud");
+      const filtroTipo = document.querySelector("#filtro-tipo");
+      const filtroEscenario = document.querySelector("#filtro-escenario");
+      const cuerpoTabla = document.querySelector("#tabla-comparativa tbody");
+      const cuerpoTablaComplejidad = document.querySelector("#tabla-complejidad tbody");
+      const listaVentajas = document.querySelector("#lista-ventajas");
+      const listaDesventajas = document.querySelector("#lista-desventajas");
+      const textoRecomendacion = document.querySelector("#texto-recomendacion");
+      const tabsDefinicion = document.querySelectorAll(".tab-definicion");
+      const detalleAlgoritmo = document.querySelector("#detalle-algoritmo");
+
+      if (!filtroLongitud || !filtroTipo || !filtroEscenario || !cuerpoTabla || !cuerpoTablaComplejidad || !listaVentajas || !listaDesventajas || !textoRecomendacion || !detalleAlgoritmo) {
+        return;
       }
-    };
 
-    const filtroLongitud = document.querySelector("#filtro-longitud");
-    const filtroTipo = document.querySelector("#filtro-tipo");
-    const filtroEscenario = document.querySelector("#filtro-escenario");
-    const cuerpoTabla = document.querySelector("#tabla-comparativa tbody");
-    const cuerpoTablaComplejidad = document.querySelector("#tabla-complejidad tbody");
-    const listaVentajas = document.querySelector("#lista-ventajas");
-    const listaDesventajas = document.querySelector("#lista-desventajas");
-    const textoRecomendacion = document.querySelector("#texto-recomendacion");
-    const tabsDefinicion = document.querySelectorAll(".tab-definicion");
-    const detalleAlgoritmo = document.querySelector("#detalle-algoritmo");
+      const metricas = [
+        { clave: "tiempo", etiqueta: "Tiempo (ms)", menorEsMejor: true },
+        { clave: "comparaciones", etiqueta: "Comparaciones", menorEsMejor: true },
+        { clave: "movimientos", etiqueta: "Movimientos", menorEsMejor: true },
+        { clave: "memoria", etiqueta: "Memoria extra estimada (KB)", menorEsMejor: true }
+      ];
 
-    const metricas = [
-      { clave: "tiempo", etiqueta: "Tiempo (ms)", menorEsMejor: true },
-      { clave: "comparaciones", etiqueta: "Comparaciones", menorEsMejor: true },
-      { clave: "movimientos", etiqueta: "Movimientos", menorEsMejor: true },
-      { clave: "memoria", etiqueta: "Memoria extra estimada (KB)", menorEsMejor: true }
-    ];
+      const definicionesDetalladas = {
+        merge: {
+          titulo: "Merge Sort",
+          funcionalidad: [
+            "Divide recursivamente el arreglo en mitades hasta tener subarreglos de un elemento.",
+            "Conquista mezclando subarreglos ya ordenados mediante comparacion secuencial.",
+            "Mantiene orden estable: elementos iguales conservan su posicion relativa."
+          ],
+          ventajas: [
+            "Complejidad temporal estable O(n log n) en mejor, promedio y peor caso.",
+            "Excelente comportamiento en entradas invertidas o con patron adverso.",
+            "Muy util para listas enlazadas y para ordenamiento externo en disco."
+          ],
+          desventajas: [
+            "Requiere memoria auxiliar O(n) para el proceso de mezcla.",
+            "Puede ser menos rapido que Quick Sort en arreglos pequenos en memoria RAM.",
+            "Coste adicional de copiado/movimientos durante cada fase de merge."
+          ]
+        },
+        quick: {
+          titulo: "Quick Sort",
+          funcionalidad: [
+            "Selecciona un pivote y particiona el arreglo en menores/mayores al pivote.",
+            "Ordena recursivamente ambos lados de la particion (divide y venceras).",
+            "Su eficiencia depende de la calidad de las particiones logradas."
+          ],
+          ventajas: [
+            "En promedio logra O(n log n) y suele ser muy rapido en practica.",
+            "Uso de memoria auxiliar bajo (aprox. O(log n) por recursion promedio).",
+            "Muy eficiente en arreglos en memoria cuando el pivote esta bien elegido."
+          ],
+          desventajas: [
+            "Puede degradar a O(n²) en particiones muy desbalanceadas.",
+            "No es estable por defecto (iguales pueden cambiar su orden relativo).",
+            "Puede aumentar la profundidad de recursion en escenarios adversos."
+          ]
+        }
+      };
 
-    const resolverGanador = (mergeValor, quickValor, menorEsMejor) => {
-      if (mergeValor === quickValor) return "Empate";
-      if (menorEsMejor) return mergeValor < quickValor ? "Merge Sort" : "Quick Sort";
-      return mergeValor > quickValor ? "Merge Sort" : "Quick Sort";
-    };
+      const complejidadesBase = {
+        merge: { mejor: "O(n log n)", promedio: "O(n log n)", peor: "O(n log n)", memoria: "O(n)" },
+        quick: { mejor: "O(n log n)", promedio: "O(n log n)", peor: "O(n²)", memoria: "O(log n) promedio / O(n) peor caso" }
+      };
 
-    const definicionesDetalladas = {
-      merge: {
-        titulo: "Merge Sort",
-        funcionalidad: [
-          "Divide recursivamente el arreglo en mitades hasta tener subarreglos de un elemento.",
-          "Conquista mezclando subarreglos ya ordenados mediante comparacion secuencial.",
-          "Mantiene orden estable: elementos iguales conservan su posicion relativa."
-        ],
-        ventajas: [
-          "Complejidad temporal estable O(n log n) en mejor, promedio y peor caso.",
-          "Excelente comportamiento en entradas invertidas o con patron adverso.",
-          "Muy util para listas enlazadas y para ordenamiento externo en disco."
-        ],
-        desventajas: [
-          "Requiere memoria auxiliar O(n) para el proceso de mezcla.",
-          "Puede ser menos rapido que Quick Sort en arreglos pequenos en memoria RAM.",
-          "Coste adicional de copiado/movimientos durante cada fase de merge."
-        ]
-      },
-      quick: {
-        titulo: "Quick Sort",
-        funcionalidad: [
-          "Selecciona un pivote y particiona el arreglo en menores/mayores al pivote.",
-          "Ordena recursivamente ambos lados de la particion (divide y venceras).",
-          "Su eficiencia depende de la calidad de las particiones logradas."
-        ],
-        ventajas: [
-          "En promedio logra O(n log n) y suele ser muy rapido en practica.",
-          "Uso de memoria auxiliar bajo (aprox. O(log n) por recursion promedio).",
-          "Muy eficiente en arreglos en memoria cuando el pivote esta bien elegido."
-        ],
-        desventajas: [
-          "Puede degradar a O(n²) en particiones muy desbalanceadas.",
-          "No es estable por defecto (iguales pueden cambiar su orden relativo).",
-          "Puede aumentar la profundidad de recursion en escenarios adversos."
-        ]
-      }
-    };
+      const resolverGanador = (mergeValor, quickValor, menorEsMejor) => {
+        if (mergeValor === quickValor) return "Empate";
+        if (menorEsMejor) return mergeValor < quickValor ? "Merge Sort" : "Quick Sort";
+        return mergeValor > quickValor ? "Merge Sort" : "Quick Sort";
+      };
 
-    const complejidadesBase = {
-      merge: { mejor: "O(n log n)", promedio: "O(n log n)", peor: "O(n log n)", memoria: "O(n)" },
-      quick: { mejor: "O(n log n)", promedio: "O(n log n)", peor: "O(n²)", memoria: "O(log n) promedio / O(n) peor caso" }
-    };
-
-    const renderizarDefinicionAlgoritmo = (algoritmo) => {
-      if (!detalleAlgoritmo) return;
-      const datos = definicionesDetalladas[algoritmo];
-      if (!datos) return;
-
-      const listaHtml = (titulo, items) =>
-        `<h4>${titulo}</h4><ol>${items.map((item) => `<li>${item}</li>`).join("")}</ol>`;
-
-      detalleAlgoritmo.innerHTML = `
-        <h3>${datos.titulo}: definicion detallada</h3>
-        ${listaHtml("Funcionalidad del algoritmo", datos.funcionalidad)}
-        ${listaHtml("Ventajas", datos.ventajas)}
-        ${listaHtml("Desventajas", datos.desventajas)}
-      `;
-    };
-
-    const renderizarComparativa = () => {
-      if (!filtroLongitud || !filtroTipo || !filtroEscenario || !cuerpoTabla || !cuerpoTablaComplejidad || !listaVentajas || !listaDesventajas || !textoRecomendacion) return;
-
-      const longitud = filtroLongitud.value;
-      const tipo = filtroTipo.value;
-      const escenario = filtroEscenario.value;
-      const datos = datosComparativa[tipo]?.[escenario]?.[longitud];
-      if (!datos) return;
-
-      const merge = datos.merge;
-      const quick = datos.quick;
-      cuerpoTabla.innerHTML = "";
-
-      let puntosMerge = 0;
-      let puntosQuick = 0;
-      const ventajas = [];
-      const desventajas = [];
-
-      metricas.forEach((metrica) => {
-        const mergeValor = merge[metrica.clave];
-        const quickValor = quick[metrica.clave];
-        const ganador = resolverGanador(mergeValor, quickValor, metrica.menorEsMejor);
-        const fila = document.createElement("tr");
-
-        if (ganador === "Merge Sort") puntosMerge += 1;
-        if (ganador === "Quick Sort") puntosQuick += 1;
-
-        fila.innerHTML = `
-          <td>${metrica.etiqueta}</td>
-          <td>${mergeValor}</td>
-          <td>${quickValor}</td>
-          <td><span class="badge-ganador ${ganador === "Empate" ? "empate" : ganador === "Merge Sort" ? "merge" : "quick"}">${ganador}</span></td>
+      const renderizarDefinicionAlgoritmo = (algoritmo) => {
+        const datos = definicionesDetalladas[algoritmo];
+        if (!datos) return;
+        const listaHtml = (titulo, items) =>
+          `<h4>${titulo}</h4><ol>${items.map((item) => `<li>${item}</li>`).join("")}</ol>`;
+        detalleAlgoritmo.innerHTML = `
+          <h3>${datos.titulo}: definicion detallada</h3>
+          ${listaHtml("Funcionalidad del algoritmo", datos.funcionalidad)}
+          ${listaHtml("Ventajas", datos.ventajas)}
+          ${listaHtml("Desventajas", datos.desventajas)}
         `;
-        cuerpoTabla.appendChild(fila);
+      };
+
+      const renderizarComparativa = () => {
+        const longitud = filtroLongitud.value;
+        const tipo = filtroTipo.value;
+        const escenario = filtroEscenario.value;
+        const datos = datosComparativa[tipo]?.[escenario]?.[longitud];
+        if (!datos) return;
+
+        const merge = datos.merge;
+        const quick = datos.quick;
+        cuerpoTabla.innerHTML = "";
+        let puntosMerge = 0;
+        let puntosQuick = 0;
+        const ventajas = [];
+        const desventajas = [];
+
+        metricas.forEach((metrica) => {
+          const mergeValor = merge[metrica.clave];
+          const quickValor = quick[metrica.clave];
+          const ganador = resolverGanador(mergeValor, quickValor, metrica.menorEsMejor);
+          if (ganador === "Merge Sort") puntosMerge += 1;
+          if (ganador === "Quick Sort") puntosQuick += 1;
+          const fila = document.createElement("tr");
+          fila.innerHTML = `
+            <td>${metrica.etiqueta}</td>
+            <td>${mergeValor}</td>
+            <td>${quickValor}</td>
+            <td><span class="badge-ganador ${ganador === "Empate" ? "empate" : ganador === "Merge Sort" ? "merge" : "quick"}">${ganador}</span></td>
+          `;
+          cuerpoTabla.appendChild(fila);
+        });
+
+        const factorEscenario = escenario === "invertido" ? "alto" : escenario === "parcial" ? "medio" : "normal";
+        const factorTipo = tipo === "string" ? "Comparacion lexicografica (costo adicional por longitud de texto)." : "Comparacion numerica directa.";
+        cuerpoTablaComplejidad.innerHTML = `
+          <tr>
+            <td>Mejor caso</td>
+            <td>${complejidadesBase.merge.mejor}</td>
+            <td>${complejidadesBase.quick.mejor}</td>
+          </tr>
+          <tr>
+            <td>Promedio</td>
+            <td>${complejidadesBase.merge.promedio}</td>
+            <td>${complejidadesBase.quick.promedio}</td>
+          </tr>
+          <tr>
+            <td>Peor caso (situacion actual: ${escenario})</td>
+            <td>${complejidadesBase.merge.peor}</td>
+            <td>${escenario === "invertido" ? "Se aproxima a O(n²) con pivote simple." : complejidadesBase.quick.peor}</td>
+          </tr>
+          <tr>
+            <td>Memoria adicional</td>
+            <td>${complejidadesBase.merge.memoria}</td>
+            <td>${complejidadesBase.quick.memoria}</td>
+          </tr>
+          <tr>
+            <td>Contexto de ${longitud} elementos (${tipo})</td>
+            <td>Rendimiento estable con factor ${factorEscenario}.</td>
+            <td>${escenario === "invertido" ? "Particiones desfavorables elevan comparaciones." : "Buen rendimiento promedio con pivote favorable."}</td>
+          </tr>
+          <tr>
+            <td>Tipo de dato seleccionado</td>
+            <td>${factorTipo}</td>
+            <td>${factorTipo}</td>
+          </tr>
+        `;
+
+        if (quick.tiempo < merge.tiempo) {
+          ventajas.push("Quick Sort domina en tiempo promedio en este escenario.");
+        } else {
+          ventajas.push("Merge Sort mantiene un tiempo estable incluso en casos exigentes.");
+        }
+
+        if (merge.memoria > quick.memoria) {
+          desventajas.push("Merge Sort requiere memoria adicional para mezclar subarreglos.");
+        } else if (quick.memoria > merge.memoria) {
+          desventajas.push("Quick Sort aumenta profundidad de recursion y memoria en peores casos.");
+        }
+
+        if (escenario === "invertido") {
+          desventajas.push("Con pivote simple, Quick Sort se acerca al peor caso O(n²) en arreglos invertidos.");
+          ventajas.push("Merge Sort conserva complejidad O(n log n) sin importar el orden inicial.");
+        } else {
+          ventajas.push("Quick Sort aprovecha particiones favorables y reduce operaciones de movimiento.");
+        }
+
+        ventajas.push(`En ${tipo}, ambas soluciones escalan mejor en 50 y 200 elementos que algoritmos cuadraticos.`);
+
+        listaVentajas.innerHTML = ventajas.map((item) => `<li>${item}</li>`).join("");
+        listaDesventajas.innerHTML = desventajas.map((item) => `<li>${item}</li>`).join("");
+
+        if (puntosMerge > puntosQuick) {
+          textoRecomendacion.textContent = "Recomendacion: Merge Sort. En esta combinacion ofrece mejor balance global y mas estabilidad frente al peor caso.";
+        } else if (puntosQuick > puntosMerge) {
+          textoRecomendacion.textContent = "Recomendacion: Quick Sort. En esta combinacion logra mejor rendimiento promedio con menor costo operativo.";
+        } else {
+          textoRecomendacion.textContent = "Recomendacion: empate tecnico. Elige Merge Sort si priorizas estabilidad, o Quick Sort si priorizas rapidez promedio.";
+        }
+      };
+
+      filtroLongitud.addEventListener("change", renderizarComparativa);
+      filtroTipo.addEventListener("change", renderizarComparativa);
+      filtroEscenario.addEventListener("change", renderizarComparativa);
+      tabsDefinicion.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabsDefinicion.forEach((item) => item.classList.remove("activo"));
+          tab.classList.add("activo");
+          renderizarDefinicionAlgoritmo(tab.dataset.algoritmo ?? "merge");
+        });
       });
 
-      const factorEscenario = escenario === "invertido" ? "alto" : escenario === "parcial" ? "medio" : "normal";
-      const factorTipo = tipo === "string" ? "Comparacion lexicografica (costo adicional por longitud de texto)." : "Comparacion numerica directa.";
-      cuerpoTablaComplejidad.innerHTML = `
-        <tr>
-          <td>Mejor caso</td>
-          <td>${complejidadesBase.merge.mejor}</td>
-          <td>${complejidadesBase.quick.mejor}</td>
-        </tr>
-        <tr>
-          <td>Promedio</td>
-          <td>${complejidadesBase.merge.promedio}</td>
-          <td>${complejidadesBase.quick.promedio}</td>
-        </tr>
-        <tr>
-          <td>Peor caso (situacion actual: ${escenario})</td>
-          <td>${complejidadesBase.merge.peor}</td>
-          <td>${escenario === "invertido" ? "Se aproxima a O(n²) con pivote simple." : complejidadesBase.quick.peor}</td>
-        </tr>
-        <tr>
-          <td>Memoria adicional</td>
-          <td>${complejidadesBase.merge.memoria}</td>
-          <td>${complejidadesBase.quick.memoria}</td>
-        </tr>
-        <tr>
-          <td>Contexto de ${longitud} elementos (${tipo})</td>
-          <td>Rendimiento estable con factor ${factorEscenario}.</td>
-          <td>${escenario === "invertido" ? "Particiones desfavorables elevan comparaciones." : "Buen rendimiento promedio con pivote favorable."}</td>
-        </tr>
-        <tr>
-          <td>Tipo de dato seleccionado</td>
-          <td>${factorTipo}</td>
-          <td>${factorTipo}</td>
-        </tr>
-      `;
+      renderizarDefinicionAlgoritmo("merge");
+      renderizarComparativa();
+    })();
 
-      if (quick.tiempo < merge.tiempo) {
-        ventajas.push("Quick Sort domina en tiempo promedio en este escenario.");
-      } else {
-        ventajas.push("Merge Sort mantiene un tiempo estable incluso en casos exigentes.");
+    (function setupSimulador() {
+      const root = document.querySelector("[data-simulador]");
+      if (!root) return;
+
+      const sliderCantidad = root.querySelector("#sim-cantidad");
+      const sliderValor = root.querySelector("#sim-cantidad-valor");
+      const tipoBotones = Array.from(root.querySelectorAll("[data-tipo]"));
+      const escenarioBotones = Array.from(root.querySelectorAll("[data-escenario]"));
+      const algoritmoBotones = Array.from(root.querySelectorAll("[data-algoritmo]"));
+      const linkPrograma = root.querySelector("#sim-program-link");
+      const velocidadSelect = root.querySelector("#sim-velocidad");
+      const startBtn = root.querySelector("#sim-start");
+      const pauseBtn = root.querySelector("#sim-pause");
+      const resetBtn = root.querySelector("#sim-reset");
+      const tablaBody = root.querySelector("#sim-tabla tbody");
+      const etiquetaEscenario = root.querySelector("#sim-etiqueta-escenario");
+      const configEstado = root.querySelector("#sim-config-estado");
+      const estadoTag = root.querySelector("#sim-estado");
+      const visualStage = root.querySelector("#sim-visual");
+      const timelineThumb = root.querySelector("#sim-timeline");
+      const descripcion = root.querySelector("#sim-descripcion");
+      const estabilidad = root.querySelector("#sim-estabilidad");
+      const recursionTexto = root.querySelector("#sim-recursion");
+      const situacionTexto = root.querySelector("#sim-situacion");
+      const logArea = root.querySelector("#sim-log");
+
+      if (!sliderCantidad || !sliderValor || !velocidadSelect || !tablaBody || !etiquetaEscenario || !configEstado || !estadoTag || !visualStage || !timelineThumb || !descripcion || !estabilidad || !recursionTexto || !situacionTexto || !logArea) {
+        return;
       }
 
-      if (merge.memoria > quick.memoria) {
-        desventajas.push("Merge Sort requiere memoria adicional para mezclar subarreglos.");
-      } else if (quick.memoria > merge.memoria) {
-        desventajas.push("Quick Sort aumenta profundidad de recursion y memoria en peores casos.");
-      }
+      const ESCENARIOS = {
+        desordenado: { titulo: "Totalmente desordenado", descripcion: "Cada corrida baraja los datos para ejercitar el peor recorrido promedio." },
+        parcial: { titulo: "Parcialmente ordenado", descripcion: "Bloques ordenados con swaps controlados para medir optimizaciones." },
+        intercalado: { titulo: "Intercalado", descripcion: "Valores altos y bajos alternan, desafiando comparaciones locales." },
+        invertido: { titulo: "Invertido", descripcion: "Orden inverso absoluto para evidenciar el peor caso." }
+      };
 
-      if (escenario === "invertido") {
-        desventajas.push("Con pivote simple, Quick Sort se acerca al peor caso O(n²) en arreglos invertidos.");
-        ventajas.push("Merge Sort conserva complejidad O(n log n) sin importar el orden inicial.");
-      } else {
-        ventajas.push("Quick Sort aprovecha particiones favorables y reduce operaciones de movimiento.");
-      }
+      const tipoEtiqueta = { int: "Enteros", string: "Strings" };
+      const stringPalette = ["#f472b6", "#fb7185", "#facc15", "#34d399", "#22d3ee", "#60a5fa", "#a78bfa", "#fbbf24", "#4ade80", "#f87171"];
+      const colorCache = new Map();
 
-      ventajas.push(`En ${tipo}, ambas soluciones escalan mejor en 50 y 200 elementos que algoritmos cuadraticos.`);
+      const ALGORITMOS = {
+        bubble: { nombre: "Bubble Sort", descripcion: "Versión clásica que compara vecinos y empuja el mayor al final.", estable: true, usaRecursion: false, color: "#8b5cf6", ejecutar: instrumentarBurbuja, visual: "Barras dinámicas" },
+        bubblePlus: { nombre: "Bubble Sort optimizado", descripcion: "Reduce pasadas al recordar el ultimo intercambio.", estable: true, usaRecursion: false, color: "#a855f7", ejecutar: instrumentarBurbujaPlus, visual: "Barras con cortes anticipados" },
+        selection: { nombre: "Selection Sort", descripcion: "Encuentra el minimo restante y lo coloca en su sitio.", estable: false, usaRecursion: false, color: "#f97316", ejecutar: instrumentarSeleccion, visual: "Barras" },
+        insertion: { nombre: "Insertion Sort", descripcion: "Inserta cada elemento en la zona ordenada desplazándolo.", estable: true, usaRecursion: false, color: "#10b981", ejecutar: instrumentarInsercion, visual: "Barras" },
+        shell: { nombre: "Shell Sort", descripcion: "Ordena usando gaps decrecientes para acelerar Inserción.", estable: false, usaRecursion: false, color: "#06b6d4", ejecutar: instrumentarShell, visual: "Barras" },
+        shaker: { nombre: "Shaker Sort", descripcion: "Burbuja bidireccional que recorre ida y vuelta.", estable: true, usaRecursion: false, color: "#f59e0b", ejecutar: instrumentarShaker, visual: "Barras" },
+        merge: { nombre: "Merge Sort", descripcion: "Divide y conquista mezclando subarreglos ordenados.", estable: true, usaRecursion: true, color: "#0ea5e9", ejecutar: instrumentarMerge, visual: "Barras + árbol de fusiones" },
+        quick: { nombre: "Quick Sort", descripcion: "Particiona alrededor de pivotes y resuelve recursivamente.", estable: false, usaRecursion: true, color: "#ec4899", ejecutar: instrumentarQuick, visual: "Barras" },
+        heap: { nombre: "Heap Sort", descripcion: "Construye un montículo y extrae máximos.", estable: false, usaRecursion: false, color: "#facc15", ejecutar: instrumentarHeap, visual: "Árbol binario" },
+        bucket: { nombre: "Bucket Sort", descripcion: "Distribuye elementos en cubetas y las ordena por separado.", estable: true, usaRecursion: false, color: "#2dd4bf", ejecutar: instrumentarBucket, visual: "Árbol de buckets" },
+        radix: { nombre: "Radix Sort", descripcion: "Ordena por dígitos desde el menos significativo.", estable: true, usaRecursion: false, color: "#f472b6", ejecutar: instrumentarRadix, visual: "Árbol de dígitos" },
+        counting: { nombre: "Counting Sort", descripcion: "Cuenta apariciones y reconstruye el arreglo ordenado.", estable: true, usaRecursion: false, color: "#94a3b8", ejecutar: instrumentarCounting, visual: "Árbol de frecuencias" }
+      };
 
-      listaVentajas.innerHTML = ventajas.map((item) => `<li>${item}</li>`).join("");
-      listaDesventajas.innerHTML = desventajas.map((item) => `<li>${item}</li>`).join("");
+      const enlacesProgramas = {
+        bubble: { int: "/programas-temporales/programa-02", string: "/programas-temporales/programa-01" },
+        bubblePlus: { int: "/programas-temporales/programa-05", string: "/programas-temporales/programa-06" },
+        selection: { int: "/programas-temporales/programa-11", string: "/programas-temporales/programa-12" },
+        insertion: { int: "/programas-temporales/programa-15", string: "/programas-temporales/programa-16" },
+        shell: { int: "/programas-temporales/programa-09", string: "/programas-temporales/programa-10" },
+        shaker: { int: "/programas-temporales/programa-18", string: "/programas-temporales/programa-19" },
+        merge: { int: "/programas-temporales/programa-21", string: "/programas-temporales/programa-22" },
+        quick: { int: "/programas-temporales/programa-07", string: "/programas-temporales/programa-08" },
+        heap: { int: "/programas-temporales/programa-24", string: "/programas-temporales/programa-25" },
+        bucket: { int: "/programas-temporales/programa-26", string: "/programas-temporales/programa-27" },
+        radix: { int: "/programas-temporales/programa-20" },
+        counting: { int: "/programas-temporales/programa-29" }
+      };
 
-      if (puntosMerge > puntosQuick) {
-        textoRecomendacion.textContent = "Recomendacion: Merge Sort. En esta combinacion ofrece mejor balance global y mas estabilidad frente al peor caso.";
-      } else if (puntosQuick > puntosMerge) {
-        textoRecomendacion.textContent = "Recomendacion: Quick Sort. En esta combinacion logra mejor rendimiento promedio con menor costo operativo.";
-      } else {
-        textoRecomendacion.textContent = "Recomendacion: empate tecnico. Elige Merge Sort si priorizas estabilidad, o Quick Sort si priorizas rapidez promedio.";
-      }
-    };
+      const state = {
+        tipoDato: "int",
+        escenario: "desordenado",
+        cantidad: Number(sliderCantidad.value),
+        algoritmoActivo: "bubble",
+        velocidad: Number(velocidadSelect.value),
+        resultados: [],
+        pasoActual: 0,
+        maxPasos: 0,
+        jugando: false,
+        temporizador: null
+      };
 
-    const botonCopiar = document.querySelector(".boton-copiar");
-    const nodoCodigo = document.querySelector(".cuadro-codigo");
-    filtroLongitud?.addEventListener("change", renderizarComparativa);
-    filtroTipo?.addEventListener("change", renderizarComparativa);
-    filtroEscenario?.addEventListener("change", renderizarComparativa);
-    tabsDefinicion.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        tabsDefinicion.forEach((item) => item.classList.remove("activo"));
-        tab.classList.add("activo");
-        renderizarDefinicionAlgoritmo(tab.dataset.algoritmo ?? "merge");
+      const seleccionarBoton = (coleccion, boton) => {
+        coleccion.forEach((item) => item.classList.remove("activo"));
+        boton.classList.add("activo");
+      };
+
+      const setStatus = (texto) => {
+        estadoTag.textContent = texto;
+      };
+
+      const obtenerColorBarra = (item, colorBase) => {
+        if (state.tipoDato === "string") {
+          const clave = item.label.charCodeAt(0);
+          if (!colorCache.has(clave)) {
+            const tono = stringPalette[colorCache.size % stringPalette.length];
+            colorCache.set(clave, tono);
+          }
+          return colorCache.get(clave);
+        }
+        return colorBase;
+      };
+
+      const actualizarSliderLabel = () => {
+        sliderValor.textContent = `${state.cantidad} datos`;
+      };
+
+      const actualizarEtiquetaEscenario = () => {
+        etiquetaEscenario.textContent = `${ESCENARIOS[state.escenario].titulo} · ${tipoEtiqueta[state.tipoDato]}`;
+      };
+
+      const detenerAnimacion = () => {
+        state.jugando = false;
+        if (state.temporizador) {
+          clearTimeout(state.temporizador);
+          state.temporizador = null;
+        }
+      };
+
+      const updateTimeline = () => {
+        const total = Math.max(1, state.maxPasos - 1);
+        const avance = state.resultados.length ? Math.min(1, state.pasoActual / total) : 0;
+        timelineThumb.style.setProperty("--avance", `${avance * 100}%`);
+      };
+
+      const renderLog = (descripcionPaso, pasoActual, totalPasos) => {
+        const mensaje = descripcionPaso ?? "Sin cambios visibles en este paso.";
+        logArea.innerHTML = `<p><strong>Paso ${Math.min(pasoActual + 1, totalPasos)}</strong> · ${mensaje}</p>`;
+      };
+
+      const renderTreeView = (tree) => {
+        visualStage.dataset.view = "tree";
+        visualStage.innerHTML = "";
+        const wrapper = document.createElement("div");
+        wrapper.className = "sim-tree";
+        const niveles = tree?.niveles ?? [];
+        if (!niveles.length) {
+          const texto = document.createElement("p");
+          texto.className = "sim-placeholder";
+          texto.textContent = "Estructura sin datos disponibles.";
+          wrapper.appendChild(texto);
+        } else {
+          niveles.forEach((nivel) => {
+            const fila = document.createElement("div");
+            fila.className = "tree-level";
+            nivel.forEach((nodo) => {
+              const elemento = document.createElement("div");
+              elemento.className = "tree-node";
+              if (nodo.highlight) elemento.classList.add("activo");
+              elemento.textContent = nodo.label;
+              fila.appendChild(elemento);
+            });
+            wrapper.appendChild(fila);
+          });
+        }
+        visualStage.appendChild(wrapper);
+      };
+
+      const renderBarsView = (paso, algoritmo) => {
+        visualStage.dataset.view = "bars";
+        visualStage.innerHTML = "";
+        if (!paso.items?.length) {
+          visualStage.innerHTML = '<p class="sim-placeholder">Inicia la simulación para ver las barras en movimiento.</p>';
+          return;
+        }
+        const fragment = document.createDocumentFragment();
+        const maxValor = Math.max(...paso.items.map((item) => item.value), 1);
+        const mostrarEtiquetas = paso.items.length <= 45;
+        paso.items.forEach((item, indice) => {
+          const barra = document.createElement("div");
+          barra.className = "sim-bar";
+          barra.style.setProperty("--altura", `${Math.max(8, (item.value / maxValor) * 100)}%`);
+          barra.style.setProperty("--bar-color", obtenerColorBarra(item, algoritmo.color));
+          if (paso.resaltados?.includes(indice)) barra.classList.add("activo");
+          if (mostrarEtiquetas) {
+            barra.innerHTML = `<span>${item.label}</span>`;
+          }
+          fragment.appendChild(barra);
+        });
+        visualStage.appendChild(fragment);
+      };
+
+      const renderDescripcion = () => {
+        const meta = ALGORITMOS[state.algoritmoActivo];
+        if (!meta) return;
+        descripcion.textContent = `${meta.descripcion} · Vista: ${meta.visual ?? "Barras"}`;
+        estabilidad.textContent = meta.estable ? "Estable (mantiene el orden de iguales)" : "Inestable (puede reordenar valores identicos)";
+        recursionTexto.textContent = meta.usaRecursion ? "Usa recursividad" : "Iterativo";
+        situacionTexto.textContent = `${ESCENARIOS[state.escenario].titulo} · ${tipoEtiqueta[state.tipoDato]}`;
+        if (linkPrograma) {
+          const enlace = enlacesProgramas[state.algoritmoActivo]?.[state.tipoDato];
+          if (enlace) {
+            linkPrograma.href = enlace;
+            linkPrograma.textContent = "Ver programa individual";
+            linkPrograma.classList.remove("link-disabled");
+          } else {
+            linkPrograma.href = "#";
+            linkPrograma.textContent = "Programa no encontrado";
+            linkPrograma.classList.add("link-disabled");
+          }
+        }
+      };
+
+      const renderTabla = () => {
+        if (!state.resultados.length) {
+          tablaBody.innerHTML = '<tr><td colspan="10">Aún no hay datos procesados.</td></tr>';
+          return;
+        }
+        tablaBody.innerHTML = state.resultados
+          .map((resultado) => {
+            const pasoIndice = Math.min(state.pasoActual, resultado.steps.length - 1);
+            const paso = resultado.steps[pasoIndice] ?? resultado.steps[resultado.steps.length - 1];
+            const enlacePrograma = enlacesProgramas[resultado.id]?.[state.tipoDato];
+            const programaCell = enlacePrograma
+              ? `<a class="tabla-link" href="${enlacePrograma}" target="_blank" rel="noreferrer">Abrir</a>`
+              : '<span class="tabla-link disabled">No encontrado</span>';
+            return `
+              <tr class="sim-row ${resultado.id === state.algoritmoActivo ? "activo" : ""}" style="--alg-color:${resultado.color}">
+                <td>${resultado.nombre}</td>
+                <td>${Math.min(state.pasoActual + 1, resultado.steps.length)}</td>
+                <td>${paso?.comparaciones ?? 0}</td>
+                <td>${paso?.intercambios ?? 0}</td>
+                <td>${paso?.iteraciones ?? 0}</td>
+                <td>${resultado.tiempoMs.toFixed(2)}</td>
+                <td>${resultado.memoria.toFixed(1)}</td>
+                <td>${resultado.usaRecursion ? "Sí" : "No"}</td>
+                <td>${resultado.estable ? "Estable" : "Inestable"}</td>
+                <td>${programaCell}</td>
+              </tr>
+            `;
+          })
+          .join("");
+      };
+
+      const renderVisual = () => {
+        if (!state.resultados.length) {
+          visualStage.innerHTML = '<p class="sim-placeholder">Inicia la simulación para ver las barras en movimiento.</p>';
+          visualStage.dataset.view = "bars";
+          return;
+        }
+        const activo = state.resultados.find((item) => item.id === state.algoritmoActivo) ?? state.resultados[0];
+        const pasoIndice = Math.min(state.pasoActual, activo.steps.length - 1);
+        const paso = activo.steps[pasoIndice];
+        if (!paso) {
+          visualStage.innerHTML = '<p class="sim-placeholder">Crea una nueva simulación para ver resultados.</p>';
+          visualStage.dataset.view = "bars";
+          return;
+        }
+        if (paso.vista === "tree" && paso.tree) {
+          renderTreeView(paso.tree);
+        } else {
+          renderBarsView(paso, activo);
+        }
+        renderLog(paso.descripcion, pasoIndice, activo.steps.length);
+      };
+
+      const updateUi = () => {
+        renderTabla();
+        renderVisual();
+        renderDescripcion();
+        updateTimeline();
+      };
+
+      const scheduleTick = () => {
+        if (state.temporizador) {
+          clearTimeout(state.temporizador);
+          state.temporizador = null;
+        }
+        if (!state.jugando) return;
+        state.temporizador = window.setTimeout(() => {
+          if (state.pasoActual < state.maxPasos - 1) {
+            state.pasoActual += 1;
+            updateUi();
+            scheduleTick();
+          } else {
+            detenerAnimacion();
+            setStatus("Finalizado");
+          }
+        }, state.velocidad);
+      };
+
+      const estimarMemoria = (id, n) => {
+        switch (id) {
+          case "merge":
+            return n * 8;
+          case "quick":
+            return Math.log2(n + 1) * 64;
+          case "heap":
+            return n * 4;
+          default:
+            return n * 2;
+        }
+      };
+
+      const prepararSimulacion = () => {
+        colorCache.clear();
+        const dataset = generarDataset(state.tipoDato, state.escenario, state.cantidad);
+        const resultados = Object.entries(ALGORITMOS).map(([id, meta]) => {
+          const copia = dataset.map(clonarPunto);
+          const inicio = performance.now();
+          const steps = meta.ejecutar(copia);
+          const fin = performance.now();
+          return {
+            id,
+            nombre: meta.nombre,
+            color: meta.color,
+            estable: meta.estable,
+            usaRecursion: meta.usaRecursion,
+            steps,
+            tiempoMs: fin - inicio,
+            memoria: estimarMemoria(id, copia.length)
+          };
+        });
+        state.resultados = resultados;
+        state.pasoActual = 0;
+        state.maxPasos = Math.max(...resultados.map((r) => r.steps.length), 1);
+        configEstado.textContent = `Listo: ${state.cantidad} datos (${tipoEtiqueta[state.tipoDato]} · ${ESCENARIOS[state.escenario].titulo}).`;
+        updateUi();
+      };
+
+      const generarDataset = (tipoDato, escenario, cantidad) => {
+        const base = Array.from({ length: cantidad }, (_, index) => {
+          const valor = index + 1;
+          if (tipoDato === "string") {
+            const letra = String.fromCharCode(65 + (index % 26));
+            const sufijo = (index % 100).toString().padStart(2, "0");
+            return { value: valor, label: `${letra}${sufijo}` };
+          }
+          return { value: valor, label: valor.toString().padStart(2, "0") };
+        });
+
+        if (escenario === "invertido") {
+          return [...base].reverse();
+        }
+
+        if (escenario === "intercalado") {
+          const mezcla = [];
+          const mitad = Math.ceil(base.length / 2);
+          for (let i = 0; i < mitad; i++) {
+            if (base[i]) mezcla.push(base[i]);
+            if (base[i + mitad]) mezcla.push(base[i + mitad]);
+          }
+          return mezcla;
+        }
+
+        if (escenario === "parcial") {
+          const copia = [...base];
+          for (let i = 0; i < copia.length; i += 5) {
+            const j = Math.min(copia.length - 1, i + 3);
+            [copia[i], copia[j]] = [copia[j], copia[i]];
+          }
+          return copia;
+        }
+
+        const mezcla = [...base];
+        for (let i = mezcla.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [mezcla[i], mezcla[j]] = [mezcla[j], mezcla[i]];
+        }
+        return mezcla;
+      };
+
+      const crearEstadisticas = () => ({ comparaciones: 0, intercambios: 0, iteraciones: 0 });
+      const clonarPunto = (item) => ({ value: item.value, label: item.label });
+      const crearPaso = (items, stats, descripcion, extras = {}) => ({
+        items: items.map(clonarPunto),
+        comparaciones: stats.comparaciones,
+        intercambios: stats.intercambios,
+        iteraciones: stats.iteraciones,
+        descripcion,
+        vista: extras.vista ?? "bars",
+        tree: extras.tree ?? null,
+        resaltados: extras.resaltados ?? []
       });
-    });
-    renderizarDefinicionAlgoritmo("merge");
-    renderizarComparativa();
 
-    botonCopiar?.addEventListener("click", async () => {
-      if (!nodoCodigo) return;
+      const construirTreeHeap = (items, tamanio, resaltados = []) => {
+        const niveles = [];
+        let nivelActual = 0;
+        let elementosEnNivel = 1;
+        let indice = 0;
+        while (indice < tamanio) {
+          const nivel = [];
+          for (let j = 0; j < elementosEnNivel && indice < tamanio; j++) {
+            nivel.push({ label: items[indice].label, highlight: resaltados.includes(indice) });
+            indice++;
+          }
+          niveles.push(nivel);
+          nivelActual++;
+          elementosEnNivel = Math.pow(2, nivelActual);
+        }
+        return { niveles };
+      };
 
-      const texto = nodoCodigo.textContent ?? "";
+      const construirTreeBuckets = (buckets) => {
+        const header = buckets.map((bucket, idx) => ({
+          label: `B${idx + 1} (${bucket.length})`,
+          highlight: bucket.length > 0
+        }));
+        const filas = buckets.map((bucket) => (bucket.length ? bucket.map((item) => ({ label: item.label })) : [{ label: "—" }]));
+        return { niveles: [header, ...filas] };
+      };
 
-      try {
-        await navigator.clipboard.writeText(texto);
-        botonCopiar.innerHTML = "✅";
-        setTimeout(() => {
-          botonCopiar.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V7Zm2 0h9v11h-9V7Z" /><path d="M5 4a2 2 0 0 1 2-2h9v2H7v11H5V4Zm-2 5h2v11a2 2 0 0 0 2 2h11v2H7a2 2 0 0 1-2-2V9Z" /></svg>`;
-        }, 1400);
-      } catch {
-        const seleccion = window.getSelection();
-        const rango = document.createRange();
-        rango.selectNodeContents(nodoCodigo);
-        seleccion?.removeAllRanges();
-        seleccion?.addRange(rango);
+      const construirTreeRadix = (buckets, nivel) => {
+        const encabezado = buckets.map((bucket, idx) => ({ label: `D${idx}`, highlight: bucket.length > 0 }));
+        const detalle = buckets.map((bucket) => (bucket.length ? bucket.map((item) => ({ label: item.label })) : [{ label: "vacío" }]));
+        return { niveles: [[{ label: `Dígito ${nivel}` }], encabezado, ...detalle] };
+      };
+
+      const construirTreeContador = (contador) => {
+        if (!contador.length) return { niveles: [[{ label: "Sin datos" }]] };
+        const segmentos = Math.min(10, contador.length);
+        const rango = Math.ceil(contador.length / segmentos);
+        const nodos = [];
+        for (let i = 0; i < segmentos; i++) {
+          const inicio = i * rango;
+          if (inicio >= contador.length) break;
+          const fin = Math.min(contador.length - 1, inicio + rango - 1);
+          const suma = contador.slice(inicio, fin + 1).reduce((acc, val) => acc + val, 0);
+          nodos.push({ label: `${inicio}-${fin}: ${suma}`, highlight: suma > 0 });
+        }
+        return { niveles: [nodos] };
+      };
+
+      function instrumentarBurbuja(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        for (let i = 0; i < items.length - 1; i++) {
+          let huboCambio = false;
+          for (let j = 0; j < items.length - 1 - i; j++) {
+            stats.comparaciones++;
+            if (items[j].value > items[j + 1].value) {
+              [items[j], items[j + 1]] = [items[j + 1], items[j]];
+              stats.intercambios++;
+              huboCambio = true;
+              pasos.push(crearPaso(items, stats, `Intercambio entre posiciones ${j + 1} y ${j + 2}`));
+            }
+            stats.iteraciones++;
+          }
+          if (!huboCambio) break;
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Los datos ya estaban ordenados"));
+        return pasos;
       }
-    });
+
+      function instrumentarBurbujaPlus(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        let ultimaPosicion = items.length - 1;
+        while (ultimaPosicion > 0) {
+          let nuevoLimite = 0;
+          for (let j = 0; j < ultimaPosicion; j++) {
+            stats.comparaciones++;
+            if (items[j].value > items[j + 1].value) {
+              [items[j], items[j + 1]] = [items[j + 1], items[j]];
+              stats.intercambios++;
+              nuevoLimite = j;
+              pasos.push(crearPaso(items, stats, `Intercambio optimizado en ${j + 1}`, { resaltados: [j, j + 1] }));
+            }
+            stats.iteraciones++;
+          }
+          if (nuevoLimite === 0) break;
+          ultimaPosicion = nuevoLimite;
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Arreglo ya estaba ordenado"));
+        return pasos;
+      }
+
+      function instrumentarSeleccion(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        for (let i = 0; i < items.length - 1; i++) {
+          let min = i;
+          for (let j = i + 1; j < items.length; j++) {
+            stats.comparaciones++;
+            if (items[j].value < items[min].value) {
+              min = j;
+            }
+          }
+          if (min !== i) {
+            [items[i], items[min]] = [items[min], items[i]];
+            stats.intercambios++;
+          }
+          stats.iteraciones++;
+          pasos.push(crearPaso(items, stats, `Posicion ${i + 1} lista`, { resaltados: [i, min] }));
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Arreglo trivial"));
+        return pasos;
+      }
+
+      function instrumentarInsercion(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        for (let i = 1; i < items.length; i++) {
+          const clave = items[i];
+          let j = i - 1;
+          stats.iteraciones++;
+          while (j >= 0 && items[j].value > clave.value) {
+            stats.comparaciones++;
+            items[j + 1] = items[j];
+            j -= 1;
+            stats.intercambios++;
+            pasos.push(crearPaso(items, stats, `Desplazando ${items[j + 1].label}`, { resaltados: [j + 1, j + 2] }));
+          }
+          if (j >= 0) stats.comparaciones++;
+          items[j + 1] = clave;
+          pasos.push(crearPaso(items, stats, `Insertando ${clave.label}`, { resaltados: [j + 1] }));
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Dataset minimo"));
+        return pasos;
+      }
+
+      function instrumentarShell(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        for (let gap = Math.floor(items.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+          for (let i = gap; i < items.length; i++) {
+            const temp = items[i];
+            let j = i;
+            while (j >= gap && items[j - gap].value > temp.value) {
+              stats.comparaciones++;
+              items[j] = items[j - gap];
+              j -= gap;
+              stats.intercambios++;
+              pasos.push(crearPaso(items, stats, `Gap ${gap}: desplazando ${temp.label}`, { resaltados: [j, j + gap] }));
+            }
+            if (j >= gap) stats.comparaciones++;
+            items[j] = temp;
+            stats.iteraciones++;
+            pasos.push(crearPaso(items, stats, `Gap ${gap}: insertando ${temp.label}`));
+          }
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Gap final sin cambios"));
+        return pasos;
+      }
+
+      function instrumentarShaker(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        let inicio = 0;
+        let fin = items.length - 1;
+        let intercambio = true;
+        while (inicio < fin && intercambio) {
+          intercambio = false;
+          for (let i = inicio; i < fin; i++) {
+            stats.comparaciones++;
+            if (items[i].value > items[i + 1].value) {
+              [items[i], items[i + 1]] = [items[i + 1], items[i]];
+              stats.intercambios++;
+              intercambio = true;
+            }
+            stats.iteraciones++;
+            pasos.push(crearPaso(items, stats, `Recorrido ➝ ${i + 1}`, { resaltados: [i, i + 1] }));
+          }
+          fin--;
+          if (!intercambio) break;
+          intercambio = false;
+          for (let i = fin; i > inicio; i--) {
+            stats.comparaciones++;
+            if (items[i - 1].value > items[i].value) {
+              [items[i], items[i - 1]] = [items[i - 1], items[i]];
+              stats.intercambios++;
+              intercambio = true;
+            }
+            stats.iteraciones++;
+            pasos.push(crearPaso(items, stats, `Recorrido ⬅ ${i}`, { resaltados: [i - 1, i] }));
+          }
+          inicio++;
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Sin movimientos"));
+        return pasos;
+      }
+
+      function instrumentarMerge(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        const buffer = Array(items.length);
+
+        const mergeSort = (inicio, fin) => {
+          if (inicio >= fin) return;
+          const medio = Math.floor((inicio + fin) / 2);
+          mergeSort(inicio, medio);
+          mergeSort(medio + 1, fin);
+          mezclar(inicio, medio, fin);
+          pasos.push(crearPaso(items, stats, `Mezcla ${inicio + 1}-${fin + 1}`));
+        };
+
+        const mezclar = (inicio, medio, fin) => {
+          let i = inicio;
+          let j = medio + 1;
+          let k = 0;
+          while (i <= medio && j <= fin) {
+            stats.comparaciones++;
+            if (items[i].value <= items[j].value) {
+              buffer[k++] = items[i++];
+            } else {
+              buffer[k++] = items[j++];
+              stats.intercambios++;
+            }
+            stats.iteraciones++;
+          }
+          while (i <= medio) {
+            buffer[k++] = items[i++];
+            stats.iteraciones++;
+          }
+          while (j <= fin) {
+            buffer[k++] = items[j++];
+            stats.iteraciones++;
+          }
+          for (let idx = 0; idx < k; idx++) {
+            items[inicio + idx] = buffer[idx];
+          }
+        };
+
+        mergeSort(0, items.length - 1);
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Dataset minimo"));
+        return pasos;
+      }
+
+      function instrumentarQuick(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+
+        const quickSort = (inicio, fin) => {
+          if (inicio >= fin) return;
+          const pivoteIndex = particion(inicio, fin);
+          pasos.push(crearPaso(items, stats, `Pivote colocado en posicion ${pivoteIndex + 1}`, { resaltados: [pivoteIndex] }));
+          quickSort(inicio, pivoteIndex - 1);
+          quickSort(pivoteIndex + 1, fin);
+        };
+
+        const particion = (inicio, fin) => {
+          const pivote = items[fin];
+          let i = inicio;
+          for (let j = inicio; j < fin; j++) {
+            stats.comparaciones++;
+            if (items[j].value < pivote.value) {
+              if (i !== j) {
+                [items[i], items[j]] = [items[j], items[i]];
+                stats.intercambios++;
+              }
+              i++;
+            }
+            stats.iteraciones++;
+            pasos.push(crearPaso(items, stats, `Comparando con pivote ${pivote.label}`, { resaltados: [i, j, fin] }));
+          }
+          [items[i], items[fin]] = [items[fin], items[i]];
+          stats.intercambios++;
+          return i;
+        };
+
+        quickSort(0, items.length - 1);
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Dataset minimo"));
+        return pasos;
+      }
+
+      function instrumentarHeap(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        const n = items.length;
+
+        const heapify = (tamanio, indice) => {
+          let mayor = indice;
+          const izquierda = 2 * indice + 1;
+          const derecha = 2 * indice + 2;
+          if (izquierda < tamanio) {
+            stats.comparaciones++;
+            if (items[izquierda].value > items[mayor].value) {
+              mayor = izquierda;
+            }
+          }
+          if (derecha < tamanio) {
+            stats.comparaciones++;
+            if (items[derecha].value > items[mayor].value) {
+              mayor = derecha;
+            }
+          }
+          if (mayor !== indice) {
+            [items[indice], items[mayor]] = [items[mayor], items[indice]];
+            stats.intercambios++;
+            pasos.push(crearPaso(items, stats, `Heapify sobre indice ${indice + 1}`, { resaltados: [indice, mayor], tree: construirTreeHeap(items, tamanio, [indice, mayor]), vista: "tree" }));
+            heapify(tamanio, mayor);
+          }
+          stats.iteraciones++;
+        };
+
+        for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+          heapify(n, i);
+        }
+        for (let i = n - 1; i > 0; i--) {
+          [items[0], items[i]] = [items[i], items[0]];
+          stats.intercambios++;
+          pasos.push(crearPaso(items, stats, `Extraido maximo hacia la posicion ${i + 1}`, { resaltados: [0, i], tree: construirTreeHeap(items, i, [0]), vista: "tree" }));
+          heapify(i, 0);
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Dataset minimo"));
+        return pasos;
+      }
+
+      function ordenarInsercionLigero(arr) {
+        for (let i = 1; i < arr.length; i++) {
+          const clave = arr[i];
+          let j = i - 1;
+          while (j >= 0 && arr[j].value > clave.value) {
+            arr[j + 1] = arr[j];
+            j--;
+          }
+          arr[j + 1] = clave;
+        }
+        return arr;
+      }
+
+      function instrumentarBucket(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        const bucketCount = Math.max(3, Math.ceil(Math.sqrt(items.length)));
+        const maxValor = Math.max(...items.map((item) => item.value), 1);
+        const buckets = Array.from({ length: bucketCount }, () => []);
+
+        items.forEach((item) => {
+          const indice = Math.min(bucketCount - 1, Math.floor((item.value / maxValor) * bucketCount));
+          buckets[indice].push(clonarPunto(item));
+          stats.iteraciones++;
+          pasos.push(crearPaso(items, stats, `Elemento ${item.label} entra a bucket ${indice + 1}`, { vista: "tree", tree: construirTreeBuckets(buckets) }));
+        });
+
+        const resultado = [];
+        buckets.forEach((bucket, idx) => {
+          ordenarInsercionLigero(bucket);
+          bucket.forEach((elemento) => {
+            resultado.push(elemento);
+            stats.iteraciones++;
+            pasos.push(crearPaso(resultado.concat(items.slice(resultado.length)), stats, `Reinsertando bucket ${idx + 1}`, { resaltados: [resultado.length - 1] }));
+          });
+        });
+        for (let i = 0; i < items.length; i++) {
+          items[i] = resultado[i];
+        }
+        pasos.push(crearPaso(items, stats, "Buckets combinados"));
+        return pasos;
+      }
+
+      function instrumentarRadix(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        const maxValor = Math.max(...items.map((item) => item.value), 1);
+        const maxDigitos = Math.floor(Math.log10(maxValor)) + 1;
+        let divisor = 1;
+
+        for (let d = 0; d < maxDigitos; d++) {
+          const buckets = Array.from({ length: 10 }, () => []);
+          items.forEach((item) => {
+            const digito = Math.floor((item.value / divisor) % 10);
+            buckets[digito].push(clonarPunto(item));
+            stats.iteraciones++;
+          });
+          pasos.push(crearPaso(items, stats, `Distribuyendo por dígito ${d + 1}`, { vista: "tree", tree: construirTreeRadix(buckets, d + 1) }));
+          let idx = 0;
+          buckets.forEach((bucket) => {
+            bucket.forEach((elemento) => {
+              items[idx++] = elemento;
+            });
+          });
+          divisor *= 10;
+          pasos.push(crearPaso(items, stats, `Reconstrucción tras dígito ${d + 1}`));
+        }
+        if (!pasos.length) pasos.push(crearPaso(items, stats, "Sin cambios"));
+        return pasos;
+      }
+
+      function instrumentarCounting(datos) {
+        const items = datos.map(clonarPunto);
+        const stats = crearEstadisticas();
+        const pasos = [];
+        const maxValor = Math.max(...items.map((item) => item.value), 1);
+        const contador = new Array(maxValor + 1).fill(0);
+
+        items.forEach((item) => {
+          contador[item.value]++;
+          stats.iteraciones++;
+          pasos.push(crearPaso(items, stats, `Contando ${item.label}`, { vista: "tree", tree: construirTreeContador(contador) }));
+        });
+
+        for (let i = 1; i < contador.length; i++) {
+          contador[i] += contador[i - 1];
+          stats.iteraciones++;
+          pasos.push(crearPaso(items, stats, `Acumulando rango ${i}`, { vista: "tree", tree: construirTreeContador(contador) }));
+        }
+
+        const salida = new Array(items.length);
+        for (let i = items.length - 1; i >= 0; i--) {
+          const valor = items[i].value;
+          contador[valor]--;
+          const posicion = contador[valor];
+          salida[posicion] = clonarPunto(items[i]);
+          stats.intercambios++;
+          pasos.push(crearPaso(salida.filter(Boolean), stats, `Colocando ${items[i].label}`));
+        }
+
+        for (let i = 0; i < items.length; i++) {
+          items[i] = salida[i];
+        }
+        pasos.push(crearPaso(items, stats, "Reconstrucción completada"));
+        return pasos;
+      }
+
+      const iniciarSimulacion = () => {
+        prepararSimulacion();
+        state.jugando = true;
+        setStatus("Ejecutando");
+        scheduleTick();
+      };
+
+      const resetVista = () => {
+        detenerAnimacion();
+        state.resultados = [];
+        state.pasoActual = 0;
+        state.maxPasos = 0;
+        setStatus("En espera");
+        updateUi();
+        logArea.innerHTML = '<p>El registro mostrará el evento más reciente de la animación.</p>';
+        configEstado.textContent = 'Configura y presiona "Simular" para generar los datos.';
+      };
+
+      sliderCantidad.addEventListener("input", (event) => {
+        const valor = Number(event.currentTarget.value);
+        state.cantidad = valor;
+        actualizarSliderLabel();
+        detenerAnimacion();
+      });
+
+      velocidadSelect.addEventListener("change", (event) => {
+        state.velocidad = Number(event.currentTarget.value);
+      });
+
+      tipoBotones.forEach((boton) => {
+        boton.addEventListener("click", () => {
+          seleccionarBoton(tipoBotones, boton);
+          state.tipoDato = boton.dataset.tipo ?? "int";
+          actualizarEtiquetaEscenario();
+          renderDescripcion();
+        });
+      });
+
+      escenarioBotones.forEach((boton) => {
+        boton.addEventListener("click", () => {
+          seleccionarBoton(escenarioBotones, boton);
+          state.escenario = boton.dataset.escenario ?? "desordenado";
+          actualizarEtiquetaEscenario();
+          renderDescripcion();
+        });
+      });
+
+      algoritmoBotones.forEach((boton) => {
+        boton.addEventListener("click", () => {
+          seleccionarBoton(algoritmoBotones, boton);
+          state.algoritmoActivo = boton.dataset.algoritmo ?? "bubble";
+          if (linkPrograma && boton.dataset.programa) {
+            linkPrograma.href = boton.dataset.programa;
+          }
+          renderDescripcion();
+          renderVisual();
+        });
+      });
+
+      startBtn?.addEventListener("click", () => {
+        detenerAnimacion();
+        iniciarSimulacion();
+      });
+
+      pauseBtn?.addEventListener("click", () => {
+        if (!state.resultados.length) return;
+        if (state.jugando) {
+          detenerAnimacion();
+          setStatus("Pausado");
+        } else {
+          state.jugando = true;
+          setStatus("Reanudado");
+          scheduleTick();
+        }
+      });
+
+      resetBtn?.addEventListener("click", resetVista);
+
+      actualizarSliderLabel();
+      actualizarEtiquetaEscenario();
+      renderDescripcion();
+      resetVista();
+    })();
+
+    (function setupSortingPlayground() {
+      const lab = document.querySelector(".simulator-lab");
+      const tabsContainer = document.getElementById("simTabs");
+      const canvas = document.getElementById("simCanvas");
+      const sizeSlider = document.getElementById("simSize");
+      const sizeLabel = document.getElementById("simSizeVal");
+      const speedSlider = document.getElementById("simSpeed");
+      const speedLabel = document.getElementById("simSpeedVal");
+      const orderSelect = document.getElementById("simOrder");
+      const rangeSlider = document.getElementById("simRange");
+      const rangeLabel = document.getElementById("simRangeVal");
+      const generateBtn = document.getElementById("simGenerate");
+      const startBtn = document.getElementById("simStart");
+      const pauseBtn = document.getElementById("simPause");
+      const stepBtn = document.getElementById("simStep");
+      const resetBtn = document.getElementById("simReset");
+      const compEl = document.getElementById("simComp");
+      const swapEl = document.getElementById("simSwap");
+      const timeEl = document.getElementById("simTime");
+      const stateEl = document.getElementById("simState");
+      const logEl = document.getElementById("simLog");
+      const infoTitle = document.getElementById("simInfoTitle");
+      const infoDesc = document.getElementById("simInfoDesc");
+      const infoTags = document.getElementById("simInfoComplexity");
+      const progressFill = document.getElementById("simProgress");
+
+      if (!lab || !tabsContainer || !(canvas instanceof HTMLCanvasElement)) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      const ALGOS = {
+        bubble: { name: "Bubble", full: "Bubble Sort", desc: "Compara pares adyacentes y los intercambia si están en el orden incorrecto.", best: "O(n)", avg: "O(n²)", worst: "O(n²)", space: "O(1)", stable: true },
+        selection: { name: "Selection", full: "Selection Sort", desc: "Busca el mínimo del subarreglo no ordenado y lo coloca al inicio.", best: "O(n²)", avg: "O(n²)", worst: "O(n²)", space: "O(1)", stable: false },
+        insertion: { name: "Insertion", full: "Insertion Sort", desc: "Inserta cada elemento en la parte ya ordenada del arreglo.", best: "O(n)", avg: "O(n²)", worst: "O(n²)", space: "O(1)", stable: true },
+        shell: { name: "Shell", full: "Shell Sort", desc: "Generalización de insertion con gaps decrecientes.", best: "O(n log n)", avg: "O(n^{1.3})", worst: "O(n²)", space: "O(1)", stable: false },
+        merge: { name: "Merge", full: "Merge Sort", desc: "Divide y combina subarreglos con complejidad O(n log n).", best: "O(n log n)", avg: "O(n log n)", worst: "O(n log n)", space: "O(n)", stable: true },
+        quick: { name: "Quick", full: "Quick Sort", desc: "Particiona usando un pivote y recurre sobre cada mitad.", best: "O(n log n)", avg: "O(n log n)", worst: "O(n²)", space: "O(log n)", stable: false },
+        heap: { name: "Heap", full: "Heap Sort", desc: "Construye un max-heap y extrae el máximo sucesivamente.", best: "O(n log n)", avg: "O(n log n)", worst: "O(n log n)", space: "O(1)", stable: false },
+        counting: { name: "Counting", full: "Counting Sort", desc: "Cuenta ocurrencias de cada valor dentro de un rango acotado.", best: "O(n+k)", avg: "O(n+k)", worst: "O(n+k)", space: "O(k)", stable: true },
+        radix: { name: "Radix", full: "Radix Sort", desc: "Ordena dígito a dígito usando counting como subrutina.", best: "O(d·n)", avg: "O(d·n)", worst: "O(d·n)", space: "O(n+k)", stable: true },
+        cocktail: { name: "Cocktail", full: "Cocktail Shaker Sort", desc: "Burbuja bidireccional que recorre en ambos sentidos.", best: "O(n)", avg: "O(n²)", worst: "O(n²)", space: "O(1)", stable: true },
+        gnome: { name: "Gnome", full: "Gnome Sort", desc: "Variante de insertion que retrocede cuando encuentra desórdenes.", best: "O(n)", avg: "O(n²)", worst: "O(n²)", space: "O(1)", stable: true },
+        cycle: { name: "Cycle", full: "Cycle Sort", desc: "Minimiza escrituras determinando la posición final de cada elemento.", best: "O(n²)", avg: "O(n²)", worst: "O(n²)", space: "O(1)", stable: false }
+      };
+
+      const ALGO_KEYS = Object.keys(ALGOS);
+      let currentAlgo = ALGO_KEYS[0];
+      let arr = [];
+      let running = false;
+      let paused = false;
+      let comparisons = 0;
+      let swaps = 0;
+      let startTime = 0;
+      let animToken;
+      const highlights = {};
+
+      const resizeCanvas = () => {
+        const dpr = window.devicePixelRatio || 1;
+        const width = canvas.clientWidth;
+        canvas.width = width * dpr;
+        canvas.height = 220 * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        drawArray(arr, highlights);
+      };
+
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      function buildTabs() {
+        tabsContainer.innerHTML = "";
+        ALGO_KEYS.forEach((key) => {
+          const button = document.createElement("button");
+          button.textContent = ALGOS[key].name;
+          button.type = "button";
+          if (key === currentAlgo) {
+            button.setAttribute("aria-current", "true");
+          }
+          button.addEventListener("click", () => {
+            currentAlgo = key;
+            Array.from(tabsContainer.children).forEach((child) => child.removeAttribute("aria-current"));
+            button.setAttribute("aria-current", "true");
+            updateInfo();
+            resetAll();
+          });
+          tabsContainer.appendChild(button);
+        });
+      }
+
+      function updateInfo() {
+        const data = ALGOS[currentAlgo];
+        if (!data) return;
+        if (infoTitle) infoTitle.textContent = data.full;
+        if (infoDesc) infoDesc.textContent = data.desc;
+        if (infoTags) {
+          infoTags.innerHTML = `
+            <span>Mejor: ${data.best}</span>
+            <span>Promedio: ${data.avg}</span>
+            <span>Peor: ${data.worst}</span>
+            <span>Espacio: ${data.space}</span>
+            <span>Estable: ${data.stable ? "sí" : "no"}</span>
+          `;
+        }
+      }
+
+      function updateRangeLabels() {
+        if (sizeLabel && sizeSlider instanceof HTMLInputElement) {
+          sizeLabel.textContent = sizeSlider.value;
+        }
+        if (speedLabel && speedSlider instanceof HTMLInputElement) {
+          const labels = ["", "muy lento", "lento", "moderado", "normal", "normal", "rápido", "rápido", "muy rápido", "ultra", "instante"];
+          const idx = Number(speedSlider.value) || 0;
+          speedLabel.textContent = `${idx} — ${labels[idx] ?? ""}`;
+        }
+        if (rangeLabel && rangeSlider instanceof HTMLInputElement) {
+          rangeLabel.textContent = `1 – ${rangeSlider.value}`;
+        }
+      }
+
+      function makeArray() {
+        const n = Number(sizeSlider?.value ?? 30);
+        const max = Number(rangeSlider?.value ?? 100);
+        const order = orderSelect?.value ?? "random";
+        let base = Array.from({ length: n }, () => Math.floor(Math.random() * Math.max(1, max - 1)) + 1);
+        const shuffle = () => base.sort(() => Math.random() - 0.5);
+        switch (order) {
+          case "sorted":
+            base.sort((a, b) => a - b);
+            break;
+          case "reverse":
+            base.sort((a, b) => b - a);
+            break;
+          case "nearlySorted":
+            base.sort((a, b) => a - b);
+            for (let i = 0; i < Math.max(1, Math.floor(n * 0.1)); i++) {
+              const x = Math.floor(Math.random() * n);
+              const y = Math.floor(Math.random() * n);
+              [base[x], base[y]] = [base[y], base[x]];
+            }
+            break;
+          case "fewUnique":
+            const values = [Math.floor(max * 0.2), Math.floor(max * 0.5), Math.floor(max * 0.8)];
+            base = base.map(() => values[Math.floor(Math.random() * values.length)]);
+            break;
+          case "mountain":
+            base.sort((a, b) => a - b);
+            base = [...base.slice(0, Math.floor(n / 2)), ...base.slice(Math.floor(n / 2)).reverse()];
+            break;
+          case "valley":
+            base.sort((a, b) => b - a);
+            base = [...base.slice(0, Math.floor(n / 2)), ...base.slice(Math.floor(n / 2)).reverse()];
+            break;
+          case "pipes":
+            base.sort((a, b) => a - b);
+            const temp = [];
+            for (let i = 0; i < base.length; i += 2) temp.push(base[i]);
+            for (let i = 1; i < base.length; i += 2) temp.unshift(base[i]);
+            base = temp;
+            break;
+          default:
+            shuffle();
+            break;
+        }
+        return base;
+      }
+
+      function drawArray(values, hint = {}) {
+        const dpr = window.devicePixelRatio || 1;
+        const width = canvas.width / dpr;
+        const height = canvas.height / dpr;
+        ctx.clearRect(0, 0, width, height);
+        if (!values.length) return;
+        const max = Math.max(...values, 1);
+        const gap = 2;
+        const barWidth = Math.max(2, (width - gap * (values.length - 1)) / values.length);
+        values.forEach((value, index) => {
+          const barHeight = Math.max(4, (value / max) * (height - 18));
+          const x = index * (barWidth + gap);
+          const y = height - barHeight - 18;
+          let color = "#378add";
+          if (hint.sorted && hint.sorted.has(index)) color = "#1d9e75";
+          else if (hint.pivot === index) color = "#7f77dd";
+          else if (hint.min === index) color = "#d4537e";
+          else if (hint.swap && hint.swap.includes(index)) color = "#d85a30";
+          else if (hint.compare && hint.compare.includes(index)) color = "#ef9f27";
+          ctx.fillStyle = color;
+          ctx.fillRect(x, y, barWidth, barHeight);
+        });
+      }
+
+      function resetStats() {
+        comparisons = 0;
+        swaps = 0;
+        if (compEl) compEl.textContent = "0";
+        if (swapEl) swapEl.textContent = "0";
+        if (timeEl) timeEl.textContent = "0";
+        if (stateEl) stateEl.textContent = "listo";
+        if (progressFill) progressFill.style.width = "0%";
+      }
+
+      function log(message) {
+        if (!logEl) return;
+        logEl.innerHTML += `${message}<br />`;
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      function setRunning(active) {
+        running = active;
+        if (startBtn) startBtn.toggleAttribute("disabled", active);
+        if (generateBtn) generateBtn.toggleAttribute("disabled", active);
+        if (pauseBtn) pauseBtn.toggleAttribute("disabled", !active);
+        if (stepBtn) stepBtn.toggleAttribute("disabled", !active);
+        if (sizeSlider) sizeSlider.toggleAttribute("disabled", active);
+        if (orderSelect) orderSelect.toggleAttribute("disabled", active);
+        if (rangeSlider) rangeSlider.toggleAttribute("disabled", active);
+      }
+
+      function getDelay() {
+        const speeds = [0, 500, 250, 120, 60, 30, 15, 8, 3, 1, 0];
+        const idx = Number(speedSlider?.value ?? 5);
+        return speeds[idx] ?? 60;
+      }
+
+      async function startSort() {
+        if (running) return;
+        if (!arr.length) generateArray();
+        resetStats();
+        setRunning(true);
+        paused = false;
+        if (pauseBtn) pauseBtn.textContent = "Pausar";
+        if (stateEl) stateEl.textContent = "ordenando";
+        startTime = performance.now();
+        log(`▶ Iniciando ${ALGOS[currentAlgo].full} con ${arr.length} elementos...`);
+        const working = [...arr];
+        const sortedSet = new Set();
+        try {
+          await SORT_FUNCS[currentAlgo](working, sortedSet);
+        } catch (error) {
+          if (error !== "stopped") throw error;
+        }
+        if (running) {
+          working.forEach((_, idx) => sortedSet.add(idx));
+          arr = [...working];
+          drawArray(arr, { sorted: sortedSet });
+          const elapsed = Math.round(performance.now() - startTime);
+          if (timeEl) timeEl.textContent = String(elapsed);
+          if (stateEl) stateEl.textContent = "completado";
+          if (progressFill) progressFill.style.width = "100%";
+          log(`✓ Completado en ${elapsed}ms | ${comparisons} comp. | ${swaps} intercambios`);
+        }
+        setRunning(false);
+      }
+
+      function togglePause() {
+        if (!running) return;
+        paused = !paused;
+        if (pauseBtn) pauseBtn.textContent = paused ? "Continuar" : "Pausar";
+        if (stateEl) stateEl.textContent = paused ? "pausado" : "ordenando";
+      }
+
+      function stepOnce() {
+        paused = true;
+        if (pauseBtn) pauseBtn.textContent = "Continuar";
+      }
+
+      function resetAll() {
+        if (animToken) {
+          clearTimeout(animToken);
+          animToken = undefined;
+        }
+        running = false;
+        paused = false;
+        if (pauseBtn) {
+          pauseBtn.textContent = "Pausar";
+          pauseBtn.setAttribute("disabled", "true");
+        }
+        if (stepBtn) stepBtn.setAttribute("disabled", "true");
+        setRunning(false);
+        generateArray();
+      }
+
+      async function wait(hint, progress) {
+        comparisons++;
+        if (compEl) compEl.textContent = String(comparisons);
+        if (progressFill && progress !== undefined) {
+          progressFill.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
+        }
+        drawArray(arr, hint);
+        while (paused) {
+          await new Promise((resolve) => setTimeout(resolve, 50));
+          if (!running) throw "stopped";
+        }
+        if (!running) throw "stopped";
+        const delay = getDelay();
+        if (delay > 0) await new Promise((resolve) => setTimeout(resolve, delay));
+      }
+
+      async function doSwap(array, i, j, hint) {
+        [array[i], array[j]] = [array[j], array[i]];
+        arr[i] = array[i];
+        arr[j] = array[j];
+        swaps++;
+        if (swapEl) swapEl.textContent = String(swaps);
+        hint.swap = [i, j];
+        drawArray(arr, hint);
+        if (!running) throw "stopped";
+        const delay = getDelay();
+        if (delay > 0) await new Promise((resolve) => setTimeout(resolve, Math.floor(delay / 2)));
+      }
+
+      const SORT_FUNCS = {
+        async bubble(a, sorted) {
+          for (let i = 0; i < a.length - 1; i++) {
+            let swapped = false;
+            for (let j = 0; j < a.length - i - 1; j++) {
+              await wait({ compare: [j, j + 1], sorted }, (i * a.length + j) / (a.length * a.length));
+              if (a[j] > a[j + 1]) {
+                await doSwap(a, j, j + 1, { sorted });
+                swapped = true;
+              }
+            }
+            sorted.add(a.length - 1 - i);
+            if (!swapped) break;
+          }
+          sorted.add(0);
+        },
+        async selection(a, sorted) {
+          for (let i = 0; i < a.length - 1; i++) {
+            let minIdx = i;
+            for (let j = i + 1; j < a.length; j++) {
+              await wait({ compare: [minIdx, j], min: minIdx, sorted }, i / a.length);
+              if (a[j] < a[minIdx]) minIdx = j;
+            }
+            if (minIdx !== i) await doSwap(a, i, minIdx, { sorted });
+            sorted.add(i);
+          }
+          sorted.add(a.length - 1);
+        },
+        async insertion(a, sorted) {
+          sorted.add(0);
+          for (let i = 1; i < a.length; i++) {
+            const key = a[i];
+            let j = i - 1;
+            while (j >= 0 && a[j] > key) {
+              await wait({ compare: [j, j + 1], sorted }, i / a.length);
+              a[j + 1] = a[j];
+              arr[j + 1] = a[j];
+              swaps++;
+              if (swapEl) swapEl.textContent = String(swaps);
+              j--;
+            }
+            a[j + 1] = key;
+            arr[j + 1] = key;
+            sorted.add(i);
+          }
+        },
+        async shell(a, sorted) {
+          let gap = 1;
+          while (gap < Math.floor(a.length / 3)) gap = gap * 3 + 1;
+          while (gap >= 1) {
+            for (let i = gap; i < a.length; i++) {
+              const temp = a[i];
+              let j = i;
+              while (j >= gap && a[j - gap] > temp) {
+                await wait({ compare: [j - gap, j], sorted }, gap / a.length);
+                a[j] = a[j - gap];
+                arr[j] = a[j];
+                swaps++;
+                if (swapEl) swapEl.textContent = String(swaps);
+                j -= gap;
+              }
+              a[j] = temp;
+              arr[j] = temp;
+            }
+            gap = Math.floor(gap / 3);
+          }
+          a.forEach((_, idx) => sorted.add(idx));
+        },
+        async merge(a, sorted) {
+          const temp = Array(a.length);
+          async function mergeSort(left, right) {
+            if (left >= right) return;
+            const mid = Math.floor((left + right) / 2);
+            await mergeSort(left, mid);
+            await mergeSort(mid + 1, right);
+            let i = left;
+            let j = mid + 1;
+            let k = left;
+            while (i <= mid && j <= right) {
+              await wait({ compare: [i, j], sorted }, (k - left) / (right - left + 1));
+              if (a[i] <= a[j]) temp[k++] = a[i++];
+              else temp[k++] = a[j++];
+            }
+            while (i <= mid) temp[k++] = a[i++];
+            while (j <= right) temp[k++] = a[j++];
+            for (let idx = left; idx <= right; idx++) {
+              a[idx] = temp[idx];
+              arr[idx] = temp[idx];
+            }
+          }
+          await mergeSort(0, a.length - 1);
+          a.forEach((_, idx) => sorted.add(idx));
+        },
+        async quick(a, sorted) {
+          async function quickSort(start, end) {
+            if (start >= end) return;
+            const pivotIndex = await partition(start, end);
+            sorted.add(pivotIndex);
+            await quickSort(start, pivotIndex - 1);
+            await quickSort(pivotIndex + 1, end);
+          }
+          async function partition(start, end) {
+            const pivot = a[end];
+            let i = start;
+            for (let j = start; j < end; j++) {
+              await wait({ compare: [j, end], pivot: end }, j / a.length);
+              if (a[j] < pivot) {
+                await doSwap(a, i, j, { pivot: end });
+                i++;
+              }
+            }
+            await doSwap(a, i, end, { pivot: i });
+            return i;
+          }
+          await quickSort(0, a.length - 1);
+          a.forEach((_, idx) => sorted.add(idx));
+        },
+        async heap(a, sorted) {
+          const heapify = async (n, i) => {
+            let largest = i;
+            const left = 2 * i + 1;
+            const right = 2 * i + 2;
+            if (left < n && a[left] > a[largest]) largest = left;
+            if (right < n && a[right] > a[largest]) largest = right;
+            if (largest !== i) {
+              await doSwap(a, i, largest, {});
+              await heapify(n, largest);
+            }
+          };
+          for (let i = Math.floor(a.length / 2) - 1; i >= 0; i--) {
+            await heapify(a.length, i);
+          }
+          for (let end = a.length - 1; end > 0; end--) {
+            await doSwap(a, 0, end, { sorted });
+            sorted.add(end);
+            await heapify(end, 0);
+          }
+          sorted.add(0);
+        },
+        async counting(a, sorted) {
+          const max = Math.max(...a);
+          const counts = new Array(max + 1).fill(0);
+          a.forEach((val) => counts[val]++);
+          for (let i = 1; i < counts.length; i++) counts[i] += counts[i - 1];
+          const output = new Array(a.length);
+          for (let i = a.length - 1; i >= 0; i--) {
+            const val = a[i];
+            counts[val]--;
+            output[counts[val]] = val;
+            swaps++;
+            if (swapEl) swapEl.textContent = String(swaps);
+            drawArray(output.filter(Boolean));
+            await new Promise((resolve) => setTimeout(resolve, getDelay()));
+          }
+          for (let i = 0; i < output.length; i++) {
+            a[i] = output[i];
+            arr[i] = output[i];
+            sorted.add(i);
+          }
+        },
+        async radix(a, sorted) {
+          const max = Math.max(...a);
+          let exp = 1;
+          while (Math.floor(max / exp) > 0) {
+            const buckets = Array.from({ length: 10 }, () => []);
+            for (const val of a) {
+              buckets[Math.floor(val / exp) % 10].push(val);
+            }
+            let idx = 0;
+            for (const bucket of buckets) {
+              for (const val of bucket) {
+                a[idx] = val;
+                arr[idx] = val;
+                idx++;
+              }
+            }
+            exp *= 10;
+            await wait({}, exp / max);
+          }
+          a.forEach((_, idx) => sorted.add(idx));
+        },
+        async cocktail(a, sorted) {
+          let startIdx = 0;
+          let endIdx = a.length - 1;
+          while (startIdx < endIdx) {
+            for (let i = startIdx; i < endIdx; i++) {
+              await wait({ compare: [i, i + 1], sorted }, i / a.length);
+              if (a[i] > a[i + 1]) await doSwap(a, i, i + 1, { sorted });
+            }
+            sorted.add(endIdx--);
+            for (let i = endIdx; i > startIdx; i--) {
+              await wait({ compare: [i - 1, i], sorted }, i / a.length);
+              if (a[i - 1] > a[i]) await doSwap(a, i - 1, i, { sorted });
+            }
+            sorted.add(startIdx++);
+          }
+        },
+        async gnome(a, sorted) {
+          let idx = 0;
+          while (idx < a.length) {
+            if (idx === 0 || a[idx] >= a[idx - 1]) {
+              idx++;
+            } else {
+              await doSwap(a, idx, idx - 1, {});
+              idx--;
+            }
+            await wait({}, idx / a.length);
+          }
+          a.forEach((_, i) => sorted.add(i));
+        },
+        async cycle(a, sorted) {
+          for (let cycleStart = 0; cycleStart < a.length - 1; cycleStart++) {
+            let item = a[cycleStart];
+            let pos = cycleStart;
+            for (let i = cycleStart + 1; i < a.length; i++) {
+              if (a[i] < item) pos++;
+            }
+            if (pos === cycleStart) continue;
+            while (item === a[pos]) pos++;
+            [a[pos], item] = [item, a[pos]];
+            arr[pos] = a[pos];
+            swaps++;
+            if (swapEl) swapEl.textContent = String(swaps);
+            await wait({}, pos / a.length);
+            while (pos !== cycleStart) {
+              pos = cycleStart;
+              for (let i = cycleStart + 1; i < a.length; i++) {
+                if (a[i] < item) pos++;
+              }
+              while (item === a[pos]) pos++;
+              [a[pos], item] = [item, a[pos]];
+              arr[pos] = a[pos];
+              swaps++;
+              if (swapEl) swapEl.textContent = String(swaps);
+              await wait({}, pos / a.length);
+            }
+          }
+          a.forEach((_, idx) => sorted.add(idx));
+        }
+      };
+
+      function generateArray() {
+        arr = makeArray();
+        drawArray(arr);
+        resetStats();
+        log("Arreglo generado: " + arr.length + " elementos");
+      }
+
+      buildTabs();
+      updateInfo();
+      updateRangeLabels();
+      generateArray();
+
+      sizeSlider?.addEventListener("input", () => {
+        updateRangeLabels();
+        if (!running) {
+          generateArray();
+        }
+      });
+      speedSlider?.addEventListener("input", updateRangeLabels);
+      rangeSlider?.addEventListener("input", () => {
+        updateRangeLabels();
+        if (!running) generateArray();
+      });
+      orderSelect?.addEventListener("change", () => {
+        if (!running) generateArray();
+      });
+      generateBtn?.addEventListener("click", () => {
+        if (!running) generateArray();
+      });
+      startBtn?.addEventListener("click", startSort);
+      pauseBtn?.addEventListener("click", togglePause);
+      stepBtn?.addEventListener("click", stepOnce);
+      resetBtn?.addEventListener("click", resetAll);
+    })();
   </script>
+
 </BaseLayout>
-
-<style>
-.programa-shell{
-  max-width: 1260px;
-  display: grid;
-  gap: 1.1rem;
-}
-
-.encabezado-programa{
-  display: grid;
-  grid-template-columns: 110px 1fr auto;
-  gap: 1.2rem;
-  padding: 1.4rem;
-  align-items: center;
-}
-
-.encabezado-programa > img{
-  width: 100%;
-  max-width: 110px;
-  border-radius: .8rem;
-  background: #fff;
-  padding: 6px;
-  border: 1px solid var(--line);
-}
-
-.encabezado-programa h1{
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
-  margin-bottom: .5rem;
-}
-
-.encabezado-programa p{ margin: 0; }
-
-.icono-volver,
-.boton-copiar{
-  width: 3.7rem;
-  height: 3.7rem;
-  border-radius: .8rem;
-  border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--text);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.icono-volver .ui-icon{
-  margin-right: 0;
-  width: 1.9rem;
-  height: 1.9rem;
-}
-
-.icono-volver:hover,
-.boton-copiar:hover{
-  transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
-}
-
-.encabezado-cuadro{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .7rem;
-  margin-bottom: .8rem;
-}
-
-.encabezado-cuadro h2,
-.zona-imagen h2{
-  display: inline-flex;
-  align-items: center;
-  font-size: 1.5rem;
-  margin: 0;
-}
-
-.cuadro-codigo{
-  margin: 0;
-  min-height: 460px;
-  max-height: 460px;
-  overflow: auto;
-  border: 1px solid var(--line);
-  border-radius: .8rem;
-  padding: 1rem;
-  background: var(--panel);
-  color: var(--text);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  font-size: 1rem;
-  line-height: 1.55;
-}
-
-
-.marco-imagen{
-  margin-top: .8rem;
-  min-height: 460px;
-  border-radius: .8rem;
-  border: 1px solid var(--line);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  padding: .6rem;
-  background: var(--panel);
-}
-
-.marco-imagen img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: .6rem;
-}
-
-.zona-comparativa{
-  display: grid;
-  gap: 1rem;
-}
-
-.zona-comparativa h2{
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-}
-
-.texto-suave{
-  margin: 0;
-  color: var(--text-soft, color-mix(in srgb, var(--text) 75%, white 25%));
-}
-
-.grilla-accesos{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .8rem;
-}
-
-.acceso-algoritmo{
-  border: 1px solid var(--line);
-  border-radius: .8rem;
-  text-decoration: none;
-  color: var(--text);
-  padding: 1rem;
-  display: grid;
-  gap: .3rem;
-  transition: transform .15s ease;
-}
-
-.acceso-algoritmo:hover{ transform: translateY(-2px); }
-.acceso-algoritmo.merge{ background: color-mix(in srgb, #2dd4bf 17%, var(--panel)); }
-.acceso-algoritmo.quick{ background: color-mix(in srgb, #f59e0b 17%, var(--panel)); }
-.etiqueta-algoritmo{ font-size: .9rem; opacity: .85; }
-
-.controles-comparativa{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .8rem;
-}
-
-.controles-comparativa label{
-  display: grid;
-  gap: .35rem;
-  font-weight: 600;
-}
-
-.controles-comparativa select{
-  border: 1px solid var(--line);
-  border-radius: .6rem;
-  background: var(--panel);
-  color: var(--text);
-  padding: .52rem .6rem;
-}
-
-.tabla-contenedor{
-  overflow-x: auto;
-}
-
-.tabla-comparativa{
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid var(--line);
-  border-radius: .7rem;
-  overflow: hidden;
-}
-
-.tabla-comparativa th,
-.tabla-comparativa td{
-  border-bottom: 1px solid var(--line);
-  padding: .65rem .7rem;
-  text-align: left;
-}
-
-.badge-ganador{
-  display: inline-flex;
-  padding: .18rem .55rem;
-  border-radius: 999px;
-  font-size: .84rem;
-  border: 1px solid transparent;
-}
-
-.badge-ganador.merge{ background: color-mix(in srgb, #2dd4bf 18%, transparent); border-color: #2dd4bf; }
-.badge-ganador.quick{ background: color-mix(in srgb, #f59e0b 18%, transparent); border-color: #f59e0b; }
-.badge-ganador.empate{ background: color-mix(in srgb, #60a5fa 18%, transparent); border-color: #60a5fa; }
-
-.paneles-analisis{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .8rem;
-}
-
-.panel-analisis{
-  border: 1px solid var(--line);
-  border-radius: .8rem;
-  padding: .8rem;
-  background: color-mix(in srgb, var(--panel) 82%, #020617 18%);
-}
-
-.panel-analisis h3{
-  margin-top: 0;
-  margin-bottom: .55rem;
-  font-size: 1rem;
-}
-
-.panel-analisis ul{
-  margin: 0;
-  padding-left: 1rem;
-}
-
-.panel-definiciones{
-  border: 1px solid var(--line);
-  border-radius: .8rem;
-  padding: .9rem;
-  background: color-mix(in srgb, var(--panel) 86%, #0f172a 14%);
-}
-
-.selector-definicion{
-  display: inline-flex;
-  gap: .55rem;
-  margin-bottom: .8rem;
-}
-
-.tab-definicion{
-  border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--text);
-  padding: .45rem .75rem;
-  border-radius: 999px;
-}
-
-.tab-definicion.activo{
-  border-color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 18%, var(--panel));
-}
-
-.detalle-algoritmo h3{
-  margin: 0 0 .5rem;
-}
-
-.detalle-algoritmo h4{
-  margin: .7rem 0 .3rem;
-  font-size: .98rem;
-}
-
-.detalle-algoritmo ol{
-  margin: 0;
-  padding-left: 1.1rem;
-}
-
-@media (max-width: 900px){
-  .encabezado-programa{
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-  }
-
-  .grilla-accesos,
-  .paneles-analisis,
-  .controles-comparativa{
-    grid-template-columns: 1fr;
-  }
-}
-</style>

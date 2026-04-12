@@ -14,11 +14,13 @@ La meta es que sea:
 - Modo claro / modo oscuro (sin perder el estilo cyberpunk limpio)
 
 ## Decisiones importantes
-- Los textos/datos van en `src/datos/` (no se escriben directo dentro del HTML).
-- Los estilos se centralizan en `src/estilos/tema.css` para no repetir colores.
-- Los componentes se separan por funcionalidad en `src/componentes/`.
+- Los textos y listados activos viven en `src/data/content.ts`.
+- Los estilos activos se centralizan en `src/styles/theme.css` y `src/styles/app.css`.
+- La home actual se resuelve desde `src/pages/index.astro` con `BaseLayout.astro`.
 
 ## Estado actual (v1)
 - Sobre mi: activo (en columnas)
 - Habilidades: activo (3 columnas: Dominado / En proceso / Por aprender)
-- Proyectos: vacio a proposito (ver `docs/03_componentes.md` y `src/datos/proyectos.ts`)
+- Proyectos: activo con tarjetas y accesos a material academico desde `src/data/content.ts`
+- Programas temporales: activos y enlazados desde `src/programas-temporales/programas.ts`
+- Parciales: activos y enlazados desde `src/parciales/parciales.ts`

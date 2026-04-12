@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio QA"
+  short_description: "Valida build, rutas y coherencia tecnica"
+  default_prompt: "Use $portfolio-quality-guard para revisar regresiones, validar build y detectar incoherencias entre codigo, assets y documentacion del portafolio."

@@ -1,0 +1,29 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad29" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" rx="32" fill="url(#grad29)" />
+  <g stroke="#fcd34d" stroke-width="6" stroke-linecap="round">
+    <line x1="200" y1="200" x2="760" y2="200" />
+    <line x1="200" y1="260" x2="760" y2="260" />
+    <line x1="200" y1="320" x2="760" y2="320" />
+  </g>
+  <g fill="#f8fafc" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="24">
+    <text x="220" y="195">Contador</text>
+    <text x="220" y="255">Prefix</text>
+    <text x="220" y="315">Salida estable</text>
+  </g>
+  <g>
+    <rect x="560" y="160" width="180" height="160" rx="16" fill="#f472b6" opacity="0.2" />
+    <text x="650" y="245" text-anchor="middle" font-size="60" fill="#f8fafc" font-family="'Space Grotesk', 'Segoe UI', sans-serif">Σ</text>
+  </g>
+  <text x="480" y="470" fill="#f1f5f9" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="44" text-anchor="middle">
+    Counting Sort Metrics
+  </text>
+  <text x="480" y="90" fill="#ddd6fe" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="28" text-anchor="middle">
+    Programa temporal 29
+  </text>
+</svg>

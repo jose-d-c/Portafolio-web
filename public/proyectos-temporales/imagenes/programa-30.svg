@@ -1,0 +1,38 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad30" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#312e81" />
+      <stop offset="100%" stop-color="#7c2d12" />
+    </linearGradient>
+    <linearGradient id="bars" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#e11d48" />
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" rx="36" fill="url(#grad30)" />
+  <g opacity="0.4">
+    <circle cx="160" cy="120" r="70" fill="#f472b6" />
+    <circle cx="780" cy="120" r="90" fill="#38bdf8" />
+    <circle cx="480" cy="420" r="110" fill="#facc15" />
+  </g>
+  <g transform="translate(170 160)">
+    <rect x="0" y="0" width="620" height="220" rx="24" fill="rgba(15,23,42,0.65)" stroke="#94a3b8" stroke-dasharray="6 12" />
+    <text x="310" y="48" text-anchor="middle" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="28" fill="#e2e8f0">Comparativa en vivo</text>
+    <g transform="translate(60 80)" fill="url(#bars)">
+      <rect x="0" y="40" width="40" height="80" rx="12" />
+      <rect x="70" y="10" width="40" height="110" rx="12" />
+      <rect x="140" y="0" width="40" height="120" rx="12" />
+      <rect x="210" y="60" width="40" height="60" rx="12" />
+      <rect x="280" y="20" width="40" height="100" rx="12" />
+      <rect x="350" y="50" width="40" height="70" rx="12" />
+      <rect x="420" y="5" width="40" height="115" rx="12" />
+    </g>
+  </g>
+  <text x="480" y="470" fill="#f8fafc" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="44" text-anchor="middle">
+    Sorting Simulator Neo
+  </text>
+  <text x="480" y="90" fill="#c7d2fe" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="28" text-anchor="middle">
+    Programa temporal 30
+  </text>
+</svg>

@@ -1,6 +1,8 @@
-# Auditoría de comentarios explicativos vs lógica del código (Programas temporales 01–27)
+# Auditoría de comentarios explicativos vs lógica del código (Programas temporales 01–30)
 
 Fecha de auditoría: 2026-03-28
+
+> **Actualización 2026-04-11:** se añadieron los programas 28 (búsqueda binaria), 29 (Counting Sort) y 30 (simulador visual). Mantener este documento como histórico: los 27 programas previos ya fueron auditados; los nuevos quedarán pendientes para la próxima ronda.
 
 ## Alcance
 Se auditó **cada archivo fuente** en `public/programas-temporales/codigos/programa-01.txt` a `programa-27.txt` para validar:

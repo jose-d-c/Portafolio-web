@@ -1,0 +1,3946 @@
+{
+  "programa-01": {
+    "titulo": "Ordenamiento Burbuja simple en C++ (String)",
+    "lenguaje": "cpp",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "bubble_simple",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.8,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 8,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 180,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 80,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 18000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 800,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.945,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 94.5,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 40,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 9450,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 400,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 2.079,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 9,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 207.9,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 88,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 20790,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 880,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.402,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 13,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 340.2,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 128,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 34020,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 1280,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-02": {
+    "titulo": "Ordenamiento Burbuja simple en Python (int)",
+    "lenguaje": "python",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "bubble_simple",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.8,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 8,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 180,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 80,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 18000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 800,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.945,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 94.5,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 40,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 9450,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 400,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 2.079,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 9,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 207.9,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 88,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 20790,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 880,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.402,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 13,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 340.2,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 128,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 34020,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 1280,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-03": {
+    "titulo": "Ordenamiento Burbuja simple en Java (int)",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "bubble_simple",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.8,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 8,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 180,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 80,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 18000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 800,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.945,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 94.5,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 40,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 9450,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 400,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 2.079,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 9,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 207.9,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 88,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 20790,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 880,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.402,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 13,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 340.2,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 128,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 34020,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 1280,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-04": {
+    "titulo": "Ordenamiento Burbuja simple en Java (String)",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "bubble_simple",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.8,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 8,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 180,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 80,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 18000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 800,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.945,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 94.5,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 40,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 9450,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 400,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 2.079,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 9,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 207.9,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 88,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 20790,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 880,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.402,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 13,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 340.2,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 128,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 34020,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 1280,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-05": {
+    "titulo": "Burbuja mejorado en Java (enteros)",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "bubble_mejorado",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.5,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 6,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 150,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 60,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 15000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 600,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.788,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 3,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 78.75,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 30,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 7875,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 300,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.733,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 7,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 173.25,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 66,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 17325,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 660,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 2.835,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 10,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 283.5,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 96,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 28350,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 960,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-06": {
+    "titulo": "Burbuja mejorado en Java (String)",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "bubble_mejorado",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.5,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 6,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 150,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 60,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 15000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 600,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.788,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 3,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 78.75,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 30,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 7875,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 300,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.733,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 7,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 173.25,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 66,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 17325,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 660,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 2.835,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 10,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 283.5,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 96,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 28350,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 960,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-07": {
+    "titulo": "Quicksort en Java (enteros)",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "quick",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.332,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 6.644,
+          "memoriaKb": 3,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 35,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 99.658,
+          "memoriaKb": 30,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 350,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.174,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 3.488,
+          "memoriaKb": 2.7,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 18,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 52.32,
+          "memoriaKb": 27,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 175,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.384,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 7.674,
+          "memoriaKb": 3.15,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 39,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 115.105,
+          "memoriaKb": 31.5,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 385,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.628,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 6,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 12.557,
+          "memoriaKb": 3.45,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 56,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 188.353,
+          "memoriaKb": 34.5,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 560,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-08": {
+    "titulo": "Quicksort en Java (String)",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "quick",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.332,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 6.644,
+          "memoriaKb": 3,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 35,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 99.658,
+          "memoriaKb": 30,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 350,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.174,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 3.488,
+          "memoriaKb": 2.7,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 18,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 52.32,
+          "memoriaKb": 27,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 175,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.384,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 7.674,
+          "memoriaKb": 3.15,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 39,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 115.105,
+          "memoriaKb": 31.5,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 385,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.628,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 6,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 12.557,
+          "memoriaKb": 3.45,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 56,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 188.353,
+          "memoriaKb": 34.5,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 560,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-09": {
+    "titulo": "Shell Sort en Java (int)",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "shell",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.365,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 7.308,
+          "memoriaKb": 3.5,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 40,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 109.624,
+          "memoriaKb": 35,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 400,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.192,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 3.837,
+          "memoriaKb": 3.15,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 20,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 57.552,
+          "memoriaKb": 31.5,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 200,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.422,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 8.441,
+          "memoriaKb": 3.68,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 44,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 126.615,
+          "memoriaKb": 36.75,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 440,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.691,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 6,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 13.813,
+          "memoriaKb": 4.03,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 64,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 207.189,
+          "memoriaKb": 40.25,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 640,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-10": {
+    "titulo": "Shell Sort en Java (String)",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "shell",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.365,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 7.308,
+          "memoriaKb": 3.5,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 40,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 109.624,
+          "memoriaKb": 35,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 400,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.192,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 3.837,
+          "memoriaKb": 3.15,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 20,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 57.552,
+          "memoriaKb": 31.5,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 200,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.422,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 8.441,
+          "memoriaKb": 3.68,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 44,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 126.615,
+          "memoriaKb": 36.75,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 440,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.691,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 6,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 13.813,
+          "memoriaKb": 4.03,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 64,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 207.189,
+          "memoriaKb": 40.25,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 640,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-11": {
+    "titulo": "Seleccion en Java (int)",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "selection",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.6,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 5,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 160,
+          "memoriaKb": 3.5,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 45,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 16000,
+          "memoriaKb": 35,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 450,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.84,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 84,
+          "memoriaKb": 3.15,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 23,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 8400,
+          "memoriaKb": 31.5,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 225,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.848,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 5,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 184.8,
+          "memoriaKb": 3.68,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 50,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 18480,
+          "memoriaKb": 36.75,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 495,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.024,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 7,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 302.4,
+          "memoriaKb": 4.03,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 72,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 30240,
+          "memoriaKb": 40.25,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 720,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-12": {
+    "titulo": "Seleccion en Java (String)",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "selection",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.6,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 5,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 160,
+          "memoriaKb": 3.5,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 45,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 16000,
+          "memoriaKb": 35,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 450,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.84,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 2,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 84,
+          "memoriaKb": 3.15,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 23,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 8400,
+          "memoriaKb": 31.5,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 225,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.848,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 5,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 184.8,
+          "memoriaKb": 3.68,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 50,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 18480,
+          "memoriaKb": 36.75,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 495,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.024,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 7,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 302.4,
+          "memoriaKb": 4.03,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 72,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 30240,
+          "memoriaKb": 40.25,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 720,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-13": {
+    "titulo": "Comparacion de tiempos de algoritmos",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "multi_tiempo",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 4.385,
+          "memoriaKb": 4.2,
+          "iteraciones": 199,
+          "comparaciones": 199,
+          "intercambios": 54,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 87.699,
+          "memoriaKb": 42,
+          "iteraciones": 3986,
+          "comparaciones": 3986,
+          "intercambios": 540,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 1315.484,
+          "memoriaKb": 420,
+          "iteraciones": 59795,
+          "comparaciones": 59795,
+          "intercambios": 5400,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 2.302,
+          "memoriaKb": 3.78,
+          "iteraciones": 120,
+          "comparaciones": 140,
+          "intercambios": 27,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 46.042,
+          "memoriaKb": 37.8,
+          "iteraciones": 2392,
+          "comparaciones": 2790,
+          "intercambios": 270,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 690.629,
+          "memoriaKb": 378,
+          "iteraciones": 35877,
+          "comparaciones": 41856,
+          "intercambios": 2700,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 5.065,
+          "memoriaKb": 4.41,
+          "iteraciones": 209,
+          "comparaciones": 209,
+          "intercambios": 59,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 101.292,
+          "memoriaKb": 44.1,
+          "iteraciones": 4186,
+          "comparaciones": 4186,
+          "intercambios": 594,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 1519.383,
+          "memoriaKb": 441,
+          "iteraciones": 62784,
+          "comparaciones": 62784,
+          "intercambios": 5940,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 8.288,
+          "memoriaKb": 4.83,
+          "iteraciones": 269,
+          "comparaciones": 279,
+          "intercambios": 86,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 165.751,
+          "memoriaKb": 48.3,
+          "iteraciones": 5382,
+          "comparaciones": 5581,
+          "intercambios": 864,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 2486.264,
+          "memoriaKb": 483,
+          "iteraciones": 80723,
+          "comparaciones": 83713,
+          "intercambios": 8640,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-14": {
+    "titulo": "Uso de memoria de algoritmos",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "multi_memoria",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 3.986,
+          "memoriaKb": 5.4,
+          "iteraciones": 199,
+          "comparaciones": 199,
+          "intercambios": 54,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 79.726,
+          "memoriaKb": 54,
+          "iteraciones": 3986,
+          "comparaciones": 3986,
+          "intercambios": 540,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 1195.894,
+          "memoriaKb": 540,
+          "iteraciones": 59795,
+          "comparaciones": 59795,
+          "intercambios": 5400,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 2.093,
+          "memoriaKb": 4.86,
+          "iteraciones": 120,
+          "comparaciones": 140,
+          "intercambios": 27,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 41.856,
+          "memoriaKb": 48.6,
+          "iteraciones": 2392,
+          "comparaciones": 2790,
+          "intercambios": 270,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 627.844,
+          "memoriaKb": 486,
+          "iteraciones": 35877,
+          "comparaciones": 41856,
+          "intercambios": 2700,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 4.604,
+          "memoriaKb": 5.67,
+          "iteraciones": 209,
+          "comparaciones": 209,
+          "intercambios": 59,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 92.084,
+          "memoriaKb": 56.7,
+          "iteraciones": 4186,
+          "comparaciones": 4186,
+          "intercambios": 594,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 1381.258,
+          "memoriaKb": 567,
+          "iteraciones": 62784,
+          "comparaciones": 62784,
+          "intercambios": 5940,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 7.534,
+          "memoriaKb": 6.21,
+          "iteraciones": 269,
+          "comparaciones": 279,
+          "intercambios": 86,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 150.683,
+          "memoriaKb": 62.1,
+          "iteraciones": 5382,
+          "comparaciones": 5581,
+          "intercambios": 864,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 2260.24,
+          "memoriaKb": 621,
+          "iteraciones": 80723,
+          "comparaciones": 83713,
+          "intercambios": 8640,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-15": {
+    "titulo": "Insercion en Java (int)",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "insertion",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.4,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 140,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 40,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 14000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 400,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.735,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 73.5,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 20,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 7350,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 200,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.617,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 161.7,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 44,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 16170,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 440,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 2.646,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 6,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 264.6,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 64,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 26460,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 640,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-16": {
+    "titulo": "Insercion en Java (String)",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "insertion",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.4,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 140,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 40,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 14000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 400,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.735,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 2,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 73.5,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 20,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 7350,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 200,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.617,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 161.7,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 44,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 16170,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 440,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 2.646,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 6,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 264.6,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 64,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 26460,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 640,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-17": {
+    "titulo": "Metricas completas de ordenamientos",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "multi_metricas",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 4.784,
+          "memoriaKb": 6,
+          "iteraciones": 199,
+          "comparaciones": 199,
+          "intercambios": 60,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 95.672,
+          "memoriaKb": 60,
+          "iteraciones": 3986,
+          "comparaciones": 3986,
+          "intercambios": 600,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 1435.073,
+          "memoriaKb": 600,
+          "iteraciones": 59795,
+          "comparaciones": 59795,
+          "intercambios": 6000,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 2.511,
+          "memoriaKb": 5.4,
+          "iteraciones": 120,
+          "comparaciones": 140,
+          "intercambios": 30,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 50.228,
+          "memoriaKb": 54,
+          "iteraciones": 2392,
+          "comparaciones": 2790,
+          "intercambios": 300,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 753.413,
+          "memoriaKb": 540,
+          "iteraciones": 35877,
+          "comparaciones": 41856,
+          "intercambios": 3000,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 5.525,
+          "memoriaKb": 6.3,
+          "iteraciones": 209,
+          "comparaciones": 209,
+          "intercambios": 66,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 110.501,
+          "memoriaKb": 63,
+          "iteraciones": 4186,
+          "comparaciones": 4186,
+          "intercambios": 660,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 1657.509,
+          "memoriaKb": 630,
+          "iteraciones": 62784,
+          "comparaciones": 62784,
+          "intercambios": 6600,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 9.041,
+          "memoriaKb": 6.9,
+          "iteraciones": 269,
+          "comparaciones": 279,
+          "intercambios": 96,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 180.819,
+          "memoriaKb": 69,
+          "iteraciones": 5382,
+          "comparaciones": 5581,
+          "intercambios": 960,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 2712.288,
+          "memoriaKb": 690,
+          "iteraciones": 80723,
+          "comparaciones": 83713,
+          "intercambios": 9600,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-18": {
+    "titulo": "Shaker Sort con metricas (int)",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "shaker",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.7,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 7,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 170,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 70,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 17000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 700,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.893,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 89.25,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 35,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 8925,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 350,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.964,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 8,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 196.35,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 77,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 19635,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 770,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.213,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 11,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 321.3,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 112,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 32130,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 1120,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-19": {
+    "titulo": "Shaker Sort con metricas (String)",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "shaker",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.7,
+          "memoriaKb": 1,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 7,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 170,
+          "memoriaKb": 4,
+          "iteraciones": 10000,
+          "comparaciones": 10000,
+          "intercambios": 70,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 17000,
+          "memoriaKb": 40,
+          "iteraciones": 1000000,
+          "comparaciones": 1000000,
+          "intercambios": 700,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.893,
+          "memoriaKb": 1,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 89.25,
+          "memoriaKb": 3.6,
+          "iteraciones": 6000,
+          "comparaciones": 7000,
+          "intercambios": 35,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 8925,
+          "memoriaKb": 36,
+          "iteraciones": 600000,
+          "comparaciones": 700000,
+          "intercambios": 350,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.964,
+          "memoriaKb": 1,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 8,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 196.35,
+          "memoriaKb": 4.2,
+          "iteraciones": 10500,
+          "comparaciones": 10500,
+          "intercambios": 77,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 19635,
+          "memoriaKb": 42,
+          "iteraciones": 1050000,
+          "comparaciones": 1050000,
+          "intercambios": 770,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 3.213,
+          "memoriaKb": 1,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 11,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 321.3,
+          "memoriaKb": 4.6,
+          "iteraciones": 13500,
+          "comparaciones": 14000,
+          "intercambios": 112,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 32130,
+          "memoriaKb": 46,
+          "iteraciones": 1350000,
+          "comparaciones": 1400000,
+          "intercambios": 1120,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-20": {
+    "titulo": "Radix Sort en Java",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "radix",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.07,
+          "memoriaKb": 1,
+          "iteraciones": 10,
+          "comparaciones": 10,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 0.7,
+          "memoriaKb": 5,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 20,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 7,
+          "memoriaKb": 50,
+          "iteraciones": 1000,
+          "comparaciones": 1000,
+          "intercambios": 200,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.037,
+          "memoriaKb": 1,
+          "iteraciones": 6,
+          "comparaciones": 7,
+          "intercambios": 1,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 0.367,
+          "memoriaKb": 4.5,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 10,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 3.675,
+          "memoriaKb": 45,
+          "iteraciones": 600,
+          "comparaciones": 700,
+          "intercambios": 100,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.081,
+          "memoriaKb": 1,
+          "iteraciones": 11,
+          "comparaciones": 11,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 0.808,
+          "memoriaKb": 5.25,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 22,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 8.085,
+          "memoriaKb": 52.5,
+          "iteraciones": 1050,
+          "comparaciones": 1050,
+          "intercambios": 220,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.132,
+          "memoriaKb": 1,
+          "iteraciones": 14,
+          "comparaciones": 14,
+          "intercambios": 3,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 1.323,
+          "memoriaKb": 5.75,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 32,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 13.23,
+          "memoriaKb": 57.5,
+          "iteraciones": 1350,
+          "comparaciones": 1400,
+          "intercambios": 320,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-21": {
+    "titulo": "Merge Sort con enteros",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "merge",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.399,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 3,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 7.973,
+          "memoriaKb": 8,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 30,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 119.589,
+          "memoriaKb": 80,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 300,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.209,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 4.186,
+          "memoriaKb": 7.2,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 15,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 62.784,
+          "memoriaKb": 72,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 150,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.46,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 3,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 9.208,
+          "memoriaKb": 8.4,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 33,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 138.126,
+          "memoriaKb": 84,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 330,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.753,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 5,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 15.068,
+          "memoriaKb": 9.2,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 48,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 226.024,
+          "memoriaKb": 92,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 480,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-22": {
+    "titulo": "Merge Sort con nombres",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "merge",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.399,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 3,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 7.973,
+          "memoriaKb": 8,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 30,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 119.589,
+          "memoriaKb": 80,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 300,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.209,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 4.186,
+          "memoriaKb": 7.2,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 15,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 62.784,
+          "memoriaKb": 72,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 150,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.46,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 3,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 9.208,
+          "memoriaKb": 8.4,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 33,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 138.126,
+          "memoriaKb": 84,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 330,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.753,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 5,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 15.068,
+          "memoriaKb": 9.2,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 48,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 226.024,
+          "memoriaKb": 92,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 480,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-23": {
+    "titulo": "Comparativa Merge vs Quick",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "comparativa",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 1.063,
+          "memoriaKb": 1.2,
+          "iteraciones": 66,
+          "comparaciones": 66,
+          "intercambios": 12,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 21.26,
+          "memoriaKb": 12,
+          "iteraciones": 1329,
+          "comparaciones": 1329,
+          "intercambios": 120,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 318.905,
+          "memoriaKb": 120,
+          "iteraciones": 19932,
+          "comparaciones": 19932,
+          "intercambios": 1200,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.558,
+          "memoriaKb": 1.08,
+          "iteraciones": 40,
+          "comparaciones": 47,
+          "intercambios": 6,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 11.162,
+          "memoriaKb": 10.8,
+          "iteraciones": 797,
+          "comparaciones": 930,
+          "intercambios": 60,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 167.425,
+          "memoriaKb": 108,
+          "iteraciones": 11959,
+          "comparaciones": 13952,
+          "intercambios": 600,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 1.228,
+          "memoriaKb": 1.26,
+          "iteraciones": 70,
+          "comparaciones": 70,
+          "intercambios": 13,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 24.556,
+          "memoriaKb": 12.6,
+          "iteraciones": 1395,
+          "comparaciones": 1395,
+          "intercambios": 132,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 368.335,
+          "memoriaKb": 126,
+          "iteraciones": 20928,
+          "comparaciones": 20928,
+          "intercambios": 1320,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 2.009,
+          "memoriaKb": 1.38,
+          "iteraciones": 90,
+          "comparaciones": 93,
+          "intercambios": 19,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 40.182,
+          "memoriaKb": 13.8,
+          "iteraciones": 1794,
+          "comparaciones": 1860,
+          "intercambios": 192,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 602.731,
+          "memoriaKb": 138,
+          "iteraciones": 26908,
+          "comparaciones": 27904,
+          "intercambios": 1920,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-24": {
+    "titulo": "Heap Sort con enteros",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "heap",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.432,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 5,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 8.637,
+          "memoriaKb": 5,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 45,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 129.555,
+          "memoriaKb": 50,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 450,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.227,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 4.534,
+          "memoriaKb": 4.5,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 23,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 68.016,
+          "memoriaKb": 45,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 225,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.499,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 5,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 9.976,
+          "memoriaKb": 5.25,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 50,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 149.636,
+          "memoriaKb": 52.5,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 495,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.816,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 7,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 16.324,
+          "memoriaKb": 5.75,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 72,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 244.859,
+          "memoriaKb": 57.5,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 720,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-25": {
+    "titulo": "Heap Sort con strings",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "heap",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.432,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 5,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 8.637,
+          "memoriaKb": 5,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 45,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 129.555,
+          "memoriaKb": 50,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 450,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.227,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 4.534,
+          "memoriaKb": 4.5,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 23,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 68.016,
+          "memoriaKb": 45,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 225,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.499,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 5,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 9.976,
+          "memoriaKb": 5.25,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 50,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 149.636,
+          "memoriaKb": 52.5,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 495,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.816,
+          "memoriaKb": 1,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 7,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 16.324,
+          "memoriaKb": 5.75,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 72,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 244.859,
+          "memoriaKb": 57.5,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 720,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-26": {
+    "titulo": "Bucket Sort con enteros",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "bucket",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.399,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 7.973,
+          "memoriaKb": 9,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 35,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 119.589,
+          "memoriaKb": 90,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 350,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.209,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 4.186,
+          "memoriaKb": 8.1,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 18,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 62.784,
+          "memoriaKb": 81,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 175,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.46,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 4,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 9.208,
+          "memoriaKb": 9.45,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 39,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 138.126,
+          "memoriaKb": 94.5,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 385,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.753,
+          "memoriaKb": 1.03,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 6,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 15.068,
+          "memoriaKb": 10.35,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 56,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 226.024,
+          "memoriaKb": 103.5,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 560,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-27": {
+    "titulo": "Bucket Sort con strings",
+    "lenguaje": "java",
+    "tipoDato": "string",
+    "tipoAlgoritmo": "bucket",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.399,
+          "memoriaKb": 1,
+          "iteraciones": 33,
+          "comparaciones": 33,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas totalmente desordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 7.973,
+          "memoriaKb": 9,
+          "iteraciones": 664,
+          "comparaciones": 664,
+          "intercambios": 35,
+          "entrada": "Arreglo de cadenas totalmente desordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 119.589,
+          "memoriaKb": 90,
+          "iteraciones": 9966,
+          "comparaciones": 9966,
+          "intercambios": 350,
+          "entrada": "Arreglo de cadenas totalmente desordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.209,
+          "memoriaKb": 1,
+          "iteraciones": 20,
+          "comparaciones": 23,
+          "intercambios": 2,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 4.186,
+          "memoriaKb": 8.1,
+          "iteraciones": 399,
+          "comparaciones": 465,
+          "intercambios": 18,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 62.784,
+          "memoriaKb": 81,
+          "iteraciones": 5979,
+          "comparaciones": 6976,
+          "intercambios": 175,
+          "entrada": "Arreglo de cadenas parcialmente ordenados (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.46,
+          "memoriaKb": 1,
+          "iteraciones": 35,
+          "comparaciones": 35,
+          "intercambios": 4,
+          "entrada": "Arreglo de cadenas orden intercalado (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 9.208,
+          "memoriaKb": 9.45,
+          "iteraciones": 698,
+          "comparaciones": 698,
+          "intercambios": 39,
+          "entrada": "Arreglo de cadenas orden intercalado (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 138.126,
+          "memoriaKb": 94.5,
+          "iteraciones": 10464,
+          "comparaciones": 10464,
+          "intercambios": 385,
+          "entrada": "Arreglo de cadenas orden intercalado (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.753,
+          "memoriaKb": 1.03,
+          "iteraciones": 45,
+          "comparaciones": 47,
+          "intercambios": 6,
+          "entrada": "Arreglo de cadenas orden invertido (10 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 15.068,
+          "memoriaKb": 10.35,
+          "iteraciones": 897,
+          "comparaciones": 930,
+          "intercambios": 56,
+          "entrada": "Arreglo de cadenas orden invertido (100 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 226.024,
+          "memoriaKb": 103.5,
+          "iteraciones": 13454,
+          "comparaciones": 13952,
+          "intercambios": 560,
+          "entrada": "Arreglo de cadenas orden invertido (1000 elementos)",
+          "salida": "Cadenas ordenadas alfabeticamente (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-28": {
+    "titulo": "Simulador de Busqueda Binaria",
+    "lenguaje": "java",
+    "tipoDato": "binario",
+    "tipoAlgoritmo": "binary_search",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.1,
+          "memoriaKb": 1,
+          "iteraciones": 3,
+          "comparaciones": 33,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados totalmente desordenados (10 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 0.199,
+          "memoriaKb": 1.5,
+          "iteraciones": 7,
+          "comparaciones": 66,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados totalmente desordenados (100 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 0.299,
+          "memoriaKb": 15,
+          "iteraciones": 10,
+          "comparaciones": 100,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados totalmente desordenados (1000 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.052,
+          "memoriaKb": 1,
+          "iteraciones": 2,
+          "comparaciones": 23,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados parcialmente ordenados (10 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 0.105,
+          "memoriaKb": 1.35,
+          "iteraciones": 4,
+          "comparaciones": 47,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados parcialmente ordenados (100 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 0.157,
+          "memoriaKb": 13.5,
+          "iteraciones": 6,
+          "comparaciones": 70,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados parcialmente ordenados (1000 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.115,
+          "memoriaKb": 1,
+          "iteraciones": 3,
+          "comparaciones": 35,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados orden intercalado (10 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 0.23,
+          "memoriaKb": 1.58,
+          "iteraciones": 7,
+          "comparaciones": 70,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados orden intercalado (100 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 0.345,
+          "memoriaKb": 15.75,
+          "iteraciones": 10,
+          "comparaciones": 105,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados orden intercalado (1000 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.188,
+          "memoriaKb": 1,
+          "iteraciones": 4,
+          "comparaciones": 47,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados orden invertido (10 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 0.377,
+          "memoriaKb": 1.72,
+          "iteraciones": 9,
+          "comparaciones": 93,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados orden invertido (100 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 0.565,
+          "memoriaKb": 17.25,
+          "iteraciones": 13,
+          "comparaciones": 140,
+          "intercambios": 0,
+          "entrada": "Arreglo de enteros ordenados orden invertido (1000 elementos)",
+          "salida": "Posicion encontrada o -1 tras evaluar hasta 3 mitades (n=1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  },
+  "programa-29": {
+    "titulo": "Counting Sort instrumentado",
+    "lenguaje": "java",
+    "tipoDato": "int",
+    "tipoAlgoritmo": "counting_sort",
+    "escenarios": {
+      "desordenado": {
+        "10": {
+          "tiempoMs": 0.08,
+          "memoriaKb": 1,
+          "iteraciones": 10,
+          "comparaciones": 10,
+          "intercambios": 1,
+          "entrada": "Arreglo de enteros totalmente desordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 0.8,
+          "memoriaKb": 7,
+          "iteraciones": 100,
+          "comparaciones": 100,
+          "intercambios": 10,
+          "entrada": "Arreglo de enteros totalmente desordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 8,
+          "memoriaKb": 70,
+          "iteraciones": 1000,
+          "comparaciones": 1000,
+          "intercambios": 100,
+          "entrada": "Arreglo de enteros totalmente desordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "TOTALMENTE DESORDENADOS"
+        }
+      },
+      "parcial": {
+        "10": {
+          "tiempoMs": 0.042,
+          "memoriaKb": 1,
+          "iteraciones": 6,
+          "comparaciones": 7,
+          "intercambios": 1,
+          "entrada": "Arreglo de enteros parcialmente ordenados (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "100": {
+          "tiempoMs": 0.42,
+          "memoriaKb": 6.3,
+          "iteraciones": 60,
+          "comparaciones": 70,
+          "intercambios": 5,
+          "entrada": "Arreglo de enteros parcialmente ordenados (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        },
+        "1000": {
+          "tiempoMs": 4.2,
+          "memoriaKb": 63,
+          "iteraciones": 600,
+          "comparaciones": 700,
+          "intercambios": 50,
+          "entrada": "Arreglo de enteros parcialmente ordenados (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "PARCIALMENTE ORDENADOS"
+        }
+      },
+      "intercalado": {
+        "10": {
+          "tiempoMs": 0.092,
+          "memoriaKb": 1,
+          "iteraciones": 11,
+          "comparaciones": 11,
+          "intercambios": 1,
+          "entrada": "Arreglo de enteros orden intercalado (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "100": {
+          "tiempoMs": 0.924,
+          "memoriaKb": 7.35,
+          "iteraciones": 105,
+          "comparaciones": 105,
+          "intercambios": 11,
+          "entrada": "Arreglo de enteros orden intercalado (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        },
+        "1000": {
+          "tiempoMs": 9.24,
+          "memoriaKb": 73.5,
+          "iteraciones": 1050,
+          "comparaciones": 1050,
+          "intercambios": 110,
+          "entrada": "Arreglo de enteros orden intercalado (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INTERCALADO"
+        }
+      },
+      "invertido": {
+        "10": {
+          "tiempoMs": 0.151,
+          "memoriaKb": 1,
+          "iteraciones": 14,
+          "comparaciones": 14,
+          "intercambios": 2,
+          "entrada": "Arreglo de enteros orden invertido (10 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 10)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "100": {
+          "tiempoMs": 1.512,
+          "memoriaKb": 8.05,
+          "iteraciones": 135,
+          "comparaciones": 140,
+          "intercambios": 16,
+          "entrada": "Arreglo de enteros orden invertido (100 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 100)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        },
+        "1000": {
+          "tiempoMs": 15.12,
+          "memoriaKb": 80.5,
+          "iteraciones": 1350,
+          "comparaciones": 1400,
+          "intercambios": 160,
+          "entrada": "Arreglo de enteros orden invertido (1000 elementos)",
+          "salida": "Valores ordenados de menor a mayor (total 1000)",
+          "escenarioLabel": "ORDEN INVERTIDO"
+        }
+      }
+    }
+  }
+}

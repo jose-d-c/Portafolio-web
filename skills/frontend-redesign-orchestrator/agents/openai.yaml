@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Redesign"
+  short_description: "Adapta patrones del laboratorio JDC al portafolio"
+  default_prompt: "Use $frontend-redesign-orchestrator para rediseñar el frontend del portafolio tomando ideas utiles del laboratorio JDC y adaptandolas a la arquitectura Astro activa."

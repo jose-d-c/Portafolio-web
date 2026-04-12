@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Sync"
+  short_description: "Alinea docs con el codigo activo"
+  default_prompt: "Use $docs-sync-maintainer para corregir drift entre la documentacion local y la arquitectura activa del portafolio."

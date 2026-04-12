@@ -144,9 +144,24 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
     descripcion:
       "Programa Java con Bucket Sort para cadenas en tamanos 10, 50 y 200, evaluando casos desorganizados, parcialmente organizados e invertidos con tiempo, memoria, comparaciones, movimientos e iteraciones.",
   },
+  28: {
+    titulo: "Programa temporal 28: Simulador de Busqueda Binaria",
+    descripcion:
+      "Aplicacion interactiva que ilustra busqueda binaria sobre enteros y strings ordenados. Permite variar la longitud, el valor objetivo y muestra cada mitad explorada, comparaciones, profundidad recursiva y visuales sincronizadas.",
+  },
+  29: {
+    titulo: "Programa temporal 29: Counting Sort instrumentado",
+    descripcion:
+      "Implementacion detallada de Counting Sort que explica el arreglo contador, la acumulacion de frecuencias y reconstruccion estable. Incluye escenarios de datos reducidos/medios/altos y mediciones de tiempo, memoria y movimientos.",
+  },
+  30: {
+    titulo: "Programa temporal 30: Simulador visual de algoritmos de ordenamiento",
+    descripcion:
+      "Laboratorio interactivo con slider de cantidad, configuraciones de tipo/situacion del arreglo y comparativa en tiempo real de varios algoritmos (burbuja, quick, merge, etc.) mostrando animaciones, metricas y estabilidad al instante.",
+  },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
 const construirTituloProgramaTemporal = (numero: number, tituloBase?: string) => {
   const numeroFormateado = numero.toString().padStart(2, "0");

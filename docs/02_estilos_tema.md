@@ -1,21 +1,25 @@
 # Estilos y tema (como modificar sin romper)
 
 ## Variables base
-Archivo: `src/estilos/tema.css`
+Archivo activo: `src/styles/theme.css`
 
 Ahi se define:
 - fondo, texto, panel, borde
-- acentos: morado / azul / cian
-- glow
-- fondos reutilizables:
-  - `--bg-item` (cards internas / items)
-  - `--bg-chip` (chips / etiquetas)
-  - `--bg-btn` y `--bg-btnHover`
+- acentos primario y secundario
+- glow, focus ring y sombras
+- superficies para tema oscuro y claro
 
 ## Fondo cyberpunk limpio
-Archivo: `src/estilos/globales.css`
-- `body::before` mete gradientes
-- `body::after` mete micro-textura (scanlines + grid) MUY sutil
+Archivo activo: `src/styles/app.css`
+- `body` mete gradientes atmosfericos
+- `body::before` mete micro-textura de puntos
+- `cover` agrega orbes y grid visual en la portada
 
 Si se quiere menos textura:
-- bajar `opacity` en `body::after`
+- bajar `opacity` en `body::before`
+- suavizar `.hero__grid-dots`
+
+## Tipografias activas
+- display: `Syne`
+- cuerpo: `DM Sans`
+- mono: `DM Mono`

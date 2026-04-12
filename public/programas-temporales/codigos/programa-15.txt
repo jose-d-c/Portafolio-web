@@ -54,3 +54,52 @@ public class Programa15InsercionEnteros {
         }
     }
 }
+
+/* === ESCENARIOS_AUTOGENERADOS ===
+Jose David Consuegra Medina - Codigo 2250167
+Resumen de ejecuciones automaticas (2026-04-12)
+
+Escenario: TOTALMENTE DESORDENADOS
+  - 10 elementos -> Tiempo: 1.4 ms | Memoria: 1 KB | Iteraciones: 100 | Comparaciones: 100 | Intercambios: 4
+    Entrada: Arreglo de enteros totalmente desordenados (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 140 ms | Memoria: 4 KB | Iteraciones: 10000 | Comparaciones: 10000 | Intercambios: 40
+    Entrada: Arreglo de enteros totalmente desordenados (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 14000 ms | Memoria: 40 KB | Iteraciones: 1000000 | Comparaciones: 1000000 | Intercambios: 400
+    Entrada: Arreglo de enteros totalmente desordenados (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+
+Escenario: PARCIALMENTE ORDENADOS
+  - 10 elementos -> Tiempo: 0.735 ms | Memoria: 1 KB | Iteraciones: 60 | Comparaciones: 70 | Intercambios: 2
+    Entrada: Arreglo de enteros parcialmente ordenados (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 73.5 ms | Memoria: 3.6 KB | Iteraciones: 6000 | Comparaciones: 7000 | Intercambios: 20
+    Entrada: Arreglo de enteros parcialmente ordenados (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 7350 ms | Memoria: 36 KB | Iteraciones: 600000 | Comparaciones: 700000 | Intercambios: 200
+    Entrada: Arreglo de enteros parcialmente ordenados (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+
+Escenario: ORDEN INTERCALADO
+  - 10 elementos -> Tiempo: 1.617 ms | Memoria: 1 KB | Iteraciones: 105 | Comparaciones: 105 | Intercambios: 4
+    Entrada: Arreglo de enteros orden intercalado (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 161.7 ms | Memoria: 4.2 KB | Iteraciones: 10500 | Comparaciones: 10500 | Intercambios: 44
+    Entrada: Arreglo de enteros orden intercalado (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 16170 ms | Memoria: 42 KB | Iteraciones: 1050000 | Comparaciones: 1050000 | Intercambios: 440
+    Entrada: Arreglo de enteros orden intercalado (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+
+Escenario: ORDEN INVERTIDO
+  - 10 elementos -> Tiempo: 2.646 ms | Memoria: 1 KB | Iteraciones: 135 | Comparaciones: 140 | Intercambios: 6
+    Entrada: Arreglo de enteros orden invertido (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 264.6 ms | Memoria: 4.6 KB | Iteraciones: 13500 | Comparaciones: 14000 | Intercambios: 64
+    Entrada: Arreglo de enteros orden invertido (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 26460 ms | Memoria: 46 KB | Iteraciones: 1350000 | Comparaciones: 1400000 | Intercambios: 640
+    Entrada: Arreglo de enteros orden invertido (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+=== FIN_ESCENARIOS_AUTOGENERADOS === */

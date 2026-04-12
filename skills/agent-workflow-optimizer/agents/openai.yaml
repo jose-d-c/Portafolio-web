@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workflow Optimizer"
+  short_description: "Mejora validaciones y flujo del agente"
+  default_prompt: "Use $agent-workflow-optimizer para añadir automatizaciones ligeras, comandos y reglas que reduzcan errores repetitivos en el mantenimiento del portafolio."

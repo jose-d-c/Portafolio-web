@@ -1,0 +1,4 @@
+interface:
+  display_name: "Astro Portfolio"
+  short_description: "Mantiene la arquitectura activa del portafolio Astro"
+  default_prompt: "Use $astro-portfolio-maintainer para trabajar sobre la arquitectura vigente del portafolio, evitando rutas legacy y validando cambios de layout, tema y navegacion."

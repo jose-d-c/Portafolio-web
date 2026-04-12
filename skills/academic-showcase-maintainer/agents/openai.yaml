@@ -1,0 +1,4 @@
+interface:
+  display_name: "Academic Showcase"
+  short_description: "Gestiona programas temporales y parciales"
+  default_prompt: "Use $academic-showcase-maintainer para editar programas temporales o parciales, manteniendo consistencia entre metadata en src y archivos reales en public."

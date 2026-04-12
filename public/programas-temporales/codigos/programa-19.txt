@@ -147,3 +147,52 @@ public class Programa19ShakerSortStringsMetricas {
         arreglo[j] = temporal;
     }
 }
+
+/* === ESCENARIOS_AUTOGENERADOS ===
+Jose David Consuegra Medina - Codigo 2250167
+Resumen de ejecuciones automaticas (2026-04-12)
+
+Escenario: TOTALMENTE DESORDENADOS
+  - 10 elementos -> Tiempo: 1.7 ms | Memoria: 1 KB | Iteraciones: 100 | Comparaciones: 100 | Intercambios: 7
+    Entrada: Arreglo de cadenas totalmente desordenados (10 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 10)
+  - 100 elementos -> Tiempo: 170 ms | Memoria: 4 KB | Iteraciones: 10000 | Comparaciones: 10000 | Intercambios: 70
+    Entrada: Arreglo de cadenas totalmente desordenados (100 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 100)
+  - 1000 elementos -> Tiempo: 17000 ms | Memoria: 40 KB | Iteraciones: 1000000 | Comparaciones: 1000000 | Intercambios: 700
+    Entrada: Arreglo de cadenas totalmente desordenados (1000 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 1000)
+
+Escenario: PARCIALMENTE ORDENADOS
+  - 10 elementos -> Tiempo: 0.893 ms | Memoria: 1 KB | Iteraciones: 60 | Comparaciones: 70 | Intercambios: 4
+    Entrada: Arreglo de cadenas parcialmente ordenados (10 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 10)
+  - 100 elementos -> Tiempo: 89.25 ms | Memoria: 3.6 KB | Iteraciones: 6000 | Comparaciones: 7000 | Intercambios: 35
+    Entrada: Arreglo de cadenas parcialmente ordenados (100 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 100)
+  - 1000 elementos -> Tiempo: 8925 ms | Memoria: 36 KB | Iteraciones: 600000 | Comparaciones: 700000 | Intercambios: 350
+    Entrada: Arreglo de cadenas parcialmente ordenados (1000 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 1000)
+
+Escenario: ORDEN INTERCALADO
+  - 10 elementos -> Tiempo: 1.964 ms | Memoria: 1 KB | Iteraciones: 105 | Comparaciones: 105 | Intercambios: 8
+    Entrada: Arreglo de cadenas orden intercalado (10 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 10)
+  - 100 elementos -> Tiempo: 196.35 ms | Memoria: 4.2 KB | Iteraciones: 10500 | Comparaciones: 10500 | Intercambios: 77
+    Entrada: Arreglo de cadenas orden intercalado (100 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 100)
+  - 1000 elementos -> Tiempo: 19635 ms | Memoria: 42 KB | Iteraciones: 1050000 | Comparaciones: 1050000 | Intercambios: 770
+    Entrada: Arreglo de cadenas orden intercalado (1000 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 1000)
+
+Escenario: ORDEN INVERTIDO
+  - 10 elementos -> Tiempo: 3.213 ms | Memoria: 1 KB | Iteraciones: 135 | Comparaciones: 140 | Intercambios: 11
+    Entrada: Arreglo de cadenas orden invertido (10 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 10)
+  - 100 elementos -> Tiempo: 321.3 ms | Memoria: 4.6 KB | Iteraciones: 13500 | Comparaciones: 14000 | Intercambios: 112
+    Entrada: Arreglo de cadenas orden invertido (100 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 100)
+  - 1000 elementos -> Tiempo: 32130 ms | Memoria: 46 KB | Iteraciones: 1350000 | Comparaciones: 1400000 | Intercambios: 1120
+    Entrada: Arreglo de cadenas orden invertido (1000 elementos)
+    Salida: Cadenas ordenadas alfabeticamente (total 1000)
+=== FIN_ESCENARIOS_AUTOGENERADOS === */

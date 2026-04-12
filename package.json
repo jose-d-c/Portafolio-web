@@ -8,6 +8,8 @@
   },
   "scripts": {
     "test": "astro build",
+    "check:content": "node tools/validate-content-paths.mjs",
+    "check:workspace": "npm run check:content",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",

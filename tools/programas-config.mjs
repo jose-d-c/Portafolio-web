@@ -1,0 +1,33 @@
+export const programasConfig = [
+  { slug: "programa-01", titulo: "Ordenamiento Burbuja simple en C++ (String)", tipo: "bubble_simple", lenguaje: "cpp", dato: "string" },
+  { slug: "programa-02", titulo: "Ordenamiento Burbuja simple en Python (int)", tipo: "bubble_simple", lenguaje: "python", dato: "int" },
+  { slug: "programa-03", titulo: "Ordenamiento Burbuja simple en Java (int)", tipo: "bubble_simple", lenguaje: "java", dato: "int" },
+  { slug: "programa-04", titulo: "Ordenamiento Burbuja simple en Java (String)", tipo: "bubble_simple", lenguaje: "java", dato: "string" },
+  { slug: "programa-05", titulo: "Burbuja mejorado en Java (enteros)", tipo: "bubble_mejorado", lenguaje: "java", dato: "int" },
+  { slug: "programa-06", titulo: "Burbuja mejorado en Java (String)", tipo: "bubble_mejorado", lenguaje: "java", dato: "string" },
+  { slug: "programa-07", titulo: "Quicksort en Java (enteros)", tipo: "quick", lenguaje: "java", dato: "int" },
+  { slug: "programa-08", titulo: "Quicksort en Java (String)", tipo: "quick", lenguaje: "java", dato: "string" },
+  { slug: "programa-09", titulo: "Shell Sort en Java (int)", tipo: "shell", lenguaje: "java", dato: "int" },
+  { slug: "programa-10", titulo: "Shell Sort en Java (String)", tipo: "shell", lenguaje: "java", dato: "string" },
+  { slug: "programa-11", titulo: "Seleccion en Java (int)", tipo: "selection", lenguaje: "java", dato: "int" },
+  { slug: "programa-12", titulo: "Seleccion en Java (String)", tipo: "selection", lenguaje: "java", dato: "string" },
+  { slug: "programa-13", titulo: "Comparacion de tiempos de algoritmos", tipo: "multi_tiempo", lenguaje: "java", dato: "int" },
+  { slug: "programa-14", titulo: "Uso de memoria de algoritmos", tipo: "multi_memoria", lenguaje: "java", dato: "int" },
+  { slug: "programa-15", titulo: "Insercion en Java (int)", tipo: "insertion", lenguaje: "java", dato: "int" },
+  { slug: "programa-16", titulo: "Insercion en Java (String)", tipo: "insertion", lenguaje: "java", dato: "string" },
+  { slug: "programa-17", titulo: "Metricas completas de ordenamientos", tipo: "multi_metricas", lenguaje: "java", dato: "int" },
+  { slug: "programa-18", titulo: "Shaker Sort con metricas (int)", tipo: "shaker", lenguaje: "java", dato: "int" },
+  { slug: "programa-19", titulo: "Shaker Sort con metricas (String)", tipo: "shaker", lenguaje: "java", dato: "string" },
+  { slug: "programa-20", titulo: "Radix Sort en Java", tipo: "radix", lenguaje: "java", dato: "int" },
+  { slug: "programa-21", titulo: "Merge Sort con enteros", tipo: "merge", lenguaje: "java", dato: "int" },
+  { slug: "programa-22", titulo: "Merge Sort con nombres", tipo: "merge", lenguaje: "java", dato: "string" },
+  { slug: "programa-23", titulo: "Comparativa Merge vs Quick", tipo: "comparativa", lenguaje: "java", dato: "int" },
+  { slug: "programa-24", titulo: "Heap Sort con enteros", tipo: "heap", lenguaje: "java", dato: "int" },
+  { slug: "programa-25", titulo: "Heap Sort con strings", tipo: "heap", lenguaje: "java", dato: "string" },
+  { slug: "programa-26", titulo: "Bucket Sort con enteros", tipo: "bucket", lenguaje: "java", dato: "int" },
+  { slug: "programa-27", titulo: "Bucket Sort con strings", tipo: "bucket", lenguaje: "java", dato: "string" },
+  { slug: "programa-28", titulo: "Simulador de Busqueda Binaria", tipo: "binary_search", lenguaje: "java", dato: "binario" },
+  { slug: "programa-29", titulo: "Counting Sort instrumentado", tipo: "counting_sort", lenguaje: "java", dato: "int" }
+];
+
+export const configPorSlug = Object.fromEntries(programasConfig.map((programa) => [programa.slug, programa]));

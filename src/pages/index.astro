@@ -1,151 +1,210 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { habilidades, parcialesAcademicos, perfil, proyectos, proyectosTemporales, sobreMi } from "../data/content";
+
+const totalProgramas = proyectosTemporales.length;
+const totalParciales = parcialesAcademicos.length;
+const totalSkills = habilidades.length;
 ---
 
 <BaseLayout>
-  <main class="app-shell">
-    <header class="cover panel" id="portada">
-      <img src={perfil.foto} alt={`Foto de ${perfil.nombre}`} class="avatar" />
-      <div>
-        <p class="eyebrow">Portafolio profesional</p>
+  <main class="ds-shell" id="contenido-principal">
+    <div class="ds-layout">
+      <aside class="ds-sidebar">
+        <small>// portfolio owner</small>
         <h1>{perfil.nombre}</h1>
-        <p class="role">{perfil.rol}</p>
+        <p>{perfil.rol}</p>
         <p>{perfil.enfoque}</p>
-        <div class="actions">
-          <a class="contact-btn contact-mail" href={perfil.correo}>
-            <img src="/icons/mail.svg" alt="" class="ui-icon" aria-hidden="true" />
-            Correo
+
+        <nav class="app-nav ds-nav" aria-label="Navegación principal">
+          <button class="nav-btn active" data-target="sobre-mi" aria-current="page">
+            <img src="/icons/user.svg" alt="" class="ui-icon" aria-hidden="true" />Sobre mí
+          </button>
+          <button class="nav-btn" data-target="proyectos">
+            <img src="/icons/folder.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos
+          </button>
+          <button class="nav-btn" data-target="habilidades">
+            <img src="/icons/bolt.svg" alt="" class="ui-icon" aria-hidden="true" />Habilidades
+          </button>
+          <button class="nav-btn" data-theme-toggle aria-pressed="false" aria-label="Cambiar tema de color">
+            <img src="/icons/theme.svg" alt="" class="ui-icon" aria-hidden="true" />Tema
+            <small data-theme-label>Oscuro</small>
+          </button>
+        </nav>
+
+        <div class="ds-stat-grid" aria-label="Resumen del portafolio">
+          <div class="ds-stat">
+            <small>Skills visibles</small>
+            <strong>{totalSkills}</strong>
+          </div>
+          <div class="ds-stat">
+            <small>Programas temporales</small>
+            <strong>{totalProgramas}</strong>
+          </div>
+          <div class="ds-stat">
+            <small>Parciales</small>
+            <strong>{totalParciales}</strong>
+          </div>
+        </div>
+
+        <div class="ds-actions">
+          <a class="ds-button" href={perfil.correo}>
+            <img src="/icons/mail.svg" alt="" class="ui-icon" aria-hidden="true" />Correo
           </a>
-          <a class="contact-btn contact-whatsapp" href={perfil.whatsapp} target="_blank" rel="noreferrer">
-            <img src="/icons/whatsapp.svg" alt="" class="ui-icon" aria-hidden="true" />
-            WhatsApp
+          <a class="ds-button secondary" href={perfil.whatsapp} target="_blank" rel="noreferrer">
+            <img src="/icons/whatsapp.svg" alt="" class="ui-icon" aria-hidden="true" />WhatsApp
           </a>
         </div>
+      </aside>
+
+      <div class="ds-main view-deck" aria-live="polite">
+        <section class="ds-panel ds-panel--hero section-block" id="sobre-mi" data-section>
+          <div class="ds-hero-grid">
+            <div>
+              <div class="status-badge" role="status">
+                <span class="status-badge__dot" aria-hidden="true"></span>
+                Portafolio técnico activo
+              </div>
+              <h2>Codigo, infraestructura y academia conectada</h2>
+              <p>{sobreMi.perfilLaboral[0]}</p>
+              <div class="ds-card-grid">
+                <div class="ds-card">
+                  <h3>Formación</h3>
+                  {sobreMi.estudios.map((item) => (
+                    <p><strong>{item.titulo}:</strong> {item.detalle}</p>
+                  ))}
+                </div>
+                <div class="ds-card">
+                  <h3>Certificaciones</h3>
+                  {sobreMi.certificaciones.map((item) => (
+                    <p><strong>{item.titulo}:</strong> {item.detalle}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div class="ds-hero-visual">
+              <img src={perfil.foto} alt={`Foto de ${perfil.nombre}`} class="ds-avatar" />
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-panel section-block" id="proyectos" data-section>
+          <header class="section-header">
+            <p class="section-tag">// proyectos universitarios</p>
+            <h2>Proyectos core y laboratorios académicos</h2>
+            <p>Portafolio personal más {totalProgramas} programas temporales y {totalParciales} parciales documentados.</p>
+          </header>
+
+          <div class="project-grid">
+            <div class="ds-card">
+              <h3>Proyectos destacados</h3>
+              <div class="ds-card-grid">
+                {proyectos.map((proyecto) => (
+                  <article class="temporary-card">
+                    <h4>{proyecto.titulo}</h4>
+                    <p>{proyecto.descripcion}</p>
+                    <small>{proyecto.etiquetas.join(" • ")}</small>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div class="ds-card">
+              <div class="programas-meta">
+                <div>
+                  <p class="ds-eyebrow">Programas temporales</p>
+                  <h3>{totalProgramas} plantillas activas</h3>
+                  <p>Cada algoritmo tiene código instrumentado, métricas y visualización propia.</p>
+                </div>
+                <a class="ds-button" href="/programas-temporales/programa-01">Abrir catálogo</a>
+              </div>
+
+              <details class="ds-card" open>
+                <summary>
+                  <span class="ds-eyebrow">Programas temporales</span>
+                  <span class="details-state">Desplegar</span>
+                </summary>
+                <div class="ds-card-grid">
+                  {proyectosTemporales.map((item) => (
+                    <a class="temporary-card" href={item.enlace}>
+                      <h4>{item.titulo}</h4>
+                      <p>{item.descripcion}</p>
+                    </a>
+                  ))}
+                </div>
+              </details>
+
+              <details class="ds-card">
+                <summary>
+                  <span class="ds-eyebrow">Parciales oficiales</span>
+                  <span class="details-state">Desplegar</span>
+                </summary>
+                <div class="ds-card-grid">
+                  {parcialesAcademicos.map((item) => (
+                    <a class="temporary-card" href={item.enlace}>
+                      <h4>{item.titulo}</h4>
+                      <p>{item.descripcion}</p>
+                      <small>Ver puntos del parcial</small>
+                    </a>
+                  ))}
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-panel section-block" id="habilidades" data-section>
+          <header class="section-header">
+            <p class="section-tag">// habilidades</p>
+            <h2>Mapa de habilidades por estado</h2>
+            <p>El avance en Linux, redes, servidores y seguridad se controla desde `src/data/content.ts`.</p>
+          </header>
+
+          <div class="skills-layout">
+            <section class="ds-card">
+              <h3>Estado general</h3>
+              <div class="ds-stat-grid">
+                {[
+                  { label: "Dominadas", estado: "Dominado" },
+                  { label: "En proceso", estado: "En proceso" },
+                  { label: "Por aprender", estado: "Por aprender" },
+                ].map((grupo) => (
+                  <div class="ds-stat">
+                    <small>{grupo.label}</small>
+                    <strong>{habilidades.filter((skill) => skill.estado === grupo.estado).length}</strong>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section class="ds-card">
+              <div class="skills-columns">
+                {[
+                  { titulo: "Dominadas", estado: "Dominado" },
+                  { titulo: "En proceso", estado: "En proceso" },
+                  { titulo: "Por aprender", estado: "Por aprender" },
+                ].map((columna) => (
+                  <article class="skill-column">
+                    <h3>{columna.titulo}</h3>
+                    <div class="skill-list">
+                      {habilidades
+                        .filter((skill) => skill.estado === columna.estado)
+                        .map((skill) => (
+                          <div class="skill-card">
+                            <h4><img src={skill.icono} alt="" class="ui-icon" aria-hidden="true" />{skill.nombre}</h4>
+                          </div>
+                        ))}
+                      {habilidades.filter((skill) => skill.estado === columna.estado).length === 0 && (
+                        <p class="empty-state">Aún sin habilidades registradas.</p>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+        </section>
       </div>
-    </header>
-
-    <div class="content-shell">
-      <nav class="sidebar panel" aria-label="Navegación lateral">
-        <button class="nav-btn active nav-about" data-target="sobre-mi" aria-current="page"><img src="/icons/user.svg" alt="" class="ui-icon" aria-hidden="true" />Sobre mí</button>
-        <button class="nav-btn nav-projects" data-target="proyectos"><img src="/icons/folder.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos</button>
-        <button class="nav-btn nav-skills" data-target="habilidades"><img src="/icons/bolt.svg" alt="" class="ui-icon" aria-hidden="true" />Habilidades</button>
-        <button class="nav-btn nav-theme" data-theme-toggle><img src="/icons/theme.svg" alt="" class="ui-icon" aria-hidden="true" />Tema</button>
-      </nav>
-
-      <section class="views" aria-live="polite">
-        <article class="view active section-about" id="sobre-mi">
-          <h2><img src="/icons/user.svg" alt="" class="ui-icon" aria-hidden="true" />Sobre mí</h2>
-
-          <details class="panel subpanel profile-dropdown">
-            <summary><img src="/icons/briefcase.svg" alt="" class="ui-icon" aria-hidden="true" />Perfil laboral</summary>
-            {sobreMi.perfilLaboral.map((item) => (
-              <p>{item}</p>
-            ))}
-          </details>
-
-          <div class="grid-3">
-            <div class="panel subpanel info-card card-studies">
-              <h3><img src="/icons/study.svg" alt="" class="ui-icon" aria-hidden="true" />Estudios</h3>
-              {sobreMi.estudios.map((item) => (
-                <p><strong>{item.titulo}:</strong> {item.detalle}</p>
-              ))}
-            </div>
-            <div class="panel subpanel info-card card-experience">
-              <h3><img src="/icons/briefcase.svg" alt="" class="ui-icon" aria-hidden="true" />Experiencia laboral</h3>
-              {sobreMi.experienciaLaboral.map((item) => (
-                <p><strong>{item.titulo}:</strong> {item.detalle}</p>
-              ))}
-            </div>
-            <div class="panel subpanel info-card card-certs">
-              <h3><img src="/icons/certificate.svg" alt="" class="ui-icon" aria-hidden="true" />Certificaciones</h3>
-              {sobreMi.certificaciones.map((item) => (
-                <p><strong>{item.titulo}:</strong> {item.detalle}</p>
-              ))}
-            </div>
-          </div>
-        </article>
-
-        <article class="view section-projects" id="proyectos" aria-hidden="true">
-          <h2><img src="/icons/folder.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos</h2>
-          <div class="panel subpanel">
-            <h3><img src="/icons/rocket.svg" alt="" class="ui-icon" aria-hidden="true" />Proyectos normales</h3>
-            <div class="cards">
-              {proyectos.map((proyecto) => (
-                <div class="card project-card">
-                  <h4>{proyecto.titulo}</h4>
-                  <p>{proyecto.descripcion}</p>
-                  <small>{proyecto.etiquetas.join(" • ")}</small>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <details class="panel subpanel temporary">
-            <summary>
-              <h3><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Programas temporales</h3>
-              <span>Desplegar</span>
-            </summary>
-            <div class="cards">
-              {proyectosTemporales.map((item) => (
-                <a class="card temporary-card" href={item.enlace}>
-                  <h4>{item.titulo}</h4>
-                  <p>{item.descripcion}</p>
-                </a>
-              ))}
-            </div>
-          </details>
-
-
-          <details class="panel subpanel temporary">
-            <summary>
-              <h3><img src="/icons/flask.svg" alt="" class="ui-icon" aria-hidden="true" />Parciales</h3>
-              <span>Desplegar</span>
-            </summary>
-            <div class="cards">
-              {parcialesAcademicos.map((item) => (
-                <a class="card temporary-card boton-parcial" href={item.enlace}>
-                  <h4>{item.titulo}</h4>
-                  <p>{item.descripcion}</p>
-                  <small>Entrar al apartado del parcial</small>
-                </a>
-              ))}
-            </div>
-          </details>
-        </article>
-
-        <article class="view section-skills" id="habilidades" aria-hidden="true">
-          <h2><img src="/icons/bolt.svg" alt="" class="ui-icon" aria-hidden="true" />Habilidades</h2>
-          <div class="skills-columns">
-            {[
-              { titulo: "Dominadas", estado: "Dominado", clase: "skills-dominadas" },
-              { titulo: "En proceso", estado: "En proceso", clase: "skills-proceso" },
-              { titulo: "Por aprender", estado: "Por aprender", clase: "skills-aprender" },
-            ].map((columna) => (
-              <section class={`panel subpanel skill-column ${columna.clase}`}>
-                <h3>{columna.titulo}</h3>
-                <div class="cards skill-list">
-                  {habilidades
-                    .filter((skill) => skill.estado === columna.estado)
-                    .map((skill) => (
-                      <div class={`card skill-card ${skill.tono}`}>
-                        <h4><img src={skill.icono} alt="" class="ui-icon skill-icon" aria-hidden="true" />{skill.nombre}</h4>
-                      </div>
-                    ))}
-                  {habilidades.filter((skill) => skill.estado === columna.estado).length === 0 && (
-                    <p class="empty-state">Aún sin habilidades registradas.</p>
-                  )}
-                </div>
-              </section>
-            ))}
-          </div>
-        </article>
-      </section>
     </div>
   </main>
 </BaseLayout>
-
-
-<style>
-.boton-parcial small{ opacity:.9; }
-</style>

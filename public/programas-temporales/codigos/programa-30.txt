@@ -1,0 +1,178 @@
+// =============================================================================
+// PROGRAMA TEMPORAL 30: SIMULADOR VISUAL DE ORDENAMIENTOS
+// =============================================================================
+// Este archivo documenta la logica principal utilizada en la experiencia
+// interactiva implementada dentro de la pagina Astro (programa-30). La
+// simulacion corre en el navegador y permite:
+//  - Escoger algoritmo, tipo de dato (int/string), cantidad (slider) y situacion
+//    de orden (desordenado, parcialmente ordenado, intercalado, invertido).
+//  - Comparar en tiempo real metricas de varios algoritmos simultaneamente.
+//  - Visualizar la animacion del algoritmo seleccionado mientras el resto solo
+//    actualiza sus metricas dentro de una tabla comparativa.
+// =============================================================================
+
+type AlgoritmoId = "bubble" | "selection" | "insertion" | "merge" | "quick" | "heap";
+
+type Paso = {
+  snapshot: number[];
+  comparaciones: number;
+  intercambios: number;
+  iteraciones: number;
+  descripcion?: string;
+};
+
+type ResultadoAlgoritmo = {
+  id: AlgoritmoId;
+  nombre: string;
+  estable: boolean;
+  usaRecursion: boolean;
+  pasos: Paso[];
+  memoriaExtra: number;
+  tiempoMs: number;
+};
+
+const ALGORITMOS: Record<AlgoritmoId, {
+  nombre: string;
+  estable: boolean;
+  usaRecursion: boolean;
+  color: string;
+  ejecutar: (datos: number[]) => Paso[];
+}> = {
+  bubble: {
+    nombre: "Bubble Sort",
+    estable: true,
+    usaRecursion: false,
+    color: "#8b5cf6",
+    ejecutar: instrumentarBurbuja,
+  },
+  selection: {
+    nombre: "Selection Sort",
+    estable: false,
+    usaRecursion: false,
+    color: "#f97316",
+    ejecutar: instrumentarSeleccion,
+  },
+  insertion: {
+    nombre: "Insertion Sort",
+    estable: true,
+    usaRecursion: false,
+    color: "#10b981",
+    ejecutar: instrumentarInsercion,
+  },
+  merge: {
+    nombre: "Merge Sort",
+    estable: true,
+    usaRecursion: true,
+    color: "#0ea5e9",
+    ejecutar: instrumentarMerge,
+  },
+  quick: {
+    nombre: "Quick Sort",
+    estable: false,
+    usaRecursion: true,
+    color: "#ec4899",
+    ejecutar: instrumentarQuick,
+  },
+  heap: {
+    nombre: "Heap Sort",
+    estable: false,
+    usaRecursion: false,
+    color: "#facc15",
+    ejecutar: instrumentarHeap,
+  },
+};
+
+export function prepararSimulacion(config) {
+  const arregloBase = generarDatos(config);
+  const resultados = Object.entries(ALGORITMOS).map(([id, algoritmo]) => {
+    const copia = [...arregloBase];
+    const inicio = performance.now();
+    const pasos = algoritmo.ejecutar(copia);
+    const fin = performance.now();
+    return {
+      id,
+      nombre: algoritmo.nombre,
+      estable: algoritmo.estable,
+      usaRecursion: algoritmo.usaRecursion,
+      pasos,
+      memoriaExtra: estimarMemoria(algoritmo, copia.length),
+      tiempoMs: fin - inicio,
+    } satisfies ResultadoAlgoritmo;
+  });
+  return { resultados, arregloBase };
+}
+
+// Cada funcion instrumentarX agrega un Paso al final del arreglo "pasos" cada vez
+// que se completa un barrido o se ejecuta una operacion significativa. El front
+// usa esos pasos para:
+//  - Actualizar la tabla comparativa.
+//  - Animar el arreglo en tiempo real (solo el algoritmo seleccionado).
+//  - Emitir descripciones (por ejemplo, "Comparando indices 2 y 3", "Pivote = 40").
+
+function instrumentarBurbuja(datos: number[]): Paso[] {
+  const pasos: Paso[] = [];
+  let comparaciones = 0;
+  let intercambios = 0;
+  for (let i = 0; i < datos.length - 1; i++) {
+    for (let j = 0; j < datos.length - 1 - i; j++) {
+      comparaciones++;
+      if (datos[j] > datos[j + 1]) {
+        [datos[j], datos[j + 1]] = [datos[j + 1], datos[j]];
+        intercambios++;
+        registrarPaso();
+      }
+    }
+    registrarPaso(`Fin de pasada ${i + 1}`);
+  }
+  function registrarPaso(descripcion?: string) {
+    pasos.push({ snapshot: [...datos], comparaciones, intercambios, iteraciones: pasos.length + 1, descripcion });
+  }
+  if (!pasos.length) registrarPaso();
+  return pasos;
+}
+
+// instrumentarSeleccion, instrumentarInsercion, instrumentarMerge, instrumentarQuick
+// e instrumentarHeap siguen el mismo patron: cada vez que se realiza una operacion
+// relevante generan un nuevo Paso con copia del arreglo y metricas acumuladas.
+
+function generarDatos(config: {
+  cantidad: number;
+  tipoDato: "int" | "string";
+  situacion: "desordenado" | "parcial" | "intercalado" | "invertido";
+}): number[] {
+  const base = Array.from({ length: config.cantidad }, (_, i) => i + 1);
+  if (config.situacion === "invertido") {
+    return base.reverse();
+  }
+  if (config.situacion === "intercalado") {
+    return base.map((valor, indice) => (indice % 2 === 0 ? valor : valor * 1.3));
+  }
+  if (config.situacion === "parcial") {
+    return base.map((valor, indice) => (indice % 5 === 0 ? valor + 10 : valor));
+  }
+  // desordenado
+  for (let i = base.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [base[i], base[j]] = [base[j], base[i]];
+  }
+  return base;
+}
+
+function estimarMemoria(algoritmo: { id: AlgoritmoId }, n: number) {
+  switch (algoritmo.id) {
+    case "merge":
+      return n * 4 * 2; // buffer auxiliar
+    case "quick":
+      return Math.log2(n) * 64; // stack recursion
+    case "heap":
+      return n * 4; // heap array adicional
+    default:
+      return n * 2;
+  }
+}
+
+// La capa de UI consume esta API así:
+// const simulacion = prepararSimulacion(configSeleccionada);
+// renderTabla(simulacion.resultados);
+// renderVisual(simulacion.resultados.find(r => r.id === algoritmoActual));
+// manejarPlayPause(() => avanzarPaso());

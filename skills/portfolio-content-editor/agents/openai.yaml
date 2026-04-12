@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio Content"
+  short_description: "Actualiza perfil, proyectos y habilidades"
+  default_prompt: "Use $portfolio-content-editor para actualizar el contenido profesional del portafolio desde las fuentes de datos y validar que los assets publicos sigan enlazados correctamente."

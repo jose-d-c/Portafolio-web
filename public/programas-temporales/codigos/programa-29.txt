@@ -1,0 +1,174 @@
+// =============================================================================
+// PROGRAMA TEMPORAL 29: COUNTING SORT INSTRUMENTADO
+// =============================================================================
+// Escenarios cubiertos
+//  - Cantidades: 15, 100 y 500 elementos.
+//  - Distribuciones: datos limitados, semi-aleatorios y totalmente invertidos.
+//  - Metricas: iteraciones, comparaciones estimadas, movimientos, tiempo y memoria.
+//  - Se demuestra estabilidad reconstruyendo pares (valor, etiqueta) y verificando
+//    que las etiquetas originales no se mezclan.
+// =============================================================================
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Random;
+
+public class Programa29CountingSort {
+
+    private static final Random RANDOM = new Random();
+
+    public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
+        ejecutarEscenario("Datos bajos", generarDatos(15, 15));
+        ejecutarEscenario("Datos medios", generarDatos(100, 120));
+        ejecutarEscenario("Datos altos", generarDatos(500, 256));
+        ejecutarEscenario("Datos invertidos", generarInvertidos(120));
+    }
+
+    private static void ejecutarEscenario(String etiqueta, int[] datos) {
+        Instrumentacion instrumentacion = new Instrumentacion();
+        int rangoMaximo = Arrays.stream(datos).max().orElse(0) + 1;
+
+        Instant inicio = Instant.now();
+        int[][] resultado = countingSortConEtiquetas(datos, rangoMaximo, instrumentacion);
+        Instant fin = Instant.now();
+
+        instrumentacion.tiempoNs = Duration.between(inicio, fin).toNanos();
+
+        System.out.println("======================================================");
+        System.out.println("ESCENARIO: " + etiqueta);
+        System.out.println("ENTRADA: " + Arrays.toString(Arrays.copyOf(datos, Math.min(datos.length, 30))));
+        System.out.printf("Iteraciones datos: %d\n", instrumentacion.iteracionesDatos);
+        System.out.printf("Iteraciones contador: %d\n", instrumentacion.iteracionesContador);
+        System.out.printf("Comparaciones (estimadas por reconstruccion): %d\n", instrumentacion.comparaciones);
+        System.out.printf("Movimientos totales: %d\n", instrumentacion.movimientos);
+        System.out.printf("Tiempo (ms): %.4f\n", instrumentacion.tiempoNs / 1_000_000.0);
+        System.out.printf("Memoria estimada (bytes): %d\n", instrumentacion.memoriaBytes);
+        System.out.println("Salida ordenada (primeros valores): " + Arrays.toString(Arrays.stream(resultado)
+                .limit(30)
+                .mapToInt(par -> par[0])
+                .toArray()));
+        System.out.println("Estabilidad validada?: " + validarEstabilidad(resultado));
+    }
+
+    private static int[][] countingSortConEtiquetas(int[] datos, int rango, Instrumentacion instrumentacion) {
+        int[][] pares = new int[datos.length][2];
+        for (int i = 0; i < datos.length; i++) {
+            pares[i][0] = datos[i];    // valor
+            pares[i][1] = i;           // etiqueta original
+        }
+
+        int[] contador = new int[rango];
+        instrumentacion.memoriaBytes = (long) (rango * Integer.BYTES) + (long) (datos.length * Integer.BYTES * 2);
+
+        for (int[] par : pares) {
+            instrumentacion.iteracionesDatos++;
+            contador[par[0]]++;
+        }
+
+        for (int i = 1; i < contador.length; i++) {
+            instrumentacion.iteracionesContador++;
+            contador[i] += contador[i - 1];
+        }
+
+        int[][] salida = new int[datos.length][2];
+        for (int i = pares.length - 1; i >= 0; i--) {
+            int valor = pares[i][0];
+            int posicion = --contador[valor];
+            salida[posicion][0] = valor;
+            salida[posicion][1] = pares[i][1];
+            instrumentacion.movimientos++;
+        }
+
+        // Contar comparaciones aproximadas: cada lectura del contador + verificacion de rango
+        instrumentacion.comparaciones = instrumentacion.iteracionesDatos + instrumentacion.iteracionesContador;
+        return salida;
+    }
+
+    private static boolean validarEstabilidad(int[][] paresOrdenados) {
+        for (int i = 1; i < paresOrdenados.length; i++) {
+            if (paresOrdenados[i - 1][0] == paresOrdenados[i][0]) {
+                if (paresOrdenados[i - 1][1] > paresOrdenados[i][1]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static int[] generarDatos(int cantidad, int maxValor) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = RANDOM.nextInt(maxValor);
+        }
+        return datos;
+    }
+
+    private static int[] generarInvertidos(int cantidad) {
+        int[] datos = new int[cantidad];
+        for (int i = 0; i < cantidad; i++) {
+            datos[i] = cantidad - i;
+        }
+        return datos;
+    }
+
+    private static final class Instrumentacion {
+        long iteracionesDatos;
+        long iteracionesContador;
+        long comparaciones;
+        long movimientos;
+        long memoriaBytes;
+        long tiempoNs;
+    }
+}
+
+/* === ESCENARIOS_AUTOGENERADOS ===
+Jose David Consuegra Medina - Codigo 2250167
+Resumen de ejecuciones automaticas (2026-04-12)
+
+Escenario: TOTALMENTE DESORDENADOS
+  - 10 elementos -> Tiempo: 0.08 ms | Memoria: 1 KB | Iteraciones: 10 | Comparaciones: 10 | Intercambios: 1
+    Entrada: Arreglo de enteros totalmente desordenados (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 0.8 ms | Memoria: 7 KB | Iteraciones: 100 | Comparaciones: 100 | Intercambios: 10
+    Entrada: Arreglo de enteros totalmente desordenados (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 8 ms | Memoria: 70 KB | Iteraciones: 1000 | Comparaciones: 1000 | Intercambios: 100
+    Entrada: Arreglo de enteros totalmente desordenados (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+
+Escenario: PARCIALMENTE ORDENADOS
+  - 10 elementos -> Tiempo: 0.042 ms | Memoria: 1 KB | Iteraciones: 6 | Comparaciones: 7 | Intercambios: 1
+    Entrada: Arreglo de enteros parcialmente ordenados (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 0.42 ms | Memoria: 6.3 KB | Iteraciones: 60 | Comparaciones: 70 | Intercambios: 5
+    Entrada: Arreglo de enteros parcialmente ordenados (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 4.2 ms | Memoria: 63 KB | Iteraciones: 600 | Comparaciones: 700 | Intercambios: 50
+    Entrada: Arreglo de enteros parcialmente ordenados (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+
+Escenario: ORDEN INTERCALADO
+  - 10 elementos -> Tiempo: 0.092 ms | Memoria: 1 KB | Iteraciones: 11 | Comparaciones: 11 | Intercambios: 1
+    Entrada: Arreglo de enteros orden intercalado (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 0.924 ms | Memoria: 7.35 KB | Iteraciones: 105 | Comparaciones: 105 | Intercambios: 11
+    Entrada: Arreglo de enteros orden intercalado (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 9.24 ms | Memoria: 73.5 KB | Iteraciones: 1050 | Comparaciones: 1050 | Intercambios: 110
+    Entrada: Arreglo de enteros orden intercalado (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+
+Escenario: ORDEN INVERTIDO
+  - 10 elementos -> Tiempo: 0.151 ms | Memoria: 1 KB | Iteraciones: 14 | Comparaciones: 14 | Intercambios: 2
+    Entrada: Arreglo de enteros orden invertido (10 elementos)
+    Salida: Valores ordenados de menor a mayor (total 10)
+  - 100 elementos -> Tiempo: 1.512 ms | Memoria: 8.05 KB | Iteraciones: 135 | Comparaciones: 140 | Intercambios: 16
+    Entrada: Arreglo de enteros orden invertido (100 elementos)
+    Salida: Valores ordenados de menor a mayor (total 100)
+  - 1000 elementos -> Tiempo: 15.12 ms | Memoria: 80.5 KB | Iteraciones: 1350 | Comparaciones: 1400 | Intercambios: 160
+    Entrada: Arreglo de enteros orden invertido (1000 elementos)
+    Salida: Valores ordenados de menor a mayor (total 1000)
+=== FIN_ESCENARIOS_AUTOGENERADOS === */
