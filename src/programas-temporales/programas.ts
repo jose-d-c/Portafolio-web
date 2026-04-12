@@ -145,23 +145,18 @@ const configuracionesPersonalizadas: Record<number, Pick<ProgramaTemporal, "titu
       "Programa Java con Bucket Sort para cadenas en tamanos 10, 50 y 200, evaluando casos desorganizados, parcialmente organizados e invertidos con tiempo, memoria, comparaciones, movimientos e iteraciones.",
   },
   28: {
-    titulo: "Programa temporal 28: Simulador de Busqueda Binaria",
+    titulo: "Programa temporal 28: Búsqueda Binaria en Java",
     descripcion:
-      "Aplicacion interactiva que ilustra busqueda binaria sobre enteros y strings ordenados. Permite variar la longitud, el valor objetivo y muestra cada mitad explorada, comparaciones, profundidad recursiva y visuales sincronizadas.",
+      "Se utiliza cuando el vector está previamente ordenado y reduce exponencialmente el número de iteraciones necesarias; por ejemplo, en 50.000.000 de elementos requiere como máximo 26 comparaciones en el peor caso.",
   },
   29: {
-    titulo: "Programa temporal 29: Counting Sort instrumentado",
+    titulo: "Programa temporal 29: Counting Sort en Java (int)",
     descripcion:
-      "Implementacion detallada de Counting Sort que explica el arreglo contador, la acumulacion de frecuencias y reconstruccion estable. Incluye escenarios de datos reducidos/medios/altos y mediciones de tiempo, memoria y movimientos.",
-  },
-  30: {
-    titulo: "Programa temporal 30: Simulador visual de algoritmos de ordenamiento",
-    descripcion:
-      "Laboratorio interactivo con slider de cantidad, configuraciones de tipo/situacion del arreglo y comparativa en tiempo real de varios algoritmos (burbuja, quick, merge, etc.) mostrando animaciones, metricas y estabilidad al instante.",
+      "Implementacion de Counting Sort con enteros no negativos, incluyendo trazas en consola y explicacion por pasos sobre conteo, acumulacion y construccion estable del arreglo ordenado.",
   },
 };
 
-const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+const ordenProgramasTemporales = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29];
 
 const construirTituloProgramaTemporal = (numero: number, tituloBase?: string) => {
   const numeroFormateado = numero.toString().padStart(2, "0");
